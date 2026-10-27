@@ -4,3 +4,7 @@ tests/node_modules/
 tests/package-lock.json
 assets/textures/raw/
 tools/blender-mcp/
+# third-party reference models (never shipped)
+assets/models/lara*
+# private photos of Torii (never in the public repo)
+assets/screenshots/torii face.jpg

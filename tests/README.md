@@ -4,7 +4,7 @@ Loads the game headlessly in jsdom with a mock THREE, so tests can call real
 game functions (`terrainY`, `updatePlayer`, `applySave`, ...).
 
     cd tests && npm install jsdom
-    for t in regress levels inventory story migrate intro guide door tumble savefile uiscale chest coast horizon; do node $t.js; done
+    for t in regress levels inventory story migrate intro guide door tumble savefile uiscale chest coast horizon model; do node $t.js; done
 
 harness.js resolves the NEWEST `torii-neo-antalya-ALPHA-x.y.html` in the game
 folder automatically, so a new version needs no test changes.
@@ -13,8 +13,8 @@ folder automatically, so a new version needs no test changes.
   boot(dir) boots the newest build in another folder (used for `backups/`)
 - `regress.js` — core + save round-trip + old-save compatibility
 - `migrate.js` — a REAL save made by the previous version (from `backups/`)
-  loaded through CONTINUE: nothing she earned may change. Rewritten for 7.1:
-  a 7.0 save must come through field-for-field (only `mid` may fill in, when
+  loaded through CONTINUE: nothing she earned may change. Updated for 7.2:
+  a 7.1 save must come through field-for-field (only `mid` may fill in, when
   CONTINUE starts the queued mission). It exits 1 on any ✗ — check for ✗
   lines, not just the last line, when running the suite.
 - `levels.js` — 7.0 levels, XP curve, perk cards, milestones, monster levels
@@ -24,6 +24,11 @@ folder automatically, so a new version needs no test changes.
 - `guide.js` — PAUSE → 📘 GUIDE
 - `door.js`, `tumble.js`, `savefile.js`, `uiscale.js`, `chest.js`,
   `coast.js`, `horizon.js` — earlier features, still checked every release
+- `model.js` — 7.2: Torii's rigged model embedded as base64 glb (`#torii-glb`):
+  one outside script only, size, materials, bones = the game's joint names at
+  the game's joint spots, UVs inside her atlas regions, weights; and in the game
+  a broken model must leave the code body (`buildGirl`) exactly as it was.
+  The mock THREE never loads the model, so the real look is checked in the Browser pane.
 
 Gotchas learned the hard way:
 - The save keys are `lvl` / `weap` / `unit`, NOT `level` / `weapons`.

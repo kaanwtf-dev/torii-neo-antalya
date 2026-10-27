@@ -2,7 +2,7 @@
 
 A browser game Kaan is making as a gift for his girlfriend Torii. It teaches Turkish from
 *Teach Yourself Turkish* (16 units, 20 missions) inside a PS2-style neon city: Torii (braids),
-her black dog Bandit, and Kaan on his balcony. Current version: **ALPHA 7.1 · BLUE HOUR** (the PS1 visual pass).
+her black dog Bandit, and Kaan on his balcony. Current version: **ALPHA 7.2 · POLYGON GIRL** (Torii as a real rigged model); her face is a 40x48 PS1-crunched photo (`TORII_FACE`).
 
 Kaan likes a casual tone — "bro", swearing is fine.
 
@@ -50,6 +50,11 @@ Kaan likes a casual tone — "bro", swearing is fine.
   `assets/textures/raw/`), `ps1Img`/`ps1Ground`/`ps1Facade` repaint surfaces once pictures decode,
   `winEmit` + `BLDMATS` light windows by night, `drawFrame`/`PS1P` = dither pass (on with NIGHT GRADE).
   Night palette lives in `DAYK`; lamp light in `lamp()` (`_lampPool`, `_lampCone`).
+- Torii's real model (7.2): `#torii-glb` (base64 glb) loaded by the inlined r128 `GLTFLoader`;
+  `girlModel(R)` (called at the end of `buildGirl`) adds bones INTO the joint groups, so all the
+  procedural poses drive it; `R.proc` = the code body it hides; on any failure the code body stays.
+  Source + pipeline: `tools/torii_model/` (`retex_torii.py`, `torii.glb`). Skinned materials need
+  `skinning=true` AND `needsUpdate=true` in r128. Credit model authors (patch notes + end credits).
 - Blender MCP is set up for this folder (`.mcp.json`, add-on in `tools/blender-mcp/`). Blender must be
   open; tools only load in a session started after that.
 
@@ -59,7 +64,7 @@ Kaan likes a casual tone — "bro", swearing is fine.
 installed, ask Kaan before installing it.
 
     cd tests && npm install jsdom
-    for t in regress levels inventory story migrate intro guide door tumble savefile uiscale chest coast horizon; do node $t.js; done
+    for t in regress levels inventory story migrate intro guide door tumble savefile uiscale chest coast horizon model; do node $t.js; done
 
 - `migrate.js` loads a REAL save made by the version in `backups/` into the new one — it must pass
   before every release.
