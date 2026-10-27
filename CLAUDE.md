@@ -2,7 +2,7 @@
 
 A browser game Kaan is making as a gift for his girlfriend Torii. It teaches Turkish from
 *Teach Yourself Turkish* (16 units, 20 missions) inside a PS2-style neon city: Torii (braids),
-her black dog Bandit, and Kaan on his balcony. Current version: **ALPHA 7.0 · NEON NIGHTS**.
+her black dog Bandit, and Kaan on his balcony. Current version: **ALPHA 7.1 · BLUE HOUR** (the PS1 visual pass).
 
 Kaan likes a casual tone — "bro", swearing is fine.
 
@@ -46,6 +46,12 @@ Kaan likes a casual tone — "bro", swearing is fine.
 - Help for the player: first-time cards `TIPS` + `tip(id)`; the full guide `GUIDE` (PAUSE → 📘 GUIDE).
   Anything new and complicated gets a tip card and a guide section.
 - Intro: `INTRO`, `introScene`, the synth track `IM` / `imBar`. Kaan's monster service: `HOTSPOTS`.
+- PS1 look (7.1): `PS1TEX` (embedded AI textures, made by `assets/textures/ps1.py` from
+  `assets/textures/raw/`), `ps1Img`/`ps1Ground`/`ps1Facade` repaint surfaces once pictures decode,
+  `winEmit` + `BLDMATS` light windows by night, `drawFrame`/`PS1P` = dither pass (on with NIGHT GRADE).
+  Night palette lives in `DAYK`; lamp light in `lamp()` (`_lampPool`, `_lampCone`).
+- Blender MCP is set up for this folder (`.mcp.json`, add-on in `tools/blender-mcp/`). Blender must be
+  open; tools only load in a session started after that.
 
 ## Testing
 

@@ -13,7 +13,10 @@ folder automatically, so a new version needs no test changes.
   boot(dir) boots the newest build in another folder (used for `backups/`)
 - `regress.js` — core + save round-trip + old-save compatibility
 - `migrate.js` — a REAL save made by the previous version (from `backups/`)
-  loaded through CONTINUE: nothing she earned may change
+  loaded through CONTINUE: nothing she earned may change. Rewritten for 7.1:
+  a 7.0 save must come through field-for-field (only `mid` may fill in, when
+  CONTINUE starts the queued mission). It exits 1 on any ✗ — check for ✗
+  lines, not just the last line, when running the suite.
 - `levels.js` — 7.0 levels, XP curve, perk cards, milestones, monster levels
 - `inventory.js` — gear, backpack, nazar beads, shops
 - `story.js` — cutscenes, Hellspace scenes, mission step types, side quests
