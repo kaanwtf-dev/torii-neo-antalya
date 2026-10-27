@@ -78,3 +78,8 @@ installed, ask Kaan before installing it.
 1. All tests pass (`migrate.js` included). 2. Visual check in the Browser pane.
 3. Bump the filename, `GAME_VER`, `#ver`, and add a `PATCHES` entry at the top.
 4. Move the previous version to `backups/`. 5. Update `tests/README.md` if tests changed.
+6. Commit + push `main`, then publish online: the public repo is `kaanwtf-dev/torii-neo-antalya`, and
+   Torii plays at https://kaanwtf-dev.github.io/torii-neo-antalya/ (GitHub Pages from the `gh-pages`
+   branch). On `gh-pages`, copy the new version in as `index.html` (plus the versioned file and `backups/`),
+   commit, push. The gh token has no `workflow` scope, so no Actions — update the branch by hand.
+   Online saves live in her browser for that site, separate from saves made by opening the file.
