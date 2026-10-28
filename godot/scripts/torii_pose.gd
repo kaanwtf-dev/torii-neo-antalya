@@ -15,12 +15,14 @@ var ph := 0.0                      # stride phase
 var _down := {}                    # side -> Quaternion turning that arm down
 var body_rest := Vector3.ZERO
 
-func _init(skeleton: Skeleton3D) -> void:
+# down: radians from the model's rest pose to arms hanging straight (Torii: T-pose -> 1.28; the NPC
+# bases rest in an A-pose, so they pass their own, measured from the rig)
+func _init(skeleton: Skeleton3D, down: float = ARMS_DOWN) -> void:
 	sk = skeleton
 	for n in ["body", "head", "arm_m", "arm_p", "elb_m", "elb_p", "leg_m", "leg_p", "kn_m", "kn_p"]:
 		b[n] = sk.find_bone(n)
-	_down[-1] = Quaternion(Vector3(0, 0, 1), ARMS_DOWN)    # her right arm (-x) swings down
-	_down[1] = Quaternion(Vector3(0, 0, 1), -ARMS_DOWN)    # her left arm (+x)
+	_down[-1] = Quaternion(Vector3(0, 0, 1), down)         # the right arm (-x) swings down
+	_down[1] = Quaternion(Vector3(0, 0, 1), -down)         # the left arm (+x)
 	body_rest = sk.get_bone_rest(b["body"]).origin
 
 static func eul(x: float, y: float = 0.0, z: float = 0.0) -> Quaternion:

@@ -39,6 +39,7 @@ func _ready() -> void:
 	Tint.apply(ban_model)            # his black fur is a vertex tint over the shared monster atlas
 	ban.setup(ban_model, p)
 	_update_lamps()
+	_people(world, p)
 	# her save (the same torii_save 7.2 uses), the HUD, and mission 1
 	SaveBridge.load_save()
 	p.max_hp = SaveBridge.get_i("mh", 100); p.heal_full()
@@ -74,6 +75,29 @@ func _dev_m1test(m: Node, p: CharacterBody3D) -> void:
 	print("M1TEST done: step ", m.step, " running ", m.running)
 	get_tree().quit()
 
+# every person in the city (7.2's walkers, shopkeepers, café/tavla regulars, named NPCs, Kaan) as one of
+# the two NPC bases in an outfit from Kaan's sheet; positions, poses and walking loops come from 7.2
+const WOMEN := ["TEYZE", "DEFNE"]
+func _people(world: Node3D, p: Node3D) -> void:
+	var list = JSON.parse_string(FileAccess.get_file_as_string("res://assets/npc/people.json"))
+	if not list: return
+	var i := 0
+	for d in list:
+		i += 1
+		var n := Npc.new(); world.add_child(n)
+		var female: bool = (i % 2 == 0) and d["name"] == ""      # unnamed people alternate; named ones by name
+		for w in WOMEN: if String(d["name"]).contains(w): female = true
+		var kind := "female" if female else "male"
+		var outfit := "res://assets/npc/%s_%d.png" % [kind, (i * 7 + 3) % 6]
+		if d["kind"] == "kaan":
+			kind = "male"; outfit = "res://assets/npc/male_base.png"      # Kaan: the sheet's base outfit
+		n.setup(kind, outfit, float(d["sc"]), p)
+		n.position = Vector3(d["x"], d["y"], d["z"]); n.rotation.y = d["ry"]; n.base_y = d["y"]
+		if d["kind"] == "kaan": n.mode = "kaan"
+		elif d["kind"] == "ped":
+			n.mode = "walk"; n.walk = {"cx": float(d["ped"]["cx"]), "cz": float(d["ped"]["cz"]), "t": float(d["ped"]["t"]), "sp": float(d["ped"]["sp"])}
+		elif d["seated"]: n.sit_at(float(d["y"]), float(d["sc"]))
+
 func _fps_probe() -> void:
 	await get_tree().create_timer(3.0).timeout
 	var f := 0; var t0 := Time.get_ticks_msec()
@@ -90,6 +114,16 @@ func _dev_shot(p: Node3D) -> void:
 		walk = walk or a == "--walk"; front = front or a == "--front"
 		if a == "--fps": _fps_probe()
 	if path == "": return
+	for a in OS.get_cmdline_user_args():
+		if a.begins_with("--at="):                          # --at=x,z,yaw : stand somewhere else for the shot
+			var v := a.substr(5).split(",")
+			p.global_position = Vector3(float(v[0]), 1.0, float(v[1])); p.yaw = float(v[2])
+			if v.size() > 3: p.pitch = float(v[3])
+	if "--npcinfo" in OS.get_cmdline_user_args():
+		var all := get_tree().root.find_children("*", "Npc", true, false)
+		var modes := {}
+		for n in all: modes[n.mode] = modes.get(n.mode, 0) + 1
+		print("NPCS ", all.size(), " ", modes, " kaan at ", all.filter(func(n): return n.mode == "kaan").map(func(n): return n.global_position))
 	if front: p.yaw = PI; p.get_node("CamPivot").rotation.y = PI
 	if "--bike" in OS.get_cmdline_user_args():
 		p.global_position = Vector3(-20, .05, -10); p._get_on()

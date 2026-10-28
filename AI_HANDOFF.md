@@ -26,6 +26,29 @@ Project rules live in `CLAUDE.md` (they apply to both of us). Newest entry on to
 - Never put Torii's real photo (`assets/screenshots/torii face.jpg`) in git — it's ignored on purpose.
 
 ## Log
+- 2026-10-27 Claude: **all NPCs replaced** (Kaan's rule: EVERY person = one of the two NPC bases + an outfit texture).
+  `godot/assets/npc/people.json` = all 62 person() people from 7.2 (position, facing, scale, seated, walker loop
+  cx/cz/t/sp, NPC name): 20 walkers, 28 standing, 13 seated, Kaan. City re-exported with every person hidden (the
+  old export had ~22 baked-in people = 131k tris; city now 218k tris, 350 materials, 144 chunks, 25 MB).
+  `scripts/npc.gd` (`Npc`): base + outfit texture (material_override), scaled to 7.2's ~2.06 m × its scale (kids .65);
+  arms-down angle measured from the A-pose rig and fed to `ToriiPose` (now takes `down` as a parameter); ports of
+  walkPerson / idlePerson / sitPerson / updatePeds (square loop, h 17) / updateKaan (waves within ~18 m); not animated
+  beyond 90 m. `main.gd _people()`: unnamed people alternate male/female, named ones by name (TEYZE, DEFNE → female),
+  outfit = (i·7+3) % 6; Kaan = male base in the sheet's base outfit on the balcony (-23, 5.85, -17.6). 120 FPS.
+  Dev flags: `--at=x,z,yaw[,pitch]`, `--npcinfo`. Not yet: NPC dialogue/quests/greeting labels.
+- 2026-10-27 Claude: **NPC bases built** from `assets/screenshots/PS1-Style NPC Base Model Reference Sheet.png`
+  (Kaan: one male + one female base, outfits = texture swaps, no extra detail). `tools/npc_model/npc_base.py`
+  (Blender/MCP): `build(kind)` reads each figure's outline row by row (front + side views; sensitive threshold
+  because dark hair/black tops ≈ background) into low-poly rings: torso+head (10 sides; above the armpits the full
+  span, below it everything between the arms), two legs (innermost run, so hanging hands aren't mistaken for legs),
+  two A-pose arms following the arm outline; neck fixed at .86·height, shoulders .14 below; shoulder/sleeve verts
+  partly weighted to the arm. Same joint names as Torii (body, head, arm/elb/leg/kn _m/_p), bones up, no roll,
+  REST = A-POSE. `bake_base` projects front/back + side views (sides only on head and legs — on the torso they
+  show the hanging arms) → 256px; `bake_variants` = each outfit's front picture wrapped round the body, head from
+  the base. A colour-bled sheet was tried and made it worse (stripes) — reverted. Output in `godot/assets/npc/`:
+  `npc_male.glb` (1,380 tris), `npc_female.glb` (1,632 tris), `male_base/0-5.png`, `female_base/0-5.png`.
+  Previews: `tools/npc_model/compare_npc_bases.png`, `compare_npc_outfits.png`. Not in Godot yet (next step:
+  spawn 7.2's peds + named NPCs on these bases; remove the baked tavla "statues" from the city).
 - 2026-10-27 Claude: committed everything to `main` as 6f60d95 (not pushed). Kaan's decision: ONE version
   from now on = Godot; no HTML work; web export last and maybe never (desktop build may ship — then her
   browser save needs an import step).
