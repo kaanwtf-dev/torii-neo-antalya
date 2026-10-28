@@ -43,15 +43,15 @@ func _ready() -> void:
 	# her save (the same torii_save 7.2 uses), the HUD, and mission 1
 	SaveBridge.load_save()
 	p.max_hp = SaveBridge.get_i("mh", 100); p.heal_full()
-	p.hold(load("res://assets/weapons/katana.glb"), p.weapon)
+	p.equip_from_save()
 	var hud := Hud.new(); add_child(hud)
 	p.hp_changed.connect(hud.set_hp); hud.set_hp(p.hp, p.max_hp)
 	# the Turkish course (7.2's 16 units) and its quiz screen
 	var quiz := QuizUI.new(); add_child(quiz)
 	var lessons := Lessons.new(); lessons.name = "Lessons"; add_child(lessons); lessons.setup(p, hud, quiz)
-	var m := Node.new(); m.name = "Mission1"; m.set_script(load("res://scripts/mission1.gd")); add_child(m)
-	m.setup(world, p, hud)
-	if "--m1test" in OS.get_cmdline_user_args(): _dev_m1test(m, p)
+	var m := Missions.new(); m.name = "Missions"; add_child(m)
+	m.setup(world, p, hud, lessons)
+	for a in OS.get_cmdline_user_args(): if a.begins_with("--autoplay="): _dev_autoplay(m, p, lessons, quiz, hud, int(a.substr(11)))
 	if "--lessontest" in OS.get_cmdline_user_args(): _dev_lessontest(lessons, quiz, hud)
 	_dev_shot(p)
 
@@ -81,28 +81,44 @@ func _dev_lessontest(L: Lessons, q: QuizUI, hud: Hud) -> void:
 	print("LESSONTEST answered ", n, " ul=", SaveBridge.data.get("ul"), " lesson=", SaveBridge.data.get("lesson"), " xp=", SaveBridge.data.get("xp"), " lvl=", SaveBridge.data.get("lvl"))
 	get_tree().quit()
 
-# developer check only: play mission 1 start to finish by itself, then quit (used against a copy of a
-# real 7.2 save with --savedir=, to prove the save round-trips)
-func _dev_m1test(m: Node, p: CharacterBody3D) -> void:
-	var frames := func(n):
-		for i in n: await get_tree().physics_frame
-	await frames.call(10)
-	m.hud.call_box("", ""); m._start()
-	p.global_position = Vector3(60, .5, -54); await frames.call(10)
-	print("M1TEST after goto: step ", m.step)
-	for a in OS.get_cmdline_user_args():
-		if a.begins_with("--m1shot="):                     # a frame of the imp fight, then stop
-			p.yaw = PI * .5; await frames.call(70)
-			await RenderingServer.frame_post_draw
-			get_viewport().get_texture().get_image().save_png(a.substr(9)); get_tree().quit(); return
-	for e in get_tree().get_nodes_in_group("enemies"): e.hit(99)
-	await frames.call(5)
-	print("M1TEST after imps: step ", m.step, " kills ", m.kills)
-	for a in m.avos.duplicate():
-		if is_instance_valid(a): p.global_position = a.global_position; await frames.call(4)
-	print("M1TEST after avocados: step ", m.step)
-	p.global_position = Vector3(-24, .5, -12); await frames.call(10)
-	print("M1TEST done: step ", m.step, " running ", m.running)
+# developer check only: plays the story by itself for `n` missions (calls, quizzes, every step type, hunt
+# gates, unit lessons), then quits — run with --savedir= on a copy of a real 7.2 save
+func _dev_autoplay(M: Missions, p: CharacterBody3D, L: Lessons, q: QuizUI, hud: Hud, n: int) -> void:
+	var enter := InputEventKey.new(); enter.keycode = KEY_ENTER; enter.pressed = true
+	var start_next := SaveBridge.get_i("next")
+	var tries := 0
+	while SaveBridge.get_i("next") < start_next + n and tries < 60000:
+		tries += 1
+		await get_tree().create_timer(.05).timeout
+		if hud.box.visible: M._unhandled_input(enter); continue
+		if hud._choice:                                  # bazaar haggle / coin toss: take the right answer
+			var st: Dictionary = M._st()
+			var pick := 0
+			if st.get("t") == "choice": for i in st["opts"].size(): if st["opts"][i].get("ok", false): pick = i
+			var btns := hud._choice.find_children("*", "Button", true, false)
+			if btns.size() > pick: btns[pick].pressed.emit()
+			continue
+		if QuizUI.open:
+			if q.lesson_cb.is_valid(): q._unhandled_input(enter)
+			elif not q.lock:
+				match q.cur.get("kind", "mc"):
+					"fill": q.fill.text = str(q.cur["answer"][0] if q.cur["answer"] is Array else q.cur["answer"]); q._submit_fill()
+					"order": q.picked = q.cur["words"].duplicate(); q.pool = []; q._submit_order()
+					_: q._pick(int(q.cur["a"]))
+			continue
+		for e in get_tree().get_nodes_in_group("enemies"): if e.hp > 0 and e.dmg > 0: e.hit(9999)
+		var st: Dictionary = M._st()
+		if st.is_empty(): continue
+		match st["t"]:
+			"goto", "return", "zone", "choice", "god":
+				p.global_position = Vector3(st["x"], 1.0, st["z"])
+				if st["t"] == "god": M._god()
+			"collect":
+				for pk in M.pickups: if is_instance_valid(pk["node"]) and pk["item"] == st["item"]: p.global_position = pk["node"].global_position; break
+			"deliver": p.global_position = Vector3(st["to"][0], 1.0, st["to"][1])
+			"photo": M._advance()
+	print("AUTOPLAY next=", SaveBridge.get_i("next"), " unit=", SaveBridge.get_i("unit"), " ul=", SaveBridge.get_i("ul"), " lvl=", SaveBridge.get_i("lvl"),
+		" weap=", SaveBridge.data.get("weap"), " lira=", SaveBridge.get_i("lira"), " mh=", SaveBridge.get_i("mh"), " gate=", SaveBridge.data.get("gate"), " tries=", tries)
 	get_tree().quit()
 
 # every person in the city (7.2's walkers, shopkeepers, café/tavla regulars, named NPCs, Kaan) as one of
@@ -145,6 +161,12 @@ func _dev_shot(p: Node3D) -> void:
 		if a == "--fps": _fps_probe()
 	if path == "": return
 	for a in OS.get_cmdline_user_args():
+		if a.begins_with("--mobs="):                        # --mobs=zombie,ghost,... : line some up in front of her
+			var kinds := a.substr(7).split(",")
+			for i in kinds.size():
+				var e := Enemy.spawn(p.get_parent(), kinds[i], p.global_position + Vector3((i - kinds.size() / 2.0) * 2.2, 0, -6.5), p)
+				e.sp = 0.0; e.dmg = 0
+	for a in OS.get_cmdline_user_args():
 		if a.begins_with("--at="):                          # --at=x,z,yaw : stand somewhere else for the shot
 			var v := a.substr(5).split(",")
 			p.global_position = Vector3(float(v[0]), 1.0, float(v[1])); p.yaw = float(v[2])
@@ -168,7 +190,7 @@ func _dev_shot(p: Node3D) -> void:
 
 func _inputs() -> void:
 	var map := {"move_forward": [KEY_W, KEY_UP], "move_back": [KEY_S, KEY_DOWN], "move_left": [KEY_A, KEY_LEFT],
-		"move_right": [KEY_D, KEY_RIGHT], "sprint": [KEY_SHIFT], "jump": [KEY_SPACE], "interact": [KEY_E], "attack": [KEY_F]}
+		"move_right": [KEY_D, KEY_RIGHT], "sprint": [KEY_SHIFT], "jump": [KEY_SPACE], "interact": [KEY_E], "attack": [KEY_F], "weapon": [KEY_Q]}
 	for a in map:
 		if not InputMap.has_action(a): InputMap.add_action(a)
 		for k in map[a]:

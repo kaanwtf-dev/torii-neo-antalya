@@ -51,6 +51,26 @@ func call_box(name: String, t: String) -> void:
 func banner(t: String) -> void: ban.text = t; _ban_t = 3.0
 func toast(t: String, dur := 3.0) -> void: tst.text = t; _tst_t = dur
 
+# a question with buttons (the bazaar haggle, the gods' coin game); pauses her like a quiz does
+var _choice: PanelContainer
+func choose(who_: String, text_: String, opts: Array, cb: Callable) -> void:
+	if _choice: _choice.queue_free()
+	_choice = PanelContainer.new(); _choice.position = Vector2(140, 200); _choice.size = Vector2(680, 0)
+	var sb := StyleBoxFlat.new(); sb.bg_color = Color(.07, .04, .13, 1); sb.border_color = Color("ffd66b")
+	sb.set_border_width_all(2); sb.set_corner_radius_all(12); sb.set_content_margin_all(18)
+	_choice.add_theme_stylebox_override("panel", sb); add_child(_choice)
+	var v := VBoxContainer.new(); v.add_theme_constant_override("separation", 10); _choice.add_child(v)
+	var w := Label.new(); w.text = who_; w.add_theme_color_override("font_color", Color("ffd66b")); w.add_theme_font_size_override("font_size", 16); v.add_child(w)
+	var q := RichTextLabel.new(); q.bbcode_enabled = true; q.fit_content = true; q.text = text_; q.custom_minimum_size = Vector2(640, 0)
+	q.add_theme_font_size_override("normal_font_size", 18); q.add_theme_font_size_override("bold_font_size", 18); q.add_theme_font_size_override("italics_font_size", 18); v.add_child(q)
+	for i in opts.size():
+		var b := Button.new(); b.text = "%d. %s" % [i + 1, opts[i]]; b.add_theme_font_size_override("font_size", 17)
+		b.pressed.connect(func():
+			_choice.queue_free(); _choice = null; QuizUI.open = false; Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+			cb.call(i))
+		v.add_child(b)
+	QuizUI.open = true; Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+
 func _process(dt: float) -> void:
 	_ban_t -= dt; _tst_t -= dt
 	ban.visible = _ban_t > 0; tst.visible = _tst_t > 0

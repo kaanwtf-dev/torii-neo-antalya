@@ -33,6 +33,7 @@ var attack_t := 0.0
 var attack_cd := 0.0
 var hand: Node3D
 var hurt_cd := 0.0
+var dance_t := 0.0                    # > 0: she's dancing (mission zones, victories)
 
 func set_bike(b: Node3D) -> void:
 	bike = b
@@ -68,7 +69,30 @@ func hold(weapon_scene: PackedScene, stats: Dictionary) -> void:
 	weapon = stats
 	if not hand: return
 	for c in hand.get_children(): c.queue_free()
-	hand.add_child(weapon_scene.instantiate())
+	if weapon_scene: hand.add_child(weapon_scene.instantiate())
+
+# her weapons = the save's `weap` list (7.2's names and stats); Q switches to the next one
+static var WSTATS := {}
+func equip_from_save() -> void:
+	if WSTATS.is_empty(): WSTATS = JSON.parse_string(FileAccess.get_file_as_string("res://assets/missions/missions.json"))["weapons"]
+	var weap: Array = SaveBridge.data.get("weap", ["katana"])
+	if weap.is_empty(): weap = ["kick"]
+	var wi := clampi(SaveBridge.get_i("wi"), 0, weap.size() - 1)
+	equip(weap[wi])
+
+func equip(id: String) -> void:
+	if WSTATS.is_empty(): WSTATS = JSON.parse_string(FileAccess.get_file_as_string("res://assets/missions/missions.json"))["weapons"]
+	var w: Dictionary = WSTATS.get(id, WSTATS["kick"])
+	var path := "res://assets/weapons/%s.glb" % id
+	hold(load(path) if ResourceLoader.exists(path) else null,
+		{"id": id, "n": w.get("n", id), "dmg": float(w["dmg"]), "cd": float(w["cd"]), "rng": float(w["rng"]), "arc": float(w["arc"])})
+
+func next_weapon() -> void:
+	var weap: Array = SaveBridge.data.get("weap", ["katana"])
+	if weap.size() < 2: return
+	var wi := (weap.find(weapon["id"]) + 1) % weap.size()
+	SaveBridge.data["wi"] = wi; equip(weap[wi])
+	if Lessons.me: Lessons.me.hud.toast("%s · %d dmg" % [weapon["n"], int(weapon["dmg"])], 2.0)
 
 func take_hit(dmg: int) -> void:
 	if hurt_cd > 0: return
@@ -86,6 +110,21 @@ func _attack() -> void:
 		var to: Vector3 = e.global_position - global_position; to.y = 0
 		if to.length() <= weapon["rng"] and absf(f.signed_angle_to(to.normalized(), Vector3.UP)) <= weapon["arc"]:
 			e.hit(weapon["dmg"])
+			_wear()
+
+# 7.2: every landed hit wears a weapon down; at zero it breaks and she swaps to the next one
+func _wear() -> void:
+	var id: String = weapon["id"]
+	if id == "kick": return
+	var dur: Dictionary = SaveBridge.data.get("dur", {})
+	if not dur.has(id): return
+	dur[id] = float(dur[id]) - 1; SaveBridge.data["dur"] = dur
+	if dur[id] <= 0:
+		var weap: Array = SaveBridge.data.get("weap", [])
+		weap.erase(id); dur.erase(id); SaveBridge.data["weap"] = weap
+		if Lessons.me: Lessons.me.hud.toast("💥 %s broke!" % weapon["n"], 3.0)
+		SaveBridge.data["wi"] = 0
+		equip(weap[0] if weap.size() else "kick")
 
 func _unhandled_input(e: InputEvent) -> void:
 	if QuizUI.open: return
@@ -110,6 +149,7 @@ func _physics_process(dt: float) -> void:
 		if pose: pose.update(dt, t, false, 0.0, false, 0.0)
 		return
 	if Input.is_action_just_pressed("attack"): _attack()
+	if Input.is_action_just_pressed("weapon"): next_weapon()
 	if on_bike:
 		_ride(dt)
 		return
@@ -129,8 +169,10 @@ func _physics_process(dt: float) -> void:
 	move_and_slide()
 	$CamPivot.rotation.x = pitch
 	var ground := Vector2(velocity.x, velocity.z).length()
+	dance_t -= dt
 	if pose:
 		pose.update(dt, t, ground > .2, ground, not is_on_floor(), velocity.y)
+		if dance_t > 0 and ground < .2 and is_on_floor(): pose.dance(t)
 		if attack_t > 0: pose.swing(1.0 - attack_t / .28)
 
 func _get_on() -> void:

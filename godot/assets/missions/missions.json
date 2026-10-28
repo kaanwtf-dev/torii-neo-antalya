@@ -1,0 +1,2846 @@
+{
+ "missions": [
+  {
+   "id": "avo",
+   "unit": 1,
+   "title": "MISSION 1 · THE AVOCADO RUN",
+   "xp": 70,
+   "phrase": "Ne kadar?",
+   "intro": {
+    "name": "KAAN 📱",
+    "lines": [
+     "Bebeğim! We're out of avocados and I refuse to live like this. 🥑",
+     "Ride to [b]Safeway[/b] — and heads up, imps have taken over the parking lot. Turkish word of the day: [i]avokado[/i]. Easy one."
+    ]
+   },
+   "pickups": [
+    {
+     "n": 1,
+     "x": [
+      55.0,
+      0,
+      0
+     ],
+     "z": [
+      -51.0,
+      0,
+      0
+     ],
+     "item": "avocado"
+    },
+    {
+     "n": 1,
+     "x": [
+      60.0,
+      0,
+      0
+     ],
+     "z": [
+      -49.0,
+      0,
+      0
+     ],
+     "item": "avocado"
+    },
+    {
+     "n": 1,
+     "x": [
+      65.0,
+      0,
+      0
+     ],
+     "z": [
+      -51.0,
+      0,
+      0
+     ],
+     "item": "avocado"
+    }
+   ],
+   "reward": {
+    "weapons": [
+     "avoflail"
+    ],
+    "msg": "🆕 [b]"
+   },
+   "steps": [
+    {
+     "t": "goto",
+     "x": 60,
+     "z": -54,
+     "lab": "Ride to Safeway 🛒 (grab the bike!)"
+    },
+    {
+     "t": "kill",
+     "x": 60,
+     "z": -52,
+     "n": 3,
+     "mob": "imp",
+     "lab": "Clear 3 parking-lot imps 👹",
+     "bn": "PARKING LOT IMPS! 👹",
+     "mobs": [
+      {
+       "n": 3,
+       "x": [
+        60.0,
+        -8.0,
+        8.0
+       ],
+       "z": [
+        -50.0,
+        -4.0,
+        4.0
+       ],
+       "mob": "imp"
+      }
+     ]
+    },
+    {
+     "t": "collect",
+     "x": 60,
+     "z": -52,
+     "item": "avocado",
+     "n": 3,
+     "lab": "Grab 3 avocados 🥑"
+    },
+    {
+     "t": "return",
+     "x": -24,
+     "z": -12,
+     "lab": "Bring them back to Kaan 🏠"
+    }
+   ]
+  },
+  {
+   "id": "simit",
+   "unit": 2,
+   "title": "MISSION 2 · THE SIMIT HUNT",
+   "xp": 90,
+   "phrase": "Acıktım",
+   "intro": {
+    "name": "KAAN 📱",
+    "lines": [
+     "Trader Joe's got TURKISH SIMIT in stock. This is not a drill. 🥯",
+     "[i]Simit[/i] = the sesame bagel of the gods. Go before the zombies eat it all — literally, there are zombies."
+    ]
+   },
+   "pickups": [
+    {
+     "n": 1,
+     "x": [
+      -100.0,
+      0,
+      0
+     ],
+     "z": [
+      29.0,
+      0,
+      0
+     ],
+     "item": "simit"
+    }
+   ],
+   "reward": {
+    "weapons": [
+     "simitring",
+     "syringe"
+    ],
+    "msg": "💉 [b]SYRINGE[/b] unlocked! Fast stabby weapon — switch with [Q]"
+   },
+   "steps": [
+    {
+     "t": "goto",
+     "x": -100,
+     "z": 26,
+     "lab": "Ride to Trader Joe's 🥯"
+    },
+    {
+     "t": "collect",
+     "x": -100,
+     "z": 27,
+     "item": "simit",
+     "n": 1,
+     "lab": "Grab a simit 🥯"
+    },
+    {
+     "t": "kill",
+     "x": -100,
+     "z": 26,
+     "n": 4,
+     "mob": "zombie",
+     "lab": "Fight off 4 hangry zombies 🧟",
+     "bn": "HANGRY ZOMBIES! 🧟",
+     "mobs": [
+      {
+       "n": 4,
+       "x": [
+        -100.0,
+        -8.0,
+        8.0
+       ],
+       "z": [
+        24.0,
+        -4.0,
+        6.0
+       ],
+       "mob": "zombie"
+      }
+     ]
+    },
+    {
+     "t": "return",
+     "x": -24,
+     "z": -12,
+     "lab": "Back to Kaan 🏠"
+    }
+   ]
+  },
+  {
+   "id": "doner",
+   "unit": 3,
+   "title": "MISSION 3 · DÖNER DIPLOMACY",
+   "xp": 120,
+   "phrase": "Çok güzel!",
+   "intro": {
+    "name": "KAAN 📱",
+    "lines": [
+     "Jayna Gyro. [i]Döner[/i]. Bring it home and I'll love you forever. (I already do, but still.) 🥙",
+     "Warning: last customer got ambushed by zombie office workers. Bring the katana."
+    ]
+   },
+   "pickups": [
+    {
+     "n": 1,
+     "x": [
+      60.0,
+      0,
+      0
+     ],
+     "z": [
+      50.0,
+      0,
+      0
+     ],
+     "item": "doner"
+    }
+   ],
+   "reward": {
+    "weapons": [
+     "donerspit"
+    ],
+    "msg": "🆕 [b]"
+   },
+   "steps": [
+    {
+     "t": "goto",
+     "x": 60,
+     "z": 54,
+     "lab": "Ride to Jayna Gyro 🥙"
+    },
+    {
+     "t": "collect",
+     "x": 60,
+     "z": 51,
+     "item": "doner",
+     "n": 1,
+     "lab": "Grab the döner 🥙 · careful!"
+    },
+    {
+     "t": "kill",
+     "x": 60,
+     "z": 52,
+     "n": 5,
+     "mob": "zombie",
+     "lab": "AMBUSH! Defeat 5 zombies 🧟",
+     "bn": "ZOMBIE AMBUSH! 🧟",
+     "mobs": [
+      {
+       "n": 5,
+       "x": [
+        60.0,
+        -9.0,
+        9.0
+       ],
+       "z": [
+        50.0,
+        -7.0,
+        5.0
+       ],
+       "mob": "zombie"
+      }
+     ]
+    },
+    {
+     "t": "deliver",
+     "soft": true,
+     "to": [
+      -24,
+      -12
+     ],
+     "bn": "SICAK SICAK · WHILE IT'S HOT",
+     "lab": "RUN it home before it gets cold 🏃‍♀️⏱",
+     "lateMsg": "Too late — it's getting cold",
+     "time": [
+      16.0,
+      7.0
+     ],
+     "fast": {
+      "xp": 60,
+      "lira": 40,
+      "msg": "🥙 [b]Sıcacık![/b] [i](Piping hot!)[/i] Kaan is in love all over again. +40₺"
+     },
+     "late": {
+      "msg": "🥙 [b]Soğudu...[/b] [i](It went cold...)[/i] He ate it anyway. Of course he did."
+     }
+    }
+   ]
+  },
+  {
+   "id": "pena",
+   "unit": 4,
+   "title": "MISSION 4 · PICK UP THE PICKS",
+   "xp": 80,
+   "phrase": "Nerede?",
+   "intro": {
+    "name": "KAAN 📱",
+    "lines": [
+     "Melodi Müzik has guitar picks — [i]pena[/i] in Turkish. Your bass deserves the best. 🎸",
+     "The roadie imps guarding the store have gone feral. Show them who the real musician is."
+    ]
+   },
+   "pickups": [
+    {
+     "n": 1,
+     "x": [
+      20.0,
+      0,
+      0
+     ],
+     "z": [
+      56.0,
+      0,
+      0
+     ],
+     "item": "pena"
+    }
+   ],
+   "reward": {
+    "weapons": [
+     "penashuri"
+    ],
+    "msg": "🎸 Pena acquired! [b]Bass guitar +10 damage[/b]"
+   },
+   "steps": [
+    {
+     "t": "goto",
+     "x": 20,
+     "z": 58,
+     "lab": "Go to Melodi Müzik 🎸"
+    },
+    {
+     "t": "kill",
+     "x": 20,
+     "z": 58,
+     "n": 4,
+     "mob": "imp",
+     "lab": "Deal with 4 feral roadie imps 👹",
+     "bn": "FERAL ROADIES! 👹",
+     "mobs": [
+      {
+       "n": 4,
+       "x": [
+        20.0,
+        -7.0,
+        7.0
+       ],
+       "z": [
+        56.0,
+        -4.0,
+        4.0
+       ],
+       "mob": "imp"
+      }
+     ]
+    },
+    {
+     "t": "collect",
+     "x": 20,
+     "z": 57,
+     "item": "pena",
+     "n": 1,
+     "lab": "Buy the pena 🎸"
+    },
+    {
+     "t": "return",
+     "x": -24,
+     "z": -12,
+     "lab": "Back to Kaan 🏠"
+    }
+   ]
+  },
+  {
+   "id": "park",
+   "unit": 4,
+   "title": "MISSION 5 · WALK THE GOOD BOY",
+   "xp": 85,
+   "phrase": "Köpeğim çok tatlı",
+   "intro": {
+    "name": "KAAN 📱",
+    "lines": [
+     "Bandit has been staring at the leash for an hour. An HOUR, Torii. 🐶",
+     "Take him to the park. Play. Be free. Watch out for the squirrel-chasing imps."
+    ]
+   },
+   "pickups": [],
+   "reward": {
+    "mm": 20,
+    "weapons": [
+     "balllauncher"
+    ],
+    "msg": "🐶 Bandit is SO happy! [b]+20 max mana[/b]"
+   },
+   "steps": [
+    {
+     "t": "goto",
+     "x": 20,
+     "z": -60,
+     "lab": "Walk Bandit to the park 🐶🌳"
+    },
+    {
+     "t": "zone",
+     "x": 20,
+     "z": -60,
+     "r": 9,
+     "dur": 8,
+     "lab": "Play in the park! 🎾 stay in the area"
+    },
+    {
+     "t": "kill",
+     "x": 20,
+     "z": -60,
+     "n": 5,
+     "mob": "imp",
+     "lab": "Chase off 5 park imps 👹",
+     "bn": "PARK INVADERS! 👹",
+     "mobs": [
+      {
+       "n": 5,
+       "x": [
+        20.0,
+        -9.0,
+        9.0
+       ],
+       "z": [
+        -60.0,
+        -9.0,
+        9.0
+       ],
+       "mob": "imp"
+      }
+     ]
+    },
+    {
+     "t": "return",
+     "x": -24,
+     "z": -12,
+     "lab": "Home time 🏠"
+    }
+   ]
+  },
+  {
+   "id": "cruze",
+   "unit": 5,
+   "title": "MISSION 6 · CAR WASH DAY",
+   "xp": 110,
+   "phrase": "Nasılsın?",
+   "intro": {
+    "name": "KAAN 📱",
+    "lines": [
+     "Babe... your 2017 Cruze. It hasn't been washed since 2017. 🚗💩",
+     "It's... moving on its own now. I think the filth achieved consciousness. Please handle it. With violence if needed."
+    ]
+   },
+   "pickups": [],
+   "reward": {
+    "weapons": [
+     "wiper"
+    ],
+    "msg": "🆕 [b]"
+   },
+   "steps": [
+    {
+     "t": "goto",
+     "x": -48,
+     "z": -2,
+     "lab": "Approach the Filthy Cruze 🚗💩"
+    },
+    {
+     "t": "boss",
+     "boss": "cruze",
+     "x": -48,
+     "z": -3,
+     "bn": "THE FILTHY CRUZE AWAKENS! 🚗💢",
+     "lab": "WASH IT! Fight with [F]!",
+     "phases": [
+      {
+       "at": 0.66,
+       "bn": "ÇAMUR BANYOSU · MUD BATH",
+       "sub": "It's flinging filth — dodge the purple shots!",
+       "ops": [
+        [
+         "caster"
+        ]
+       ]
+      },
+      {
+       "at": 0.33,
+       "bn": "OTOPİLOT · SELF-DRIVING",
+       "sub": "It charges! Step aside, then hit it while it's dazed",
+       "ops": [
+        [
+         "charger"
+        ],
+        [
+         "enrage",
+         1.15
+        ]
+       ]
+      }
+     ],
+     "after": [
+      "✨ SPARKLING CLEAN!"
+     ]
+    },
+    {
+     "t": "return",
+     "x": -24,
+     "z": -12,
+     "lab": "Tell Kaan the good news 🏠"
+    }
+   ]
+  },
+  {
+   "id": "plaj",
+   "unit": 6,
+   "title": "MISSION 7 · BEACH DAY",
+   "xp": 100,
+   "phrase": "Bir kokteyl lütfen",
+   "intro": {
+    "name": "KAAN 📱",
+    "lines": [
+     "You've earned a break. VIP sunbed, one cocktail, zero responsibilities. 🏖️",
+     "Practice ordering in Turkish: [i]Bir kokteyl lütfen![/i] And bring me back a seashell. Watch out for towel thieves."
+    ]
+   },
+   "pickups": [
+    {
+     "n": 1,
+     "x": [
+      121.0,
+      0,
+      0
+     ],
+     "z": [
+      8.0,
+      0,
+      0
+     ],
+     "item": "shell"
+    }
+   ],
+   "reward": {
+    "weapons": [
+     "parasol"
+    ],
+    "msg": "🆕 [b]"
+   },
+   "steps": [
+    {
+     "t": "goto",
+     "x": 120,
+     "z": 6,
+     "lab": "Ride to the VIP sunbed 🏖️"
+    },
+    {
+     "t": "zone",
+     "x": 120,
+     "z": 6,
+     "r": 6,
+     "dur": 6,
+     "dance": true,
+     "lab": "Sip a cocktail, soak it in 🍹💃"
+    },
+    {
+     "t": "kill",
+     "x": 118,
+     "z": 4,
+     "n": 4,
+     "mob": "thot",
+     "lab": "Fight off 4 towel thieves 💅",
+     "bn": "TOWEL THIEVES! 💅",
+     "mobs": [
+      {
+       "n": 4,
+       "x": [
+        118.0,
+        -8.0,
+        8.0
+       ],
+       "z": [
+        4.0,
+        -8.0,
+        8.0
+       ],
+       "mob": "thot"
+      }
+     ]
+    },
+    {
+     "t": "collect",
+     "x": 121,
+     "z": 8,
+     "item": "shell",
+     "n": 1,
+     "lab": "Souvenir: grab a seashell 🐚"
+    },
+    {
+     "t": "return",
+     "x": -24,
+     "z": -12,
+     "lab": "Back to Kaan 🏠"
+    }
+   ]
+  },
+  {
+   "id": "totes",
+   "unit": 7,
+   "title": "MISSION 8 · DAWN OF THE TOTES",
+   "xp": 130,
+   "phrase": "Çok erken!",
+   "intro": {
+    "name": "KAAN 📱",
+    "lines": [
+     "WAKE UP WAKE UP WAKE UP. It's 5 AM. Trader Joe's limited edition TOTE BAGS drop today. 👜",
+     "The line is already forming. Get in it. Defend your spot. This is the most dangerous mission yet."
+    ]
+   },
+   "pickups": [
+    {
+     "n": 1,
+     "x": [
+      -100.0,
+      0,
+      0
+     ],
+     "z": [
+      29.0,
+      0,
+      0
+     ],
+     "item": "tote"
+    }
+   ],
+   "reward": {
+    "weapons": [
+     "totemace"
+    ],
+    "msg": "🆕 [b]"
+   },
+   "start": {
+    "teach": [
+     "sabah",
+     "erken",
+     "sıra"
+    ],
+    "dawn": true
+   },
+   "steps": [
+    {
+     "t": "deliver",
+     "soft": true,
+     "to": [
+      -100,
+      26
+     ],
+     "bn": "5 AM · BEAT THE QUEUE",
+     "lab": "5 AM — beat the queue to Trader Joe's! ⏰",
+     "lateMsg": "The queue is already round the block",
+     "time": [
+      14.0,
+      7.5
+     ],
+     "fast": {
+      "xp": 60,
+      "msg": "⏰ [b]First in line![/b] [i]Sıradaki![/i] (Next!) — you're right at the front."
+     },
+     "late": {
+      "extra": 3,
+      "msg": "😤 [b]The queue is round the block.[/b] Three extra line cutters are coming for your spot."
+     }
+    },
+    {
+     "t": "zone",
+     "x": -100,
+     "z": 27,
+     "r": 7,
+     "dur": 10,
+     "lab": "Wait in line... patience 🧍🧍🧍"
+    },
+    {
+     "t": "kill",
+     "x": -100,
+     "z": 26,
+     "n": 6,
+     "mob": "thot",
+     "lab": "Stop 6 line cutters!! 😤",
+     "bn": "LINE CUTTERS!! 😤",
+     "mobs": [
+      {
+       "n": 6,
+       "x": [
+        -100.0,
+        -9.0,
+        9.0
+       ],
+       "z": [
+        24.0,
+        -4.0,
+        7.0
+       ],
+       "mob": "thot"
+      }
+     ]
+    },
+    {
+     "t": "collect",
+     "x": -100,
+     "z": 29,
+     "item": "tote",
+     "n": 1,
+     "lab": "Claim your tote bag 👜"
+    },
+    {
+     "t": "return",
+     "x": -24,
+     "z": -12,
+     "lab": "Victory lap home 🏠"
+    }
+   ]
+  },
+  {
+   "id": "anne",
+   "unit": 8,
+   "title": "MISSION 9 · STOCKTON: MOM'S HOUSE",
+   "xp": 140,
+   "phrase": "İyi geceler",
+   "intro": {
+    "name": "KAAN 📱",
+    "lines": [
+     "Your mom called. She made [i]börek[/i]. You HAVE to go. 🥟",
+     "But Torii... Josh is home. You know what that means. Aliens. Time travelers. Drones. Protect your sanity. I believe in you."
+    ]
+   },
+   "pickups": [
+    {
+     "n": 1,
+     "x": [
+      -44.0,
+      0,
+      0
+     ],
+     "z": [
+      -161.0,
+      0,
+      0
+     ],
+     "item": "borek"
+    }
+   ],
+   "reward": {
+    "mh": 15,
+    "weapons": [
+     "terlik"
+    ],
+    "msg": "🥟 Mom's börek! [b]+15 max HP[/b]"
+   },
+   "steps": [
+    {
+     "t": "goto",
+     "x": -40,
+     "z": -140,
+     "lab": "North gate to Stockton 🌉"
+    },
+    {
+     "t": "goto",
+     "x": -46,
+     "z": -162,
+     "lab": "Go to Mom's house 👩"
+    },
+    {
+     "t": "zone",
+     "x": -46,
+     "z": -162,
+     "r": 8,
+     "dur": 12,
+     "lab": "Chat with Mom · SURVIVE Josh 🙉"
+    },
+    {
+     "t": "collect",
+     "x": -44,
+     "z": -161,
+     "item": "borek",
+     "n": 1,
+     "lab": "Take the börek 🥟"
+    },
+    {
+     "t": "kill",
+     "x": -42,
+     "z": -155,
+     "n": 5,
+     "mob": "ghost",
+     "lab": "Josh's stories woke 5 ghosts 👻",
+     "bn": "THE STORIES WERE TRUE?! 👻",
+     "mobs": [
+      {
+       "n": 5,
+       "x": [
+        -42.0,
+        -8.0,
+        8.0
+       ],
+       "z": [
+        -155.0,
+        -6.0,
+        6.0
+       ],
+       "mob": "ghost"
+      }
+     ]
+    },
+    {
+     "t": "return",
+     "x": -24,
+     "z": -12,
+     "lab": "ESCAPE! Josh is still talking 🏃‍♀️"
+    }
+   ]
+  },
+  {
+   "id": "cam",
+   "unit": 9,
+   "title": "MISSION 10 · CAMEROON ROOTS",
+   "xp": 170,
+   "phrase": "Seni özledim",
+   "intro": {
+    "name": "KAAN 📱",
+    "lines": [
+     "Bebeğim... I booked you a flight. To [b]Cameroon[/b]. 🇨🇲",
+     "Where your dede — your grandpa — was from. Visit his memorial. Bring flowers. Take Bandit.",
+     "Turkish word: [i]dede[/i] = grandpa. He would be so proud of you. ❤"
+    ]
+   },
+   "pickups": [
+    {
+     "n": 5,
+     "x": [
+      584.0,
+      -4.0,
+      8.0
+     ],
+     "z": [
+      4.0,
+      -4.0,
+      8.0
+     ],
+     "item": "flower"
+    }
+   ],
+   "reward": {
+    "weapons": [
+     "mask",
+     "djembe"
+    ],
+    "teach": [
+     "dede",
+     "aile"
+    ],
+    "msg": "🥁 [b]DJEMBE[/b] unlocked! Dede's rhythm lives in you — big AOE swings [Q]"
+   },
+   "steps": [
+    {
+     "t": "goto",
+     "x": -10,
+     "z": 94,
+     "lab": "Ride to the airport gate ✈️"
+    },
+    {
+     "t": "travel",
+     "zone": "cam",
+     "x": -10,
+     "z": 94,
+     "lab": "Flight to Cameroon 🇨🇲"
+    },
+    {
+     "t": "goto",
+     "x": 586,
+     "z": 10,
+     "lab": "Find Dede's memorial 🕯️"
+    },
+    {
+     "t": "collect",
+     "x": 588,
+     "z": 6,
+     "item": "flower",
+     "n": 5,
+     "lab": "Gather 5 hibiscus flowers 🌺"
+    },
+    {
+     "t": "kill",
+     "x": 595,
+     "z": 0,
+     "n": 6,
+     "mob": "spirit",
+     "lab": "Calm 6 restless mask spirits 🎭",
+     "bn": "THE SPIRITS STIR 🎭",
+     "mobs": [
+      {
+       "n": 3,
+       "x": [
+        595.0,
+        -8.0,
+        8.0
+       ],
+       "z": [
+        0.0,
+        -6.0,
+        6.0
+       ],
+       "mob": "spirit"
+      }
+     ]
+    },
+    {
+     "t": "zone",
+     "x": 585,
+     "z": 10,
+     "r": 6,
+     "dur": 8,
+     "lab": "Sit with Dede awhile 🕯️❤"
+    },
+    {
+     "t": "travel",
+     "zone": "city",
+     "x": 628,
+     "z": 8,
+     "lab": "Fly home 🛬"
+    },
+    {
+     "t": "return",
+     "x": -24,
+     "z": -12,
+     "lab": "Tell Kaan everything 🏠"
+    }
+   ]
+  },
+  {
+   "id": "az",
+   "unit": 10,
+   "title": "MISSION 11 · ARIZONA SUN",
+   "xp": 180,
+   "phrase": "Burası çok güzel",
+   "intro": {
+    "name": "KAAN 📱",
+    "lines": [
+     "Next flight: [b]Arizona[/b]. Grandma's been asking about you. 🌵",
+     "[i]Büyükanne[/i] = grandma. Hug her. Pick her some cactus fruit. And uh... the desert has scorpions. Big ones. Sorry."
+    ]
+   },
+   "pickups": [
+    {
+     "n": 4,
+     "x": [
+      608.0,
+      -8.0,
+      8.0
+     ],
+     "z": [
+      300.0,
+      -8.0,
+      8.0
+     ],
+     "item": "fruit"
+    }
+   ],
+   "reward": {
+    "weapons": [
+     "rattle",
+     "cactus"
+    ],
+    "teach": [
+     "büyükanne"
+    ],
+    "msg": "🌵 [b]SAGUARO FIST[/b] unlocked! Grandma knitted it. Somehow. Heaviest weapon in the game [Q]"
+   },
+   "steps": [
+    {
+     "t": "goto",
+     "x": -10,
+     "z": 94,
+     "lab": "Back to the airport ✈️"
+    },
+    {
+     "t": "travel",
+     "zone": "az",
+     "x": -10,
+     "z": 94,
+     "lab": "Flight to Arizona 🌵"
+    },
+    {
+     "t": "goto",
+     "x": 600,
+     "z": 288,
+     "lab": "Walk to Grandma's house 👵"
+    },
+    {
+     "t": "zone",
+     "x": 599,
+     "z": 288,
+     "r": 5,
+     "dur": 6,
+     "lab": "Hug büyükanne 🤗 (stay close)"
+    },
+    {
+     "t": "collect",
+     "x": 610,
+     "z": 300,
+     "item": "fruit",
+     "n": 4,
+     "lab": "Pick 4 cactus fruits 🌵"
+    },
+    {
+     "t": "kill",
+     "x": 600,
+     "z": 305,
+     "n": 8,
+     "mob": "scorpion",
+     "lab": "Squash 8 scorpions 🦂",
+     "bn": "SCORPION SWARM! 🦂",
+     "mobs": [
+      {
+       "n": 4,
+       "x": [
+        600.0,
+        -12.0,
+        12.0
+       ],
+       "z": [
+        305.0,
+        -10.0,
+        10.0
+       ],
+       "mob": "scorpion"
+      }
+     ]
+    },
+    {
+     "t": "travel",
+     "zone": "city",
+     "x": 628,
+     "z": 308,
+     "lab": "Fly home 🛬"
+    },
+    {
+     "t": "return",
+     "x": -24,
+     "z": -12,
+     "lab": "Home to Kaan 🏠"
+    }
+   ]
+  },
+  {
+   "id": "liv",
+   "unit": 11,
+   "title": "MISSION 12 · HOMETOWN: LIVERMORE",
+   "xp": 190,
+   "phrase": "Türkçe öğreniyorum",
+   "intro": {
+    "name": "KAAN 📱",
+    "lines": [
+     "One more flight, bebeğim. [b]Livermore[/b]. Where you grew up. 🍇",
+     "Your old house is still there. The vineyards too. Find your old photos... I'll be here when the memories get heavy. ❤"
+    ]
+   },
+   "pickups": [
+    {
+     "n": 3,
+     "x": [
+      600.0,
+      -4.0,
+      4.0
+     ],
+     "z": [
+      -279.0,
+      -2.0,
+      4.0
+     ],
+     "item": "photo"
+    }
+   ],
+   "reward": {
+    "mh": 25,
+    "weapons": [
+     "machete"
+    ],
+    "teach": [
+     "memleket",
+     "çocukluk",
+     "anı"
+    ],
+    "msg": "🏡 Hometown heart: [b]+25 max HP[/b]. You can't go home again — but you can visit."
+   },
+   "steps": [
+    {
+     "t": "goto",
+     "x": -10,
+     "z": 94,
+     "lab": "Airport — one last flight ✈️"
+    },
+    {
+     "t": "travel",
+     "zone": "liv",
+     "x": -10,
+     "z": 94,
+     "lab": "Flight to Livermore 🍇"
+    },
+    {
+     "t": "goto",
+     "x": 600,
+     "z": -281,
+     "lab": "Walk to your old house 🏡"
+    },
+    {
+     "t": "collect",
+     "x": 600,
+     "z": -279,
+     "item": "photo",
+     "n": 3,
+     "lab": "Find 3 childhood photos 📷"
+    },
+    {
+     "t": "zone",
+     "x": 600,
+     "z": -281,
+     "r": 6,
+     "dur": 8,
+     "lab": "Sit with the memories 💭"
+    },
+    {
+     "t": "kill",
+     "x": 600,
+     "z": -300,
+     "n": 6,
+     "mob": "wisp",
+     "lab": "Release 6 memory wisps 💫",
+     "bn": "THE PAST LINGERS 💫",
+     "mobs": [
+      {
+       "n": 3,
+       "x": [
+        600.0,
+        -10.0,
+        10.0
+       ],
+       "z": [
+        -300.0,
+        -8.0,
+        8.0
+       ],
+       "mob": "wisp"
+      }
+     ]
+    },
+    {
+     "t": "travel",
+     "zone": "city",
+     "x": 628,
+     "z": -292,
+     "lab": "Fly home 🛬"
+    },
+    {
+     "t": "return",
+     "x": -24,
+     "z": -12,
+     "lab": "Home is where Kaan is 🏠❤"
+    }
+   ]
+  },
+  {
+   "id": "karen",
+   "unit": 12,
+   "title": "FINALE · THE HELLSPACE RECKONING",
+   "xp": 250,
+   "phrase": "Seni seviyorum",
+   "intro": {
+    "name": "KAAN 📱",
+    "lines": [
+     "It's time, Torii. [b]Hellspace Wealth[/b]. Your old job. Your old boss. 🏢",
+     "CEO Karen has been terrorizing this city long enough. Every unpaid overtime hour, every \"per my last email\"...",
+     "Go collect your severance. I love you. [i]Seni seviyorum.[/i] ❤ Now go end her."
+    ]
+   },
+   "pickups": [],
+   "reward": {
+    "weapons": [
+     "stapler",
+     "bills",
+     "keyboard"
+    ],
+    "msg": "💵 [b]BILL BOX[/b] + ⌨️ [b]KEYBOARD[/b]! Your severance package.\n"
+   },
+   "steps": [
+    {
+     "t": "goto",
+     "x": -100,
+     "z": -92,
+     "lab": "March to Hellspace Wealth 🏢"
+    },
+    {
+     "t": "boss",
+     "boss": "karen",
+     "x": -100,
+     "z": -90,
+     "bn": "CEO KAREN 👩‍💼🔥",
+     "lab": "FINAL BOSS! Years of overtime... PAYBACK TIME! [F]",
+     "phases": [
+      {
+       "at": 0.66,
+       "bn": "PERFORMANCE REVIEW",
+       "sub": "She's throwing staplers and calling in Accounting — dodge the purple!",
+       "ops": [
+        [
+         "caster"
+        ],
+        [
+         "summon",
+         "zombie",
+         2.0
+        ]
+       ]
+      },
+      {
+       "at": 0.33,
+       "bn": "MANDATORY OVERTIME",
+       "sub": "\"CAN I SPEAK TO YOUR MANAGER\" — she charges now. Sidestep, then punish",
+       "ops": [
+        [
+         "charger"
+        ],
+        [
+         "enrage",
+         1.2
+        ]
+       ]
+      }
+     ]
+    },
+    {
+     "t": "return",
+     "x": -24,
+     "z": -12,
+     "lab": "Go home to Kaan — you're free 🕊️"
+    }
+   ]
+  },
+  {
+   "id": "gods",
+   "unit": 12,
+   "title": "EPILOGUE · THE TRICKSTER GODS",
+   "xp": 300,
+   "phrase": "Şans",
+   "intro": {
+    "name": "KAAN 📱",
+    "lines": [
+     "Bebeğim... something strange is happening in the city. 🪙",
+     "Three shrines appeared overnight. People say the [b]Trickster Gods[/b] came back — [b]Yazı[/b] (heads), [b]Tura[/b] (tails), and their mother [b]Kader[/b] (Fate).",
+     "They only speak to people who have proven themselves. That's you now. Go win their coin games — but bring lira, they never play for free. 🎲"
+    ]
+   },
+   "pickups": [],
+   "reward": {
+    "lira": 300,
+    "mm": 30,
+    "weapons": [
+     "loadeddice",
+     "zeybek"
+    ],
+    "msg": "⚔️ [b]ZEYBEK SWORD[/b] + 300₺ + 30 max mana!\n"
+   },
+   "steps": [
+    {
+     "t": "goto",
+     "x": -70,
+     "z": 28,
+     "lab": "Find the shrine of YAZI 🪙"
+    },
+    {
+     "t": "god",
+     "id": "yazi",
+     "x": -70,
+     "z": 28,
+     "lab": "Beat YAZI at heads-or-tails 🪙 [E]"
+    },
+    {
+     "t": "goto",
+     "x": 34,
+     "z": -104,
+     "lab": "Find the shrine of TURA 🎲"
+    },
+    {
+     "t": "kill",
+     "x": 34,
+     "z": -104,
+     "n": 6,
+     "mob": "witch",
+     "lab": "Tura sent 6 witches to test you 🧙‍♀️",
+     "bn": "TURA'S WITCHES! 🧙‍♀️",
+     "mobs": [
+      {
+       "n": 3,
+       "x": [
+        34.0,
+        -10.0,
+        10.0
+       ],
+       "z": [
+        -104.0,
+        -10.0,
+        10.0
+       ],
+       "mob": "witch"
+      }
+     ]
+    },
+    {
+     "t": "god",
+     "id": "tura",
+     "x": 34,
+     "z": -104,
+     "lab": "Beat TURA at heads-or-tails 🎲 [E]"
+    },
+    {
+     "t": "goto",
+     "x": -108,
+     "z": -26,
+     "lab": "Find KADER, Mother of Fate 🔮"
+    },
+    {
+     "t": "god",
+     "id": "kader",
+     "x": -108,
+     "z": -26,
+     "lab": "Beat FATE herself 🔮 [E]"
+    },
+    {
+     "t": "return",
+     "x": -24,
+     "z": -12,
+     "lab": "Tell Kaan you out-gambled the gods 🏠"
+    }
+   ]
+  },
+  {
+   "id": "bazaar",
+   "unit": 13,
+   "title": "MISSION 15 · THE GRAND BAZAAR",
+   "xp": 200,
+   "phrase": "Çok pahalı!",
+   "intro": {
+    "name": "KAAN 📱",
+    "lines": [
+     "The [b]Kapalı Çarşı[/b] opened in the west district. Real Turkish haggling. 🧿",
+     "This is your final exam in numbers and prices, bebeğim: [i]Kaç para?[/i] = how much? · [i]Çok pahalı![/i] = too expensive!",
+     "Bring me a nazar bead. And do NOT accept the first price. Ever."
+    ]
+   },
+   "pickups": [
+    {
+     "n": 1,
+     "x": [
+      -142.0,
+      0,
+      0
+     ],
+     "z": [
+      62.0,
+      0,
+      0
+     ],
+     "item": "nazar"
+    }
+   ],
+   "reward": {
+    "lira": 200,
+    "weapons": [
+     "kilim"
+    ],
+    "teach": [
+     "pazarlık"
+    ],
+    "msg": "🧿 The bazaar respects you now. [b]+200₺[/b] · [i]pazarlık[/i] = haggling"
+   },
+   "steps": [
+    {
+     "t": "goto",
+     "x": -140,
+     "z": 56,
+     "lab": "Ride west to the Grand Bazaar 🧿"
+    },
+    {
+     "t": "zone",
+     "x": -140,
+     "z": 58,
+     "r": 10,
+     "dur": 9,
+     "lab": "Haggle with the traders 💬 (stay in the market)"
+    },
+    {
+     "t": "choice",
+     "x": -140,
+     "z": 58,
+     "who": "HALICI AHMET 🧶",
+     "whoShort": "the trader",
+     "lab": "Haggle for the nazar bead — in Turkish 💬",
+     "q": "\"Bu nazar boncuğu... sana özel, [b]500 lira[/b]!\" [i](This nazar bead — special price, just for you: 500 lira!)[/i] What do you say?",
+     "hint": "Kaan said: NEVER accept the first price.",
+     "opts": [
+      {
+       "t": "Çok pahalı! 100 lira olur mu?",
+       "en": "Too expensive! Would 100 lira do?",
+       "ok": true,
+       "r": "Ahh, pazarlık biliyorsun! 150 olsun, anlaştık! 🤝 [i](Ah, you know how to haggle! Let's say 150 — deal!)[/i]"
+      },
+      {
+       "t": "Tamam, 500 lira.",
+       "en": "Okay, 500 lira.",
+       "r": "*his eyes light up* ...Kaan would be SO disappointed in you. 😅"
+      },
+      {
+       "t": "Bir kokteyl lütfen.",
+       "en": "One cocktail, please.",
+       "r": "This is a bazaar, canım, not a beach bar! 🍹"
+      },
+      {
+       "t": "Nerede?",
+       "en": "Where is it?",
+       "r": "It is... right here. In my hand. 🧿"
+      }
+     ]
+    },
+    {
+     "t": "kill",
+     "x": -140,
+     "z": 60,
+     "n": 6,
+     "mob": "thot",
+     "lab": "Chase off 6 pickpockets 💅",
+     "bn": "PICKPOCKETS! 💅",
+     "mobs": [
+      {
+       "n": 6,
+       "x": [
+        -140.0,
+        -12.0,
+        12.0
+       ],
+       "z": [
+        58.0,
+        -10.0,
+        10.0
+       ],
+       "mob": "thot"
+      }
+     ]
+    },
+    {
+     "t": "collect",
+     "x": -142,
+     "z": 62,
+     "item": "nazar",
+     "n": 1,
+     "lab": "Buy a nazar bead 🧿"
+    },
+    {
+     "t": "return",
+     "x": -24,
+     "z": -12,
+     "lab": "Take it home to Kaan 🏠"
+    }
+   ]
+  },
+  {
+   "id": "marina",
+   "unit": 13,
+   "title": "MISSION 16 · MARINA SUNSET",
+   "xp": 210,
+   "phrase": "Burası çok güzel",
+   "intro": {
+    "name": "KAAN 📱",
+    "lines": [
+     "Meet me at the [b]Marina[/b], southwest past Tower Bridge. ⚓",
+     "I want you to see the boats at night. [i]Deniz[/i], [i]gemi[/i], [i]köprü[/i] — sea, ship, bridge.",
+     "Careful though. Something has been coming out of the water down there. 👻"
+    ]
+   },
+   "pickups": [],
+   "reward": {
+    "mh": 20,
+    "weapons": [
+     "oar"
+    ],
+    "teach": [
+     "gemi",
+     "köprü"
+    ],
+    "msg": "⚓ Sea air is good for the soul. [b]+20 max HP[/b]"
+   },
+   "steps": [
+    {
+     "t": "goto",
+     "x": -126,
+     "z": 0,
+     "lab": "Cross Tower Bridge 🌉"
+    },
+    {
+     "t": "goto",
+     "x": -182,
+     "z": 96,
+     "lab": "Ride down to the Marina ⚓"
+    },
+    {
+     "t": "photo",
+     "n": 3,
+     "mob": "ghost",
+     "x": -182,
+     "z": 100,
+     "range": 45,
+     "bn": "KANITLA! · GET PROOF",
+     "lab": "Kaan won't believe you — photograph 3 harbour ghosts 👻📸",
+     "done": "Kaan: \"OKAY. I BELIEVE YOU.\" 😱"
+    },
+    {
+     "t": "kill",
+     "x": -182,
+     "z": 100,
+     "n": 7,
+     "mob": "ghost",
+     "lab": "Banish 7 harbour ghosts 👻",
+     "bn": "HARBOUR GHOSTS! 👻",
+     "mobs": [
+      {
+       "n": 7,
+       "x": [
+        -182.0,
+        -12.0,
+        12.0
+       ],
+       "z": [
+        100.0,
+        -12.0,
+        12.0
+       ],
+       "mob": "ghost"
+      }
+     ]
+    },
+    {
+     "t": "zone",
+     "x": -184,
+     "z": 100,
+     "r": 8,
+     "dur": 8,
+     "dance": true,
+     "lab": "Watch the boats with Bandit ⛵❤"
+    },
+    {
+     "t": "return",
+     "x": -24,
+     "z": -12,
+     "lab": "Home to Kaan 🏠"
+    }
+   ]
+  },
+  {
+   "id": "arena",
+   "unit": 14,
+   "title": "MISSION 17 · THE ZEYBEK TOURNAMENT",
+   "xp": 260,
+   "phrase": "Hadi bakalım!",
+   "intro": {
+    "name": "KAAN 📱",
+    "lines": [
+     "The [b]Zeybek Arena[/b] in the northwest is holding an open tournament. ⚔️",
+     "Three rounds. No running. The [i]zeybek[/i] are the warrior-dancers of the Aegean — and you dance AND fight.",
+     "Win it, bebeğim. I'll be screaming your name from the stands. 🗣️"
+    ]
+   },
+   "pickups": [],
+   "reward": {
+    "mm": 25,
+    "weapons": [
+     "efedagger"
+    ],
+    "msg": "🏆 CHAMPION! [b]+25 max mana[/b] · Battle Cry cooldown 60s → 40s"
+   },
+   "steps": [
+    {
+     "t": "goto",
+     "x": -180,
+     "z": -20,
+     "lab": "Enter the Zeybek Arena ⚔️"
+    },
+    {
+     "t": "kill",
+     "x": -180,
+     "z": -20,
+     "n": 8,
+     "mob": "skeleton",
+     "lab": "ROUND 1 — 8 skeleton archers 💀",
+     "bn": "ROUND 1! 💀",
+     "mobs": [
+      {
+       "n": 5,
+       "x": [
+        -180.0,
+        -11.0,
+        11.0
+       ],
+       "z": [
+        -20.0,
+        -11.0,
+        11.0
+       ],
+       "mob": "skeleton"
+      }
+     ]
+    },
+    {
+     "t": "kill",
+     "x": -180,
+     "z": -20,
+     "n": 6,
+     "mob": "mummy",
+     "lab": "ROUND 2 — 6 mummies 🧟",
+     "bn": "ROUND 2! 🧟",
+     "mobs": [
+      {
+       "n": 4,
+       "x": [
+        -180.0,
+        -11.0,
+        11.0
+       ],
+       "z": [
+        -20.0,
+        -11.0,
+        11.0
+       ],
+       "mob": "mummy"
+      }
+     ]
+    },
+    {
+     "t": "boss",
+     "boss": "karen",
+     "x": -180,
+     "z": -24,
+     "bn": "FINAL ROUND · SHE CAME BACK 👩‍💼🔥",
+     "lab": "ROUND 3 — Karen entered the tournament?! [F]",
+     "phases": [
+      {
+       "at": 0.5,
+       "bn": "SHE READ THE RULEBOOK",
+       "sub": "Staplers AND charging. Stay moving",
+       "ops": [
+        [
+         "caster"
+        ],
+        [
+         "charger"
+        ],
+        [
+         "enrage",
+         1.15
+        ]
+       ]
+      }
+     ]
+    },
+    {
+     "t": "zone",
+     "x": -180,
+     "z": -20,
+     "r": 7,
+     "dur": 5,
+     "dance": true,
+     "lab": "Victory dance in the arena 💃🏆"
+    },
+    {
+     "t": "return",
+     "x": -24,
+     "z": -12,
+     "lab": "Bring the trophy home 🏆"
+    }
+   ]
+  },
+  {
+   "id": "djset",
+   "unit": 14,
+   "title": "MISSION 18 · HEADLINE SET AT CLUB HOLO",
+   "xp": 230,
+   "phrase": "Müzik",
+   "intro": {
+    "name": "DJ COOL CAT 🐱",
+    "lines": [
+     "Miyav. Listen. 🐱 The Diskotek King wants YOU on the decks Saturday.",
+     "Headline set. Club Holo. Your name in neon. [i]Sen bir yıldızsın[/i] — you are a star.",
+     "Bring your bass. And warm the crowd up first — this city dances or it dies. 🎧"
+    ]
+   },
+   "pickups": [],
+   "reward": {
+    "lira": 250,
+    "weapons": [
+     "turntable"
+    ],
+    "teach": [
+     "yıldız"
+    ],
+    "msg": "🎧 The city knows your name. [b]+250₺[/b] · Dance Blast cooldown 8s → 6s · [i]yıldız[/i] = star"
+   },
+   "steps": [
+    {
+     "t": "goto",
+     "x": 101,
+     "z": -24,
+     "lab": "Get to the DJ booth at Club Holo 🎧"
+    },
+    {
+     "t": "zone",
+     "x": 101,
+     "z": -24,
+     "r": 7,
+     "dur": 10,
+     "dance": true,
+     "lab": "PLAY YOUR SET 🎧💃 (stay on the decks)"
+    },
+    {
+     "t": "kill",
+     "x": 99,
+     "z": -24,
+     "n": 8,
+     "mob": null,
+     "lab": "Bounce 8 troublemakers off the floor 🕺",
+     "bn": "CLUB INVASION! 🕺",
+     "mobs": [
+      {
+       "n": 4,
+       "x": [
+        99.0,
+        -10.0,
+        10.0
+       ],
+       "z": [
+        -24.0,
+        -12.0,
+        12.0
+       ],
+       "pool": [
+        "thot",
+        "imp",
+        "witch"
+       ]
+      }
+     ]
+    },
+    {
+     "t": "zone",
+     "x": 101,
+     "z": -24,
+     "r": 7,
+     "dur": 6,
+     "dance": true,
+     "lab": "ENCORE! 🎉"
+    },
+    {
+     "t": "return",
+     "x": -24,
+     "z": -12,
+     "lab": "Kaan waited up for you ❤"
+    }
+   ]
+  },
+  {
+   "id": "bday",
+   "unit": 15,
+   "title": "MISSION 19 · KAAN'S BIRTHDAY",
+   "xp": 240,
+   "phrase": "Seni seviyorum",
+   "intro": {
+    "name": "BANDIT 🐶",
+    "lines": [
+     "*Bandit drops a chewed calendar at your feet* 🐶",
+     "*It is circled in red. It is Kaan's birthday. TODAY.*",
+     "*He has been planning your missions all year and never once mentioned it.* 🎂",
+     "*Bandit looks at you. You look at Bandit. You both know what to do.*"
+    ]
+   },
+   "pickups": [
+    {
+     "n": 1,
+     "x": [
+      -140.0,
+      0,
+      0
+     ],
+     "z": [
+      58.0,
+      0,
+      0
+     ],
+     "item": "baklava"
+    },
+    {
+     "n": 1,
+     "x": [
+      20.0,
+      0,
+      0
+     ],
+     "z": [
+      26.0,
+      0,
+      0
+     ],
+     "item": "cay"
+    },
+    {
+     "n": 3,
+     "x": [
+      -20.0,
+      -3.0,
+      3.0
+     ],
+     "z": [
+      64.0,
+      -2.0,
+      3.0
+     ],
+     "item": "flower"
+    }
+   ],
+   "reward": {
+    "mh": 30,
+    "mm": 25,
+    "weapons": [
+     "candle"
+    ],
+    "teach": [
+     "doğum günü"
+    ],
+    "msg": "🎂 [b]\"İyi ki doğdun Kaan!\"[/b] (Happy birthday!) He cried a little. [b]+30 HP, +25 mana[/b]"
+   },
+   "steps": [
+    {
+     "t": "goto",
+     "x": -140,
+     "z": 56,
+     "lab": "Gift 1: baklava from the Bazaar 🍯"
+    },
+    {
+     "t": "collect",
+     "x": -140,
+     "z": 58,
+     "item": "baklava",
+     "n": 1,
+     "lab": "Get the baklava 🍯"
+    },
+    {
+     "t": "goto",
+     "x": 20,
+     "z": 24,
+     "lab": "Gift 2: Türk kahvesi from Five Sips ☕"
+    },
+    {
+     "t": "collect",
+     "x": 20,
+     "z": 26,
+     "item": "cay",
+     "n": 1,
+     "lab": "Get the coffee ☕"
+    },
+    {
+     "t": "goto",
+     "x": -20,
+     "z": 62,
+     "lab": "Gift 3: flowers from LowBrau — where you met 💐"
+    },
+    {
+     "t": "collect",
+     "x": -20,
+     "z": 64,
+     "item": "flower",
+     "n": 3,
+     "lab": "Pick 3 flowers 💐"
+    },
+    {
+     "t": "kill",
+     "x": -20,
+     "z": 62,
+     "n": 6,
+     "mob": null,
+     "lab": "Nobody ruins this day. Clear 6 mobs 😤",
+     "bn": "NOT TODAY! 😤",
+     "mobs": [
+      {
+       "n": 5,
+       "x": [
+        -20.0,
+        -12.0,
+        12.0
+       ],
+       "z": [
+        62.0,
+        -12.0,
+        12.0
+       ],
+       "pool": [
+        "imp",
+        "zombie",
+        "thot",
+        "ghost"
+       ]
+      }
+     ]
+    },
+    {
+     "t": "deliver",
+     "soft": true,
+     "fragile": true,
+     "to": [
+      -24,
+      -12
+     ],
+     "bn": "HEDİYELER · THE GIFTS",
+     "lab": "SURPRISE HIM 🎂❤ — get the gifts home without crashing",
+     "brokeMsg": "Oh no — the baklava got squished!",
+     "lateMsg": "He's getting suspicious",
+     "time": [
+      25.0,
+      6.0
+     ],
+     "fast": {
+      "xp": 80,
+      "msg": "🎁 [b]Kusursuz![/b] [i](Flawless!)[/i] Not a crumb out of place."
+     },
+     "late": {}
+    }
+   ]
+  },
+  {
+   "id": "kismet",
+   "unit": 16,
+   "title": "GRAND FINALE · THE ANTALYA TICKET",
+   "xp": 400,
+   "phrase": "Kader",
+   "intro": {
+    "name": "KAAN 📱",
+    "lines": [
+     "Torii. Come to the airport. Don't ask questions. ✈️",
+     "You learned a whole language. You beat your old boss, out-gambled Fate herself, and never once quit.",
+     "I bought two tickets. [b]Real Antalya.[/b] The actual one, with the actual sea. 🌴",
+     "But the city heard. Everything you ever beat is between you and that gate. [i]Kader[/i] — this is fate. Come home to me first."
+    ]
+   },
+   "pickups": [],
+   "reward": {
+    "lira": 1000,
+    "mh": 50,
+    "mm": 50,
+    "weapons": [
+     "sunblade",
+     "zeybek"
+    ],
+    "teach": [
+     "rüya",
+     "kader"
+    ],
+    "msg": "🌟 [b]YOU FINISHED TORİİ: NEO ANTALYA.[/b]\nShe learned a language, beat a city, and got her dream. [i]Rüya[/i] = dream. ❤"
+   },
+   "steps": [
+    {
+     "t": "goto",
+     "x": -24,
+     "z": -12,
+     "lab": "Meet Kaan at the apartment 🏠"
+    },
+    {
+     "t": "kill",
+     "x": -24,
+     "z": -16,
+     "n": 10,
+     "mob": null,
+     "lab": "They came for you. All of them. Clear 10 ⚔️",
+     "bn": "THE CITY FIGHTS BACK ⚔️",
+     "mobs": [
+      {
+       "mob": "imp",
+       "n": 1,
+       "x": [
+        -24,
+        -14,
+        14
+       ],
+       "z": [
+        -14,
+        -12,
+        12
+       ],
+       "elite": 0.3
+      },
+      {
+       "mob": "zombie",
+       "n": 1,
+       "x": [
+        -24,
+        -14,
+        14
+       ],
+       "z": [
+        -14,
+        -12,
+        12
+       ],
+       "elite": 0.3
+      },
+      {
+       "mob": "thot",
+       "n": 1,
+       "x": [
+        -24,
+        -14,
+        14
+       ],
+       "z": [
+        -14,
+        -12,
+        12
+       ],
+       "elite": 0.3
+      },
+      {
+       "mob": "ghost",
+       "n": 1,
+       "x": [
+        -24,
+        -14,
+        14
+       ],
+       "z": [
+        -14,
+        -12,
+        12
+       ],
+       "elite": 0.3
+      },
+      {
+       "mob": "witch",
+       "n": 1,
+       "x": [
+        -24,
+        -14,
+        14
+       ],
+       "z": [
+        -14,
+        -12,
+        12
+       ],
+       "elite": 0.3
+      },
+      {
+       "mob": "skeleton",
+       "n": 1,
+       "x": [
+        -24,
+        -14,
+        14
+       ],
+       "z": [
+        -14,
+        -12,
+        12
+       ],
+       "elite": 0.3
+      },
+      {
+       "mob": "mummy",
+       "n": 1,
+       "x": [
+        -24,
+        -14,
+        14
+       ],
+       "z": [
+        -14,
+        -12,
+        12
+       ],
+       "elite": 0.3
+      }
+     ]
+    },
+    {
+     "t": "boss",
+     "boss": "driver",
+     "x": -40,
+     "z": -10,
+     "bn": "ONE LAST TERRIBLE DRIVER 🚗💢",
+     "lab": "It followed you home. End it. [F]",
+     "phases": [
+      {
+       "at": 0.6,
+       "bn": "ROAD RAGE",
+       "sub": "It's coming straight for you — dive aside!",
+       "ops": [
+        [
+         "charger"
+        ],
+        [
+         "enrage",
+         1.15
+        ]
+       ]
+      },
+      {
+       "at": 0.3,
+       "bn": "STUDENT DRIVERS",
+       "sub": "It called its friends from driving school",
+       "ops": [
+        [
+         "summon",
+         "imp",
+         3.0
+        ]
+       ]
+      }
+     ]
+    },
+    {
+     "t": "goto",
+     "x": -10,
+     "z": 94,
+     "lab": "Ride to the airport with Bandit ✈️"
+    },
+    {
+     "t": "zone",
+     "x": -10,
+     "z": 94,
+     "r": 7,
+     "dur": 8,
+     "dance": true,
+     "lab": "Kaan is holding the tickets 🎟️❤"
+    },
+    {
+     "t": "travel",
+     "zone": "cam",
+     "x": -10,
+     "z": 94,
+     "lab": "Board the plane 🛫"
+    },
+    {
+     "t": "zone",
+     "x": 622,
+     "z": 0,
+     "r": 60,
+     "dur": 4,
+     "dance": true,
+     "lab": "✈️ ..."
+    },
+    {
+     "t": "travel",
+     "zone": "city",
+     "x": 622,
+     "z": 0,
+     "lab": "Land somewhere new 🛬"
+    },
+    {
+     "t": "return",
+     "x": -24,
+     "z": -12,
+     "lab": "Her dream, finally 🌴❤"
+    }
+   ]
+  }
+ ],
+ "gates": [
+  {
+   "n": 5,
+   "type": "imp"
+  },
+  {
+   "n": 8,
+   "type": "zombie"
+  },
+  {
+   "n": 12,
+   "type": "thot"
+  },
+  {
+   "n": 14,
+   "type": null
+  },
+  {
+   "n": 16,
+   "type": "ghost"
+  },
+  {
+   "n": 18,
+   "type": null
+  },
+  {
+   "n": 20,
+   "type": "imp"
+  },
+  {
+   "n": 24,
+   "type": null,
+   "elite": 1
+  },
+  {
+   "n": 28,
+   "type": "thot"
+  },
+  {
+   "n": 30,
+   "type": null,
+   "elite": 2
+  },
+  {
+   "n": 34,
+   "type": "ghost"
+  },
+  {
+   "n": 40,
+   "type": null,
+   "elite": 3
+  }
+ ],
+ "zspawn": {
+  "city": {
+   "x": -10,
+   "z": 92
+  },
+  "cam": {
+   "x": 622,
+   "z": 0
+  },
+  "az": {
+   "x": 622,
+   "z": 300
+  },
+  "liv": {
+   "x": 622,
+   "z": -300
+  }
+ },
+ "zname": {
+  "cam": "CAMEROON 🇨🇲 — Dede's homeland",
+  "az": "ARIZONA 🌵 — Grandma's desert",
+  "liv": "LIVERMORE 🍇 — the hometown"
+ },
+ "weapons": {
+  "kick": {
+   "n": "Kick 🦵",
+   "dmg": 9,
+   "cd": 0.5,
+   "rng": 2,
+   "arc": 1,
+   "snd": "thud",
+   "dur": null,
+   "rar": "Unarmed",
+   "w": 0
+  },
+  "oklava": {
+   "n": "Rolling Pin 🥖",
+   "dmg": 16,
+   "cd": 0.3,
+   "rng": 2.4,
+   "arc": 1,
+   "snd": "thud",
+   "dur": 34,
+   "rar": "Common",
+   "w": 26
+  },
+  "syringe": {
+   "n": "Syringe 💉",
+   "dmg": 13,
+   "cd": 0.22,
+   "rng": 2.1,
+   "arc": 0.9,
+   "snd": "stab",
+   "dur": 40,
+   "rar": "Common",
+   "w": 26
+  },
+  "katana": {
+   "n": "Katana 🗡",
+   "dmg": 26,
+   "cd": 0.45,
+   "rng": 2.6,
+   "arc": 1.1,
+   "snd": "whoosh",
+   "dur": 46,
+   "rar": "Uncommon",
+   "w": 15
+  },
+  "tepsi": {
+   "n": "Tea Tray ☕",
+   "dmg": 24,
+   "cd": 0.5,
+   "rng": 3,
+   "arc": 2.2,
+   "snd": "clack",
+   "dur": 36,
+   "rar": "Uncommon",
+   "w": 15
+  },
+  "sis": {
+   "n": "Kebab Skewer 🍢",
+   "dmg": 34,
+   "cd": 0.4,
+   "rng": 2.9,
+   "arc": 1,
+   "snd": "stab",
+   "dur": 38,
+   "rar": "Rare",
+   "w": 7
+  },
+  "keyboard": {
+   "n": "Keyboard ⌨️",
+   "dmg": 38,
+   "cd": 0.55,
+   "rng": 2.8,
+   "arc": 1.25,
+   "snd": "clack",
+   "dur": 28,
+   "rar": "Rare",
+   "w": 7
+  },
+  "balta": {
+   "n": "Woodsman Axe 🪓",
+   "dmg": 52,
+   "cd": 0.95,
+   "rng": 2.7,
+   "arc": 1.3,
+   "snd": "thud",
+   "dur": 30,
+   "rar": "Rare",
+   "w": 6
+  },
+  "bass": {
+   "n": "Bass Guitar 🎸",
+   "dmg": 42,
+   "cd": 0.85,
+   "rng": 3.4,
+   "arc": 2.6,
+   "snd": "bassHit",
+   "dur": 44,
+   "rar": "Epic",
+   "w": 3
+  },
+  "djembe": {
+   "n": "Djembe 🥁",
+   "dmg": 55,
+   "cd": 0.9,
+   "rng": 3.6,
+   "arc": 2.8,
+   "snd": "drum",
+   "dur": 34,
+   "rar": "Epic",
+   "w": 3
+  },
+  "cactus": {
+   "n": "Saguaro Fist 🌵",
+   "dmg": 68,
+   "cd": 1.1,
+   "rng": 2.4,
+   "arc": 1.2,
+   "snd": "thud",
+   "dur": 26,
+   "rar": "Epic",
+   "w": 2
+  },
+  "zeybek": {
+   "n": "Zeybek Sword ⚔️",
+   "dmg": 88,
+   "cd": 0.75,
+   "rng": 3.2,
+   "arc": 1.5,
+   "snd": "whoosh",
+   "dur": 22,
+   "rar": "LEGENDARY",
+   "w": 1
+  },
+  "bills": {
+   "n": "Bill Box 💵",
+   "dmg": 45,
+   "cd": 0.7,
+   "rng": 0,
+   "arc": 0,
+   "snd": "cash",
+   "dur": 55,
+   "rar": "Rare",
+   "ranged": true,
+   "w": 5
+  },
+  "nazarw": {
+   "n": "Nazar Sling 🧿",
+   "dmg": 62,
+   "cd": 0.5,
+   "rng": 0,
+   "arc": 0,
+   "snd": "sting",
+   "dur": 42,
+   "rar": "Epic",
+   "ranged": true,
+   "w": 2
+  },
+  "joshdev": {
+   "n": "Josh's Device 📡",
+   "dmg": 58,
+   "cd": 0.8,
+   "rng": 8,
+   "arc": 0,
+   "snd": "zap",
+   "dur": 18,
+   "rar": "CURSED",
+   "w": 0,
+   "shock": true
+  },
+  "tavlaw": {
+   "n": "Tavla Board ⚂",
+   "dmg": 84,
+   "cd": 1,
+   "rng": 3.1,
+   "arc": 1.6,
+   "snd": "clack",
+   "dur": 16,
+   "rar": "TAVLA CHAMPION",
+   "w": 0
+  },
+  "avoflail": {
+   "n": "Avocado Flail 🥑",
+   "dmg": 22,
+   "cd": 0.42,
+   "rng": 2.7,
+   "arc": 1.2,
+   "snd": "thud",
+   "dur": 38,
+   "rar": "Mission",
+   "w": 0,
+   "ranged": false
+  },
+  "simitring": {
+   "n": "Sesame Chakram 🥯",
+   "dmg": 30,
+   "cd": 0.34,
+   "rng": 2.9,
+   "arc": 1.9,
+   "snd": "whoosh",
+   "dur": 34,
+   "rar": "Mission",
+   "w": 0,
+   "ranged": false
+  },
+  "donerspit": {
+   "n": "Döner Spit 🥙",
+   "dmg": 46,
+   "cd": 0.62,
+   "rng": 3.4,
+   "arc": 1.3,
+   "snd": "stab",
+   "dur": 36,
+   "rar": "Mission",
+   "w": 0,
+   "ranged": false
+  },
+  "penashuri": {
+   "n": "Pick Shuriken 🎸",
+   "dmg": 36,
+   "cd": 0.4,
+   "rng": 0,
+   "arc": 0,
+   "snd": "whoosh",
+   "dur": 44,
+   "rar": "Mission",
+   "w": 0,
+   "ranged": true
+  },
+  "balllauncher": {
+   "n": "Tennis Launcher 🎾",
+   "dmg": 33,
+   "cd": 0.45,
+   "rng": 0,
+   "arc": 0,
+   "snd": "drop",
+   "dur": 48,
+   "rar": "Mission",
+   "w": 0,
+   "ranged": true
+  },
+  "wiper": {
+   "n": "Wiper Blade 🚗",
+   "dmg": 28,
+   "cd": 0.3,
+   "rng": 3.1,
+   "arc": 1.6,
+   "snd": "clack",
+   "dur": 30,
+   "rar": "Mission",
+   "w": 0,
+   "ranged": false
+  },
+  "parasol": {
+   "n": "Beach Parasol 🏖️",
+   "dmg": 34,
+   "cd": 0.7,
+   "rng": 3.6,
+   "arc": 2.9,
+   "snd": "whoosh",
+   "dur": 32,
+   "rar": "Mission",
+   "w": 0,
+   "ranged": false
+  },
+  "totemace": {
+   "n": "Tote Mace 👜",
+   "dmg": 52,
+   "cd": 0.85,
+   "rng": 2.6,
+   "arc": 1.3,
+   "snd": "thud",
+   "dur": 30,
+   "rar": "Mission",
+   "w": 0,
+   "ranged": false
+  },
+  "terlik": {
+   "n": "Mom's Slipper 🩴",
+   "dmg": 66,
+   "cd": 0.36,
+   "rng": 2.4,
+   "arc": 1.1,
+   "snd": "clack",
+   "dur": 52,
+   "rar": "Mission · FEARED",
+   "w": 0,
+   "ranged": false
+  },
+  "mask": {
+   "n": "Ancestor Mask 🎭",
+   "dmg": 58,
+   "cd": 0.75,
+   "rng": 3,
+   "arc": 2.2,
+   "snd": "boo",
+   "dur": 34,
+   "rar": "Mission",
+   "w": 0,
+   "ranged": false
+  },
+  "rattle": {
+   "n": "Rattlesnake Whip 🐍",
+   "dmg": 44,
+   "cd": 0.4,
+   "rng": 4.2,
+   "arc": 1,
+   "snd": "sting",
+   "dur": 36,
+   "rar": "Mission",
+   "w": 0,
+   "ranged": false
+  },
+  "machete": {
+   "n": "Vineyard Machete 🍇",
+   "dmg": 62,
+   "cd": 0.55,
+   "rng": 3,
+   "arc": 1.3,
+   "snd": "whoosh",
+   "dur": 34,
+   "rar": "Mission",
+   "w": 0,
+   "ranged": false
+  },
+  "stapler": {
+   "n": "Severance Stapler 📎",
+   "dmg": 40,
+   "cd": 0.34,
+   "rng": 0,
+   "arc": 0,
+   "snd": "clack",
+   "dur": 60,
+   "rar": "Mission",
+   "w": 0,
+   "ranged": true
+  },
+  "loadeddice": {
+   "n": "Loaded Dice ⚂",
+   "dmg": 70,
+   "cd": 0.6,
+   "rng": 0,
+   "arc": 0,
+   "snd": "coinflip",
+   "dur": 30,
+   "rar": "Mission · RIGGED",
+   "w": 0,
+   "ranged": true
+  },
+  "kilim": {
+   "n": "Kilim Whip 🧶",
+   "dmg": 48,
+   "cd": 0.44,
+   "rng": 4,
+   "arc": 1.1,
+   "snd": "whoosh",
+   "dur": 38,
+   "rar": "Mission",
+   "w": 0,
+   "ranged": false
+  },
+  "oar": {
+   "n": "Boat Oar ⚓",
+   "dmg": 56,
+   "cd": 0.68,
+   "rng": 3.8,
+   "arc": 2,
+   "snd": "thud",
+   "dur": 40,
+   "rar": "Mission",
+   "w": 0,
+   "ranged": false
+  },
+  "efedagger": {
+   "n": "Efe Dagger 🗡",
+   "dmg": 74,
+   "cd": 0.42,
+   "rng": 2.5,
+   "arc": 1,
+   "snd": "stab",
+   "dur": 28,
+   "rar": "Mission",
+   "w": 0,
+   "ranged": false
+  },
+  "turntable": {
+   "n": "Turntable Discus 🎧",
+   "dmg": 60,
+   "cd": 0.5,
+   "rng": 0,
+   "arc": 0,
+   "snd": "dance",
+   "dur": 42,
+   "rar": "Mission",
+   "w": 0,
+   "ranged": true
+  },
+  "candle": {
+   "n": "Candle Wand 🎂",
+   "dmg": 54,
+   "cd": 0.38,
+   "rng": 3.2,
+   "arc": 1.4,
+   "snd": "ding",
+   "dur": 44,
+   "rar": "Mission",
+   "w": 0,
+   "ranged": false
+  },
+  "sunblade": {
+   "n": "Antalya Sun Blade 🌴",
+   "dmg": 96,
+   "cd": 0.6,
+   "rng": 3.5,
+   "arc": 1.7,
+   "snd": "whoosh",
+   "dur": 36,
+   "rar": "MISSION LEGENDARY",
+   "w": 0,
+   "ranged": false
+  }
+ },
+ "enemies": {
+  "imp": {
+   "hp": 20,
+   "sp": 5.1,
+   "dmg": 6,
+   "xp": 8,
+   "snd": "chitter",
+   "name": "Imp"
+  },
+  "witch": {
+   "hp": 70,
+   "sp": 3.2,
+   "dmg": 14,
+   "xp": 30,
+   "snd": "cackle",
+   "name": "Long-Nose Witch",
+   "caster": true
+  },
+  "skeleton": {
+   "hp": 48,
+   "sp": 2.4,
+   "dmg": 13,
+   "xp": 28,
+   "snd": "rattle",
+   "name": "Skeleton Archer",
+   "archer": true
+  },
+  "mummy": {
+   "hp": 120,
+   "sp": 1.7,
+   "dmg": 20,
+   "xp": 42,
+   "snd": "moan",
+   "name": "Mummy"
+  },
+  "driver": {
+   "hp": 110,
+   "sp": 8.2,
+   "dmg": 24,
+   "xp": 70,
+   "snd": "honk",
+   "name": "TERRIBLE DRIVER",
+   "rare": true
+  },
+  "lory": {
+   "hp": 340,
+   "sp": 6.4,
+   "dmg": 26,
+   "xp": 260,
+   "snd": "sass",
+   "name": "LORY",
+   "mini": true,
+   "zone": "beach"
+  },
+  "vergi": {
+   "hp": 290,
+   "sp": 3.4,
+   "dmg": 22,
+   "xp": 230,
+   "snd": "karen",
+   "name": "VERGİ MEMURU",
+   "mini": true,
+   "zone": "down",
+   "steals": true
+  },
+  "kapici": {
+   "hp": 420,
+   "sp": 2.6,
+   "dmg": 30,
+   "xp": 280,
+   "snd": "groan",
+   "name": "KAPICI",
+   "mini": true,
+   "zone": "mid"
+  },
+  "zombie": {
+   "hp": 60,
+   "sp": 2.25,
+   "dmg": 12,
+   "xp": 20,
+   "snd": "groan",
+   "name": "Zombie"
+  },
+  "thot": {
+   "hp": 30,
+   "sp": 4.6,
+   "dmg": 8,
+   "xp": 14,
+   "snd": "sass",
+   "name": "Evil Thot"
+  },
+  "ghost": {
+   "hp": 45,
+   "sp": 2.8,
+   "dmg": 10,
+   "xp": 18,
+   "snd": "boo",
+   "name": "Ghost",
+   "ghost": true
+  },
+  "cruze": {
+   "hp": 150,
+   "sp": 5.2,
+   "dmg": 16,
+   "xp": 90,
+   "snd": "rev",
+   "name": "FILTHY CRUZE",
+   "boss": true
+  },
+  "karen": {
+   "hp": 380,
+   "sp": 2.9,
+   "dmg": 18,
+   "xp": 220,
+   "snd": "karen",
+   "name": "CEO KAREN",
+   "boss": true,
+   "sum": true
+  },
+  "spirit": {
+   "hp": 55,
+   "sp": 3.1,
+   "dmg": 11,
+   "xp": 22,
+   "snd": "boo",
+   "name": "Mask Spirit",
+   "ghost": true
+  },
+  "scorpion": {
+   "hp": 40,
+   "sp": 5.4,
+   "dmg": 12,
+   "xp": 20,
+   "snd": "sting",
+   "name": "Scorpion"
+  },
+  "wisp": {
+   "hp": 50,
+   "sp": 2.6,
+   "dmg": 10,
+   "xp": 20,
+   "snd": "woosh2",
+   "name": "Memory Wisp",
+   "ghost": true
+  },
+  "okuz": {
+   "hp": 150,
+   "sp": 2,
+   "dmg": 16,
+   "xp": 55,
+   "snd": "groan",
+   "name": "ÖKÜZ",
+   "charger": true
+  },
+  "aga": {
+   "hp": 520,
+   "sp": 3.3,
+   "dmg": 24,
+   "xp": 320,
+   "snd": "karen",
+   "name": "KARA ÇARŞI AĞASI",
+   "boss": true
+  }
+ }
+}

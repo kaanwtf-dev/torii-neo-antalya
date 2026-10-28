@@ -26,6 +26,27 @@ Project rules live in `CLAUDE.md` (they apply to both of us). Newest entry on to
 - Never put Torii's real photo (`assets/screenshots/torii face.jpg`) in git — it's ignored on purpose.
 
 ## Log
+- 2026-10-27 Claude: **all 20 missions ported** (generic engine). `tools/missions/convert_missions.py` turns 7.2's
+  MISSIONS (exported with function source) + GATES/ZSPAWN/ZNAME/WEAPONS into `godot/assets/missions/missions.json`
+  (spawn patterns, deliver timers, boss phase ops, choice options, rewards parsed out of the JS). Models exported
+  from 7.2: 12 monsters/bosses (`assets/mobs/`, person-based ones have leg_/arm_/head joints named), 32 weapons
+  (`assets/weapons/`), 12 mission pickups (`assets/pickups/`). `scripts/enemy.gd` (`Enemy.spawn`) = every monster
+  with 7.2 stats: melee, archers/casters shoot (`scripts/shot.gd`), ghosts float, chargers wind up/dash/daze, boss
+  phases (caster/charger/enrage/summon), elites (gold, ×2). `scripts/missions.gd` (`Missions`) = step types goto,
+  collect, kill (waves until done), return, zone (+dance), deliver (timer, fast/late, fragile), travel (teleport to
+  ZSPAWN), boss, god (heads-or-tails best of 3, sets npc.god_<id>), choice (`Hud.choose`), photo (T); Kaan's call
+  per mission (ENTER), rewards (weapons+dur, mh, mm, lira, teach), HUNT GATE between missions (spawns the gate's
+  monsters near her, 3 at a time), proceedTo/advanceUnit (forces the unit's 3 lessons first). Player: Q = next
+  weapon (7.2 has a hold-Q wheel — simplified), weapons wear per hit and break, `ToriiPose.dance()`.
+  mission1.gd/imp.gd removed (imp is an Enemy now). Dev: `--autoplay=N --savedir=DIR` plays N missions alone.
+  Proof: 4 missions from a fresh 7.2 save → level 7, unit 4, 6 weapons; real 7.2 loads it (mission "park" next).
+  FULL RUN: all 20 missions + every hunt gate autoplayed (fresh 7.2 save → level 18, unit 16, 27 weapons,
+  6341 lira); the real 7.2 loads the final save with no errors. Fixes from the run: hunt gate counts are clamped
+  (extra kills drove `left` negative and hid the epics still owed → gate never finished); `_st()` returns {}
+  when no mission runs (after the last one). Autoplay loop limit 60000 (`main.gd`). Not committed yet.
+  Note: tests/harness.js needs `TORII_DIR="/Users/kaan/Claude/Video Game Torii"` (its default path is stale).
+  Not ported: Hellspace cutscenes between missions, the dawn sky, SKILLS cooldown rewards, ranged weapons/ammo,
+  the gods' original game rules (simplified to best-of-3 coin toss), Josh/Stockton extras, bounty contracts.
 - 2026-10-27 Claude: **Turkish lessons ported.** `godot/assets/lessons/turkish.json` = 7.2's UNITS (16 units × 3 lessons),
   POOLS (288 extra questions), WORDS (259), GQ (26 grammar) exported from the running game, HTML → BBCode.
   `scripts/quiz_ui.gd` (`QuizUI`, static `open` pauses Torii): lesson page (ENTER), then 10-question sessions — mc

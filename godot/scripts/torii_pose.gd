@@ -57,6 +57,16 @@ func ride(t: float, bike_speed: float, lean: float) -> void:
 	body(.34, -lean * .5, lean * 1.25, .42 + absf(sin(p)) * .02)
 	head(0, lean * .7, -lean * .45)       # head stays closer to level and looks through the corner
 
+# dancing (7.2's dancing branch): arms up, hips swaying, braids flying
+func dance(t: float) -> void:
+	var d := t * 11.0
+	arm(-1, -2.7 + sin(d) * .5, 0, -.4 + sin(d * .5) * .3); arm(1, -2.7 + cos(d) * .5, 0, .4 - sin(d * .5) * .3)
+	leg(-1, sin(d) * .25, sin(d) * .1); leg(1, -sin(d) * .25, -sin(d) * .1)
+	elbow(-1, -1.5 + sin(d) * .5); elbow(1, -1.5 + cos(d) * .5)
+	knee(-1, .35 + sin(d) * .3); knee(1, .35 - sin(d) * .3)
+	body(0, sin(d * .5) * .4, sin(d) * .09, absf(sin(d)) * .14)
+	head(0, -sin(d * .5) * .3, sin(d * .5) * .18)
+
 # a weapon swing, on top of whatever she's doing (7.2's attack branch, non-kick): p = 0..1 through it
 func swing(p: float) -> void:
 	var ease := (p / .35) if p < .35 else (1.0 - (p - .35) / .65)
