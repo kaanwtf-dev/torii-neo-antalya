@@ -26,6 +26,9 @@ Project rules live in `CLAUDE.md` (they apply to both of us). Newest entry on to
 - Never put Torii's real photo (`assets/screenshots/torii face.jpg`) in git — it's ignored on purpose.
 
 ## Log
+- 2026-10-27 Claude: committed everything to `main` as 6f60d95 (not pushed). Kaan's decision: ONE version
+  from now on = Godot; no HTML work; web export last and maybe never (desktop build may ship — then her
+  browser save needs an import step).
 - 2026-10-27 Claude: **mission 1 + her save in Godot.** `scripts/save_bridge.gd` (`SaveBridge`): reads `torii_save`
   → `_bak` → `_bak2` (web: browser localStorage via JavaScriptBridge = the SAME save as 7.2 on the same site;
   desktop: `user://torii_save.json`, override with `--savedir=`), keeps the WHOLE dict and only edits fields it
