@@ -26,6 +26,18 @@ Project rules live in `CLAUDE.md` (they apply to both of us). Newest entry on to
 - Never put Torii's real photo (`assets/screenshots/torii face.jpg`) in git — it's ignored on purpose.
 
 ## Log
+- 2026-10-27 Claude: **Turkish lessons ported.** `godot/assets/lessons/turkish.json` = 7.2's UNITS (16 units × 3 lessons),
+  POOLS (288 extra questions), WORDS (259), GQ (26 grammar) exported from the running game, HTML → BBCode.
+  `scripts/quiz_ui.gd` (`QuizUI`, static `open` pauses Torii): lesson page (ENTER), then 10-question sessions — mc
+  (click / 1-4, options reshuffled), fill (accent-insensitive `norm()`), word order; dots, ✅/❌ + explanation.
+  `scripts/lessons.gd` (`Lessons.me`): lessonTick every 5 kills (imp.gd calls it), starts when safe (no enemy within
+  √150 m, not biking > 4), K = 3-question skip test, revision after a unit's 3 parts, +25 XP + random reward
+  (HP/lira/beads), +15 XP per right answer, −6 HP + `missed` list per wrong one, perfect = +40 XP, teach() + vocab
+  quiz every 4 new words (+ grammar from level 4). Walkers greeting her teach "merhaba"; mission 1 teaches
+  "avokado". `scripts/tts.gd` speaks Turkish if the OS has a Turkish voice (project: audio/general/text_to_speech).
+  Save fields like 7.2: lesson, lk, unit, ul, words, missed. Proof: `--lessontest --shots=DIR --savedir=DIR` on a
+  real 7.2 save → 7.2 loads it as unit 1, ul 1, lesson 1, lvl 2, zero errors. Not yet: unit advancement (comes with
+  missions 2-20), mana (no mana bar yet), Old Soul tutors/tavla replay of missed questions.
 - 2026-10-27 Claude: **all NPCs replaced** (Kaan's rule: EVERY person = one of the two NPC bases + an outfit texture).
   `godot/assets/npc/people.json` = all 62 person() people from 7.2 (position, facing, scale, seated, walker loop
   cx/cz/t/sp, NPC name): 20 walkers, 28 standing, 13 seated, Kaan. City re-exported with every person hidden (the

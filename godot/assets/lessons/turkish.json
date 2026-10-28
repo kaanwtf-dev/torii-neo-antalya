@@ -1,0 +1,5855 @@
+{
+"UNITS": [
+{
+"n": 1,
+"tt": "ekmek var mı? · is there any bread?",
+"ls": [
+{
+"t": "Greetings & Farewells",
+"v": "👋",
+"lines": [
+"[i]Merhaba[/i] = hello · [i]Günaydın[/i] = good morning · [i]İyi günler[/i] = good day",
+"Leaving: [i]Hoşça kal[/i] (you stay) · [i]Güle güle[/i] (said to the one leaving) · [i]Görüşürüz[/i] = see you",
+"Polite address: [b]efendim[/b]. Shopkeeper greets you: [i]Buyurun![/i] = \"go ahead / how can I help\"."
+],
+"qs": [
+{
+"q": "You are LEAVING a shop. The shopkeeper says?",
+"o": [
+"Güle güle",
+"Hoşça kal",
+"Merhaba",
+"Buyurun"
+],
+"a": 0,
+"x": "güle güle is said TO the leaver"
+},
+{
+"q": "\"Good morning\" =",
+"o": [
+"Günaydın",
+"İyi geceler",
+"Hoşça kal",
+"Teşekkürler"
+],
+"a": 0
+}
+]
+},
+{
+"t": "var / yok — There is, there isn't",
+"v": "🍞",
+"lines": [
+"Turkish has no verb \"to have\" here. It uses [b]var[/b] (exists) and [b]yok[/b] (doesn't exist).",
+"[i]Ekmek [b]var[/b].[/i] = There is bread. · [i]Ekmek [b]yok[/b].[/i] = There is no bread.",
+"Ask by adding mı: [i]Ekmek var [b]mı[/b]?[/i] = Is there any bread?"
+],
+"qs": [
+{
+"q": "\"Is there any water?\" =",
+"o": [
+"Su var mı?",
+"Su yok mu?",
+"Su mu var?",
+"Var su mı?"
+],
+"a": 0
+},
+{
+"q": "The café is out of tea. They say:",
+"o": [
+"Çay yok",
+"Çay var",
+"Çay mı",
+"Çay lütfen"
+],
+"a": 0
+}
+]
+},
+{
+"t": "The mi Question Word",
+"v": "❓",
+"lines": [
+"[b]mi/mı/mu/mü[/b] is a separate little word that turns any statement into a question.",
+"It harmonizes with the last vowel: güzel→[b]mi[/b] · var→[b]mı[/b] · yorgun→[b]mu[/b] · Türk→[b]mü[/b]",
+"[i]Bu güzel mi?[/i] = Is this beautiful? — Turkish never changes word order for questions. 🎯"
+],
+"qs": [
+{
+"q": "\"Yorgun __?\" (Are you tired?)",
+"o": [
+"musun",
+"misin",
+"mısın",
+"müsün"
+],
+"a": 0,
+"x": "u → mu"
+},
+{
+"q": "Which is TRUE about Turkish questions?",
+"o": [
+"Word order stays the same",
+"You invert the verb",
+"You raise the first word",
+"You add -ler"
+],
+"a": 0
+}
+]
+}
+]
+},
+{
+"n": 2,
+"tt": "İngiliz misiniz? · are you English?",
+"ls": [
+{
+"t": "am / are / is — Personal Endings",
+"v": "🧍",
+"lines": [
+"Turkish has no separate verb \"to be\" — it glues endings on: [i]Türk[b]üm[/b][/i] = I am Turkish.",
+"-im (I) · -sin (you) · —(he/she/it, nothing!) · -iz (we) · -siniz (you plural/polite) · -ler (they)",
+"[i]Öğrenci[b]yim[/b][/i] = I am a student. (y is a buffer after a vowel) 🔤"
+],
+"qs": [
+{
+"q": "\"I am a nurse\" (hemşire) =",
+"o": [
+"Hemşireyim",
+"Hemşiresin",
+"Hemşire",
+"Hemşireler"
+],
+"a": 0,
+"x": "vowel + y + im"
+},
+{
+"q": "\"She is a doctor\" (doktor) =",
+"o": [
+"Doktor",
+"Doktorum",
+"Doktorsun",
+"Doktoruz"
+],
+"a": 0,
+"x": "he/she takes NO ending"
+}
+]
+},
+{
+"t": "Where are you from?",
+"v": "🌍",
+"lines": [
+"[i]Nerelisiniz?[/i] = Where are you from? Answer with [b]-li[/b]: [i]Amerikalı[b]yım[/b][/i] = I'm American.",
+"[i]İstanbullu[/i] = from Istanbul · [i]Sacramentolu[/i] = from Sacramento 😎",
+"Politely: [i]Adınız ne?[/i] = What is your name? · [i]Memnun oldum[/i] = Pleased to meet you."
+],
+"qs": [
+{
+"q": "\"I am from Antalya\" =",
+"o": [
+"Antalyalıyım",
+"Antalyayım",
+"Antalyada",
+"Antalyalar"
+],
+"a": 0
+},
+{
+"q": "\"Pleased to meet you\" =",
+"o": [
+"Memnun oldum",
+"Görüşürüz",
+"Buyurun",
+"Afiyet olsun"
+],
+"a": 0
+}
+]
+},
+{
+"t": "Numbers 1–20",
+"v": "🔢",
+"lines": [
+"1 bir · 2 iki · 3 üç · 4 dört · 5 beş · 6 altı · 7 yedi · 8 sekiz · 9 dokuz · 10 on",
+"Then just stack: 11 [b]on bir[/b] · 12 [b]on iki[/b] · 20 [b]yirmi[/b] · 21 [b]yirmi bir[/b]",
+"Remember: after a number the noun stays SINGULAR — [i]beş kokteyl[/i], never \"beş kokteyller\" 🍹"
+],
+"qs": [
+{
+"q": "\"Three dogs\" =",
+"o": [
+"üç köpek",
+"üç köpekler",
+"köpek üç",
+"üçler köpek"
+],
+"a": 0
+},
+{
+"q": "What is [b]on yedi[/b]?",
+"o": [
+"17",
+"70",
+"107",
+"7"
+],
+"a": 0
+}
+]
+}
+]
+},
+{
+"n": 3,
+"tt": "daha koymayın, lütfen! · no more, please!",
+"ls": [
+{
+"t": "Ordering a Meal",
+"v": "🍽️",
+"lines": [
+"[i]Bir çay lütfen[/i] = one tea please · [i]Ne tavsiye edersiniz?[/i] = what do you recommend?",
+"[i]Hesap lütfen[/i] = the bill please · [i]Afiyet olsun![/i] = enjoy your meal!",
+"Reply to thanks: [i]Bir şey değil[/i] = it's nothing / you're welcome."
+],
+"qs": [
+{
+"q": "You finished eating and want to pay:",
+"o": [
+"Hesap lütfen",
+"Afiyet olsun",
+"Buyurun",
+"Bir şey değil"
+],
+"a": 0
+},
+{
+"q": "\"Enjoy your meal!\" =",
+"o": [
+"Afiyet olsun",
+"Güle güle",
+"Memnun oldum",
+"Kolay gelsin"
+],
+"a": 0
+}
+]
+},
+{
+"t": "Commands (Imperative)",
+"v": "✋",
+"lines": [
+"The bare verb stem IS the command: [i]gel![/i] = come! · [i]bak![/i] = look! · [i]dur![/i] = stop!",
+"Polite plural: add [b]-in/-ın/-un/-ün[/b]: [i]gel[b]in[/b][/i] = please come · [i]bak[b]ın[/b][/i] = look",
+"Negative command: [b]-me/-ma[/b]: [i]gitme![/i] = don't go! · [i]koyma![/i] = don't put!"
+],
+"qs": [
+{
+"q": "\"Don't go!\" =",
+"o": [
+"Gitme!",
+"Git!",
+"Gidiyor",
+"Gidin"
+],
+"a": 0
+},
+{
+"q": "Polite \"please come in\" =",
+"o": [
+"Buyurun",
+"Gitme",
+"Dur",
+"Bakma"
+],
+"a": 0
+}
+]
+},
+{
+"t": "Simple Directions",
+"v": "🗺️",
+"lines": [
+"[i]sağa[/i] = to the right · [i]sola[/i] = to the left · [i]düz[/i] = straight",
+"[i]Sağa dönün[/i] = turn right · [i]Düz gidin[/i] = go straight on",
+"[i]ileride[/i] = up ahead · [i]burada[/i] = here · [i]orada[/i] = there 📍"
+],
+"qs": [
+{
+"q": "\"Turn left\" =",
+"o": [
+"Sola dönün",
+"Sağa dönün",
+"Düz gidin",
+"Burada durun"
+],
+"a": 0
+},
+{
+"q": "[b]düz[/b] means:",
+"o": [
+"straight",
+"right",
+"left",
+"back"
+],
+"a": 0
+}
+]
+}
+]
+},
+{
+"n": 4,
+"tt": "şaka yapıyorsunuz! · you're joking!",
+"ls": [
+{
+"t": "-iyor — Happening Now",
+"v": "🏃‍♀️",
+"lines": [
+"Verb stem + [b]-iyor[/b] + person = the \"-ing\" tense. [i]Gel[b]iyorum[/b][/i] = I am coming.",
+"It also covers routines: [i]Her sabah kahve iç[b]iyorum[/b][/i] = I drink coffee every morning ☕",
+"Watch the softening: git → [i]gid[b]iyor[/b][/i], et → [i]ed[b]iyor[/b][/i] (t becomes d)."
+],
+"qs": [
+{
+"q": "\"She is going\" =",
+"o": [
+"Gidiyor",
+"Gitiyor",
+"Gider",
+"Gitti"
+],
+"a": 0,
+"x": "t softens to d"
+},
+{
+"q": "\"I am dancing\" (dans etmek) =",
+"o": [
+"Dans ediyorum",
+"Dans etiyorum",
+"Dans ettim",
+"Dans edeceğim"
+],
+"a": 0
+}
+]
+},
+{
+"t": "Negative -iyor",
+"v": "🚫",
+"lines": [
+"Slip [b]-mi/-mı/-mu/-mü[/b] in before -yor: [i]gel[b]mi[/b]yorum[/i] = I am not coming.",
+"[i]Sigara iç[b]mi[/b]yorum[/i] = I don't smoke 🚭 (a very useful sentence!)",
+"Question + negative: [i]Gelmiyor musun?[/i] = Aren't you coming?"
+],
+"qs": [
+{
+"q": "\"I am not drinking tea\" =",
+"o": [
+"Çay içmiyorum",
+"Çay içiyorum",
+"Çay içmedim",
+"Çay yok"
+],
+"a": 0
+},
+{
+"q": "\"He is not coming\" =",
+"o": [
+"Gelmiyor",
+"Gelmiyorum",
+"Gelmez",
+"Gelmedi"
+],
+"a": 0
+}
+]
+},
+{
+"t": "Whose is it? Possession",
+"v": "🔑",
+"lines": [
+"[b]benim[/b] ...-im = my · [b]senin[/b] ...-in = your · [b]onun[/b] ...-i = his/her",
+"[i]benim köpeğ[b]im[/b][/i] = my dog (k softens to ğ!) · [i]senin araba[b]n[/b][/i] = your car",
+"To say \"I have\": [i]Bir köpeğim [b]var[/b][/i] = I have a dog. Literally \"my dog exists\" 🐶"
+],
+"qs": [
+{
+"q": "\"I have a bicycle\" =",
+"o": [
+"Bir bisikletim var",
+"Bir bisiklet var",
+"Bisikletim yok",
+"Bisiklet istiyorum"
+],
+"a": 0
+},
+{
+"q": "\"your bag\" (çanta) =",
+"o": [
+"senin çantan",
+"benim çantam",
+"onun çantası",
+"çantalar"
+],
+"a": 0
+}
+]
+}
+]
+},
+{
+"n": 5,
+"tt": "çok beklediniz mi? · have you been waiting long?",
+"ls": [
+{
+"t": "The Past Tense -di",
+"v": "⬅️",
+"lines": [
+"Stem + [b]-di/-dı/-du/-dü[/b] + person. [i]Gel[b]dim[/b][/i] = I came. [i]Git[b]ti[/b][/i] = he went.",
+"After hard consonants (p,ç,t,k,s,ş,h,f) it hardens to [b]-ti[/b]: [i]iç[b]ti[/b]m[/i] = I drank.",
+"Negative: [i]gel[b]me[/b]dim[/i] = I didn't come."
+],
+"qs": [
+{
+"q": "\"I bought a simit\" (almak) =",
+"o": [
+"Simit aldım",
+"Simit alıyorum",
+"Simit alacağım",
+"Simit al"
+],
+"a": 0
+},
+{
+"q": "\"We didn't go\" =",
+"o": [
+"Gitmedik",
+"Gittik",
+"Gitmiyoruz",
+"Gideceğiz"
+],
+"a": 0
+}
+]
+},
+{
+"t": "Telling the Time",
+"v": "🕒",
+"lines": [
+"[i]Saat kaç?[/i] = What time is it? · [i]Saat üç[/i] = It's 3 o'clock.",
+"[i]üç buçuk[/i] = half past three · [i]üçe çeyrek var[/i] = quarter TO three",
+"[i]üçü çeyrek geçiyor[/i] = quarter PAST three ⏰"
+],
+"qs": [
+{
+"q": "\"What time is it?\" =",
+"o": [
+"Saat kaç?",
+"Kaç para?",
+"Ne kadar?",
+"Nerede?"
+],
+"a": 0
+},
+{
+"q": "[b]buçuk[/b] means:",
+"o": [
+"half past",
+"quarter to",
+"o'clock",
+"noon"
+],
+"a": 0
+}
+]
+},
+{
+"t": "Introductions",
+"v": "🤝",
+"lines": [
+"[i]Tanıştırayım[/i] = let me introduce · [i]Bu benim arkadaşım[/i] = this is my friend",
+"[i]Bu benim erkek arkadaşım Kaan[/i] = this is my boyfriend Kaan ❤",
+"[i]Memnun oldum[/i] = pleased to meet you · reply: [i]Ben de[/i] = me too."
+],
+"qs": [
+{
+"q": "\"This is my friend\" =",
+"o": [
+"Bu benim arkadaşım",
+"Bu bir arkadaş",
+"Arkadaşım var",
+"Arkadaş mı?"
+],
+"a": 0
+},
+{
+"q": "Someone says \"Memnun oldum\". You reply:",
+"o": [
+"Ben de",
+"Yok",
+"Buyurun",
+"Güle güle"
+],
+"a": 0
+}
+]
+}
+]
+},
+{
+"n": 6,
+"tt": "yarın erken kalkacağım · I'll get up early tomorrow",
+"ls": [
+{
+"t": "The Future -ecek",
+"v": "➡️",
+"lines": [
+"Stem + [b]-ecek/-acak[/b] + person: [i]gid[b]eceğim[/b][/i] = I will go.",
+"[i]Yarın erken kalk[b]acağım[/b][/i] = tomorrow I will get up early ⏰ (Trader Joe's line!)",
+"Negative: [i]git[b]me[/b]yeceğim[/i] = I won't go."
+],
+"qs": [
+{
+"q": "\"I will go to the beach\" =",
+"o": [
+"Plaja gideceğim",
+"Plaja gidiyorum",
+"Plaja gittim",
+"Plaja git"
+],
+"a": 0
+},
+{
+"q": "\"We will eat\" (yemek) =",
+"o": [
+"Yiyeceğiz",
+"Yedik",
+"Yiyoruz",
+"Yiyin"
+],
+"a": 0
+}
+]
+},
+{
+"t": "Making Suggestions -elim",
+"v": "🙋‍♀️",
+"lines": [
+"[b]-elim/-alım[/b] = let's ... : [i]Gid[b]elim[/b]![/i] = let's go! · [i]Bak[b]alım[/b][/i] = let's see",
+"[i]Hadi bakalım![/i] = come on then! (your battle cry 🗣️)",
+"Ask permission: [i]Gideyim mi?[/i] = shall I go?"
+],
+"qs": [
+{
+"q": "\"Let's dance!\" (dans etmek) =",
+"o": [
+"Dans edelim!",
+"Dans ediyorum",
+"Dans etti",
+"Dans et"
+],
+"a": 0
+},
+{
+"q": "[b]Hadi bakalım![/b] roughly means:",
+"o": [
+"Come on then!",
+"Goodbye!",
+"I'm sorry",
+"How much?"
+],
+"a": 0
+}
+]
+},
+{
+"t": "Where Things Are",
+"v": "📦",
+"lines": [
+"[i]üstünde[/i] = on top of · [i]altında[/i] = under · [i]içinde[/i] = inside · [i]yanında[/i] = next to",
+"[i]arkasında[/i] = behind · [i]önünde[/i] = in front of · [i]arasında[/i] = between",
+"[i]Köpek masanın [b]altında[/b][/i] = the dog is under the table 🐶"
+],
+"qs": [
+{
+"q": "\"next to the sea\" =",
+"o": [
+"denizin yanında",
+"denizin altında",
+"denizin üstünde",
+"denizin içinde"
+],
+"a": 0
+},
+{
+"q": "[b]arkasında[/b] =",
+"o": [
+"behind",
+"in front of",
+"inside",
+"on top"
+],
+"a": 0
+}
+]
+}
+]
+},
+{
+"n": 7,
+"tt": "yardım eder misiniz? · would you help me?",
+"ls": [
+{
+"t": "Polite Requests",
+"v": "🙏",
+"lines": [
+"[b]-er misiniz?[/b] = would you...? [i]Yardım eder misiniz?[/i] = would you help me?",
+"[i]Açar mısınız?[/i] = would you open it? · [i]Söyler misiniz?[/i] = would you tell me?",
+"Softest of all: [i]...rica ediyorum[/i] = I request... 🎩"
+],
+"qs": [
+{
+"q": "\"Would you help?\" =",
+"o": [
+"Yardım eder misiniz?",
+"Yardım et!",
+"Yardım ediyorum",
+"Yardım var mı?"
+],
+"a": 0
+},
+{
+"q": "Which is the POLITEST?",
+"o": [
+"Açar mısınız?",
+"Aç!",
+"Açma",
+"Açtım"
+],
+"a": 0
+}
+]
+},
+{
+"t": "Wanting & Intending",
+"v": "💭",
+"lines": [
+"[b]-mek istemek[/b] = to want to: [i]Gitmek [b]istiyorum[/b][/i] = I want to go.",
+"[i]Türkçe öğrenmek istiyorum[/i] = I want to learn Turkish 🇹🇷",
+"Negative: [i]Gitmek istemiyorum[/i] = I don't want to go."
+],
+"qs": [
+{
+"q": "\"I want to eat\" =",
+"o": [
+"Yemek istiyorum",
+"Yiyorum",
+"Yedim",
+"Ye!"
+],
+"a": 0
+},
+{
+"q": "\"I don't want to dance\" =",
+"o": [
+"Dans etmek istemiyorum",
+"Dans etmiyorum",
+"Dans etmedim",
+"Dans etme"
+],
+"a": 0
+}
+]
+},
+{
+"t": "Telling a Story",
+"v": "📖",
+"lines": [
+"Glue events with: [i]sonra[/i] = then · [i]ondan sonra[/i] = after that · [i]birden[/i] = suddenly",
+"[i]önce[/i] = first/before · [i]en sonunda[/i] = finally · [i]bir gün[/i] = one day",
+"[i]Bir gün plaja gittim, sonra bir kokteyl içtim.[/i] 🍹"
+],
+"qs": [
+{
+"q": "[b]birden[/b] =",
+"o": [
+"suddenly",
+"slowly",
+"yesterday",
+"finally"
+],
+"a": 0
+},
+{
+"q": "\"then / after that\" =",
+"o": [
+"sonra",
+"önce",
+"şimdi",
+"hiç"
+],
+"a": 0
+}
+]
+}
+]
+},
+{
+"n": 8,
+"tt": "nereye gidelim? · where shall we go?",
+"ls": [
+{
+"t": "Can / Able to -ebil",
+"v": "💪",
+"lines": [
+"Stem + [b]-ebil/-abil[/b] = can: [i]Yap[b]abil[/b]irim[/i] = I can do it.",
+"[i]Türkçe konuş[b]abil[/b]iyorum[/i] = I can speak Turkish 🗣️",
+"Cannot: special form [b]-emem/-amam[/b]: [i]Gid[b]emem[/b][/i] = I can't go."
+],
+"qs": [
+{
+"q": "\"I can dance\" =",
+"o": [
+"Dans edebilirim",
+"Dans ediyorum",
+"Dans ettim",
+"Dans edemem"
+],
+"a": 0
+},
+{
+"q": "\"I can't come\" =",
+"o": [
+"Gelemem",
+"Gelirim",
+"Geliyorum",
+"Geldim"
+],
+"a": 0
+}
+]
+},
+{
+"t": "Comparing Things",
+"v": "⚖️",
+"lines": [
+"[b]daha[/b] = more: [i]daha büyük[/i] = bigger · [b]en[/b] = most: [i]en güzel[/i] = the most beautiful",
+"Than = [b]-den/-dan[/b]: [i]Benden daha hızlı[/i] = faster than me 🏃‍♀️",
+"[i]Bandit dünyanın [b]en[/b] tatlı köpeği![/i] = Bandit is the world's cutest dog 🐶"
+],
+"qs": [
+{
+"q": "\"cheaper than this\" (ucuz) =",
+"o": [
+"bundan daha ucuz",
+"en ucuz",
+"çok ucuz",
+"ucuzlar"
+],
+"a": 0
+},
+{
+"q": "[b]en[/b] marks:",
+"o": [
+"the superlative (most)",
+"the comparative",
+"a question",
+"the past"
+],
+"a": 0
+}
+]
+},
+{
+"t": "Exclamations",
+"v": "😲",
+"lines": [
+"[i]Ne kadar güzel![/i] = How beautiful! · [i]Ne güzel bir gün![/i] = What a lovely day!",
+"[i]Aman Allahım![/i] = Oh my God! · [i]Vallahi![/i] = I swear! · [i]Allah Allah![/i] = well I never!",
+"[i]Maşallah![/i] = wonderful (said to protect from the evil eye) 🧿"
+],
+"qs": [
+{
+"q": "\"How beautiful!\" =",
+"o": [
+"Ne kadar güzel!",
+"Güzel mi?",
+"Güzel değil",
+"Çok güzel var"
+],
+"a": 0
+},
+{
+"q": "[b]Maşallah[/b] is said to:",
+"o": [
+"praise & ward off the evil eye",
+"say goodbye",
+"order food",
+"apologize"
+],
+"a": 0
+}
+]
+}
+]
+},
+{
+"n": 9,
+"tt": "neler yapmayı seviyorsunuz? · what do you like doing?",
+"ls": [
+{
+"t": "Obligation -meli",
+"v": "⚠️",
+"lines": [
+"Stem + [b]-meli/-malı[/b] + person = must/should: [i]Git[b]meli[/b]yim[/i] = I must go.",
+"[i]Erken kalk[b]malı[/b]yım[/i] = I must get up early ⏰",
+"Also: [i]...-mem lazım[/i] = I need to: [i]Gitmem lazım[/i] = I gotta go."
+],
+"qs": [
+{
+"q": "\"I must work\" (çalışmak) =",
+"o": [
+"Çalışmalıyım",
+"Çalışıyorum",
+"Çalıştım",
+"Çalış!"
+],
+"a": 0
+},
+{
+"q": "[b]lazım[/b] means:",
+"o": [
+"necessary / needed",
+"beautiful",
+"tired",
+"expensive"
+],
+"a": 0
+}
+]
+},
+{
+"t": "Likes & Dislikes",
+"v": "❤️",
+"lines": [
+"[b]sevmek[/b] = to love/like: [i]Denizi seviyorum[/i] = I love the sea 🌊",
+"Liking an ACTION: [b]-meyi sevmek[/b]: [i]Dans etmeyi seviyorum[/i] = I love dancing 💃",
+"[i]hoşlanmak[/i] = to be fond of · [i]nefret etmek[/i] = to hate"
+],
+"qs": [
+{
+"q": "\"I love dancing\" =",
+"o": [
+"Dans etmeyi seviyorum",
+"Dans ediyorum",
+"Dansı sevdim",
+"Dans edeceğim"
+],
+"a": 0
+},
+{
+"q": "\"I love my dog\" =",
+"o": [
+"Köpeğimi seviyorum",
+"Köpeğim var",
+"Köpek seviyor",
+"Köpeği sev"
+],
+"a": 0
+}
+]
+},
+{
+"t": "Giving Advice",
+"v": "💡",
+"lines": [
+"[i]Bence[/i] = in my opinion · [i]...-sen iyi olur[/i] = it'd be good if you...",
+"[i]Dinlenmelisin[/i] = you should rest · [i]Doktora git[/i] = go to the doctor 👩‍⚕️",
+"[i]Geçmiş olsun[/i] = get well soon (also said after any bad experience!)"
+],
+"qs": [
+{
+"q": "A friend is sick. You say:",
+"o": [
+"Geçmiş olsun",
+"Afiyet olsun",
+"Güle güle",
+"Kolay gelsin"
+],
+"a": 0
+},
+{
+"q": "[b]Bence[/b] =",
+"o": [
+"in my opinion",
+"never",
+"maybe",
+"again"
+],
+"a": 0
+}
+]
+}
+]
+},
+{
+"n": 10,
+"tt": "eğer geçmezse, ilaç veririm · if it doesn't get better...",
+"ls": [
+{
+"t": "If... Conditional -se",
+"v": "🔀",
+"lines": [
+"[b]-se/-sa[/b] = if: [i]Gel[b]ir[/b]sen[/i] = if you come · [i]İster[b]sen[/b][/i] = if you want",
+"[i][b]Eğer[/b] yağmur yağarsa, plaja gitmeyiz[/i] = if it rains, we won't go to the beach 🌧️",
+"[b]eğer[/b] is optional — the -se ending already means \"if\"."
+],
+"qs": [
+{
+"q": "\"if you want\" =",
+"o": [
+"istersen",
+"istiyorsun",
+"istedin",
+"iste"
+],
+"a": 0
+},
+{
+"q": "[b]eğer[/b] is:",
+"o": [
+"an optional word for \"if\"",
+"required in all conditionals",
+"a past marker",
+"a question word"
+],
+"a": 0
+}
+]
+},
+{
+"t": "Saying What You Need",
+"v": "🆘",
+"lines": [
+"[i]...-e ihtiyacım var[/i] = I need...: [i]Para[b]ya[/b] ihtiyacım var[/i] = I need money 💵",
+"[i]Yardıma ihtiyacım var[/i] = I need help · [i]Bir doktora ihtiyacım var[/i]",
+"Quick version: [i]Su lazım[/i] = (I) need water."
+],
+"qs": [
+{
+"q": "\"I need help\" =",
+"o": [
+"Yardıma ihtiyacım var",
+"Yardım ediyorum",
+"Yardım et",
+"Yardım var"
+],
+"a": 0
+},
+{
+"q": "Before [b]ihtiyacım var[/b] the noun takes:",
+"o": [
+"-e / -a (dative)",
+"-de (locative)",
+"-den (ablative)",
+"nothing"
+],
+"a": 0
+}
+]
+},
+{
+"t": "How Long — -dir",
+"v": "⏳",
+"lines": [
+"[i]İki yıl[b]dır[/b] burada yaşıyorum[/i] = I've been living here for two years.",
+"Turkish uses the PRESENT tense with -dır for ongoing time — not the past! 🕰️",
+"[i]Ne kadar zamandır?[/i] = for how long?"
+],
+"qs": [
+{
+"q": "\"I have been waiting for an hour\" uses which tense in Turkish?",
+"o": [
+"present (bekliyorum)",
+"past (bekledim)",
+"future",
+"imperative"
+],
+"a": 0
+},
+{
+"q": "[b]Ne kadar zamandır?[/b] =",
+"o": [
+"For how long?",
+"How much money?",
+"Where?",
+"Why?"
+],
+"a": 0
+}
+]
+}
+]
+},
+{
+"n": 11,
+"tt": "sizce çok sakin bir yermiş! · you said it was quiet!",
+"ls": [
+{
+"t": "Complaints & Apologies",
+"v": "😤",
+"lines": [
+"[i]Şikayet etmek istiyorum[/i] = I want to complain · [i]Bu kabul edilemez[/i] = this is unacceptable",
+"[i]Özür dilerim[/i] = I apologize · [i]Affedersiniz[/i] = excuse me · [i]Pardon[/i] = sorry",
+"[i]Kusura bakmayın[/i] = please don't take offence 🙇‍♀️"
+],
+"qs": [
+{
+"q": "You bump into someone. You say:",
+"o": [
+"Affedersiniz",
+"Buyurun",
+"Afiyet olsun",
+"Güle güle"
+],
+"a": 0
+},
+{
+"q": "\"I apologize\" =",
+"o": [
+"Özür dilerim",
+"Teşekkürler",
+"Memnun oldum",
+"Hoş geldin"
+],
+"a": 0
+}
+]
+},
+{
+"t": "Reporting What Others Said",
+"v": "🗣️",
+"lines": [
+"[b]...-diğini söyledi[/b] = said that...: [i]Geleceğ[b]ini[/b] söyledi[/i] = he said he would come.",
+"[i]Josh uzaylı gördüğ[b]ünü[/b] söyledi[/i] = Josh said he saw an alien 👽",
+"Turkish packs the whole clause into a noun-like chunk before the main verb."
+],
+"qs": [
+{
+"q": "\"She said she was coming\" =",
+"o": [
+"Geldiğini söyledi",
+"Geliyor",
+"Gel dedi mi",
+"Gelecek"
+],
+"a": 0
+},
+{
+"q": "Reported clauses come:",
+"o": [
+"before the main verb",
+"after the main verb",
+"at the start only",
+"never"
+],
+"a": 0
+}
+]
+},
+{
+"t": "Softening & Politeness",
+"v": "🙇‍♀️",
+"lines": [
+"Turkish softens complaints with fixed phrases. [i]Kusura bakmayın[/i] = please overlook my fault.",
+"[i]Rica ederim[/i] = you're welcome / I request it · [i]Estağfurullah[/i] = not at all, don't mention it",
+"To a person working: [i]Kolay gelsin[/i] = may it come easy. Turks say this constantly. 💪"
+]
+}
+]
+},
+{
+"n": 12,
+"tt": "aradığınız numara yanlıştır · the number is incorrect",
+"ls": [
+{
+"t": "Which / That — Relative Clauses",
+"v": "🔗",
+"lines": [
+"[b]-en/-an[/b] = the one who does: [i]dans [b]eden[/b] kız[/i] = the girl who dances 💃",
+"[b]-diği[/b] = the thing that someone does: [i]ara[b]dığınız[/b] numara[/i] = the number you dialled",
+"Turkish puts the whole description BEFORE the noun. English goes after. 🔄"
+],
+"qs": [
+{
+"q": "\"the girl who is dancing\" =",
+"o": [
+"dans eden kız",
+"kız dans ediyor",
+"dans kızı",
+"kız ki dans"
+],
+"a": 0
+},
+{
+"q": "Turkish relative clauses go:",
+"o": [
+"before the noun",
+"after the noun",
+"at sentence end",
+"with ki only"
+],
+"a": 0
+}
+]
+},
+{
+"t": "The -ip Linker",
+"v": "➕",
+"lines": [
+"[b]-ip[/b] chains two verbs by the same person: [i]Gid[b]ip[/b] aldım[/i] = I went and bought it.",
+"Only the LAST verb carries the tense and person. Efficient! ⚡",
+"[i]Kalkıp dans etti[/i] = she got up and danced."
+],
+"qs": [
+{
+"q": "\"I went and saw\" =",
+"o": [
+"Gidip gördüm",
+"Gittim gördüm",
+"Gidiyor gördüm",
+"Git gör"
+],
+"a": 0
+},
+{
+"q": "With -ip, tense is carried by:",
+"o": [
+"only the last verb",
+"only the first verb",
+"both verbs",
+"neither"
+],
+"a": 0
+}
+]
+},
+{
+"t": "Official Announcements",
+"v": "📢",
+"lines": [
+"Announcements use [b]-dir[/b] to sound formal: [i]Yanlıştır[/i] = it IS incorrect.",
+"[i]Aradığınız numara yanlıştır[/i] = the number you have dialled is incorrect ☎️",
+"[i]Kapanmıştır[/i] = it has closed · [i]Yasaktır[/i] = it is forbidden 🚫"
+]
+}
+]
+},
+{
+"n": 13,
+"tt": "ne olduğunu anlatır mısınız? · could you tell me what happened?",
+"ls": [
+{
+"t": "Was Doing — -iyordu",
+"v": "🎞️",
+"lines": [
+"[b]-iyordu[/b] = was ...ing: [i]Dans ed[b]iyordu[/b][/i] = she was dancing.",
+"[i]Yürüyordum ve birden bir hayalet gördüm![/i] = I was walking and suddenly saw a ghost 👻",
+"Use it for the BACKGROUND, and -di for the sudden event."
+],
+"qs": [
+{
+"q": "\"I was waiting\" =",
+"o": [
+"Bekliyordum",
+"Bekledim",
+"Bekleyeceğim",
+"Beklerim"
+],
+"a": 0
+},
+{
+"q": "For a sudden completed event you use:",
+"o": [
+"-di past",
+"-iyordu",
+"-ecek",
+"-meli"
+],
+"a": 0
+}
+]
+},
+{
+"t": "Hearsay — the -miş Tense",
+"v": "👂",
+"lines": [
+"[b]-miş[/b] = apparently / I heard / so they say. Turkish MARKS second-hand info! 🤯",
+"[i]Gel[b]miş[/b][/i] = apparently he came (I didn't see it myself).",
+"[i]Çok sakin bir yer[b]miş[/b]![/i] = they said it was a very quiet place!"
+],
+"qs": [
+{
+"q": "You did NOT witness it yourself. Use:",
+"o": [
+"-miş",
+"-di",
+"-iyor",
+"-ecek"
+],
+"a": 0
+},
+{
+"q": "\"Apparently she left\" =",
+"o": [
+"Gitmiş",
+"Gitti",
+"Gidiyor",
+"Gidecek"
+],
+"a": 0
+}
+]
+},
+{
+"t": "Putting the Past Together",
+"v": "🧩",
+"lines": [
+"Three pasts, three jobs: [b]-di[/b] I saw it · [b]-iyordu[/b] it was ongoing · [b]-miş[/b] I heard it",
+"[i]Geldi[/i] (he came, I know) vs [i]gelmiş[/i] (he came, apparently) vs [i]geliyordu[/i] (he was coming)",
+"Pluperfect [b]-mişti[/b] = had already happened: [i]gitmişti[/i] = he had gone."
+]
+}
+]
+},
+{
+"n": 14,
+"tt": "güldürme beni! · don't make me laugh!",
+"ls": [
+{
+"t": "Used To — -erdi",
+"v": "🕰️",
+"lines": [
+"[b]-erdi/-ardı[/b] = used to: [i]Çocukken burada oyna[b]rdım[/b][/i] = I used to play here as a kid 🧒",
+"Perfect for Livermore memories: [i]Bu evde otururduk[/i] = we used to live in this house 🏡",
+"[i]-ken[/i] = while/when: [i]çocuk[b]ken[/b][/i] = when (I was) a child."
+],
+"qs": [
+{
+"q": "\"I used to live here\" =",
+"o": [
+"Burada otururdum",
+"Burada oturuyorum",
+"Burada oturdum",
+"Burada otur"
+],
+"a": 0
+},
+{
+"q": "[b]çocukken[/b] =",
+"o": [
+"when I was a child",
+"my child",
+"children",
+"childish"
+],
+"a": 0
+}
+]
+},
+{
+"t": "Making Others Do It (Causative)",
+"v": "🔁",
+"lines": [
+"[b]-dir/-tir/-t[/b] makes a verb causative: [i]gül[/i] (laugh) → [i]gül[b]dür[/b][/i] (make laugh) 😂",
+"[i]Güldürme beni![/i] = don't make me laugh! · [i]yap[/i] (do) → [i]yap[b]tır[/b][/i] (have it done)",
+"[i]Saçımı kestir[b]dim[/b][/i] = I had my hair cut (someone else did it) ✂️"
+],
+"qs": [
+{
+"q": "\"I had my hair cut\" implies:",
+"o": [
+"someone else cut it",
+"I cut it myself",
+"my hair grew",
+"I will cut it"
+],
+"a": 0
+},
+{
+"q": "[i]öl[/i] = to die. [i]öldür[/i] =",
+"o": [
+"to kill (make die)",
+"to be dead",
+"to almost die",
+"to revive"
+],
+"a": 0
+}
+]
+},
+{
+"t": "Surprise & Reaction",
+"v": "😲",
+"lines": [
+"[i]Yok artık![/i] = no way! · [i]Ciddi misin?[/i] = are you serious? · [i]İnanmıyorum![/i] = I don't believe it!",
+"[i]Hadi canım![/i] = oh come on! · [i]Vay be![/i] = wow!",
+"Josh says aliens are real. You say: [i]Yok artık Josh![/i] 👽"
+]
+}
+]
+},
+{
+"n": 15,
+"tt": "burası ne zaman inşa edilmiş? · when was this built?",
+"ls": [
+{
+"t": "The Passive -il / -in",
+"v": "🏗️",
+"lines": [
+"Add [b]-il/-in[/b] to make the passive: [i]yap[/i] (build) → [i]yap[b]ıl[/b]dı[/i] = it was built.",
+"[i]Burası ne zaman inşa edil[b]miş[/b]?[/i] = when was this place built? 🏛️",
+"The doer, if mentioned, takes [b]tarafından[/b]: [i]Kaan tarafından yapıldı[/i]."
+],
+"qs": [
+{
+"q": "\"It was written\" (yazmak) =",
+"o": [
+"Yazıldı",
+"Yazdı",
+"Yazıyor",
+"Yazacak"
+],
+"a": 0
+},
+{
+"q": "[b]tarafından[/b] marks:",
+"o": [
+"the doer (by ...)",
+"the place",
+"the time",
+"the reason"
+],
+"a": 0
+}
+]
+},
+{
+"t": "Word Building -ci / -lik",
+"v": "🧱",
+"lines": [
+"[b]-ci/-cı[/b] = the person who does it: [i]kahve[/i] → [i]kahve[b]ci[/b][/i] = coffee seller ☕",
+"[i]iş[/i] (work) → [i]iş[b]çi[/b][/i] = worker · [i]gazete[/i] → [i]gazete[b]ci[/b][/i] = journalist",
+"[b]-lik[/b] = the abstract thing: [i]güzel[/i] → [i]güzel[b]lik[/b][/i] = beauty ✨"
+],
+"qs": [
+{
+"q": "[i]müzik[/i] + -ci =",
+"o": [
+"musician",
+"music shop",
+"musical",
+"to play music"
+],
+"a": 0
+},
+{
+"q": "[i]arkadaş[/i] (friend) + -lık =",
+"o": [
+"friendship",
+"friendly",
+"friends",
+"befriend"
+],
+"a": 0
+}
+]
+},
+{
+"t": "Building New Words",
+"v": "🔤",
+"lines": [
+"[b]-ci[/b] maker/seller · [b]-lik[/b] abstract noun · [b]-siz[/b] without · [b]-li[/b] with/from",
+"[i]şeker[b]siz[/b][/i] = without sugar (essential for coffee!) ☕ · [i]süt[b]lü[/b][/i] = with milk",
+"[i]Türkçe[/i] itself = Türk + çe, the \"in the manner of\" ending. 🇹🇷"
+]
+}
+]
+},
+{
+"n": 16,
+"tt": "fiyatları bilseydim orada yemezdik · if I had known...",
+"ls": [
+{
+"t": "Unreal If — -seydi",
+"v": "🌈",
+"lines": [
+"[b]-seydi[/b] = if (only) ... had: [i]Bil[b]seydim[/b][/i] = if I had known.",
+"[i]Fiyatları bilseydim orada yemezdik[/i] = if I'd known the prices we wouldn't have eaten there 💸",
+"The result clause takes [b]-ezdi[/b]: [i]gitmezdim[/i] = I wouldn't have gone."
+],
+"qs": [
+{
+"q": "\"If I had known\" =",
+"o": [
+"Bilseydim",
+"Biliyorum",
+"Bildim",
+"Bileceğim"
+],
+"a": 0
+},
+{
+"q": "\"I wouldn't have gone\" =",
+"o": [
+"Gitmezdim",
+"Gitmedim",
+"Gitmiyorum",
+"Gitmem"
+],
+"a": 0
+}
+]
+},
+{
+"t": "Regret & Wishes",
+"v": "💔",
+"lines": [
+"[b]Keşke[/b] = if only: [i]Keşke gelseydin[/i] = if only you had come 🥺",
+"[i]Keşke Türkçe öğrenseydim[/i] = if only I had learned Turkish... (but you ARE! 🎉)",
+"And the sweetest sentence in this whole book: [i]Seni seviyorum.[/i] ❤"
+],
+"qs": [
+{
+"q": "[b]Keşke[/b] =",
+"o": [
+"if only",
+"never",
+"always",
+"why"
+],
+"a": 0
+},
+{
+"q": "\"I love you\" =",
+"o": [
+"Seni seviyorum",
+"Seni özledim",
+"Seni gördüm",
+"Sensiz"
+],
+"a": 0
+}
+]
+},
+{
+"t": "Everything You Know",
+"v": "🎓",
+"lines": [
+"You have covered the entire book: greetings, tenses, cases, conditionals, reported speech.",
+"Turkish is agglutinative — you now know the game: find the stem, stack the endings, respect the vowels.",
+"Kaan is going to lose his mind when you say: [i]Türkçe öğrendim, seni seviyorum.[/i] ❤"
+]
+}
+]
+}
+],
+"POOLS": {
+"1": [
+{
+"f": "Hello (informal) = ___",
+"a": [
+"merhaba"
+],
+"x": "merhaba"
+},
+{
+"f": "Is there any bread? = Ekmek ___ mı?",
+"a": [
+"var"
+],
+"x": "var mı = is there"
+},
+{
+"f": "There is no tea. = Çay ___",
+"a": [
+"yok"
+],
+"x": "yok = there isn't"
+},
+{
+"q": "\"Good day\" =",
+"o": [
+"İyi günler",
+"İyi geceler",
+"Hoşça kal",
+"Buyurun"
+],
+"a": 0
+},
+{
+"q": "The shopkeeper invites you in with:",
+"o": [
+"Buyurun",
+"Güle güle",
+"Yok",
+"Lütfen"
+],
+"a": 0
+},
+{
+"q": "\"See you\" =",
+"o": [
+"Görüşürüz",
+"Merhaba",
+"Efendim",
+"Var"
+],
+"a": 0
+},
+{
+"w": [
+"Ekmek",
+"var",
+"mı"
+],
+"x": "the mi word goes last"
+},
+{
+"w": [
+"Çay",
+"yok"
+],
+"x": "yok closes the sentence"
+},
+{
+"f": "\"please\" = ___",
+"a": [
+"lütfen"
+],
+"x": "lütfen"
+},
+{
+"q": "Which means \"thank you\"?",
+"o": [
+"Teşekkürler",
+"Buyurun",
+"Efendim",
+"Yok"
+],
+"a": 0
+},
+{
+"f": "Good night = İyi ___",
+"a": [
+"geceler"
+],
+"x": "gece = night"
+},
+{
+"q": "You are the one leaving. You say:",
+"o": [
+"Hoşça kal",
+"Güle güle",
+"Buyurun",
+"Var mı"
+],
+"a": 0
+},
+{
+"q": "\"sun\" =",
+"o": [
+"güneş",
+"ay",
+"yıldız",
+"bulut"
+],
+"a": 0
+},
+{
+"q": "\"house\" =",
+"o": [
+"ev",
+"yol",
+"bahçe",
+"kapı"
+],
+"a": 0
+},
+{
+"f": "Good morning = ___aydın",
+"a": [
+"gün"
+],
+"x": "günaydın = day + bright"
+},
+{
+"q": "A neighbour is a:",
+"o": [
+"komşu",
+"kardeş",
+"öğretmen",
+"müşteri"
+],
+"a": 0
+},
+{
+"w": [
+"Bu",
+"benim",
+"evim"
+],
+"x": "this / my / house"
+},
+{
+"f": "Thank you = Teşekkür ___",
+"a": [
+"ederim"
+],
+"x": "teşekkür ederim"
+}
+],
+"2": [
+{
+"f": "I am a student = Öğrenci___",
+"a": [
+"yim"
+],
+"x": "vowel + y + im"
+},
+{
+"f": "Are you Turkish? = Türk mü___?",
+"a": [
+"sün",
+"sun"
+],
+"x": "-sün = you"
+},
+{
+"q": "\"She is a doctor\" =",
+"o": [
+"Doktor",
+"Doktorum",
+"Doktorsun",
+"Doktoruz"
+],
+"a": 0,
+"x": "no ending for he/she"
+},
+{
+"q": "\"We are tired\" (yorgun) =",
+"o": [
+"Yorgunuz",
+"Yorgunum",
+"Yorgunsun",
+"Yorgun"
+],
+"a": 0
+},
+{
+"f": "Where are you from? = ___?",
+"a": [
+"nerelisiniz",
+"nerelisin"
+],
+"x": "nereli + siniz"
+},
+{
+"f": "I am from Antalya = Antalya___",
+"a": [
+"lıyım"
+],
+"x": "-lı + yım"
+},
+{
+"q": "What is [b]yirmi bir[/b]?",
+"o": [
+"21",
+"12",
+"20",
+"31"
+],
+"a": 0
+},
+{
+"q": "\"Five dogs\" =",
+"o": [
+"beş köpek",
+"beş köpekler",
+"köpek beş",
+"beşler köpek"
+],
+"a": 0
+},
+{
+"f": "The number 7 = ___",
+"a": [
+"yedi"
+],
+"x": "yedi"
+},
+{
+"f": "The number 10 = ___",
+"a": [
+"on"
+],
+"x": "on"
+},
+{
+"w": [
+"Ben",
+"Amerikalıyım"
+],
+"x": "ben is optional but comes first"
+},
+{
+"q": "\"Pleased to meet you\" =",
+"o": [
+"Memnun oldum",
+"Görüşürüz",
+"Afiyet olsun",
+"Buyurun"
+],
+"a": 0
+},
+{
+"q": "\"chair\" =",
+"o": [
+"sandalye",
+"masa",
+"kapı",
+"pencere"
+],
+"a": 0
+},
+{
+"q": "\"road\" =",
+"o": [
+"yol",
+"ev",
+"dağ",
+"deniz"
+],
+"a": 0
+},
+{
+"f": "two chairs = iki ___",
+"a": [
+"sandalye"
+],
+"x": "no plural after a number"
+},
+{
+"q": "Which is the plural of ev?",
+"o": [
+"evler",
+"evlar",
+"eviler",
+"evleri"
+],
+"a": 0
+},
+{
+"w": [
+"Sokakta",
+"çok",
+"araba",
+"var"
+],
+"x": "place first, var last"
+},
+{
+"q": "\"rubbish / litter\" =",
+"o": [
+"çöp",
+"çay",
+"çorba",
+"çanta"
+],
+"a": 0
+}
+],
+"3": [
+{
+"f": "One tea please = Bir çay ___",
+"a": [
+"lütfen"
+],
+"x": "lütfen"
+},
+{
+"f": "The bill please = ___ lütfen",
+"a": [
+"hesap"
+],
+"x": "hesap = bill"
+},
+{
+"q": "\"Enjoy your meal!\" =",
+"o": [
+"Afiyet olsun",
+"Geçmiş olsun",
+"Kolay gelsin",
+"Hoş geldin"
+],
+"a": 0
+},
+{
+"q": "\"Don't go!\" =",
+"o": [
+"Gitme!",
+"Git!",
+"Gidin",
+"Gidiyor"
+],
+"a": 0
+},
+{
+"f": "Come! (informal command) = ___",
+"a": [
+"gel"
+],
+"x": "bare stem = command"
+},
+{
+"f": "Turn right = Sağa ___",
+"a": [
+"dön",
+"dönün"
+],
+"x": "dönmek = to turn"
+},
+{
+"q": "[b]düz[/b] means:",
+"o": [
+"straight",
+"left",
+"behind",
+"near"
+],
+"a": 0
+},
+{
+"q": "\"Don't put any more\" =",
+"o": [
+"Daha koymayın",
+"Daha koyun",
+"Koydum",
+"Koyar mısınız"
+],
+"a": 0
+},
+{
+"w": [
+"Bir",
+"kahve",
+"lütfen"
+],
+"x": "lütfen goes at the end"
+},
+{
+"w": [
+"Sola",
+"dönün"
+],
+"x": "direction then verb"
+},
+{
+"f": "You're welcome / it's nothing = Bir şey ___",
+"a": [
+"değil"
+],
+"x": "değil = not"
+},
+{
+"q": "Which is a polite command?",
+"o": [
+"Bakın",
+"Bak",
+"Bakma",
+"Baktı"
+],
+"a": 0
+},
+{
+"q": "\"to run\" =",
+"o": [
+"koşmak",
+"yürümek",
+"uçmak",
+"yüzmek"
+],
+"a": 0
+},
+{
+"f": "I am running = Koş___",
+"a": [
+"uyorum"
+],
+"x": "koş + uyor + um"
+},
+{
+"q": "\"to jump\" =",
+"o": [
+"zıplamak",
+"düşmek",
+"binmek",
+"inmek"
+],
+"a": 0
+},
+{
+"q": "\"fast\" =",
+"o": [
+"hızlı",
+"yavaş",
+"yorgun",
+"uzak"
+],
+"a": 0
+},
+{
+"w": [
+"Çok",
+"hızlı",
+"koşuyorsun"
+],
+"x": "adverb before the verb"
+},
+{
+"f": "I am tired = ___",
+"a": [
+"yorgunum"
+],
+"x": "yorgun + um"
+}
+],
+"4": [
+{
+"f": "I am coming = Gel___",
+"a": [
+"iyorum"
+],
+"x": "stem + iyor + um"
+},
+{
+"f": "She is going = ___",
+"a": [
+"gidiyor"
+],
+"x": "t softens to d"
+},
+{
+"f": "I don't smoke = Sigara iç___",
+"a": [
+"miyorum"
+],
+"x": "-mi- before -yor"
+},
+{
+"q": "\"We are dancing\" =",
+"o": [
+"Dans ediyoruz",
+"Dans ediyorum",
+"Dans ettik",
+"Dans edelim"
+],
+"a": 0
+},
+{
+"q": "\"my dog\" =",
+"o": [
+"köpeğim",
+"köpeğin",
+"köpeği",
+"köpekler"
+],
+"a": 0
+},
+{
+"f": "I have a bicycle = Bir bisikletim ___",
+"a": [
+"var"
+],
+"x": "literally \"my bike exists\""
+},
+{
+"q": "\"your car\" (araba) =",
+"o": [
+"araban",
+"arabam",
+"arabası",
+"arabalar"
+],
+"a": 0
+},
+{
+"w": [
+"Her",
+"sabah",
+"kahve",
+"içiyorum"
+],
+"x": "time first, verb last"
+},
+{
+"w": [
+"Ben",
+"plaja",
+"gidiyorum"
+],
+"x": "verb last!"
+},
+{
+"f": "You are joking! = Şaka ___!",
+"a": [
+"yapıyorsunuz",
+"yapıyorsun"
+],
+"x": "yapmak = to do/make"
+},
+{
+"q": "\"They are waiting\" =",
+"o": [
+"Bekliyorlar",
+"Bekliyorum",
+"Beklediler",
+"Bekleyecekler"
+],
+"a": 0
+},
+{
+"f": "I want water = Su ___",
+"a": [
+"istiyorum"
+],
+"x": "istemek = to want"
+},
+{
+"q": "\"to ride / to get on\" =",
+"o": [
+"binmek",
+"inmek",
+"almak",
+"vermek"
+],
+"a": 0
+},
+{
+"f": "I am riding a bike = Bisiklete ___",
+"a": [
+"biniyorum"
+],
+"x": "bisiklet takes -e"
+},
+{
+"q": "\"to fall\" =",
+"o": [
+"düşmek",
+"kalkmak",
+"durmak",
+"gitmek"
+],
+"a": 0
+},
+{
+"q": "\"hill\" =",
+"o": [
+"tepe",
+"dağ",
+"deniz",
+"göl"
+],
+"a": 0
+},
+{
+"w": [
+"Tepeye",
+"bisikletle",
+"çıkıyorum"
+],
+"x": "destination, means, verb"
+},
+{
+"q": "\"slow\" =",
+"o": [
+"yavaş",
+"hızlı",
+"yeni",
+"eski"
+],
+"a": 0
+}
+],
+"5": [
+{
+"f": "I came = Gel___",
+"a": [
+"dim"
+],
+"x": "-di past + im"
+},
+{
+"f": "I drank tea = Çay iç___",
+"a": [
+"tim"
+],
+"x": "hardens to -ti after ç"
+},
+{
+"q": "\"We didn't go\" =",
+"o": [
+"Gitmedik",
+"Gittik",
+"Gitmiyoruz",
+"Gideceğiz"
+],
+"a": 0
+},
+{
+"q": "\"What time is it?\" =",
+"o": [
+"Saat kaç?",
+"Kaç para?",
+"Ne zaman?",
+"Nerede?"
+],
+"a": 0
+},
+{
+"f": "Half past three = Üç ___",
+"a": [
+"buçuk"
+],
+"x": "buçuk = half"
+},
+{
+"q": "\"This is my friend\" =",
+"o": [
+"Bu benim arkadaşım",
+"Bu bir arkadaş",
+"Arkadaşım var",
+"Arkadaş mı"
+],
+"a": 0
+},
+{
+"w": [
+"Dün",
+"simit",
+"aldım"
+],
+"x": "time word first, verb last"
+},
+{
+"w": [
+"Çok",
+"beklediniz",
+"mi"
+],
+"x": "question word at the end"
+},
+{
+"f": "Yesterday = ___",
+"a": [
+"dün"
+],
+"x": "dün"
+},
+{
+"q": "\"Have you been waiting long?\" =",
+"o": [
+"Çok beklediniz mi?",
+"Çok bekliyor musunuz?",
+"Bekledim",
+"Bekleyin"
+],
+"a": 0
+},
+{
+"f": "I saw = Gör___",
+"a": [
+"düm"
+],
+"x": "ö → -dü"
+},
+{
+"q": "Someone says \"Memnun oldum.\" You reply:",
+"o": [
+"Ben de",
+"Yok",
+"Buyurun",
+"Hesap lütfen"
+],
+"a": 0
+},
+{
+"q": "\"dirty\" =",
+"o": [
+"kirli",
+"temiz",
+"yeni",
+"güzel"
+],
+"a": 0
+},
+{
+"q": "\"clean\" =",
+"o": [
+"temiz",
+"kirli",
+"zor",
+"kolay"
+],
+"a": 0
+},
+{
+"f": "The car is dirty = Araba ___",
+"a": [
+"kirli"
+],
+"x": "no \"is\" in Turkish"
+},
+{
+"q": "\"to wash\" =",
+"o": [
+"yıkamak",
+"yakmak",
+"yapmak",
+"yazmak"
+],
+"a": 0
+},
+{
+"w": [
+"Arabayı",
+"yıkamalıyım"
+],
+"x": "object takes -ı"
+},
+{
+"q": "\"angry\" =",
+"o": [
+"kızgın",
+"mutlu",
+"yorgun",
+"aç"
+],
+"a": 0
+}
+],
+"6": [
+{
+"f": "I will go = Gid___",
+"a": [
+"eceğim"
+],
+"x": "-ecek + im"
+},
+{
+"f": "Tomorrow = ___",
+"a": [
+"yarın"
+],
+"x": "yarın"
+},
+{
+"q": "\"I won't come\" =",
+"o": [
+"Gelmeyeceğim",
+"Geleceğim",
+"Gelmedim",
+"Gelmiyorum"
+],
+"a": 0
+},
+{
+"q": "\"Let's go!\" =",
+"o": [
+"Gidelim!",
+"Gidiyorum",
+"Gittim",
+"Git"
+],
+"a": 0
+},
+{
+"f": "Let's see = Bak___",
+"a": [
+"alım"
+],
+"x": "-alım after a"
+},
+{
+"q": "\"under the table\" =",
+"o": [
+"masanın altında",
+"masanın üstünde",
+"masanın yanında",
+"masada"
+],
+"a": 0
+},
+{
+"q": "[b]arkasında[/b] =",
+"o": [
+"behind",
+"in front of",
+"inside",
+"between"
+],
+"a": 0
+},
+{
+"w": [
+"Yarın",
+"erken",
+"kalkacağım"
+],
+"x": "verb last"
+},
+{
+"w": [
+"Hadi",
+"bakalım"
+],
+"x": "a set phrase"
+},
+{
+"f": "next to = ___",
+"a": [
+"yanında"
+],
+"x": "yan = side"
+},
+{
+"q": "\"Shall I go?\" =",
+"o": [
+"Gideyim mi?",
+"Gidelim",
+"Gideceğim",
+"Gitme"
+],
+"a": 0
+},
+{
+"f": "Come on then! = Hadi ___!",
+"a": [
+"bakalım"
+],
+"x": "your battle cry"
+},
+{
+"q": "\"sea\" =",
+"o": [
+"deniz",
+"göl",
+"nehir",
+"dağ"
+],
+"a": 0
+},
+{
+"q": "\"sunglasses\" =",
+"o": [
+"güneş gözlüğü",
+"güneş şemsiyesi",
+"gözlük kutusu",
+"güneş kremi"
+],
+"a": 0
+},
+{
+"f": "I am at the beach = Plaj___",
+"a": [
+"dayım"
+],
+"x": "-da + yım"
+},
+{
+"q": "\"to rest\" =",
+"o": [
+"dinlenmek",
+"koşmak",
+"çalışmak",
+"beklemek"
+],
+"a": 0
+},
+{
+"w": [
+"Denizde",
+"yüzüyoruz"
+],
+"x": "-de = in / at"
+},
+{
+"q": "\"happy\" =",
+"o": [
+"mutlu",
+"üzgün",
+"kızgın",
+"yorgun"
+],
+"a": 0
+}
+],
+"7": [
+{
+"q": "\"Would you help me?\" =",
+"o": [
+"Yardım eder misiniz?",
+"Yardım et!",
+"Yardım ediyorum",
+"Yardım var mı"
+],
+"a": 0
+},
+{
+"f": "I want to go = Gitmek ___",
+"a": [
+"istiyorum"
+],
+"x": "-mek istemek"
+},
+{
+"f": "I want to learn Turkish = Türkçe öğrenmek ___",
+"a": [
+"istiyorum"
+],
+"x": "infinitive + istemek"
+},
+{
+"q": "\"I don't want to dance\" =",
+"o": [
+"Dans etmek istemiyorum",
+"Dans etmiyorum",
+"Dans etmedim",
+"Dans etme"
+],
+"a": 0
+},
+{
+"q": "[b]birden[/b] =",
+"o": [
+"suddenly",
+"slowly",
+"finally",
+"yesterday"
+],
+"a": 0
+},
+{
+"q": "\"then / after that\" =",
+"o": [
+"sonra",
+"önce",
+"şimdi",
+"hep"
+],
+"a": 0
+},
+{
+"f": "first / before = ___",
+"a": [
+"önce"
+],
+"x": "önce"
+},
+{
+"w": [
+"Bir",
+"gün",
+"plaja",
+"gittim"
+],
+"x": "verb last"
+},
+{
+"w": [
+"Kapıyı",
+"açar",
+"mısınız"
+],
+"x": "polite request pattern"
+},
+{
+"q": "Which is the POLITEST?",
+"o": [
+"Açar mısınız?",
+"Aç!",
+"Açma",
+"Açtım"
+],
+"a": 0
+},
+{
+"f": "one day = bir ___",
+"a": [
+"gün"
+],
+"x": "gün = day"
+},
+{
+"q": "\"I intend to come\" (niyet) =",
+"o": [
+"Gelmek istiyorum",
+"Geldim",
+"Gelme",
+"Gelmiyorum"
+],
+"a": 0
+},
+{
+"q": "\"to buy / to take\" =",
+"o": [
+"almak",
+"vermek",
+"satmak",
+"bulmak"
+],
+"a": 0
+},
+{
+"q": "\"to give\" =",
+"o": [
+"vermek",
+"almak",
+"görmek",
+"bilmek"
+],
+"a": 0
+},
+{
+"f": "Give me two, please = İki tane ___ lütfen",
+"a": [
+"ver",
+"verin"
+],
+"x": "ver / verin"
+},
+{
+"q": "\"bag\" =",
+"o": [
+"çanta",
+"çorba",
+"çatal",
+"çiçek"
+],
+"a": 0
+},
+{
+"w": [
+"Bana",
+"iki",
+"tane",
+"ver"
+],
+"x": "to-me / two / of-them / give"
+},
+{
+"q": "\"expensive\" =",
+"o": [
+"pahalı",
+"ucuz",
+"kolay",
+"zor"
+],
+"a": 0
+}
+],
+"8": [
+{
+"f": "I can do it = Yap___",
+"a": [
+"abilirim"
+],
+"x": "-abil + irim"
+},
+{
+"f": "I can speak Turkish = Türkçe konuş___",
+"a": [
+"abiliyorum"
+],
+"x": "-abil + iyorum"
+},
+{
+"q": "\"I can't go\" =",
+"o": [
+"Gidemem",
+"Giderim",
+"Gidiyorum",
+"Gittim"
+],
+"a": 0,
+"x": "special negative"
+},
+{
+"q": "\"bigger\" =",
+"o": [
+"daha büyük",
+"en büyük",
+"çok büyük",
+"büyükler"
+],
+"a": 0
+},
+{
+"q": "\"the most beautiful\" =",
+"o": [
+"en güzel",
+"daha güzel",
+"çok güzel",
+"güzellik"
+],
+"a": 0
+},
+{
+"f": "How beautiful! = Ne kadar ___!",
+"a": [
+"güzel"
+],
+"x": "ne kadar + adjective"
+},
+{
+"q": "[b]Maşallah[/b] is said to:",
+"o": [
+"praise & ward off the evil eye",
+"say goodbye",
+"order food",
+"apologize"
+],
+"a": 0
+},
+{
+"w": [
+"Nereye",
+"gidelim"
+],
+"x": "question word first, verb last"
+},
+{
+"w": [
+"Bundan",
+"daha",
+"ucuz"
+],
+"x": "-dan = than"
+},
+{
+"f": "faster than me = benden daha ___",
+"a": [
+"hızlı"
+],
+"x": "hızlı = fast"
+},
+{
+"q": "\"What can we do?\" =",
+"o": [
+"Ne yapabiliriz?",
+"Ne yaptık?",
+"Ne yapıyoruz?",
+"Ne yap"
+],
+"a": 0
+},
+{
+"f": "Oh my God! = Aman ___!",
+"a": [
+"allahım"
+],
+"x": "an exclamation"
+},
+{
+"q": "\"mother\" =",
+"o": [
+"anne",
+"abla",
+"teyze",
+"hala"
+],
+"a": 0
+},
+{
+"q": "\"neighbourhood\" =",
+"o": [
+"mahalle",
+"şehir",
+"ülke",
+"sokak"
+],
+"a": 0
+},
+{
+"f": "my mother = anne___",
+"a": [
+"m"
+],
+"x": "anne + m"
+},
+{
+"q": "\"to miss (someone)\" =",
+"o": [
+"özlemek",
+"sevmek",
+"bilmek",
+"görmek"
+],
+"a": 0
+},
+{
+"w": [
+"Annemi",
+"çok",
+"özledim"
+],
+"x": "object -i, adverb, verb"
+},
+{
+"q": "\"together\" =",
+"o": [
+"birlikte",
+"yalnız",
+"uzak",
+"önce"
+],
+"a": 0
+}
+],
+"9": [
+{
+"f": "I must go = Git___",
+"a": [
+"meliyim"
+],
+"x": "-meli + yim"
+},
+{
+"f": "I must get up early = Erken kalk___",
+"a": [
+"malıyım"
+],
+"x": "-malı after a"
+},
+{
+"q": "[b]lazım[/b] means:",
+"o": [
+"necessary / needed",
+"beautiful",
+"tired",
+"cheap"
+],
+"a": 0
+},
+{
+"q": "\"I love dancing\" =",
+"o": [
+"Dans etmeyi seviyorum",
+"Dans ediyorum",
+"Dansı sevdim",
+"Dans edeceğim"
+],
+"a": 0
+},
+{
+"f": "I love the sea = Denizi ___",
+"a": [
+"seviyorum"
+],
+"x": "sevmek + object -i"
+},
+{
+"q": "A friend is sick. You say:",
+"o": [
+"Geçmiş olsun",
+"Afiyet olsun",
+"Kolay gelsin",
+"Güle güle"
+],
+"a": 0
+},
+{
+"q": "[b]Bence[/b] =",
+"o": [
+"in my opinion",
+"never",
+"again",
+"maybe"
+],
+"a": 0
+},
+{
+"w": [
+"Erken",
+"kalkmalıyım"
+],
+"x": "verb last"
+},
+{
+"w": [
+"Ne",
+"yapmayı",
+"seviyorsunuz"
+],
+"x": "-mayı sevmek"
+},
+{
+"f": "to hate = nefret ___",
+"a": [
+"etmek"
+],
+"x": "etmek helper verb"
+},
+{
+"q": "\"You should rest\" =",
+"o": [
+"Dinlenmelisin",
+"Dinlendim",
+"Dinleniyorsun",
+"Dinlen"
+],
+"a": 0
+},
+{
+"f": "Said to someone working = Kolay ___",
+"a": [
+"gelsin"
+],
+"x": "\"may it come easy\""
+},
+{
+"q": "\"far\" =",
+"o": [
+"uzak",
+"yakın",
+"yüksek",
+"alçak"
+],
+"a": 0
+},
+{
+"q": "\"near\" =",
+"o": [
+"yakın",
+"uzak",
+"derin",
+"geniş"
+],
+"a": 0
+},
+{
+"f": "I am going to Cameroon = Kamerun ___ gidiyorum",
+"a": [
+"a"
+],
+"x": "-a = to"
+},
+{
+"q": "\"to look for / to call\" =",
+"o": [
+"aramak",
+"bulmak",
+"almak",
+"anlamak"
+],
+"a": 0
+},
+{
+"w": [
+"Buradan",
+"çok",
+"uzak"
+],
+"x": "from-here / very / far"
+},
+{
+"q": "\"road\" =",
+"o": [
+"yol",
+"ev",
+"tepe",
+"saat"
+],
+"a": 0
+}
+],
+"10": [
+{
+"f": "if you want = ister___",
+"a": [
+"sen"
+],
+"x": "-se/-sa = if"
+},
+{
+"q": "[b]eğer[/b] is:",
+"o": [
+"an optional word for \"if\"",
+"required always",
+"a past marker",
+"a question word"
+],
+"a": 0
+},
+{
+"q": "\"I need help\" =",
+"o": [
+"Yardıma ihtiyacım var",
+"Yardım ediyorum",
+"Yardım et",
+"Yardım var"
+],
+"a": 0
+},
+{
+"f": "I need money = Paraya ihtiyacım ___",
+"a": [
+"var"
+],
+"x": "ihtiyacım var"
+},
+{
+"q": "Before [b]ihtiyacım var[/b] the noun takes:",
+"o": [
+"-e / -a (dative)",
+"-de",
+"-den",
+"nothing"
+],
+"a": 0
+},
+{
+"q": "\"I have been living here for two years\" uses:",
+"o": [
+"present tense",
+"past tense",
+"future tense",
+"imperative"
+],
+"a": 0
+},
+{
+"f": "For how long? = Ne kadar ___?",
+"a": [
+"zamandır"
+],
+"x": "-dır marks duration"
+},
+{
+"w": [
+"Eğer",
+"yağmur",
+"yağarsa",
+"gitmeyiz"
+],
+"x": "condition first, result last"
+},
+{
+"w": [
+"Su",
+"lazım"
+],
+"x": "short need pattern"
+},
+{
+"q": "\"If it doesn't get better, I'll give medicine\" starts with:",
+"o": [
+"Eğer geçmezse",
+"Geçti",
+"Geçiyor",
+"Geçecek"
+],
+"a": 0
+},
+{
+"f": "I need water = Suya ___ var",
+"a": [
+"ihtiyacım"
+],
+"x": "ihtiyaç = need"
+},
+{
+"q": "\"if I come\" =",
+"o": [
+"gelirsem",
+"geldim",
+"geliyorum",
+"geleceğim"
+],
+"a": 0
+},
+{
+"q": "\"hot\" =",
+"o": [
+"sıcak",
+"soğuk",
+"ılık",
+"serin"
+],
+"a": 0
+},
+{
+"q": "\"water\" =",
+"o": [
+"su",
+"çay",
+"süt",
+"şeker"
+],
+"a": 0
+},
+{
+"f": "I am thirsty = ___",
+"a": [
+"susadım"
+],
+"x": "su + sa + dım"
+},
+{
+"q": "\"scorpion\" =",
+"o": [
+"akrep",
+"örümcek",
+"yılan",
+"karınca"
+],
+"a": 0
+},
+{
+"w": [
+"Çölde",
+"çok",
+"sıcak"
+],
+"x": "in-the-desert / very / hot"
+},
+{
+"q": "\"to wait\" =",
+"o": [
+"beklemek",
+"koşmak",
+"gitmek",
+"durmak"
+],
+"a": 0
+}
+],
+"11": [
+{
+"q": "You bump into someone. You say:",
+"o": [
+"Affedersiniz",
+"Buyurun",
+"Afiyet olsun",
+"Güle güle"
+],
+"a": 0
+},
+{
+"f": "I apologize = Özür ___",
+"a": [
+"dilerim"
+],
+"x": "özür dilemek"
+},
+{
+"q": "\"This is unacceptable\" =",
+"o": [
+"Bu kabul edilemez",
+"Bu çok güzel",
+"Bu bir şey değil",
+"Bu ne"
+],
+"a": 0
+},
+{
+"q": "\"She said she was coming\" =",
+"o": [
+"Geldiğini söyledi",
+"Geliyor",
+"Gel dedi mi",
+"Gelecek"
+],
+"a": 0
+},
+{
+"q": "Reported clauses come:",
+"o": [
+"before the main verb",
+"after the main verb",
+"at the very start",
+"never"
+],
+"a": 0
+},
+{
+"f": "Excuse me / sorry (short) = ___",
+"a": [
+"pardon",
+"affedersiniz"
+],
+"x": "both work"
+},
+{
+"w": [
+"Şikayet",
+"etmek",
+"istiyorum"
+],
+"x": "verb last"
+},
+{
+"w": [
+"Özür",
+"dilerim"
+],
+"x": "set phrase"
+},
+{
+"f": "Please don't take offence = Kusura ___",
+"a": [
+"bakmayın"
+],
+"x": "a very Turkish softener"
+},
+{
+"q": "\"You said it was a quiet place!\" ends in:",
+"o": [
+"-miş",
+"-di",
+"-iyor",
+"-ecek"
+],
+"a": 0
+},
+{
+"q": "\"He said he saw an alien\" =",
+"o": [
+"Uzaylı gördüğünü söyledi",
+"Uzaylı gördü",
+"Uzaylı görüyor",
+"Uzaylı görecek"
+],
+"a": 0
+},
+{
+"f": "I want to complain = Şikayet etmek ___",
+"a": [
+"istiyorum"
+],
+"x": "infinitive + istemek"
+},
+{
+"q": "\"to remember\" =",
+"o": [
+"hatırlamak",
+"unutmak",
+"bilmek",
+"öğrenmek"
+],
+"a": 0
+},
+{
+"q": "\"to forget\" =",
+"o": [
+"unutmak",
+"hatırlamak",
+"anlamak",
+"sormak"
+],
+"a": 0
+},
+{
+"f": "I remember = Hatırlı___",
+"a": [
+"yorum"
+],
+"x": "-iyor + um"
+},
+{
+"q": "\"old (of things)\" =",
+"o": [
+"eski",
+"yeni",
+"genç",
+"yaşlı"
+],
+"a": 0
+},
+{
+"w": [
+"Çocukluğumu",
+"hatırlıyorum"
+],
+"x": "object first, verb last"
+},
+{
+"q": "\"memory / keepsake\" =",
+"o": [
+"hatıra",
+"hikaye",
+"rüya",
+"düşünce"
+],
+"a": 0
+}
+],
+"12": [
+{
+"q": "\"the girl who is dancing\" =",
+"o": [
+"dans eden kız",
+"kız dans ediyor",
+"dans kızı",
+"kız ki dans eder"
+],
+"a": 0
+},
+{
+"q": "Turkish relative clauses go:",
+"o": [
+"before the noun",
+"after the noun",
+"at sentence end",
+"only with ki"
+],
+"a": 0
+},
+{
+"f": "the number you dialled = aradığınız ___",
+"a": [
+"numara"
+],
+"x": "numara = number"
+},
+{
+"q": "\"I went and bought it\" =",
+"o": [
+"Gidip aldım",
+"Gittim aldım",
+"Gidiyor aldım",
+"Git al"
+],
+"a": 0
+},
+{
+"q": "With -ip, tense is carried by:",
+"o": [
+"only the last verb",
+"only the first verb",
+"both",
+"neither"
+],
+"a": 0
+},
+{
+"f": "the man who came = gel___ adam",
+"a": [
+"en"
+],
+"x": "-en = the one who"
+},
+{
+"w": [
+"Aradığınız",
+"numara",
+"yanlıştır"
+],
+"x": "description before noun"
+},
+{
+"w": [
+"Kalkıp",
+"dans",
+"etti"
+],
+"x": "-ip links the actions"
+},
+{
+"q": "\"the book I read\" =",
+"o": [
+"okuduğum kitap",
+"kitap okudum",
+"okuyan kitap",
+"kitabı okudum"
+],
+"a": 0
+},
+{
+"f": "is incorrect = ___",
+"a": [
+"yanlıştır",
+"yanlış"
+],
+"x": "-dır makes it official"
+},
+{
+"q": "-en/-an attaches to:",
+"o": [
+"the verb, describing the doer",
+"nouns only",
+"adjectives",
+"question words"
+],
+"a": 0
+},
+{
+"f": "the person who works = çalış___ kişi",
+"a": [
+"an"
+],
+"x": "a → -an"
+},
+{
+"q": "\"to win\" =",
+"o": [
+"kazanmak",
+"kaybetmek",
+"oynamak",
+"saymak"
+],
+"a": 0
+},
+{
+"q": "\"to lose\" =",
+"o": [
+"kaybetmek",
+"kazanmak",
+"bulmak",
+"almak"
+],
+"a": 0
+},
+{
+"f": "I won! = ___",
+"a": [
+"kazandım"
+],
+"x": "kazan + dım"
+},
+{
+"q": "\"luck\" =",
+"o": [
+"şans",
+"kader",
+"oyun",
+"para"
+],
+"a": 0
+},
+{
+"w": [
+"Bugün",
+"şansım",
+"yok"
+],
+"x": "today / my-luck / none"
+},
+{
+"q": "\"boss\" =",
+"o": [
+"patron",
+"müdür",
+"işçi",
+"komşu"
+],
+"a": 0
+}
+],
+"13": [
+{
+"f": "I was waiting = Bekli___",
+"a": [
+"yordum"
+],
+"x": "-iyordu + m"
+},
+{
+"q": "For a sudden completed event use:",
+"o": [
+"-di past",
+"-iyordu",
+"-ecek",
+"-meli"
+],
+"a": 0
+},
+{
+"q": "You did NOT witness it yourself. Use:",
+"o": [
+"-miş",
+"-di",
+"-iyor",
+"-ecek"
+],
+"a": 0
+},
+{
+"q": "\"Apparently she left\" =",
+"o": [
+"Gitmiş",
+"Gitti",
+"Gidiyor",
+"Gidecek"
+],
+"a": 0
+},
+{
+"f": "She was dancing = Dans edi___",
+"a": [
+"yordu"
+],
+"x": "-iyordu"
+},
+{
+"q": "\"Could you tell me what happened?\" =",
+"o": [
+"Ne olduğunu anlatır mısınız?",
+"Ne oldu",
+"Ne oluyor",
+"Ne olacak"
+],
+"a": 0
+},
+{
+"w": [
+"Yürüyordum",
+"ve",
+"birden",
+"durdum"
+],
+"x": "background then sudden event"
+},
+{
+"w": [
+"Çok",
+"güzelmiş"
+],
+"x": "hearsay ending"
+},
+{
+"f": "I had gone (pluperfect) = Git___",
+"a": [
+"miştim"
+],
+"x": "-mişti + m"
+},
+{
+"q": "-miş marks:",
+"o": [
+"information you heard",
+"something you saw",
+"the future",
+"a command"
+],
+"a": 0
+},
+{
+"f": "what happened = ne ___",
+"a": [
+"olduğunu",
+"oldu"
+],
+"x": "olmak = to happen"
+},
+{
+"q": "\"They say it was expensive\" =",
+"o": [
+"Pahalıymış",
+"Pahalıydı",
+"Pahalı",
+"Pahalı mı"
+],
+"a": 0
+},
+{
+"q": "\"how much?\" =",
+"o": [
+"ne kadar",
+"ne zaman",
+"nasıl",
+"nerede"
+],
+"a": 0
+},
+{
+"q": "\"cheap\" =",
+"o": [
+"ucuz",
+"pahalı",
+"güzel",
+"büyük"
+],
+"a": 0
+},
+{
+"f": "Too expensive! = Çok ___",
+"a": [
+"pahalı"
+],
+"x": "pahalı"
+},
+{
+"q": "\"to haggle\" =",
+"o": [
+"pazarlık etmek",
+"alışveriş yapmak",
+"para vermek",
+"satmak"
+],
+"a": 0
+},
+{
+"w": [
+"Biraz",
+"indirim",
+"yapar",
+"mısınız"
+],
+"x": "the polite haggle"
+},
+{
+"q": "\"money\" =",
+"o": [
+"para",
+"pul",
+"fiyat",
+"hesap"
+],
+"a": 0
+}
+],
+"14": [
+{
+"f": "I used to live here = Burada otur___",
+"a": [
+"urdum",
+"ardım"
+],
+"x": "-ardı = used to"
+},
+{
+"q": "[b]çocukken[/b] =",
+"o": [
+"when I was a child",
+"my child",
+"children",
+"childish"
+],
+"a": 0
+},
+{
+"q": "\"I had my hair cut\" implies:",
+"o": [
+"someone else cut it",
+"I cut it myself",
+"my hair grew",
+"I will cut it"
+],
+"a": 0
+},
+{
+"q": "[i]öl[/i] = to die. [i]öldür[/i] =",
+"o": [
+"to kill (make die)",
+"to be dead",
+"to nearly die",
+"to revive"
+],
+"a": 0
+},
+{
+"f": "Don't make me laugh! = ___ beni!",
+"a": [
+"güldürme"
+],
+"x": "gül + dür + me"
+},
+{
+"q": "\"we used to go\" =",
+"o": [
+"giderdik",
+"gittik",
+"gidiyoruz",
+"gideceğiz"
+],
+"a": 0
+},
+{
+"f": "while walking = yürü___",
+"a": [
+"rken",
+"ken"
+],
+"x": "-ken = while"
+},
+{
+"w": [
+"Çocukken",
+"burada",
+"oynardım"
+],
+"x": "verb last"
+},
+{
+"w": [
+"Güldürme",
+"beni"
+],
+"x": "command + object"
+},
+{
+"q": "The causative suffix is:",
+"o": [
+"-dir/-tir",
+"-ler",
+"-de",
+"-mi"
+],
+"a": 0
+},
+{
+"f": "to make someone do = yap___",
+"a": [
+"tır",
+"tırmak"
+],
+"x": "yaptırmak"
+},
+{
+"q": "\"I used to drink tea every morning\" uses:",
+"o": [
+"-erdi",
+"-di",
+"-ecek",
+"-meli"
+],
+"a": 0
+},
+{
+"q": "\"to fight\" =",
+"o": [
+"dövüşmek",
+"dans etmek",
+"koşmak",
+"gülmek"
+],
+"a": 0
+},
+{
+"q": "\"strong\" =",
+"o": [
+"güçlü",
+"zayıf",
+"hızlı",
+"yavaş"
+],
+"a": 0
+},
+{
+"f": "You are strong = ___",
+"a": [
+"güçlüsün"
+],
+"x": "güçlü + sün"
+},
+{
+"q": "\"stage\" =",
+"o": [
+"sahne",
+"oyun",
+"müzik",
+"dans"
+],
+"a": 0
+},
+{
+"w": [
+"Sen",
+"çok",
+"güçlüsün"
+],
+"x": "you / very / are-strong"
+},
+{
+"q": "\"crowd\" =",
+"o": [
+"kalabalık",
+"sessizlik",
+"yalnızlık",
+"karanlık"
+],
+"a": 0
+}
+],
+"15": [
+{
+"f": "It was written = Yaz___",
+"a": [
+"ıldı"
+],
+"x": "-ıl passive + dı"
+},
+{
+"q": "[b]tarafından[/b] marks:",
+"o": [
+"the doer (by ...)",
+"the place",
+"the time",
+"the reason"
+],
+"a": 0
+},
+{
+"q": "\"When was this place built?\" =",
+"o": [
+"Burası ne zaman inşa edilmiş?",
+"Burayı yaptım",
+"Burada mı",
+"Bura ne"
+],
+"a": 0
+},
+{
+"f": "coffee seller = kahve___",
+"a": [
+"ci"
+],
+"x": "-ci = person who does"
+},
+{
+"f": "worker = iş___",
+"a": [
+"çi"
+],
+"x": "hardens to -çi after ş"
+},
+{
+"q": "[i]güzel[/i] + -lik =",
+"o": [
+"beauty",
+"beautiful",
+"beautify",
+"more beautiful"
+],
+"a": 0
+},
+{
+"q": "[i]arkadaş[/i] + -lık =",
+"o": [
+"friendship",
+"friendly",
+"friends",
+"befriend"
+],
+"a": 0
+},
+{
+"w": [
+"Bu",
+"ev",
+"1990'da",
+"yapıldı"
+],
+"x": "passive verb last"
+},
+{
+"w": [
+"Kaan",
+"tarafından",
+"yapıldı"
+],
+"x": "doer + tarafından"
+},
+{
+"f": "journalist = gazete___",
+"a": [
+"ci"
+],
+"x": "gazeteci"
+},
+{
+"q": "The passive suffix is:",
+"o": [
+"-il / -in",
+"-ler",
+"-mi",
+"-ecek"
+],
+"a": 0
+},
+{
+"f": "It was said = ___",
+"a": [
+"söylendi"
+],
+"x": "söylemek → söylenmek"
+},
+{
+"q": "\"birthday\" =",
+"o": [
+"doğum günü",
+"yeni yıl",
+"bayram",
+"tatil"
+],
+"a": 0
+},
+{
+"q": "\"gift\" =",
+"o": [
+"hediye",
+"çiçek",
+"pasta",
+"mum"
+],
+"a": 0
+},
+{
+"f": "Happy birthday! = ___ günün kutlu olsun",
+"a": [
+"doğum"
+],
+"x": "doğum günü"
+},
+{
+"q": "\"to celebrate\" =",
+"o": [
+"kutlamak",
+"ağlamak",
+"beklemek",
+"saymak"
+],
+"a": 0
+},
+{
+"w": [
+"Sana",
+"bir",
+"hediye",
+"aldım"
+],
+"x": "for-you / a / gift / I-bought"
+},
+{
+"q": "\"candle\" =",
+"o": [
+"mum",
+"ışık",
+"ateş",
+"lamba"
+],
+"a": 0
+}
+],
+"16": [
+{
+"f": "If I had known = Bil___",
+"a": [
+"seydim"
+],
+"x": "-seydi + m"
+},
+{
+"q": "\"I wouldn't have gone\" =",
+"o": [
+"Gitmezdim",
+"Gitmedim",
+"Gitmiyorum",
+"Gitmem"
+],
+"a": 0
+},
+{
+"q": "[b]Keşke[/b] =",
+"o": [
+"if only",
+"never",
+"always",
+"why"
+],
+"a": 0
+},
+{
+"q": "\"I love you\" =",
+"o": [
+"Seni seviyorum",
+"Seni özledim",
+"Seni gördüm",
+"Sensiz"
+],
+"a": 0
+},
+{
+"f": "If only you had come = Keşke gel___",
+"a": [
+"seydin"
+],
+"x": "-seydin = you"
+},
+{
+"q": "\"If I had known the prices...\" begins:",
+"o": [
+"Fiyatları bilseydim",
+"Fiyatlar biliyor",
+"Fiyatı bildim",
+"Fiyat bilir"
+],
+"a": 0
+},
+{
+"w": [
+"Keşke",
+"gelseydin"
+],
+"x": "keşke first"
+},
+{
+"w": [
+"Seni",
+"çok",
+"seviyorum"
+],
+"x": "verb last, always"
+},
+{
+"f": "I missed you = Seni ___",
+"a": [
+"özledim"
+],
+"x": "özlemek"
+},
+{
+"q": "-seydi expresses:",
+"o": [
+"something unreal / regret",
+"a plain past",
+"a command",
+"a question"
+],
+"a": 0
+},
+{
+"f": "we wouldn't have eaten = ye___",
+"a": [
+"mezdik"
+],
+"x": "-mezdi + k"
+},
+{
+"q": "The sweetest sentence in the book:",
+"o": [
+"Seni seviyorum",
+"Hesap lütfen",
+"Yok",
+"Buyurun"
+],
+"a": 0
+},
+{
+"q": "\"if only\" =",
+"o": [
+"keşke",
+"belki",
+"hemen",
+"asla"
+],
+"a": 0
+},
+{
+"q": "\"together\" =",
+"o": [
+"birlikte",
+"ayrı",
+"uzak",
+"yalnız"
+],
+"a": 0
+},
+{
+"f": "I love you = Seni ___",
+"a": [
+"seviyorum"
+],
+"x": "sev + iyor + um"
+},
+{
+"q": "\"forever\" =",
+"o": [
+"sonsuza kadar",
+"bir gün",
+"şimdi",
+"belki"
+],
+"a": 0
+},
+{
+"w": [
+"Seninle",
+"her",
+"yere",
+"giderim"
+],
+"x": "with-you / every / place / I-would-go"
+},
+{
+"q": "\"home / nest\" =",
+"o": [
+"yuva",
+"oda",
+"şehir",
+"sokak"
+],
+"a": 0
+}
+]
+},
+"WORDS": [
+{
+"tr": "güneş",
+"en": "sun",
+"e": "☀️",
+"t": 1
+},
+{
+"tr": "ay",
+"en": "moon / month",
+"e": "🌙",
+"t": 1
+},
+{
+"tr": "gökyüzü",
+"en": "sky",
+"e": "🌌",
+"t": 2
+},
+{
+"tr": "dağ",
+"en": "mountain",
+"e": "⛰",
+"t": 1
+},
+{
+"tr": "tepe",
+"en": "hill",
+"e": "🌄",
+"t": 1
+},
+{
+"tr": "yol",
+"en": "road",
+"e": "🛣",
+"t": 1
+},
+{
+"tr": "ev",
+"en": "house",
+"e": "🏠",
+"t": 1
+},
+{
+"tr": "bahçe",
+"en": "garden",
+"e": "🌱",
+"t": 1
+},
+{
+"tr": "komşu",
+"en": "neighbour",
+"e": "🏘",
+"t": 1
+},
+{
+"tr": "mahalle",
+"en": "neighbourhood",
+"e": "🏘",
+"t": 2
+},
+{
+"tr": "sandık",
+"en": "chest / trunk",
+"e": "🧰",
+"t": 2
+},
+{
+"tr": "hazine",
+"en": "treasure",
+"e": "💎",
+"t": 2
+},
+{
+"tr": "anahtar",
+"en": "key",
+"e": "🔑",
+"t": 1
+},
+{
+"tr": "kilit",
+"en": "lock",
+"e": "🔒",
+"t": 2
+},
+{
+"tr": "bekçi",
+"en": "guard / watchman",
+"e": "🛡",
+"t": 2
+},
+{
+"tr": "öküz",
+"en": "ox / lout",
+"e": "🐂",
+"t": 2
+},
+{
+"tr": "sandalye",
+"en": "chair",
+"e": "🪑",
+"t": 1
+},
+{
+"tr": "masa",
+"en": "table",
+"e": "🪑",
+"t": 1
+},
+{
+"tr": "çöp",
+"en": "rubbish",
+"e": "🗑",
+"t": 1
+},
+{
+"tr": "ışık",
+"en": "light",
+"e": "💡",
+"t": 1
+},
+{
+"tr": "gözlük",
+"en": "glasses",
+"e": "👓",
+"t": 1
+},
+{
+"tr": "güneş gözlüğü",
+"en": "sunglasses",
+"e": "🕶",
+"t": 2
+},
+{
+"tr": "saat",
+"en": "hour / clock",
+"e": "🕐",
+"t": 1
+},
+{
+"tr": "sabah",
+"en": "morning",
+"e": "🌤",
+"t": 1
+},
+{
+"tr": "öğle",
+"en": "midday",
+"e": "☀️",
+"t": 1
+},
+{
+"tr": "akşam",
+"en": "evening",
+"e": "🌆",
+"t": 1
+},
+{
+"tr": "gece",
+"en": "night",
+"e": "🌙",
+"t": 1
+},
+{
+"tr": "şafak",
+"en": "dawn",
+"e": "🌅",
+"t": 2
+},
+{
+"tr": "yağmur",
+"en": "rain",
+"e": "🌧",
+"t": 1
+},
+{
+"tr": "rüzgar",
+"en": "wind",
+"e": "💨",
+"t": 2
+},
+{
+"tr": "bulut",
+"en": "cloud",
+"e": "☁️",
+"t": 1
+},
+{
+"tr": "yıldız",
+"en": "star",
+"e": "⭐",
+"t": 1
+},
+{
+"tr": "koşmak",
+"en": "to run",
+"e": "🏃‍♀️",
+"t": 1
+},
+{
+"tr": "zıplamak",
+"en": "to jump",
+"e": "🦘",
+"t": 1
+},
+{
+"tr": "düşmek",
+"en": "to fall",
+"e": "🤕",
+"t": 1
+},
+{
+"tr": "binmek",
+"en": "to ride / board",
+"e": "🚲",
+"t": 1
+},
+{
+"tr": "sürmek",
+"en": "to drive",
+"e": "🛵",
+"t": 2
+},
+{
+"tr": "açmak",
+"en": "to open",
+"e": "🔓",
+"t": 1
+},
+{
+"tr": "kapatmak",
+"en": "to close",
+"e": "🚪",
+"t": 1
+},
+{
+"tr": "dövüşmek",
+"en": "to fight",
+"e": "🥊",
+"t": 2
+},
+{
+"tr": "kazanmak",
+"en": "to win",
+"e": "🏆",
+"t": 1
+},
+{
+"tr": "kaybetmek",
+"en": "to lose",
+"e": "😖",
+"t": 1
+},
+{
+"tr": "beklemek",
+"en": "to wait",
+"e": "⏳",
+"t": 1
+},
+{
+"tr": "bulmak",
+"en": "to find",
+"e": "🔎",
+"t": 1
+},
+{
+"tr": "aramak",
+"en": "to look for / to call",
+"e": "📞",
+"t": 1
+},
+{
+"tr": "vermek",
+"en": "to give",
+"e": "🤲",
+"t": 1
+},
+{
+"tr": "almak",
+"en": "to take / to buy",
+"e": "🛍",
+"t": 1
+},
+{
+"tr": "anlamak",
+"en": "to understand",
+"e": "💡",
+"t": 1
+},
+{
+"tr": "unutmak",
+"en": "to forget",
+"e": "🫥",
+"t": 2
+},
+{
+"tr": "hatırlamak",
+"en": "to remember",
+"e": "🧠",
+"t": 2
+},
+{
+"tr": "dinlenmek",
+"en": "to rest",
+"e": "😌",
+"t": 2
+},
+{
+"tr": "yorulmak",
+"en": "to get tired",
+"e": "😮‍💨",
+"t": 2
+},
+{
+"tr": "hızlı",
+"en": "fast",
+"e": "⚡",
+"t": 1
+},
+{
+"tr": "yavaş",
+"en": "slow",
+"e": "🐢",
+"t": 1
+},
+{
+"tr": "yüksek",
+"en": "high / tall",
+"e": "📏",
+"t": 1
+},
+{
+"tr": "alçak",
+"en": "low",
+"e": "📉",
+"t": 2
+},
+{
+"tr": "uzak",
+"en": "far",
+"e": "🛣",
+"t": 1
+},
+{
+"tr": "yakın",
+"en": "near",
+"e": "📍",
+"t": 1
+},
+{
+"tr": "kolay",
+"en": "easy",
+"e": "👌",
+"t": 1
+},
+{
+"tr": "zor",
+"en": "hard / difficult",
+"e": "😤",
+"t": 1
+},
+{
+"tr": "yeni",
+"en": "new",
+"e": "✨",
+"t": 1
+},
+{
+"tr": "eski",
+"en": "old",
+"e": "🏚",
+"t": 1
+},
+{
+"tr": "temiz",
+"en": "clean",
+"e": "🧼",
+"t": 1
+},
+{
+"tr": "kirli",
+"en": "dirty",
+"e": "🧹",
+"t": 1
+},
+{
+"tr": "aç",
+"en": "hungry",
+"e": "🍽",
+"t": 1
+},
+{
+"tr": "tok",
+"en": "full (not hungry)",
+"e": "😋",
+"t": 2
+},
+{
+"tr": "yorgun",
+"en": "tired",
+"e": "😴",
+"t": 1
+},
+{
+"tr": "mutlu",
+"en": "happy",
+"e": "😊",
+"t": 1
+},
+{
+"tr": "üzgün",
+"en": "sad",
+"e": "😢",
+"t": 1
+},
+{
+"tr": "kızgın",
+"en": "angry",
+"e": "😠",
+"t": 1
+},
+{
+"tr": "belki",
+"en": "maybe",
+"e": "🤔",
+"t": 1
+},
+{
+"tr": "her zaman",
+"en": "always",
+"e": "♾",
+"t": 1
+},
+{
+"tr": "bazen",
+"en": "sometimes",
+"e": "🔀",
+"t": 1
+},
+{
+"tr": "hiç",
+"en": "never / at all",
+"e": "🚫",
+"t": 1
+},
+{
+"tr": "şimdi",
+"en": "now",
+"e": "⏱",
+"t": 1
+},
+{
+"tr": "sonra",
+"en": "later / after",
+"e": "⏭",
+"t": 1
+},
+{
+"tr": "önce",
+"en": "before",
+"e": "⏮",
+"t": 1
+},
+{
+"tr": "birlikte",
+"en": "together",
+"e": "🤝",
+"t": 1
+},
+{
+"tr": "kendi",
+"en": "own / self",
+"e": "🪞",
+"t": 2
+},
+{
+"tr": "seri",
+"en": "streak / series",
+"e": "🔥",
+"t": 2
+},
+{
+"tr": "merhaba",
+"en": "hello",
+"e": "👋",
+"t": 1
+},
+{
+"tr": "kokteyl",
+"en": "cocktail",
+"e": "🍹",
+"t": 1
+},
+{
+"tr": "köpek",
+"en": "dog",
+"e": "🐶",
+"t": 1
+},
+{
+"tr": "tavla",
+"en": "backgammon",
+"e": "🎲",
+"t": 1
+},
+{
+"tr": "sigara",
+"en": "cigarette",
+"e": "🚬",
+"t": 1
+},
+{
+"tr": "plaj",
+"en": "beach",
+"e": "🏖️",
+"t": 1
+},
+{
+"tr": "deniz",
+"en": "sea",
+"e": "🌊",
+"t": 1
+},
+{
+"tr": "bisiklet",
+"en": "bicycle",
+"e": "🚲",
+"t": 1
+},
+{
+"tr": "avokado",
+"en": "avocado",
+"e": "🥑",
+"t": 1
+},
+{
+"tr": "market",
+"en": "grocery store",
+"e": "🛒",
+"t": 1
+},
+{
+"tr": "simit",
+"en": "Turkish bagel",
+"e": "🥯",
+"t": 1
+},
+{
+"tr": "döner",
+"en": "döner kebab",
+"e": "🥙",
+"t": 1
+},
+{
+"tr": "gözlük",
+"en": "glasses",
+"e": "👓",
+"t": 1
+},
+{
+"tr": "palmiye",
+"en": "palm tree",
+"e": "🌴",
+"t": 1
+},
+{
+"tr": "ay",
+"en": "moon",
+"e": "🌙",
+"t": 1
+},
+{
+"tr": "gece",
+"en": "night",
+"e": "🌃",
+"t": 1
+},
+{
+"tr": "araba",
+"en": "car",
+"e": "🚗",
+"t": 1
+},
+{
+"tr": "ev",
+"en": "home",
+"e": "🏠",
+"t": 1
+},
+{
+"tr": "para",
+"en": "money",
+"e": "💵",
+"t": 1
+},
+{
+"tr": "müzik",
+"en": "music",
+"e": "🎵",
+"t": 1
+},
+{
+"tr": "gitar",
+"en": "guitar",
+"e": "🎸",
+"t": 1
+},
+{
+"tr": "dans",
+"en": "dance",
+"e": "💃",
+"t": 1
+},
+{
+"tr": "deniz kabuğu",
+"en": "seashell",
+"e": "🐚",
+"t": 1
+},
+{
+"tr": "aşk",
+"en": "love",
+"e": "❤️",
+"t": 1
+},
+{
+"tr": "teşekkürler",
+"en": "thank you",
+"e": "🙏",
+"t": 1
+},
+{
+"tr": "su",
+"en": "water",
+"e": "💧",
+"t": 1
+},
+{
+"tr": "gece kulübü",
+"en": "nightclub",
+"e": "🪩",
+"t": 1
+},
+{
+"tr": "günaydın",
+"en": "good morning",
+"e": "🌅",
+"t": 1
+},
+{
+"tr": "zombi",
+"en": "zombie",
+"e": "🧟",
+"t": 1
+},
+{
+"tr": "hemşire",
+"en": "nurse",
+"e": "👩‍⚕️",
+"t": 1
+},
+{
+"tr": "anne",
+"en": "mom",
+"e": "👩",
+"t": 1
+},
+{
+"tr": "börek",
+"en": "savory pastry",
+"e": "🥟",
+"t": 1
+},
+{
+"tr": "uzaylı",
+"en": "alien",
+"e": "👽",
+"t": 1
+},
+{
+"tr": "park",
+"en": "park",
+"e": "🌳",
+"t": 1
+},
+{
+"tr": "pena",
+"en": "guitar pick",
+"e": "🎸",
+"t": 1
+},
+{
+"tr": "klavye",
+"en": "keyboard",
+"e": "⌨️",
+"t": 1
+},
+{
+"tr": "patron",
+"en": "boss",
+"e": "👩‍💼",
+"t": 1
+},
+{
+"tr": "hayalet",
+"en": "ghost",
+"e": "👻",
+"t": 1
+},
+{
+"tr": "dede",
+"en": "grandpa",
+"e": "👴",
+"t": 1
+},
+{
+"tr": "büyükanne",
+"en": "grandma",
+"e": "👵",
+"t": 1
+},
+{
+"tr": "aile",
+"en": "family",
+"e": "👨‍👩‍👧",
+"t": 1
+},
+{
+"tr": "kuzen",
+"en": "cousin",
+"e": "👱‍♀️",
+"t": 1
+},
+{
+"tr": "sabah",
+"en": "morning",
+"e": "🌅",
+"t": 1
+},
+{
+"tr": "akşam",
+"en": "evening",
+"e": "🌇",
+"t": 1
+},
+{
+"tr": "erken",
+"en": "early",
+"e": "⏰",
+"t": 1
+},
+{
+"tr": "geç",
+"en": "late",
+"e": "🕚",
+"t": 1
+},
+{
+"tr": "bugün",
+"en": "today",
+"e": "📅",
+"t": 1
+},
+{
+"tr": "yarın",
+"en": "tomorrow",
+"e": "➡️",
+"t": 1
+},
+{
+"tr": "dün",
+"en": "yesterday",
+"e": "⬅️",
+"t": 1
+},
+{
+"tr": "sıcak",
+"en": "hot",
+"e": "🔥",
+"t": 1
+},
+{
+"tr": "soğuk",
+"en": "cold",
+"e": "❄️",
+"t": 1
+},
+{
+"tr": "büyük",
+"en": "big",
+"e": "🐘",
+"t": 1
+},
+{
+"tr": "küçük",
+"en": "small",
+"e": "🐭",
+"t": 1
+},
+{
+"tr": "kahve",
+"en": "coffee",
+"e": "☕",
+"t": 1
+},
+{
+"tr": "çay",
+"en": "tea",
+"e": "🫖",
+"t": 1
+},
+{
+"tr": "ekmek",
+"en": "bread",
+"e": "🍞",
+"t": 1
+},
+{
+"tr": "uçak",
+"en": "airplane",
+"e": "✈️",
+"t": 1
+},
+{
+"tr": "havalimanı",
+"en": "airport",
+"e": "🛫",
+"t": 1
+},
+{
+"tr": "çiçek",
+"en": "flower",
+"e": "🌺",
+"t": 1
+},
+{
+"tr": "kaktüs",
+"en": "cactus",
+"e": "🌵",
+"t": 1
+},
+{
+"tr": "akrep",
+"en": "scorpion",
+"e": "🦂",
+"t": 1
+},
+{
+"tr": "üzüm",
+"en": "grape",
+"e": "🍇",
+"t": 1
+},
+{
+"tr": "fotoğraf",
+"en": "photo",
+"e": "📷",
+"t": 1
+},
+{
+"tr": "çanta",
+"en": "bag",
+"e": "👜",
+"t": 1
+},
+{
+"tr": "davul",
+"en": "drum",
+"e": "🥁",
+"t": 1
+},
+{
+"tr": "dinozor",
+"en": "dinosaur",
+"e": "🦖",
+"t": 1
+},
+{
+"tr": "kedi",
+"en": "cat",
+"e": "🐱",
+"t": 1
+},
+{
+"tr": "kemik",
+"en": "bone",
+"e": "🦴",
+"t": 1
+},
+{
+"tr": "kral",
+"en": "king",
+"e": "👑",
+"t": 1
+},
+{
+"tr": "memleket",
+"en": "hometown",
+"e": "🏡",
+"t": 1
+},
+{
+"tr": "çocukluk",
+"en": "childhood",
+"e": "🧒",
+"t": 1
+},
+{
+"tr": "sağ",
+"en": "right (side)",
+"e": "➡️",
+"t": 1
+},
+{
+"tr": "sol",
+"en": "left (side)",
+"e": "⬅️",
+"t": 1
+},
+{
+"tr": "sıra",
+"en": "queue / line",
+"e": "🧍",
+"t": 1
+},
+{
+"tr": "şiş",
+"en": "skewer",
+"e": "🍢",
+"t": 1
+},
+{
+"tr": "ruh",
+"en": "spirit",
+"e": "🌬️",
+"t": 1
+},
+{
+"tr": "anı",
+"en": "memory",
+"e": "💭",
+"t": 1
+},
+{
+"tr": "koku",
+"en": "smell",
+"e": "🤢",
+"t": 1
+},
+{
+"tr": "cadı",
+"en": "witch",
+"e": "🧙‍♀️",
+"t": 1
+},
+{
+"tr": "iskelet",
+"en": "skeleton",
+"e": "💀",
+"t": 1
+},
+{
+"tr": "mumya",
+"en": "mummy",
+"e": "🧟",
+"t": 1
+},
+{
+"tr": "ok",
+"en": "arrow",
+"e": "🏹",
+"t": 1
+},
+{
+"tr": "baklava",
+"en": "baklava",
+"e": "🍯",
+"t": 1
+},
+{
+"tr": "lokum",
+"en": "Turkish delight",
+"e": "🍬",
+"t": 1
+},
+{
+"tr": "nazar boncuğu",
+"en": "evil eye bead",
+"e": "🧿",
+"t": 1
+},
+{
+"tr": "şans",
+"en": "luck",
+"e": "🍀",
+"t": 1
+},
+{
+"tr": "yazı tura",
+"en": "heads or tails",
+"e": "🪙",
+"t": 1
+},
+{
+"tr": "tanrı",
+"en": "god",
+"e": "⚡",
+"t": 1
+},
+{
+"tr": "kader",
+"en": "fate",
+"e": "🔮",
+"t": 1
+},
+{
+"tr": "çeşme",
+"en": "fountain",
+"e": "⛲",
+"t": 1
+},
+{
+"tr": "köprü",
+"en": "bridge",
+"e": "🌉",
+"t": 1
+},
+{
+"tr": "balta",
+"en": "axe",
+"e": "🪓",
+"t": 1
+},
+{
+"tr": "kılıç",
+"en": "sword",
+"e": "⚔️",
+"t": 1
+},
+{
+"tr": "oklava",
+"en": "rolling pin",
+"e": "🥖",
+"t": 1
+},
+{
+"tr": "pazarlık",
+"en": "haggling",
+"e": "🧿",
+"t": 1
+},
+{
+"tr": "gemi",
+"en": "ship",
+"e": "⛵",
+"t": 1
+},
+{
+"tr": "yıldız",
+"en": "star",
+"e": "🌟",
+"t": 1
+},
+{
+"tr": "rüya",
+"en": "dream",
+"e": "🌴",
+"t": 1
+},
+{
+"tr": "doğum günü",
+"en": "birthday",
+"e": "🎂",
+"t": 1
+},
+{
+"tr": "seviye",
+"en": "level",
+"e": "⭐",
+"t": 1
+},
+{
+"tr": "alet",
+"en": "device / tool",
+"e": "📡",
+"t": 1
+},
+{
+"tr": "zar",
+"en": "dice",
+"e": "🎲",
+"t": 1
+},
+{
+"tr": "kırık",
+"en": "hit checker (on the bar)",
+"e": "💥",
+"t": 1
+},
+{
+"tr": "matcha",
+"en": "matcha",
+"e": "🍵",
+"t": 1
+},
+{
+"tr": "nadir",
+"en": "rare",
+"e": "💀",
+"t": 1
+},
+{
+"tr": "vergi",
+"en": "tax",
+"e": "🧾",
+"t": 1
+},
+{
+"tr": "usta",
+"en": "master / expert",
+"e": "🎓",
+"t": 1
+},
+{
+"tr": "sınav",
+"en": "exam",
+"e": "📝",
+"t": 1
+},
+{
+"tr": "arkadaş",
+"en": "friend",
+"e": "🫂",
+"t": 1
+},
+{
+"tr": "kuş",
+"en": "bird",
+"e": "🐦",
+"t": 1
+},
+{
+"tr": "kanat",
+"en": "wing",
+"e": "🪶",
+"t": 1
+},
+{
+"tr": "pişmanlık",
+"en": "regret",
+"e": "💔",
+"t": 1
+},
+{
+"tr": "kapı",
+"en": "made point (blocked)",
+"e": "🚪",
+"t": 1
+},
+{
+"tr": "mars",
+"en": "gammon (double win)",
+"e": "🏆",
+"t": 1
+},
+{
+"tr": "gitmek",
+"en": "to go",
+"e": "🚶",
+"t": 1
+},
+{
+"tr": "gelmek",
+"en": "to come",
+"e": "👋",
+"t": 1
+},
+{
+"tr": "yemek",
+"en": "to eat",
+"e": "🍽️",
+"t": 1
+},
+{
+"tr": "içmek",
+"en": "to drink",
+"e": "🥤",
+"t": 1
+},
+{
+"tr": "almak",
+"en": "to buy / take",
+"e": "🛍️",
+"t": 1
+},
+{
+"tr": "sevmek",
+"en": "to love",
+"e": "❤️",
+"t": 1
+},
+{
+"tr": "istemek",
+"en": "to want",
+"e": "🙏",
+"t": 1
+},
+{
+"tr": "bilmek",
+"en": "to know",
+"e": "🧠",
+"t": 1
+},
+{
+"tr": "konuşmak",
+"en": "to speak",
+"e": "🗣️",
+"t": 1
+},
+{
+"tr": "beklemek",
+"en": "to wait",
+"e": "⏳",
+"t": 1
+},
+{
+"tr": "koşmak",
+"en": "to run",
+"e": "🏃‍♀️",
+"t": 1
+},
+{
+"tr": "uyumak",
+"en": "to sleep",
+"e": "😴",
+"t": 1
+},
+{
+"tr": "Bir kokteyl lütfen",
+"en": "One cocktail, please",
+"e": "🍹",
+"t": 2
+},
+{
+"tr": "Plaja gidiyorum",
+"en": "I'm going to the beach",
+"e": "🏖️",
+"t": 2
+},
+{
+"tr": "Köpeğim çok tatlı",
+"en": "My dog is very cute",
+"e": "🐶",
+"t": 2
+},
+{
+"tr": "Ne kadar?",
+"en": "How much is it?",
+"e": "💵",
+"t": 2
+},
+{
+"tr": "Görüşürüz bebeğim",
+"en": "See you, baby",
+"e": "😘",
+"t": 2
+},
+{
+"tr": "Nasılsın?",
+"en": "How are you?",
+"e": "🙂",
+"t": 2
+},
+{
+"tr": "Çok güzel!",
+"en": "Very beautiful!",
+"e": "✨",
+"t": 2
+},
+{
+"tr": "Acıktım",
+"en": "I'm hungry",
+"e": "😋",
+"t": 2
+},
+{
+"tr": "Nerede?",
+"en": "Where is it?",
+"e": "🗺️",
+"t": 2
+},
+{
+"tr": "İyi geceler",
+"en": "Good night",
+"e": "🌙",
+"t": 2
+},
+{
+"tr": "Seni seviyorum",
+"en": "I love you",
+"e": "❤️",
+"t": 2
+},
+{
+"tr": "Kaç para?",
+"en": "How much money?",
+"e": "💵",
+"t": 2
+},
+{
+"tr": "Çok pahalı!",
+"en": "Very expensive!",
+"e": "💸",
+"t": 2
+},
+{
+"tr": "Afiyet olsun",
+"en": "Enjoy your meal",
+"e": "🍽️",
+"t": 2
+},
+{
+"tr": "Hesap lütfen",
+"en": "The bill, please",
+"e": "🧾",
+"t": 2
+},
+{
+"tr": "Sağa dön",
+"en": "Turn right",
+"e": "➡️",
+"t": 2
+},
+{
+"tr": "Sola dön",
+"en": "Turn left",
+"e": "⬅️",
+"t": 2
+},
+{
+"tr": "Düz git",
+"en": "Go straight",
+"e": "⬆️",
+"t": 2
+},
+{
+"tr": "Acelem var",
+"en": "I'm in a hurry",
+"e": "🏃‍♀️",
+"t": 2
+},
+{
+"tr": "Bir dakika",
+"en": "One minute",
+"e": "☝️",
+"t": 2
+},
+{
+"tr": "Bilmiyorum",
+"en": "I don't know",
+"e": "🤷‍♀️",
+"t": 2
+},
+{
+"tr": "Şaka yapıyorsunuz",
+"en": "You're joking",
+"e": "😄",
+"t": 2
+},
+{
+"tr": "Türkçe öğreniyorum",
+"en": "I'm learning Turkish",
+"e": "🇹🇷",
+"t": 2
+},
+{
+"tr": "Çok erken!",
+"en": "So early!",
+"e": "⏰",
+"t": 2
+},
+{
+"tr": "Seni özledim",
+"en": "I missed you",
+"e": "🥺",
+"t": 2
+},
+{
+"tr": "Burası çok güzel",
+"en": "This place is beautiful",
+"e": "✨",
+"t": 2
+},
+{
+"tr": "Sabahları kahve içiyorum",
+"en": "I drink coffee in the mornings",
+"e": "☕",
+"t": 3
+},
+{
+"tr": "Yarın plaja gideceğim",
+"en": "Tomorrow I'll go to the beach",
+"e": "🏖️",
+"t": 3
+},
+{
+"tr": "Dün simit aldım",
+"en": "Yesterday I bought a simit",
+"e": "🥯",
+"t": 3
+},
+{
+"tr": "Köpeğimle koşuyorum",
+"en": "I'm running with my dog",
+"e": "🐶",
+"t": 3
+},
+{
+"tr": "Erken kalkmalıyım",
+"en": "I must get up early",
+"e": "⏰",
+"t": 3
+},
+{
+"tr": "Türkçe konuşabiliyorum",
+"en": "I can speak Turkish",
+"e": "🗣️",
+"t": 3
+},
+{
+"tr": "Denizi seviyorum",
+"en": "I love the sea",
+"e": "🌊",
+"t": 3
+},
+{
+"tr": "Bu kilim çok pahalı",
+"en": "This rug is very expensive",
+"e": "🧶",
+"t": 3
+},
+{
+"tr": "ayran",
+"en": "salty yoghurt drink",
+"e": "🥛",
+"t": 1
+},
+{
+"tr": "satmak",
+"en": "to sell",
+"e": "💸",
+"t": 1
+},
+{
+"tr": "takmak",
+"en": "to put on (jewellery, glasses)",
+"e": "💍",
+"t": 1
+},
+{
+"tr": "göz",
+"en": "eye",
+"e": "👁",
+"t": 1
+},
+{
+"tr": "mavi",
+"en": "blue",
+"e": "🔵",
+"t": 1
+},
+{
+"tr": "boncuk",
+"en": "bead",
+"e": "🧿",
+"t": 1
+},
+{
+"tr": "uğur",
+"en": "good luck",
+"e": "🍀",
+"t": 1
+},
+{
+"tr": "yarış",
+"en": "race",
+"e": "🏁",
+"t": 1
+},
+{
+"tr": "hırsız",
+"en": "thief",
+"e": "🦹",
+"t": 1
+},
+{
+"tr": "mektup",
+"en": "letter",
+"e": "💌",
+"t": 1
+},
+{
+"tr": "kaptan",
+"en": "captain",
+"e": "⚓",
+"t": 1
+},
+{
+"tr": "defter",
+"en": "notebook",
+"e": "📓",
+"t": 1
+},
+{
+"tr": "sayfa",
+"en": "page",
+"e": "📄",
+"t": 1
+},
+{
+"tr": "kurye",
+"en": "courier",
+"e": "📦",
+"t": 1
+},
+{
+"tr": "acele et!",
+"en": "hurry up!",
+"e": "⏱",
+"t": 2
+},
+{
+"tr": "fotoğraf çekmek",
+"en": "to take a photo",
+"e": "📸",
+"t": 2
+},
+{
+"tr": "kazandın!",
+"en": "you won!",
+"e": "🏆",
+"t": 2
+},
+{
+"tr": "yardım et!",
+"en": "help!",
+"e": "🆘",
+"t": 2
+},
+{
+"tr": "Hadi bakalım!",
+"en": "Let's go! Come on!",
+"e": "🗣️",
+"t": 2
+}
+],
+"GQ": [
+{
+"q": "Plural (e-type harmony): [b]ev[/b] (house) → houses?",
+"opts": [
+"evler",
+"evlar",
+"evleri",
+"evlerler"
+],
+"a": 0,
+"expl": "e/i/ö/ü take -ler"
+},
+{
+"q": "Plural: [b]araba[/b] (car) → cars?",
+"opts": [
+"arabalar",
+"arabaler",
+"arabalari",
+"arablar"
+],
+"a": 0,
+"expl": "a/ı/o/u take -lar"
+},
+{
+"q": "Plural: [b]köpek[/b] (dog) → dogs?",
+"opts": [
+"köpekler",
+"köpeklar",
+"köpekleri",
+"köpekes"
+],
+"a": 0,
+"expl": "ö → -ler"
+},
+{
+"q": "After numbers, NO plural: \"two dogs\" = ?",
+"opts": [
+"iki köpek",
+"iki köpekler",
+"köpekler iki",
+"ikiler köpek"
+],
+"a": 0,
+"expl": "numbers take singular!"
+},
+{
+"q": "Question particle (i-type): [b]Güzel __?[/b] (Is it beautiful?)",
+"opts": [
+"mi",
+"mı",
+"mu",
+"mü"
+],
+"a": 0,
+"expl": "e → mi"
+},
+{
+"q": "Question: [b]Türk __sün?[/b] (Are you Turkish?)",
+"opts": [
+"mü",
+"mi",
+"mı",
+"mu"
+],
+"a": 0,
+"expl": "ü → mü"
+},
+{
+"q": "Question: [b]Kokteyl var __?[/b] (Is there a cocktail?)",
+"opts": [
+"mı",
+"mi",
+"mu",
+"mü"
+],
+"a": 0,
+"expl": "a → mı"
+},
+{
+"q": "-iyor now-tense: [b]gel-[/b] (come) + I = ?",
+"opts": [
+"geliyorum",
+"geliyorsun",
+"gelirim",
+"geldim"
+],
+"a": 0,
+"expl": "stem+iyor+um"
+},
+{
+"q": "-iyor: [b]git-[/b] (go) + she = ?",
+"opts": [
+"gidiyor",
+"gitiyor",
+"gider",
+"gitti"
+],
+"a": 0,
+"expl": "t softens to d"
+},
+{
+"q": "Negative -iyor: \"I am NOT smoking\" = ?",
+"opts": [
+"Sigara içmiyorum",
+"Sigara içiyorum",
+"Sigara içtim",
+"Sigara yok"
+],
+"a": 0,
+"expl": "-m- before -iyor"
+},
+{
+"q": "Locative \"at/in\": [b]plaj[/b] → at the beach?",
+"opts": [
+"plajda",
+"plajde",
+"plajdan",
+"plaja"
+],
+"a": 0,
+"expl": "a → -da"
+},
+{
+"q": "Locative: [b]ev[/b] → at home?",
+"opts": [
+"evde",
+"evda",
+"evden",
+"eve"
+],
+"a": 0,
+"expl": "e → -de"
+},
+{
+"q": "Dative \"to\": [b]plaj[/b] → to the beach?",
+"opts": [
+"plaja",
+"plaje",
+"plajda",
+"plajdan"
+],
+"a": 0,
+"expl": "a → -a"
+},
+{
+"q": "Ablative \"from\": from Antalya = ?",
+"opts": [
+"Antalya'dan",
+"Antalya'da",
+"Antalya'ya",
+"Antalya'nın"
+],
+"a": 0,
+"expl": "-dan = from"
+},
+{
+"q": "Possessive: [b]benim köpeğ__[/b] (my dog)",
+"opts": [
+"-im",
+"-in",
+"-i",
+"-ler"
+],
+"a": 0,
+"expl": "benim ...-im"
+},
+{
+"q": "Possessive: [b]senin bisiklet__[/b] (your bike)",
+"opts": [
+"-in",
+"-im",
+"-i",
+"-iniz"
+],
+"a": 0,
+"expl": "senin ...-in"
+},
+{
+"q": "\"Is there coffee?\" = ?",
+"opts": [
+"Kahve var mı?",
+"Kahve yok mu?",
+"Var kahve mi?",
+"Kahve mi?"
+],
+"a": 0,
+"expl": "var mı = is there"
+},
+{
+"q": "\"There is no money\" = ?",
+"opts": [
+"Para yok",
+"Para var",
+"Para değil",
+"Yok para"
+],
+"a": 0,
+"expl": "yok = there is none"
+},
+{
+"q": "Past: \"I drank tea\" = ?",
+"opts": [
+"Çay içtim",
+"Çay içiyorum",
+"Çay içeceğim",
+"Çay iç"
+],
+"a": 0,
+"expl": "-di past"
+},
+{
+"q": "Future: \"I will go\" = ?",
+"opts": [
+"Gideceğim",
+"Gidiyorum",
+"Gittim",
+"Giderim"
+],
+"a": 0,
+"expl": "-ecek future"
+},
+{
+"q": "Obligation: \"I must run\" = ?",
+"opts": [
+"Koşmalıyım",
+"Koşuyorum",
+"Koştum",
+"Koşacağım"
+],
+"a": 0,
+"expl": "-meli = must"
+},
+{
+"q": "Comparative: \"bigger\" = ?",
+"opts": [
+"daha büyük",
+"en büyük",
+"çok büyük",
+"büyükler"
+],
+"a": 0,
+"expl": "daha = more"
+},
+{
+"q": "Superlative: \"the most beautiful\" = ?",
+"opts": [
+"en güzel",
+"daha güzel",
+"çok güzel",
+"güzeller"
+],
+"a": 0,
+"expl": "en = the most"
+},
+{
+"q": "Word order: \"I want a cocktail\" = ?",
+"opts": [
+"Bir kokteyl istiyorum",
+"İstiyorum bir kokteyl",
+"Kokteyl bir istiyorum",
+"Bir istiyorum kokteyl"
+],
+"a": 0,
+"expl": "verb goes LAST"
+},
+{
+"q": "\"with my dog\" = ?",
+"opts": [
+"köpeğimle",
+"köpeğimde",
+"köpeğimden",
+"köpeğime"
+],
+"a": 0,
+"expl": "-le = with"
+},
+{
+"q": "Ability: \"I can dance\" = ?",
+"opts": [
+"Dans edebiliyorum",
+"Dans ediyorum",
+"Dans etmeliyim",
+"Dans ettim"
+],
+"a": 0,
+"expl": "-ebil = can"
+}
+]
+}

@@ -46,10 +46,40 @@ func _ready() -> void:
 	p.hold(load("res://assets/weapons/katana.glb"), p.weapon)
 	var hud := Hud.new(); add_child(hud)
 	p.hp_changed.connect(hud.set_hp); hud.set_hp(p.hp, p.max_hp)
+	# the Turkish course (7.2's 16 units) and its quiz screen
+	var quiz := QuizUI.new(); add_child(quiz)
+	var lessons := Lessons.new(); lessons.name = "Lessons"; add_child(lessons); lessons.setup(p, hud, quiz)
 	var m := Node.new(); m.name = "Mission1"; m.set_script(load("res://scripts/mission1.gd")); add_child(m)
 	m.setup(world, p, hud)
 	if "--m1test" in OS.get_cmdline_user_args(): _dev_m1test(m, p)
+	if "--lessontest" in OS.get_cmdline_user_args(): _dev_lessontest(lessons, quiz, hud)
 	_dev_shot(p)
+
+# developer check only: earn a lesson with 5 kills, screenshot the lesson page and the quiz, answer
+# everything right, then quit (run with --savedir= on a copy of a real 7.2 save)
+func _dev_lessontest(L: Lessons, q: QuizUI, hud: Hud) -> void:
+	var dir := ""
+	for a in OS.get_cmdline_user_args(): if a.begins_with("--shots="): dir = a.substr(8)
+	await get_tree().create_timer(1.0).timeout
+	hud.call_box("", "")
+	for i in 5: L.lesson_tick()
+	await get_tree().create_timer(.6).timeout
+	await RenderingServer.frame_post_draw
+	if dir != "": get_viewport().get_texture().get_image().save_png(dir + "/l_lesson.png")
+	var ev := InputEventKey.new(); ev.keycode = KEY_ENTER; ev.pressed = true; q._unhandled_input(ev)
+	await get_tree().create_timer(.4).timeout
+	await RenderingServer.frame_post_draw
+	if dir != "": get_viewport().get_texture().get_image().save_png(dir + "/l_quiz.png")
+	var n := 0
+	while QuizUI.open and n < 40:
+		n += 1
+		match q.cur.get("kind", "mc"):
+			"fill": q.fill.text = str(q.cur["answer"][0] if q.cur["answer"] is Array else q.cur["answer"]); q._submit_fill()
+			"order": q.picked = q.cur["words"].duplicate(); q.pool = []; q._submit_order()
+			_: q._pick(int(q.cur["a"]))
+		await get_tree().create_timer(1.6).timeout
+	print("LESSONTEST answered ", n, " ul=", SaveBridge.data.get("ul"), " lesson=", SaveBridge.data.get("lesson"), " xp=", SaveBridge.data.get("xp"), " lvl=", SaveBridge.data.get("lvl"))
+	get_tree().quit()
 
 # developer check only: play mission 1 start to finish by itself, then quit (used against a copy of a
 # real 7.2 save with --savedir=, to prove the save round-trips)

@@ -7,6 +7,10 @@ config/name="TORİİ: NEO ANTALYA"
 run/main_scene="res://scenes/main.tscn"
 config/features=PackedStringArray("4.7", "GL Compatibility")
 
+[audio]
+
+general/text_to_speech=true
+
 [display]
 
 window/size/viewport_width=960

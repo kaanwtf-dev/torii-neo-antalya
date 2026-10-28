@@ -18,6 +18,8 @@ var torii: Node3D
 var base_y := 0.0
 var t := 0.0
 var _ground_cd := 0.0
+var greet_cd := 0.0
+const GREET := ["Merhaba! 👋", "Selam!", "İyi akşamlar!", "Merhaba, nasılsın?"]
 
 # kind: "male"/"female"; outfit: texture path; sc: 7.2's scale (kids are ~0.65)
 func setup(kind: String, outfit: String, sc: float, who: Node3D) -> void:
@@ -70,6 +72,12 @@ func _walk(dt: float) -> void:
 	if _ground_cd <= 0:
 		_ground_cd = .25; base_y = _ground(x, z)
 	position = Vector3(x, base_y + absf(sin(phase)) * .05, z); rotation.y = ry
+	# walkers greet her as they pass (updatePeds) — and that's how she learns "merhaba"
+	greet_cd -= dt
+	if torii and greet_cd <= 0 and Lessons.me and position.distance_squared_to(torii.global_position) < 20.0:
+		greet_cd = 16.0
+		Lessons.me.hud.toast(GREET.pick_random(), 2.6)
+		Lessons.me.teach("merhaba")
 
 # walkPerson(): opposed legs, counter-swinging arms, knees fold on the back-swing, elbows carried bent
 func _gait(phase: float, amp: float) -> void:

@@ -23,6 +23,7 @@ func setup(model: Node3D, target: CharacterBody3D) -> void:
 func hit(dmg: float) -> void:
 	hp -= dmg; hurt = .18
 	if hp <= 0:
+		if Lessons.me: Lessons.me.lesson_tick()         # 7.2: a Turkish lesson every 5 kills
 		died.emit(self); queue_free()
 
 func _physics_process(dt: float) -> void:

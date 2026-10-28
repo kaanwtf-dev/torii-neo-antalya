@@ -114,6 +114,7 @@ func _complete() -> void:
 	beam.visible = false; running = false
 	hud.objective("")
 	hud.banner("MISSION COMPLETE 🥑")
+	if Lessons.me: Lessons.me.teach("avokado")
 	hud.toast("🆕 Avocado Flail 🥑 — mission reward!\n+70 XP · Ne kadar? = How much?", 7.0)
 	var d := SaveBridge.data
 	d["next"] = 1; d["mid"] = null

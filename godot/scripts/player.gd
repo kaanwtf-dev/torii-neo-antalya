@@ -88,6 +88,7 @@ func _attack() -> void:
 			e.hit(weapon["dmg"])
 
 func _unhandled_input(e: InputEvent) -> void:
+	if QuizUI.open: return
 	if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT and Input.mouse_mode == Input.MOUSE_MODE_CAPTURED:
 		_attack()
 	elif e is InputEventMouseButton and e.pressed and Input.mouse_mode != Input.MOUSE_MODE_CAPTURED:
@@ -104,6 +105,10 @@ func _physics_process(dt: float) -> void:
 		if on_bike: _get_off()
 		elif global_position.distance_to(bike.global_position) < BIKE_REACH: _get_on()
 	attack_cd -= dt; attack_t -= dt; hurt_cd -= dt
+	if QuizUI.open:                       # lessons and quizzes pause her
+		velocity = Vector3.ZERO
+		if pose: pose.update(dt, t, false, 0.0, false, 0.0)
+		return
 	if Input.is_action_just_pressed("attack"): _attack()
 	if on_bike:
 		_ride(dt)
