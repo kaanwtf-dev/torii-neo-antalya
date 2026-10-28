@@ -1,0 +1,22 @@
+; TORİİ: NEO ANTALYA — Godot port (vertical slice). Engine: Godot 4.7, web export (GL Compatibility).
+config_version=5
+
+[application]
+
+config/name="TORİİ: NEO ANTALYA"
+run/main_scene="res://scenes/main.tscn"
+config/features=PackedStringArray("4.7", "GL Compatibility")
+
+[display]
+
+window/size/viewport_width=960
+window/size/viewport_height=720
+window/stretch/mode="canvas_items"
+
+[rendering]
+
+renderer/rendering_method="gl_compatibility"
+renderer/rendering_method.mobile="gl_compatibility"
+textures/canvas_textures/default_texture_filter=0
+textures/default_filters/use_nearest_mipmap_filter=true
+anti_aliasing/quality/msaa_3d=0
