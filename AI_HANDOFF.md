@@ -4,21 +4,23 @@ Kaan switches between Claude (Claude Code) and ChatGPT when one runs out of cred
 **Whoever works on this project: read this first, and update it before you stop.**
 Project rules live in `CLAUDE.md` (they apply to both of us). Newest entry on top.
 
-## Current state (2026-10-27)
+## Current state (2026-11-05)
 
-- **HTML game is FROZEN at ALPHA 7.2** (`torii-neo-antalya-ALPHA-7.2.html`, live at
-  https://kaanwtf-dev.github.io/torii-neo-antalya/). Fixes only.
-- **Moving to Godot 4** (Godot 4.7.2 installed: `/Applications/Godot.app`, CLI `godot`).
-  Plan agreed with Kaan: a vertical slice in `godot/` (not created yet) — city chunk, Torii on her new
-  model, Bandit, bike, mission 1 (Avocado Run), saving that reads/writes the same `torii_save`
-  localStorage key on the Pages site. Web export goes to `…/torii-neo-antalya/godot/` for testing.
-  Art direction: Kaan's PS1 reference screenshots in `assets/screenshots/` ("Pasted 2026-10-26 at …").
-- **In progress (Claude): Torii's new model** in Blender (Blender MCP), built to match
-  `assets/screenshots/Retro Low-Poly Character Turnaround Sheet.png` exactly: black crop top,
-  light wide-leg jeans, red/white/black jacket tied at the waist, white sneakers with black stripes,
-  dark-to-honey ombre box braids. Low-poly (~1.5k tris) T-pose mesh, texture = the sheet's own
-  views projected + baked; then rigged (arms-down rest) and exported as GLB for Godot.
-  Pipeline script: `tools/torii_model/` (sheet model script coming).
+- **ONE version = the Godot 4 project in `godot/`** (Godot 4.7.2, GL Compatibility; run: `godot --path godot`).
+  The HTML game is FROZEN at ALPHA 7.2 (`torii-neo-antalya-ALPHA-7.2.html`, still Torii's live link at
+  https://kaanwtf-dev.github.io/torii-neo-antalya/). No HTML work. Web export is the last, optional step.
+- **What Godot has:** Torii's sheet model with 7.2's poses, the real city (exported from 7.2), Bandit, the bike,
+  NPCs on the two sheet bases, Kaan on his balcony, the 16-unit Turkish course, all 20 missions + hunt gates,
+  and `SaveBridge` reading/writing the same `torii_save` dict (keeps every field it doesn't own).
+- **What it doesn't have:** see **`godot/PORT_GAPS.md`** (gap audit of 2026-11-04: 222 verified gaps + 5 critic
+  gaps, 109 features already covered, P0/P1/P2 + 12 port batches with settings). Machine-readable rows with
+  evidence: `godot/port_gaps.json`. Don't re-audit; update the doc as gaps get fixed.
+- **Next: batch 1 "Safety net + controls back"**, waiting on two answers from Kaan: desktop build or web
+  export (decides how her 7.2 save gets in), and yes/no on each "intentional change" in PORT_GAPS.md §4
+  (rows 14-16 broke his don't-change-controls rule by accident: arrows strafe, mouse steers the bike,
+  ENTER-only calls, mouse-only choices).
+- Stale claims in older log lines: "down at 0 HP = back at Kaan's" (gone with mission1.gd; at 0 HP nothing
+  happens now) and "weapons wear per hit" (7.2 wears per swing).
 
 ## Things Kaan wants every time
 - Before doing anything: recommend which model/effort settings to use, and ask him first.
@@ -26,6 +28,7 @@ Project rules live in `CLAUDE.md` (they apply to both of us). Newest entry on to
 - Never put Torii's real photo (`assets/screenshots/torii face.jpg`) in git — it's ignored on purpose.
 
 ## Log
+- 2026-11-05 Claude: **gap audit done** → `godot/PORT_GAPS.md` + `godot/port_gaps.json`. Workflow: 6 area mappers (combat, progression/save, story, Turkish, UI, world/sound), an adversarial verifier per area, a completeness critic, a writer (14 agents, all at High). 222 gaps kept, 1 refuted, 5 critic-only, 10 blind spots. Hand spot-check confirmed CRT-01, CMB-01, PLY-01, UI-01, WLD-V01. Biggest risks: a desktop build cannot see her browser save; kill level-ups are not saved until the next mission/lesson write; pre-7.0 saves would get `lvlv:2` without their migration. Index files for re-auditing live only in that session's scratchpad (rebuild from the 7.2 file if needed).
 - 2026-10-27 Claude: **all 20 missions ported** (generic engine). `tools/missions/convert_missions.py` turns 7.2's
   MISSIONS (exported with function source) + GATES/ZSPAWN/ZNAME/WEAPONS into `godot/assets/missions/missions.json`
   (spawn patterns, deliver timers, boss phase ops, choice options, rewards parsed out of the JS). Models exported
