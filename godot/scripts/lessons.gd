@@ -4,7 +4,7 @@
 # become revision. Words she meets are taught (toast + spoken) and every 4 new words there's a vocab
 # quiz; from level 4 a grammar question can join it. Right answers +15 XP, wrong ones -6 HP and go on
 # the "missed" list (7.2's tavla replays it later). Progress lives in torii_save exactly like 7.2:
-# lesson, lk, unit, ul, words, missed.
+# lesson, lk, unit, ul, words, missed. A level-up saves at once; SKIP THIS LESSON (or K) tests out.
 class_name Lessons
 extends Node
 
@@ -31,6 +31,14 @@ func setup(p: CharacterBody3D, h: Hud, q: QuizUI) -> void:
 			var L: Dictionary = l.duplicate(); L["u"] = int(u["n"]); L["ut"] = u["tt"]; L["part"] = part
 			course.append(L)
 	quiz.answered.connect(_on_answer)
+	hud.skip_btn.pressed.connect(_skip_clicked)
+
+func _skip_clicked() -> void:
+	if (active or pend) and not skipping and not _boxed(): try_skip()
+
+# a call, a choice or the save screen is up: K waits (in 7.2 those take the keyboard too)
+func _boxed() -> bool:
+	return Overlay.is_open("say") or Overlay.is_open("choice") or Overlay.is_open("save")
 
 # ---- save fields (same names as 7.2) ----
 func _gi(k: String, d := 0) -> int: return SaveBridge.get_i(k, d)
@@ -43,6 +51,7 @@ func xp(n: int) -> void:
 	if up:
 		hud.banner("LEVEL %d ✨" % SaveBridge.get_i("lvl", 1))
 		torii.max_hp = SaveBridge.get_i("mh", 100); torii.heal_full()
+		SaveBridge.write()                  # 7.2's levelUpShow() saves: a level earned from kills is never lost
 
 # ---- every 5 kills (lessonTick) ----
 func lesson_tick() -> void:
@@ -52,21 +61,22 @@ func lesson_tick() -> void:
 		hud.toast("📖 New Turkish lesson ready — or press [K] to test out of it with 3 questions", 6.0)
 
 func safe() -> bool:
-	if QuizUI.open or hud.box.visible or torii.hp <= 0: return false
+	if Overlay.any() or torii.hp <= 0: return false
 	if torii.on_bike and torii.bspeed > 4: return false
 	for e in get_tree().get_nodes_in_group("enemies"):
 		if e.global_position.distance_squared_to(torii.global_position) < 150: return false
 	return true
 
 func _process(_dt: float) -> void:
+	hud.skip_btn.visible = (active or pend) and not skipping       # 7.2's updateSkipBtn()
 	if pend and not skipping and safe():
 		pend = false; next_lesson()
 	elif quiz_pend and safe():
 		quiz_pend = false; new_words = 0; _vocab_quiz()
 
 func _unhandled_input(e: InputEvent) -> void:
-	if e is InputEventKey and e.pressed and not e.echo and e.keycode == KEY_K and (active or pend) and not skipping:
-		try_skip()
+	if e is InputEventKey and e.pressed and not e.echo and e.keycode == KEY_K and (active or pend) and not skipping and not quiz.qskip.visible and not _boxed():
+		try_skip(); get_viewport().set_input_as_handled()
 
 # ---- a lesson (nextLesson / startLessonBody) ----
 func next_lesson() -> void:
@@ -79,7 +89,7 @@ func next_lesson() -> void:
 		quiz.run(build_session(L2).slice(0, 5), func(_s):
 			xp(20); SaveBridge.write()
 			hud.toast("✍️ Revision done — +20 XP. Finish Kaan's mission to reach Unit %d." % (unit() + 1), 7.0),
-			"✍️ UNIT %d REVISION" % unit())
+			"✍️ UNIT %d REVISION" % unit(), true)
 		return
 	var L: Dictionary = ls[ul]
 	SaveBridge.data["ul"] = ul + 1
@@ -154,16 +164,22 @@ func build_session(L: Dictionary) -> Array:
 	return out.slice(0, 10)
 
 # ---- every answer (finishQ) ----
+# The missed list keeps 7.2's own format (rememberMiss): HTML text, key = text + "|" + the words. Keys are
+# compared with the markup stripped, so 7.2 and Godot clear each other's entries.
 func _on_answer(ok: bool, q: Dictionary) -> void:
-	var key: String = str(q.get("text", "")) + "|" + " ".join(q.get("words", []))
-	var missed: Array = SaveBridge.data.get("missed", [])
+	var entry := {}
+	for f in ["kind", "vis", "text", "opts", "a", "expl", "answer", "words"]:
+		if q.get(f) != null: entry[f] = Rich.to_html(q[f]) if (f == "text" or f == "expl") and q[f] is String else q[f]
+	var key: String = str(entry.get("text", "")) + "|" + " ".join(q.get("words", []))
+	var plain := Rich.plain(key)
+	var missed: Array = SaveBridge.data["missed"] if SaveBridge.data.get("missed") is Array else []
 	if ok:
 		xp(15)
-		missed = missed.filter(func(m): return m.get("k", "") != key)
+		missed = missed.filter(func(m): return not (m is Dictionary and Rich.plain(str(m.get("k", ""))) == plain))
 	else:
 		torii.hp = max(5, torii.hp - 6); torii.hp_changed.emit(torii.hp, torii.max_hp)
-		if not missed.any(func(m): return m.get("k", "") == key):
-			missed.append({"k": key, "q": q})
+		if not missed.any(func(m): return m is Dictionary and Rich.plain(str(m.get("k", ""))) == plain):
+			missed.append({"k": key, "q": entry})
 			if missed.size() > 30: missed.pop_front()
 	SaveBridge.data["missed"] = missed
 

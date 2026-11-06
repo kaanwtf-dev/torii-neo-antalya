@@ -12,6 +12,7 @@ const LAMP_RANGE := 40.0
 const LAMP_MAX := 12                 # the web renderer handles a handful of lights well, not 192
 
 func _ready() -> void:
+	Overlay.reset()                    # a reload (after loading a save file) starts with nothing open
 	_inputs()
 	var box := SubViewportContainer.new()
 	box.stretch = true; box.stretch_shrink = PIXEL
@@ -40,8 +41,11 @@ func _ready() -> void:
 	ban.setup(ban_model, p)
 	_update_lamps()
 	_people(world, p)
-	# her save (the same torii_save 7.2 uses), the HUD, and mission 1
-	SaveBridge.load_save()
+	# her save (the same torii_save 7.2 uses), the HUD, and the story
+	for a in OS.get_cmdline_user_args():                 # dev: --import=FILE does what dragging a file in does
+		if a.begins_with("--savedir="): SaveBridge.file_dir = a.substr(10)
+		if a.begins_with("--import="): print("IMPORT lvl=", SaveBridge.import_text(FileAccess.get_file_as_string(a.substr(9))))
+	var loaded := SaveBridge.load_save()
 	p.max_hp = SaveBridge.get_i("mh", 100); p.heal_full()
 	p.equip_from_save()
 	var hud := Hud.new(); add_child(hud)
@@ -50,10 +54,57 @@ func _ready() -> void:
 	var quiz := QuizUI.new(); add_child(quiz)
 	var lessons := Lessons.new(); lessons.name = "Lessons"; add_child(lessons); lessons.setup(p, hud, quiz)
 	var m := Missions.new(); m.name = "Missions"; add_child(m)
+	# 💾 SAVE & LOAD; with no save yet (a new Mac install) it first asks her to bring her browser save
+	var save_ui := SaveUI.new(); add_child(save_ui)
+	hud.save_pressed.connect(func():
+		if not Overlay.any(): save_ui.open_panel(false))
+	if "--welcome" in OS.get_cmdline_user_args(): save_ui.open_panel(true)     # dev: screenshot that screen
+	elif not loaded and not _dev():
+		save_ui.open_panel(true)
+		await save_ui.closed                  # (loading a file restarts the game on it instead)
 	m.setup(world, p, hud, lessons)
+	if "--godkey" in OS.get_cmdline_user_args(): _dev_godkey(m, p, hud); return
+	if "--savecheck" in OS.get_cmdline_user_args():      # dev: load + repair + resume, write it, report, quit
+		SaveBridge.write()
+		print("SAVECHECK ", JSON.stringify({"gate": m.gate, "loaded_from": SaveBridge.loaded_from}))
+		get_tree().quit(); return
+	if loaded:                              # 7.2's applySave() / loadGame() messages
+		hud.toast("💾 Progress restored — level %d, %d Turkish words known 🇹🇷" % [SaveBridge.get_i("lvl", 1), (SaveBridge.data.get("words", []) as Array).size()], 7.0)
+		if SaveBridge.loaded_from != SaveBridge.KEY:
+			hud.toast("💾 The main save was unreadable — restored from a backup instead. You may have lost a few minutes, no more.", 9.0, true)
 	for a in OS.get_cmdline_user_args(): if a.begins_with("--autoplay="): _dev_autoplay(m, p, lessons, quiz, hud, int(a.substr(11)))
 	if "--lessontest" in OS.get_cmdline_user_args(): _dev_lessontest(lessons, quiz, hud)
 	_dev_shot(p)
+
+# closing the window saves first (7.2 saved at every event; this catches whatever happened since). Not
+# before a save exists (BRING YOUR SAVE still up), and SaveBridge itself refuses while an import waits.
+func _notification(what: int) -> void:
+	if what == NOTIFICATION_WM_CLOSE_REQUEST and not SaveBridge.data.is_empty():
+		SaveBridge.write()
+
+# dev runs (autoplay, lesson test, screenshots) never stop at the BRING YOUR SAVE screen
+func _dev() -> bool:
+	for a in OS.get_cmdline_user_args():
+		if a.begins_with("--autoplay=") or a == "--lessontest" or a.begins_with("--shot=") or a == "--fps" or a == "--savecheck" or a == "--godkey": return true
+	return false
+
+# developer check only: a god step at her feet, E pressed through the real input path. The coin toss
+# must stay open (it used to open and close on the same press); a second E closes it.
+func _dev_godkey(M: Missions, p: Node3D, hud: Hud) -> void:
+	await get_tree().create_timer(.5).timeout
+	hud.skip_say()
+	await get_tree().create_timer(.2).timeout
+	M.m = {"steps": [{"t": "god", "id": "test", "x": p.global_position.x, "z": p.global_position.z}], "unit": 1, "title": "test"}
+	M.step = 0
+	var res := []
+	for i in 2:
+		for pressed in [true, false]:
+			var ev := InputEventKey.new(); ev.keycode = KEY_E; ev.physical_keycode = KEY_E; ev.pressed = pressed
+			Input.parse_input_event(ev)
+			for f in 4: await get_tree().physics_frame
+		res.append(hud._choice != null)
+	print("GODKEY open_after_first_E=", res[0], " open_after_second_E=", res[1], " on_bike=", p.on_bike)
+	get_tree().quit()
 
 # developer check only: earn a lesson with 5 kills, screenshot the lesson page and the quiz, answer
 # everything right, then quit (run with --savedir= on a copy of a real 7.2 save)
@@ -61,12 +112,13 @@ func _dev_lessontest(L: Lessons, q: QuizUI, hud: Hud) -> void:
 	var dir := ""
 	for a in OS.get_cmdline_user_args(): if a.begins_with("--shots="): dir = a.substr(8)
 	await get_tree().create_timer(1.0).timeout
-	hud.call_box("", "")
+	hud.skip_say()
 	for i in 5: L.lesson_tick()
 	await get_tree().create_timer(.6).timeout
 	await RenderingServer.frame_post_draw
 	if dir != "": get_viewport().get_texture().get_image().save_png(dir + "/l_lesson.png")
-	var ev := InputEventKey.new(); ev.keycode = KEY_ENTER; ev.pressed = true; q._unhandled_input(ev)
+	var ev := InputEventKey.new(); ev.keycode = KEY_ENTER; ev.pressed = true
+	while q.lesson_cb.is_valid(): q._unhandled_input(ev)          # page through the lesson's lines
 	await get_tree().create_timer(.4).timeout
 	await RenderingServer.frame_post_draw
 	if dir != "": get_viewport().get_texture().get_image().save_png(dir + "/l_quiz.png")
@@ -90,13 +142,13 @@ func _dev_autoplay(M: Missions, p: CharacterBody3D, L: Lessons, q: QuizUI, hud: 
 	while SaveBridge.get_i("next") < start_next + n and tries < 60000:
 		tries += 1
 		await get_tree().create_timer(.05).timeout
-		if hud.box.visible: M._unhandled_input(enter); continue
+		if hud.box.visible: hud.next_line(); continue
 		if hud._choice:                                  # bazaar haggle / coin toss: take the right answer
 			var st: Dictionary = M._st()
 			var pick := 0
-			if st.get("t") == "choice": for i in st["opts"].size(): if st["opts"][i].get("ok", false): pick = i
-			var btns := hud._choice.find_children("*", "Button", true, false)
-			if btns.size() > pick: btns[pick].pressed.emit()
+			if st.get("t") == "choice":
+				for k in M.choice_order.size(): if st["opts"][M.choice_order[k]].get("ok", false): pick = k
+			hud._pick_choice(pick)
 			continue
 		if QuizUI.open:
 			if q.lesson_cb.is_valid(): q._unhandled_input(enter)
@@ -167,21 +219,23 @@ func _dev_shot(p: Node3D) -> void:
 				var e := Enemy.spawn(p.get_parent(), kinds[i], p.global_position + Vector3((i - kinds.size() / 2.0) * 2.2, 0, -6.5), p)
 				e.sp = 0.0; e.dmg = 0
 	for a in OS.get_cmdline_user_args():
-		if a.begins_with("--at="):                          # --at=x,z,yaw : stand somewhere else for the shot
+		if a.begins_with("--at="):                          # --at=x,z,yaw[,pitch] : stand somewhere else for the shot
 			var v := a.substr(5).split(",")
 			p.global_position = Vector3(float(v[0]), 1.0, float(v[1])); p.yaw = float(v[2])
-			if v.size() > 3: p.pitch = float(v[3])
+			if v.size() > 3: p.pitch = float(v[3])           # 7.2's pitch: higher = looking down from above
+			p.snap_camera()
 	if "--npcinfo" in OS.get_cmdline_user_args():
 		var all := get_tree().root.find_children("*", "Npc", true, false)
 		var modes := {}
 		for n in all: modes[n.mode] = modes.get(n.mode, 0) + 1
 		print("NPCS ", all.size(), " ", modes, " kaan at ", all.filter(func(n): return n.mode == "kaan").map(func(n): return n.global_position))
-	if front: p.yaw = PI; p.get_node("CamPivot").rotation.y = PI
+	if front: p.yaw = PI; p.cam_off = PI; p.snap_camera()
 	if "--bike" in OS.get_cmdline_user_args():
 		p.global_position = Vector3(-20, .05, -10); p._get_on()
 		Input.action_press("move_forward")
 		if "--turn" in OS.get_cmdline_user_args(): Input.action_press("move_left")
-		if "--side" in OS.get_cmdline_user_args(): p.get_node("CamPivot").rotation.y = PI / 2
+		if "--side" in OS.get_cmdline_user_args(): p.cam_off = PI / 2
+		p.snap_camera()
 	elif walk: Input.action_press("move_forward")
 	await get_tree().create_timer(1.6).timeout
 	await RenderingServer.frame_post_draw
@@ -189,8 +243,10 @@ func _dev_shot(p: Node3D) -> void:
 	get_tree().quit()
 
 func _inputs() -> void:
-	var map := {"move_forward": [KEY_W, KEY_UP], "move_back": [KEY_S, KEY_DOWN], "move_left": [KEY_A, KEY_LEFT],
-		"move_right": [KEY_D, KEY_RIGHT], "sprint": [KEY_SHIFT], "jump": [KEY_SPACE], "interact": [KEY_E], "attack": [KEY_F], "weapon": [KEY_Q]}
+	# 7.2's keys: A/D strafe, the arrows ←/→ TURN her (and steer the bike like A/D), ↑/↓ walk like W/S
+	var map := {"move_forward": [KEY_W, KEY_UP], "move_back": [KEY_S, KEY_DOWN], "move_left": [KEY_A], "move_right": [KEY_D],
+		"turn_left": [KEY_LEFT], "turn_right": [KEY_RIGHT], "sprint": [KEY_SHIFT], "jump": [KEY_SPACE], "interact": [KEY_E],
+		"attack": [KEY_F], "weapon": [KEY_Q]}
 	for a in map:
 		if not InputMap.has_action(a): InputMap.add_action(a)
 		for k in map[a]:

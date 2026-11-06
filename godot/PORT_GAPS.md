@@ -6,6 +6,36 @@ Audited 2026-11-04 against **ALPHA 7.2 · POLYGON GIRL** (`torii-neo-antalya-ALP
 
 **Spot-checked by hand afterwards (2026-11-05):** CRT-01 (no save after kill level-ups), CMB-01 (0 HP), PLY-01 (arrow keys strafe), UI-01 (raw `[b]` tags: 36 in missions.json, toasts are plain Labels) and WLD-V01 (`main.gd _solidify` gives every city mesh trimesh collision) all hold in the code. CMB-01 is worse than listed: `take_hit` just clamps HP at 0, and `lessons.gd:55` refuses to start a lesson at 0 HP, so she stays stuck at 0. Full gap rows with evidence: `godot/port_gaps.json`.
 
+
+## 0. Progress
+
+**Batch 1 "Safety net + controls back" — done 2026-11-05** (Kaan: macOS desktop build, she drags her 7.2 save file in).
+- **Save in:** first launch with no save shows 💾 BRING YOUR SAVE (drag the file 7.2 makes with SAVE & LOAD → SAVE TO A FILE onto
+  the window, LOAD FROM A FILE, or a transfer code); 💾 SAVE & LOAD panel (bottom right) saves to Downloads, loads, drag-drop any
+  time, transfer code. Import goes through `SaveBridge.import_text` (7.2's applySaveText formats), the replaced save is also filed
+  in Downloads as `…-before-loading.json`, writes are frozen until the game restarts on the import. → CRT-02 (import side; the Mac
+  .app export itself still needs Godot's export templates), UI-24, PRG-25.
+- **Never worse:** level-ups and weapon breaks save at once, closing the window saves (CRT-01); `SaveBridge.migrate` = 7.2's applySave
+  repairs incl. the pre-7.0 conversion before `lvlv:2`, xp clamp, need from the curve, weapon filter + durability, unit from `next`
+  (PRG-26); resumed hunt gates take their type from the gate table (STY-V01); the missed list is stored in 7.2's own HTML format and
+  keys compare without markup, so both games clear each other's entries (TRK-10's save part; the replay itself is batch 12).
+- **Overlays:** `Overlay` gate: monsters and shots freeze and nothing hurts her during quizzes, calls, choices and the save screens;
+  mission clocks and hunt gates pause; calls wait for a free screen like 7.2's whenFree (CMB-02, UI-30).
+- **Text:** toasts are a stack of 3 rich-text boxes styled like 7.2 (red for warnings), the call box, banner and objective render
+  [b]/[i] (UI-01, PRG-V01, TRK-13, UI-31).
+- **Controls exactly like 7.2:** arrows turn, A/D strafe, 7.2 walk speeds (7.3 / 4.3 / 6.2, sprint ×1.62/×1.34, dance ×.25) (PLY-01);
+  7.2's camera (7.4 m behind, over the right shoulder, eased; 9.4 m on the bike, mouse looks around freely, re-centres after 1.3 s)
+  (CAM-01); calls page with E / Enter / Space, ESC skips (UI-37); choices take 1-9, E or Enter closes, answers shuffled, the reply
+  comes in the dialogue box, +20 XP (STY-15, UI-V02); lesson text pages one line at a time with E / Enter / Space, Enter checks word
+  order, QUİZİ GEÇ on revision, ⏭ SKIP THIS LESSON button (under the HP bar — 7.2's spot is covered by the quiz panel) (TRK-12, UI-35).
+- **Proof:** `tests/godot_save.js` (real 7.2 ⇄ Godot round trip, pre-7.0 conversion identical to 7.2's, transfer codes, one mission
+  played in Godot and loaded back into 7.2); `--godkey` (E at a god shrine keeps the coin toss open). A 3-lens review found a
+  god-shrine soft-lock (E opened and closed the coin toss on one press), an import race, a quit-save gap, a stale transfer code and
+  K over a live call — all fixed before commit.
+- **Still open from batch 1's list:** none, except the desktop build itself (export templates ~1 GB, ask Kaan first).
+- **Noticed in screenshots:** the bike camera sits inside buildings when the bike is parked against one (same as 7.2, which has no
+  camera collision) — check in a playtest.
+
 Area ids: CMB/ENM/WPN/SKL/BND/PLY/CAM/BIK/BUF/HUD/PFX/ALY/HAZ/CTL = combat & movement · PRG = progression, gear, money · STY = story, missions, NPCs · TRK = Turkish course, tavla, Old Soul · UI = menus & HUD · SND/DN/SKY/FX/WLD = sound, sky, world · CRT = critic. Where two areas found the same thing, both ids share one row. Impact = how much Torii notices it. Effort: S = hours, M = about a session, L = more than a session.
 
 ---
@@ -256,11 +286,11 @@ Some of these are Kaan's own decisions, and some just happened while porting. Ea
 
 | # | Change in Godot | 7.2 did | Who decided | Suggestion | Gap id |
 |---|---|---|---|---|---|
-| 1 | Tap Q = next weapon | Hold Q > 220 ms opens a weapon wheel. Mouse wheel cycles. | Claude ("simplified" in AI_HANDOFF) | Revert (bring the wheel back) or confirm | WPN-03, UI-34 |
+| 1 | Tap Q = next weapon | Hold Q > 220 ms opens a weapon wheel. Mouse wheel cycles. | Claude ("simplified" in AI_HANDOFF) | **Kaan 2026-11-05: bring the wheel back (batch 4).** Revert (bring the wheel back) or confirm | WPN-03, UI-34 |
 | 2 | Gods: free best-of-3 coin toss, only during the mission step | 40₺ stake per flip, +120₺ / +60 XP / lucky buff on a win, -40₺ and 12 dmg on a loss, shrines open any time, greetings | Claude ("simplified") | Revert | STY-16 |
 | 3 | Every human NPC = one of two bases + outfit texture | person() with props (Josh's tinfoil hat, the Diskotek King's crown, DJ's cat ears, Nuri's spade, Kaan's cigarette/phone) | Kaan | Keep. Fix genders by name/role (STY-28). Decide whether Lory, Vergi, Kapıcı and Ağa use the bases. | STY-28, ENM-01 |
 | 4 | Torii = the turnaround-sheet model | Vinrax PSX model + PS1 photo face, new outfit per level | Kaan | Keep. Decide on level outfits (PRG-24). Sunglasses and gear need new attachments. Update credits. Check her face. | PRG-24, PRG-09, PRG-10, STY-05 |
-| 5 | One version = Godot; HTML frozen; web export "last and maybe never" | Browser game | Kaan | Keep, but pick desktop or web before batch 1: a desktop build needs a save import | CRT-02 |
+| 5 | One version = Godot; HTML frozen; web export "last and maybe never" | Browser game | Kaan | **Kaan 2026-11-05: macOS desktop build; she drags her 7.2 save file in.** Keep, but pick desktop or web before batch 1: a desktop build needs a save import | CRT-02 |
 | 6 | 3D rendered at 1/3 resolution (240 lines), no dither/scanlines | 480 lines, dither + grade + scanlines on by default | Claude, following Kaan's PS1 screenshots | Kaan to look at it on her screen | FX-03, UI-06 |
 | 7 | Hunt gate spawns its own monsters 3 at a time near her; only those count; epics after the regulars | Ambient spawns + Kaan's contracts; any matching kill counts; epics mixed in | Claude | Keep (it's simpler and it works). Mix the epics in. | STY-37, CMB-V01, PRG-21 |
 | 8 | Kill steps respawn waves on the spot; only the step's own mobs count | Spawned once + extras; any matching kill counts | Claude | Keep | STY-12 |
@@ -269,9 +299,9 @@ Some of these are Kaan's own decisions, and some just happened while porting. Ea
 | 11 | Choice step gives +25 XP, options not shuffled | +20 XP, shuffled | Claude | Revert | STY-15 |
 | 12 | Photo-hunt ghosts harmless; facing cone decides a hit | Real ghosts, camera-on-screen check | Claude | Revert | STY-14 |
 | 13 | Fragile delivery = touching a wall above speed 6 | Bike wipe-out | Claude | Revert once BIK-01 exists | STY-13 |
-| 14 | Arrow keys strafe; mouse steers the bike | Arrows turn; mouse looks around on the bike | Looks accidental | Revert (control rule) | PLY-01, CAM-01 |
-| 15 | Calls page with ENTER only; ESC doesn't skip | E / Enter / Space, ESC skips | Looks accidental | Revert | UI-37 |
-| 16 | Choices only clickable; lesson text ignores E | 1-6 keys, E closes; E pages lessons | Looks accidental | Revert | UI-V02, TRK-12 |
+| 14 | Arrow keys strafe; mouse steers the bike | Arrows turn; mouse looks around on the bike | Looks accidental | **Kaan 2026-11-05: revert.** Revert (control rule) | PLY-01, CAM-01 |
+| 15 | Calls page with ENTER only; ESC doesn't skip | E / Enter / Space, ESC skips | Looks accidental | **Kaan 2026-11-05: revert.** Revert | UI-37 |
+| 16 | Choices only clickable; lesson text ignores E | 1-6 keys, E closes; E pages lessons | Looks accidental | **Kaan 2026-11-05: revert.** Revert | UI-V02, TRK-12 |
 | 17 | Only the nearest 12 lamp lights are on | No real lights | Claude (performance) | Keep | — |
 | 18 | Unlimited durability saved as 9999 | Infinity (null) | Claude | Keep (harmless) | — |
 | 19 | Godot writes `gate.type` into the save | Derived from GATES | Claude | Keep (harmless), but read old saves right | STY-V01 |

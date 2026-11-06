@@ -15,10 +15,13 @@ Project rules live in `CLAUDE.md` (they apply to both of us). Newest entry on to
 - **What it doesn't have:** see **`godot/PORT_GAPS.md`** (gap audit of 2026-11-04: 222 verified gaps + 5 critic
   gaps, 109 features already covered, P0/P1/P2 + 12 port batches with settings). Machine-readable rows with
   evidence: `godot/port_gaps.json`. Don't re-audit; update the doc as gaps get fixed.
-- **Next: batch 1 "Safety net + controls back"**, waiting on two answers from Kaan: desktop build or web
-  export (decides how her 7.2 save gets in), and yes/no on each "intentional change" in PORT_GAPS.md §4
-  (rows 14-16 broke his don't-change-controls rule by accident: arrows strafe, mouse steers the bike,
-  ENTER-only calls, mouse-only choices).
+- **Decided by Kaan 2026-11-05:** macOS **desktop** build (no web export for now). Her 7.2 save comes in by her
+  dragging the file 7.2 makes (SAVE & LOAD → SAVE TO A FILE) onto the Godot game's first-launch "bring your save"
+  screen (or a LOAD FROM A FILE button), always through SaveBridge. Controls go back to exactly 7.2's (PORT_GAPS §4
+  rows 14-16 reverted). The hold-Q weapon wheel comes back in batch 4. Export templates (~1 GB) are not installed:
+  ask Kaan before downloading.
+- **Batch 1 done (2026-11-05)** — see PORT_GAPS.md §0. **Next: batch 2 "Core loop + feedback base"** (fainting/respawn, checkpoints,
+  invisible lamp walls, world bounds, hit feedback; PORT_GAPS §5 says Opus · High), waiting for Kaan's go.
 - Stale claims in older log lines: "down at 0 HP = back at Kaan's" (gone with mission1.gd; at 0 HP nothing
   happens now) and "weapons wear per hit" (7.2 wears per swing).
 
@@ -28,6 +31,7 @@ Project rules live in `CLAUDE.md` (they apply to both of us). Newest entry on to
 - Never put Torii's real photo (`assets/screenshots/torii face.jpg`) in git — it's ignored on purpose.
 
 ## Log
+- 2026-11-05 Claude: **batch 1 "Safety net + controls back"** in `godot/` (details: PORT_GAPS.md §0). New: `scripts/overlay.gd` (`Overlay.open/close/any/just_closed` — the one gate for "a box is up": enemies, shots, her controls and damage, mission clocks), `scripts/rich.gd` (HTML ⇄ BBCode, `plain()` for key compares), `scripts/save_ui.gd` (BRING YOUR SAVE / SAVE & LOAD, drag-drop via `files_dropped`, native file dialog, Downloads export, transfer code). `SaveBridge`: `migrate()` (7.2 applySave repairs), `save_text()`, `import_text()` (freezes writes until the scene reloads), `export_text()`, `code()`, `file_name()`. Hud: `say()/next_line()/skip_say()` replace `call_box`; `choose()` cb gets -1 when closed; `toast(t, dur=6, bad=false)` stack. Player: camera is a top-level Camera3D driven by `_camera()` (port of updateCam), `heading` = bike direction, `yaw` = camera/her facing, new actions `turn_left/turn_right` (arrows). Dev flags: `--import=FILE` (same as dropping a file), `--savecheck` (load+repair+resume, write, print), `--welcome` (show BRING YOUR SAVE in a shot), `--godkey` (E at a god shrine via the real input path). Note: `--lessontest` needs a window (frame_post_draw never fires headless). Test: `tests/godot_save.js` (~6 min, needs `godot` on PATH).
 - 2026-11-05 Claude: **gap audit done** → `godot/PORT_GAPS.md` + `godot/port_gaps.json`. Workflow: 6 area mappers (combat, progression/save, story, Turkish, UI, world/sound), an adversarial verifier per area, a completeness critic, a writer (14 agents, all at High). 222 gaps kept, 1 refuted, 5 critic-only, 10 blind spots. Hand spot-check confirmed CRT-01, CMB-01, PLY-01, UI-01, WLD-V01. Biggest risks: a desktop build cannot see her browser save; kill level-ups are not saved until the next mission/lesson write; pre-7.0 saves would get `lvlv:2` without their migration. Index files for re-auditing live only in that session's scratchpad (rebuild from the 7.2 file if needed).
 - 2026-10-27 Claude: **all 20 missions ported** (generic engine). `tools/missions/convert_missions.py` turns 7.2's
   MISSIONS (exported with function source) + GATES/ZSPAWN/ZNAME/WEAPONS into `godot/assets/missions/missions.json`

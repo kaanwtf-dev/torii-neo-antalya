@@ -85,7 +85,7 @@ func _check_phases() -> void:
 						Enemy.spawn(get_parent(), op[1], global_position + Vector3(cos(a) * 5, 0, sin(a) * 5), torii)
 
 func _physics_process(dt: float) -> void:
-	if not torii or hp <= 0: return
+	if not torii or hp <= 0 or Overlay.any(): return      # 7.2's loop freezes the fight during calls and quizzes
 	t += dt; cd -= dt; hurt -= dt; shoot_cd -= dt
 	var to := torii.global_position - global_position; to.y = 0
 	var d := to.length()

@@ -17,6 +17,10 @@ folder automatically, so a new version needs no test changes.
   a 7.1 save must come through field-for-field (only `mid` may fill in, when
   CONTINUE starts the queued mission). It exits 1 on any ✗ — check for ✗
   lines, not just the last line, when running the suite.
+- `godot_save.js` — the Godot port ⇄ 7.2 save round trip (needs `godot` on the PATH; ~6 min): a real
+  7.2 save mid hunt-gate goes into Godot through the same import as dragging a file in, must come out
+  unchanged (hunt type kept), loads back into real 7.2; a pre-7.0 save converts in Godot exactly like
+  7.2's applySave(); transfer codes import; junk is refused; one mission played in Godot still loads in 7.2.
 - `levels.js` — 7.0 levels, XP curve, perk cards, milestones, monster levels
 - `inventory.js` — gear, backpack, nazar beads, shops
 - `story.js` — cutscenes, Hellspace scenes, mission step types, side quests

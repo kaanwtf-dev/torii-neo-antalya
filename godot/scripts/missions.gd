@@ -30,9 +30,7 @@ var boss: Enemy
 var shots := 0
 var photo_ghosts: Array = []
 var choice_open := false
-var call_lines: Array = []
-var call_who := ""
-var call_done: Callable
+var choice_order: Array = []         # the shuffled order the current choice shows its answers in
 var gate := {}
 var gate_mobs: Array = []
 var waiting_lessons := -1            # next mission index waiting for this unit's lessons
@@ -57,21 +55,21 @@ func setup(w: Node3D, p: CharacterBody3D, h: Hud, l: Lessons) -> void:
 	else: hud.toast("🌴 Every mission is done — free play! ❤", 6.0)
 
 # ---------------------------------------------------------------- Kaan's calls
+# the dialogue box pages with E / Enter / Space and ESC skips the rest, like 7.2's calls. Like 7.2's
+# whenFree() a call never opens under a quiz or another box: it waits (up to a minute) for the screen
 func phone(who: String, lines: Array, done: Callable) -> void:
-	call_who = who; call_lines = lines.duplicate(); call_done = done
-	hud.call_box(who, call_lines.pop_front())
+	var tries := 0
+	while Overlay.any() and tries < 240:
+		tries += 1
+		await get_tree().create_timer(.25).timeout
+	hud.say(who, lines, done)
 
 func _unhandled_input(e: InputEvent) -> void:
-	if not (e is InputEventKey and e.pressed and not e.echo): return
-	if hud.box.visible and (e.keycode == KEY_ENTER or e.keycode == KEY_KP_ENTER):
-		if call_lines.size(): hud.call_box(call_who, call_lines.pop_front())
-		else:
-			hud.call_box("", "")
-			var cb := call_done; call_done = Callable()
-			if cb.is_valid(): cb.call()
-		get_viewport().set_input_as_handled()
-	elif e.keycode == KEY_T and step >= 0 and _st().get("t") == "photo": _snap()
-	elif e.keycode == KEY_E and step >= 0 and _st().get("t") == "god" and _near(4.0): _god()
+	if Overlay.any() or not (e is InputEventKey and e.pressed and not e.echo): return
+	if e.keycode == KEY_T and step >= 0 and _st().get("t") == "photo":
+		_snap(); get_viewport().set_input_as_handled()
+	elif e.keycode == KEY_E and step >= 0 and _st().get("t") == "god" and _near(4.0) and not Overlay.just_closed():
+		_god(); get_viewport().set_input_as_handled()     # (or this same E would close the coin toss it opened)
 
 # ---------------------------------------------------------------- missions
 func start(i: int) -> void:
@@ -157,11 +155,11 @@ func _near(r: float) -> bool:
 
 func _process(dt: float) -> void:
 	_gate_tick()
-	if waiting_lessons >= 0 and not lessons.active and not QuizUI.open and not hud.box.visible:
+	if waiting_lessons >= 0 and not lessons.active and not Overlay.any():
 		if SaveBridge.get_i("ul") >= lessons.unit_lessons(lessons.unit()).size():
 			var nx := waiting_lessons; waiting_lessons = -1; _advance_unit(nx)
 		elif not lessons.pend: lessons.pend = true
-	if step < 0 or m.is_empty() or QuizUI.open: return
+	if step < 0 or m.is_empty() or Overlay.any(): return      # calls, quizzes and choices pause the clock
 	var st := _st()
 	if st.is_empty(): return
 	var here := torii.global_position
@@ -226,20 +224,31 @@ func _travel(zone: String) -> void:
 	hud.banner("🛬 WELCOME HOME" if zone == "city" else "🛫 " + str(D["zname"].get(zone, zone)))
 	torii.global_position = Vector3(sp["x"], 1.0, sp["z"])
 	torii.yaw = PI if zone == "city" else -PI / 2
+	torii.snap_camera()
 	if zone != "city": lessons.teach("uçak"); lessons.teach("havalimanı")
 	await get_tree().create_timer(1.5).timeout
 	_advance()
 
+# 7.2's STEP.choice: the answers in a new random order every time; the person answers in the dialogue box;
+# right = +20 XP and on, wrong = "try again", closed with E = asked again in 4 seconds
 func _choice(st: Dictionary) -> void:
 	choice_open = true
-	var opts: Array = st["opts"].map(func(o): return "%s  (%s)" % [o["t"], o.get("en", "")])
-	hud.choose(st.get("who", ""), str(st.get("q", "")) + ("\n[i]%s[/i]" % st["hint"] if st.has("hint") else ""), opts, func(i):
-		var o: Dictionary = st["opts"][i]
-		hud.toast(o.get("r", ""), 5.0)
+	choice_order = range(st["opts"].size()); choice_order.shuffle()
+	var opts: Array = choice_order.map(func(i): return "%s%s" % [st["opts"][i]["t"],
+		(" (%s)" % st["opts"][i]["en"]) if str(st["opts"][i].get("en", "")) != "" else ""])
+	var who: String = st.get("who", "")
+	hud.choose(who, str(st.get("q", "")) + ("\n[i]%s[/i]" % st["hint"] if st.has("hint") else ""), opts, func(k):
+		if k < 0:
+			await get_tree().create_timer(4.0).timeout
+			choice_open = false; return
+		var o: Dictionary = st["opts"][choice_order[k]]
+		var r: String = str(o.get("r", ""))
 		if o.get("ok", false):
-			lessons.xp(25); _advance()
-		await get_tree().create_timer(2.5).timeout
-		choice_open = false)
+			hud.say(who, [r if r != "" else "Aferin! 👏 [i](Well done!)[/i]"], func():
+				lessons.xp(20)
+				if _st() == st: _advance())
+		else:
+			hud.say(who, [(r if r != "" else "Hmm... olmadı. [i](That's not it.)[/i]") + " — try again."], func(): choice_open = false))
 
 func _god() -> void:
 	var st := _st()
@@ -249,6 +258,7 @@ func _god() -> void:
 	var round_ := func(self_ref):
 		hud.choose(gid.to_upper() + " 🪙", "Yazı mı, tura mı? [i](Heads or tails?)[/i]  First to 2 wins.  You %d · %s %d" % [score[0], gid.to_upper(), score[1]],
 			["Yazı", "Tura"], func(i):
+				if i < 0: return                     # closed with E: press E at the shrine to play again
 				var flip := randi() % 2
 				if flip == i: score[0] += 1
 				else: score[1] += 1
@@ -329,11 +339,15 @@ func _start_gate(nx: int) -> void:
 	phone("KAAN 📱", ["Bebeğim, the streets are getting rough out there... 😤",
 		"Clear out [b]%d %s[/b]%s before your next task. Dikkatli ol! [i](Be careful!)[/i]" % [gate["left"], tn, (" and [b]%d EPIC 👑[/b]" % gate["eleft"]) if gate["eleft"] else ""]], func(): pass)
 
+# like 7.2's applySave: the hunt's monster type comes from the gate table, never the save (7.2 saves don't
+# carry one, and a missing type would quietly turn "8 zombies" into "any monsters")
 func _resume_gate(g: Dictionary) -> void:
-	gate = {"next": int(g["next"]), "type": g.get("type"), "left": int(g["left"]), "eleft": int(g.get("eleft", 0))}
+	var nx := int(g.get("next", 1))
+	var G: Dictionary = D["gates"][clampi(nx - 1, 0, D["gates"].size() - 1)]
+	gate = {"next": nx, "type": G.get("type"), "left": int(g.get("left", G["n"])), "eleft": int(g.get("eleft", 0))}
 
 func _gate_tick() -> void:
-	if gate.is_empty() or hud.box.visible: return
+	if gate.is_empty() or Overlay.any(): return
 	var tn: String = (str(D["enemies"][gate["type"]]["name"]) + "s") if gate["type"] else "any monsters"
 	hud.objective("⚔️ HUNT GATE\nDefeat %s: %d left%s" % [tn, max(0, gate["left"]), (" · EPIC 👑: %d" % gate["eleft"]) if gate["eleft"] > 0 else ""])
 	gate_mobs = gate_mobs.filter(func(e): return is_instance_valid(e))

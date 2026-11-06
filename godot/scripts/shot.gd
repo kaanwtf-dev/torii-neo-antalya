@@ -22,6 +22,7 @@ static func fire(parent: Node, from: Vector3, target: Node3D, damage: int, arrow
 	s.look_at_from_position(from, aim)
 
 func _physics_process(dt: float) -> void:
+	if Overlay.any(): return
 	global_position += vel * dt; life -= dt
 	if torii and global_position.distance_to(torii.global_position + Vector3(0, 1.1, 0)) < .8:
 		torii.take_hit(dmg); queue_free(); return

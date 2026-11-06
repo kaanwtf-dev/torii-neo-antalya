@@ -1,6 +1,8 @@
 # The Turkish lesson + quiz screen, ported from 7.2 (say() lesson box, runQuiz/nextQ/finishQ):
-# multiple choice (click or 1-4), type-the-answer (accents optional), tap-the-words-in-order,
-# progress dots, ✅/❌ feedback with the explanation. The game pauses its controls while it's open.
+# the lesson one line per page (E / Enter / Space, like 7.2's dialogue box), multiple choice (click or
+# 1-4), type-the-answer (accents optional), tap-the-words-in-order (Enter checks), progress dots,
+# ✅/❌ feedback with the explanation, and QUİZİ GEÇ (K) on the quizzes 7.2 lets her skip.
+# It's an overlay: the fight stops while it's open.
 class_name QuizUI
 extends CanvasLayer
 
@@ -29,9 +31,13 @@ var done_cb: Callable
 var lesson_cb: Callable
 var picked: Array = []
 var pool: Array = []
+var pages: Array = []
+var qskip: Button
+var _run := 0                 # bumps every quiz, so a stale feedback timer can't touch the next one
 
 func _ready() -> void:
 	layer = 5
+	open = false
 	panel = PanelContainer.new(); panel.position = Vector2(110, 120); panel.size = Vector2(740, 480); panel.visible = false
 	var sb := StyleBoxFlat.new(); sb.bg_color = Color(.07, .04, .13, 1.0); sb.border_color = Color("ff5fa2")
 	sb.set_border_width_all(2); sb.set_corner_radius_all(12); sb.set_content_margin_all(18)
@@ -55,7 +61,10 @@ func _ready() -> void:
 	var ok_btn := Button.new(); ok_btn.text = "CHECK ✓"; ok_btn.pressed.connect(_submit_order); order_box.add_child(ok_btn)
 	feed = RichTextLabel.new(); feed.bbcode_enabled = true; feed.fit_content = true; feed.custom_minimum_size = Vector2(700, 0)
 	feed.add_theme_font_size_override("normal_font_size", 17); feed.add_theme_font_size_override("bold_font_size", 17); v.add_child(feed)
-	cont = _lab(v, 13, Color("7bf7ff")); cont.text = "ENTER ▸"; cont.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
+	cont = _lab(v, 13, Color("7bf7ff")); cont.text = "[E] continue"; cont.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
+	qskip = Button.new(); qskip.text = "⏭ QUİZİ GEÇ · SKIP (no re-roll bonus)  [K]"; qskip.focus_mode = Control.FOCUS_NONE
+	qskip.add_theme_font_size_override("font_size", 13); qskip.add_theme_color_override("font_color", Color("d8ffe8"))
+	qskip.visible = false; qskip.pressed.connect(skip_all); v.add_child(qskip)
 
 func _lab(parent: Node, size: int, col: Color) -> Label:
 	var l := Label.new(); l.add_theme_font_size_override("font_size", size); l.add_theme_color_override("font_color", col)
@@ -63,18 +72,38 @@ func _lab(parent: Node, size: int, col: Color) -> Label:
 
 func _show(on: bool) -> void:
 	panel.visible = on; open = on
-	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE if on else Input.MOUSE_MODE_CAPTURED
+	if on: Overlay.open("quiz")
+	else: Overlay.close("quiz"); qskip.visible = false
 
-# the lesson's explanation first (7.2's say() box), then whatever comes next
+# the lesson's explanation first, one line per page like 7.2's say() box, then whatever comes next
 func show_lesson(title: String, lines: Array, then: Callable) -> void:
-	_reset(); _show(true); lesson_cb = then
+	_reset(); _show(true); lesson_cb = then; pages = lines.duplicate()
 	tag.text = title; vis.text = "📖"
-	text.text = "\n\n".join(lines)
+	_page()
+
+func _page() -> void:
+	text.text = str(pages[0]) if pages.size() else ""
 	cont.visible = true
 
-func run(qs: Array, on_done: Callable, tag_text := "TURKISH QUIZ 🇹🇷") -> void:
-	queue = qs.duplicate(); done_cb = on_done; score = []; total = qs.size(); lesson_cb = Callable()
-	tag.text = tag_text; _show(true); _next()
+func _next_page() -> void:
+	pages.pop_front()
+	if pages.size(): _page(); return
+	var cb := lesson_cb; lesson_cb = Callable(); _show(false); cb.call()
+
+# skippable = 7.2's runQuiz(..., skippable): revision and practice quizzes show QUİZİ GEÇ
+func run(qs: Array, on_done: Callable, tag_text := "TURKISH QUIZ 🇹🇷", skippable := false) -> void:
+	_run += 1
+	queue = qs.duplicate(); done_cb = on_done; score = []; total = qs.size(); lesson_cb = Callable(); pages = []
+	tag.text = tag_text; _show(true); qskip.visible = skippable; _next()
+
+# 7.2's quizSkipAll(): drop the rest of the quiz and move on
+func skip_all() -> void:
+	if not open or not qskip.visible: return
+	_run += 1
+	queue = []; lock = true; total = 0; _show(false)
+	if Lessons.me: Lessons.me.hud.toast("⏭ Quiz atlandı. [i](Quiz skipped — no re-rolls this game.)[/i]", 5.0)
+	var cb := done_cb; done_cb = Callable()
+	if cb.is_valid(): cb.call(score)
 
 func _reset() -> void:
 	for c in opts.get_children(): c.queue_free()
@@ -162,14 +191,22 @@ func _finish(ok: bool, correct: String) -> void:
 		feed.text = "[color=#ff4d6d]Wrong ❌[/color] Answer: [b]%s[/b]" % correct
 		if cur.get("expl", "") != "": feed.text += "\n[color=#8ff2ff]%s[/color]" % cur["expl"]
 	answered.emit(ok, cur)
+	var run_id := _run
 	await get_tree().create_timer(1.4 if ok else 3.2).timeout
-	_next()
+	if run_id == _run and open: _next()
 
 func _unhandled_input(e: InputEvent) -> void:
 	if not open: return
 	if e is InputEventKey and e.pressed and not e.echo:
-		if lesson_cb.is_valid() and (e.keycode == KEY_ENTER or e.keycode == KEY_KP_ENTER or e.keycode == KEY_SPACE):
-			var cb := lesson_cb; lesson_cb = Callable(); _show(false); cb.call()
+		var enter: bool = e.keycode == KEY_ENTER or e.keycode == KEY_KP_ENTER
+		if lesson_cb.is_valid() and (enter or e.keycode == KEY_E or e.keycode == KEY_SPACE):
+			_next_page()
+			get_viewport().set_input_as_handled()
+		elif e.keycode == KEY_K and qskip.visible:
+			skip_all()
+			get_viewport().set_input_as_handled()
+		elif order_box.visible and enter:
+			_submit_order()
 			get_viewport().set_input_as_handled()
 		elif opts.visible and e.keycode >= KEY_1 and e.keycode <= KEY_4:
 			var i: int = e.keycode - KEY_1
