@@ -1,0 +1,551 @@
+{
+ "CAFE": [
+  {
+   "ic": "🍹",
+   "n": "Kokteyl",
+   "en": "cocktail · +12 HP now",
+   "p": 30
+  },
+  {
+   "ic": "💵",
+   "n": "3 destek para",
+   "en": "3 bill stacks · Bill Box ammo",
+   "p": 60
+  },
+  {
+   "ic": "🎲",
+   "n": "Tavla seti",
+   "en": "backgammon set · +20 mana now",
+   "p": 40
+  },
+  {
+   "ic": "☕",
+   "n": "Türk kahvesi",
+   "en": "Turkish coffee · +20% speed for 2 min",
+   "p": 50
+  },
+  {
+   "food": "simit"
+  },
+  {
+   "food": "cay"
+  },
+  {
+   "food": "ayran"
+  },
+  {
+   "food": "lokum"
+  },
+  {
+   "food": "baklava"
+  },
+  {
+   "food": "borek"
+  }
+ ],
+ "FOOD": {
+  "simit": {
+   "ic": "🥯",
+   "tr": "simit",
+   "en": "sesame bagel",
+   "heal": 0.2,
+   "p": 25
+  },
+  "doner": {
+   "ic": "🥙",
+   "tr": "döner",
+   "en": "döner wrap",
+   "heal": 0.35,
+   "buff": "regen",
+   "p": 60
+  },
+  "borek": {
+   "ic": "🥟",
+   "tr": "börek",
+   "en": "savoury pastry",
+   "heal": 0.5,
+   "p": 80
+  },
+  "kaktus": {
+   "ic": "🌵",
+   "tr": "kaktüs meyvesi",
+   "w": "kaktüs",
+   "en": "cactus fruit",
+   "heal": 0.15,
+   "p": 0
+  },
+  "ayran": {
+   "ic": "🥛",
+   "tr": "ayran",
+   "en": "salty yoghurt drink",
+   "heal": 0.08,
+   "stam": 1,
+   "p": 30
+  },
+  "cay": {
+   "ic": "🫖",
+   "tr": "çay",
+   "en": "black tea",
+   "buff": "spd",
+   "stam": 0.5,
+   "p": 30
+  },
+  "kahve": {
+   "ic": "☕",
+   "tr": "Türk kahvesi",
+   "w": "kahve",
+   "en": "Turkish coffee",
+   "heal": 0.1,
+   "buff": "caffeine",
+   "p": 0
+  },
+  "baklava": {
+   "ic": "🍯",
+   "tr": "baklava",
+   "en": "baklava",
+   "heal": 0.1,
+   "buff": "dmg2",
+   "p": 70
+  },
+  "lokum": {
+   "ic": "🍬",
+   "tr": "lokum",
+   "en": "Turkish delight",
+   "buff": "regen",
+   "p": 40
+  },
+  "matcha": {
+   "ic": "🍵",
+   "tr": "matcha",
+   "en": "matcha",
+   "mana": 30,
+   "buff": "focus",
+   "p": 0
+  }
+ },
+ "GEARBASE": [
+  {
+   "id": "aviator",
+   "s": "eye",
+   "ic": "🕶",
+   "tr": "Pilot Gözlüğü",
+   "en": "aviator shades",
+   "p": "crit",
+   "sec": [
+    "dmg",
+    "xp",
+    "luck"
+   ],
+   "col": 14200906,
+   "lens": 1714756
+  },
+  {
+   "id": "cateye",
+   "s": "eye",
+   "ic": "😼",
+   "tr": "Kedi Gözü",
+   "en": "cat-eye shades",
+   "p": "xp",
+   "sec": [
+    "crit",
+    "lira",
+    "luck"
+   ],
+   "col": 16736162,
+   "lens": 2756656
+  },
+  {
+   "id": "visor",
+   "s": "eye",
+   "ic": "🥽",
+   "tr": "Neon Vizör",
+   "en": "neon visor",
+   "p": "dmg",
+   "sec": [
+    "crit",
+    "spd",
+    "xp"
+   ],
+   "col": 8124415,
+   "lens": 3807850
+  },
+  {
+   "id": "round",
+   "s": "eye",
+   "ic": "👓",
+   "tr": "Yuvarlak Gözlük",
+   "en": "round glasses",
+   "p": "xp",
+   "sec": [
+    "mana",
+    "luck",
+    "lira"
+   ],
+   "col": 13158616,
+   "lens": 5913120
+  },
+  {
+   "id": "hoops",
+   "s": "jew",
+   "ic": "⭕",
+   "tr": "Halka Küpe",
+   "en": "hoop earrings",
+   "p": "dmg",
+   "sec": [
+    "crit",
+    "hp",
+    "lira"
+   ],
+   "col": 16766571
+  },
+  {
+   "id": "nazark",
+   "s": "jew",
+   "ic": "🧿",
+   "tr": "Nazarlık Kolye",
+   "en": "evil-eye necklace",
+   "p": "armor",
+   "sec": [
+    "hp",
+    "luck",
+    "xp"
+   ],
+   "col": 2060240
+  },
+  {
+   "id": "zincir",
+   "s": "jew",
+   "ic": "⛓",
+   "tr": "Altın Zincir",
+   "en": "gold chain",
+   "p": "lira",
+   "sec": [
+    "dmg",
+    "luck",
+    "crit"
+   ],
+   "col": 16762938
+  },
+  {
+   "id": "bileklik",
+   "s": "jew",
+   "ic": "📿",
+   "tr": "Boncuklu Bileklik",
+   "en": "beaded bracelet",
+   "p": "hp",
+   "sec": [
+    "armor",
+    "mana",
+    "dmg"
+   ],
+   "col": 16752335
+  },
+  {
+   "id": "spor",
+   "s": "shoe",
+   "ic": "👟",
+   "tr": "Spor Ayakkabı",
+   "en": "sneakers",
+   "p": "spd",
+   "sec": [
+    "stam",
+    "crit",
+    "luck"
+   ],
+   "col": 15921906
+  },
+  {
+   "id": "postal",
+   "s": "shoe",
+   "ic": "🥾",
+   "tr": "Postal",
+   "en": "combat boots",
+   "p": "armor",
+   "sec": [
+    "hp",
+    "dmg",
+    "stam"
+   ],
+   "col": 2761254
+  },
+  {
+   "id": "platform",
+   "s": "shoe",
+   "ic": "👠",
+   "tr": "Platform Ayakkabı",
+   "en": "platform shoes",
+   "p": "stam",
+   "sec": [
+    "spd",
+    "xp",
+    "mana"
+   ],
+   "col": 16736162
+  },
+  {
+   "id": "paten",
+   "s": "shoe",
+   "ic": "🛼",
+   "tr": "Paten",
+   "en": "roller skates",
+   "p": "spd",
+   "sec": [
+    "bike",
+    "stam",
+    "lira"
+   ],
+   "col": 8124415
+  },
+  {
+   "id": "bez",
+   "s": "bag",
+   "ic": "👜",
+   "tr": "Bez Çanta",
+   "en": "tote bag",
+   "p": "bagx",
+   "sec": [
+    "lira",
+    "luck",
+    "hp"
+   ],
+   "col": 3121295
+  },
+  {
+   "id": "capraz",
+   "s": "bag",
+   "ic": "👛",
+   "tr": "Çapraz Çanta",
+   "en": "crossbody bag",
+   "p": "luck",
+   "sec": [
+    "lira",
+    "crit",
+    "bagx"
+   ],
+   "col": 9315384
+  },
+  {
+   "id": "bel",
+   "s": "bag",
+   "ic": "💰",
+   "tr": "Bel Çantası",
+   "en": "bum bag",
+   "p": "lira",
+   "sec": [
+    "luck",
+    "spd",
+    "bagx"
+   ],
+   "col": 16766571
+  },
+  {
+   "id": "sirt",
+   "s": "bag",
+   "ic": "🎒",
+   "tr": "Sırt Çantası",
+   "en": "backpack",
+   "p": "bagx",
+   "sec": [
+    "stam",
+    "hp",
+    "mana"
+   ],
+   "col": 6958496
+  },
+  {
+   "id": "lastik",
+   "s": "bike",
+   "ic": "🛞",
+   "tr": "Neon Lastik",
+   "en": "neon tyres",
+   "p": "bike",
+   "sec": [
+    "boost",
+    "spd",
+    "luck"
+   ],
+   "col": 8124415
+  },
+  {
+   "id": "zil",
+   "s": "bike",
+   "ic": "🔔",
+   "tr": "Zil",
+   "en": "bell",
+   "p": "luck",
+   "sec": [
+    "bike",
+    "lira",
+    "xp"
+   ],
+   "col": 16766571
+  },
+  {
+   "id": "zincirb",
+   "s": "bike",
+   "ic": "⛓",
+   "tr": "Krom Zincir",
+   "en": "chrome chain",
+   "p": "boost",
+   "sec": [
+    "bike",
+    "stam",
+    "dmg"
+   ],
+   "col": 14213360
+  },
+  {
+   "id": "far",
+   "s": "bike",
+   "ic": "🔦",
+   "tr": "Neon Far",
+   "en": "neon headlight",
+   "p": "bike",
+   "sec": [
+    "crit",
+    "xp",
+    "boost"
+   ],
+   "col": 16736162
+  }
+ ],
+ "RAR": [
+  {
+   "n": "SIRADAN",
+   "en": "common",
+   "c": "#d8d4e8",
+   "w": 55
+  },
+  {
+   "n": "GÜZEL",
+   "en": "uncommon",
+   "c": "#5fff9e",
+   "w": 30
+  },
+  {
+   "n": "NADİR",
+   "en": "rare",
+   "c": "#5fb0ff",
+   "w": 11
+  },
+  {
+   "n": "DESTANSI",
+   "en": "epic",
+   "c": "#c07bff",
+   "w": 3.5
+  },
+  {
+   "n": "EFSANE",
+   "en": "legendary",
+   "c": "#ffd66b",
+   "w": 0.6
+  }
+ ],
+ "SLOTS": [
+  {
+   "id": "eye",
+   "ic": "🕶",
+   "tr": "Gözlük",
+   "en": "sunglasses"
+  },
+  {
+   "id": "jew",
+   "ic": "💍",
+   "tr": "Takı",
+   "en": "jewellery"
+  },
+  {
+   "id": "shoe",
+   "ic": "👟",
+   "tr": "Ayakkabı",
+   "en": "shoes"
+  },
+  {
+   "id": "bag",
+   "ic": "👜",
+   "tr": "Çanta",
+   "en": "bag"
+  },
+  {
+   "id": "bike",
+   "ic": "🚲",
+   "tr": "Bisiklet",
+   "en": "bike part"
+  }
+ ],
+ "STATN": {
+  "dmg": [
+   "Güç",
+   "damage",
+   "%"
+  ],
+  "crit": [
+   "Kritik",
+   "crit chance",
+   "%"
+  ],
+  "spd": [
+   "Hız",
+   "run speed",
+   "%"
+  ],
+  "xp": [
+   "Deneyim",
+   "XP",
+   "%"
+  ],
+  "lira": [
+   "Para",
+   "lira",
+   "%"
+  ],
+  "luck": [
+   "Şans",
+   "drop luck",
+   "%"
+  ],
+  "armor": [
+   "Zırh",
+   "less damage taken",
+   "%"
+  ],
+  "hp": [
+   "Can",
+   "max HP",
+   ""
+  ],
+  "mana": [
+   "Mana",
+   "max mana",
+   ""
+  ],
+  "stam": [
+   "Nefes",
+   "max stamina",
+   ""
+  ],
+  "bike": [
+   "Pedal",
+   "bike speed",
+   "%"
+  ],
+  "boost": [
+   "Turbo",
+   "cheaper boosts",
+   "%"
+  ],
+  "bagx": [
+   "Cep",
+   "backpack slots",
+   ""
+  ]
+ },
+ "VENDORS": [
+  {
+   "id": "jewel",
+   "x": -125,
+   "z": 58.5,
+   "n": "KUYUMCU ZEYNEP 💍"
+  }
+ ]
+}

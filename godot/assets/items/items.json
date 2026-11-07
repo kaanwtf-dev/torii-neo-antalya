@@ -1,0 +1,1470 @@
+{
+ "RAR": [
+  {
+   "n": "SIRADAN",
+   "en": "common",
+   "c": "#d8d4e8",
+   "w": 55
+  },
+  {
+   "n": "GÜZEL",
+   "en": "uncommon",
+   "c": "#5fff9e",
+   "w": 30
+  },
+  {
+   "n": "NADİR",
+   "en": "rare",
+   "c": "#5fb0ff",
+   "w": 11
+  },
+  {
+   "n": "DESTANSI",
+   "en": "epic",
+   "c": "#c07bff",
+   "w": 3.5
+  },
+  {
+   "n": "EFSANE",
+   "en": "legendary",
+   "c": "#ffd66b",
+   "w": 0.6
+  }
+ ],
+ "SLOTS": [
+  {
+   "id": "eye",
+   "ic": "🕶",
+   "tr": "Gözlük",
+   "en": "sunglasses"
+  },
+  {
+   "id": "jew",
+   "ic": "💍",
+   "tr": "Takı",
+   "en": "jewellery"
+  },
+  {
+   "id": "shoe",
+   "ic": "👟",
+   "tr": "Ayakkabı",
+   "en": "shoes"
+  },
+  {
+   "id": "bag",
+   "ic": "👜",
+   "tr": "Çanta",
+   "en": "bag"
+  },
+  {
+   "id": "bike",
+   "ic": "🚲",
+   "tr": "Bisiklet",
+   "en": "bike part"
+  }
+ ],
+ "STATN": {
+  "dmg": [
+   "Güç",
+   "damage",
+   "%"
+  ],
+  "crit": [
+   "Kritik",
+   "crit chance",
+   "%"
+  ],
+  "spd": [
+   "Hız",
+   "run speed",
+   "%"
+  ],
+  "xp": [
+   "Deneyim",
+   "XP",
+   "%"
+  ],
+  "lira": [
+   "Para",
+   "lira",
+   "%"
+  ],
+  "luck": [
+   "Şans",
+   "drop luck",
+   "%"
+  ],
+  "armor": [
+   "Zırh",
+   "less damage taken",
+   "%"
+  ],
+  "hp": [
+   "Can",
+   "max HP",
+   ""
+  ],
+  "mana": [
+   "Mana",
+   "max mana",
+   ""
+  ],
+  "stam": [
+   "Nefes",
+   "max stamina",
+   ""
+  ],
+  "bike": [
+   "Pedal",
+   "bike speed",
+   "%"
+  ],
+  "boost": [
+   "Turbo",
+   "cheaper boosts",
+   "%"
+  ],
+  "bagx": [
+   "Cep",
+   "backpack slots",
+   ""
+  ]
+ },
+ "FLATST": {
+  "hp": 1,
+  "mana": 1,
+  "stam": 1,
+  "bagx": 1
+ },
+ "GEARBASE": [
+  {
+   "id": "aviator",
+   "s": "eye",
+   "ic": "🕶",
+   "tr": "Pilot Gözlüğü",
+   "en": "aviator shades",
+   "p": "crit",
+   "sec": [
+    "dmg",
+    "xp",
+    "luck"
+   ],
+   "col": "#d8b04a",
+   "lens": "#1a2a44"
+  },
+  {
+   "id": "cateye",
+   "s": "eye",
+   "ic": "😼",
+   "tr": "Kedi Gözü",
+   "en": "cat-eye shades",
+   "p": "xp",
+   "sec": [
+    "crit",
+    "lira",
+    "luck"
+   ],
+   "col": "#ff5fa2",
+   "lens": "#2a1030"
+  },
+  {
+   "id": "visor",
+   "s": "eye",
+   "ic": "🥽",
+   "tr": "Neon Vizör",
+   "en": "neon visor",
+   "p": "dmg",
+   "sec": [
+    "crit",
+    "spd",
+    "xp"
+   ],
+   "col": "#7bf7ff",
+   "lens": "#3a1a6a"
+  },
+  {
+   "id": "round",
+   "s": "eye",
+   "ic": "👓",
+   "tr": "Yuvarlak Gözlük",
+   "en": "round glasses",
+   "p": "xp",
+   "sec": [
+    "mana",
+    "luck",
+    "lira"
+   ],
+   "col": "#c8c8d8",
+   "lens": "#5a3a20"
+  },
+  {
+   "id": "hoops",
+   "s": "jew",
+   "ic": "⭕",
+   "tr": "Halka Küpe",
+   "en": "hoop earrings",
+   "p": "dmg",
+   "sec": [
+    "crit",
+    "hp",
+    "lira"
+   ],
+   "col": "#ffd66b",
+   "lens": null
+  },
+  {
+   "id": "nazark",
+   "s": "jew",
+   "ic": "🧿",
+   "tr": "Nazarlık Kolye",
+   "en": "evil-eye necklace",
+   "p": "armor",
+   "sec": [
+    "hp",
+    "luck",
+    "xp"
+   ],
+   "col": "#1f6fd0",
+   "lens": null
+  },
+  {
+   "id": "zincir",
+   "s": "jew",
+   "ic": "⛓",
+   "tr": "Altın Zincir",
+   "en": "gold chain",
+   "p": "lira",
+   "sec": [
+    "dmg",
+    "luck",
+    "crit"
+   ],
+   "col": "#ffc83a",
+   "lens": null
+  },
+  {
+   "id": "bileklik",
+   "s": "jew",
+   "ic": "📿",
+   "tr": "Boncuklu Bileklik",
+   "en": "beaded bracelet",
+   "p": "hp",
+   "sec": [
+    "armor",
+    "mana",
+    "dmg"
+   ],
+   "col": "#ff9ecf",
+   "lens": null
+  },
+  {
+   "id": "spor",
+   "s": "shoe",
+   "ic": "👟",
+   "tr": "Spor Ayakkabı",
+   "en": "sneakers",
+   "p": "spd",
+   "sec": [
+    "stam",
+    "crit",
+    "luck"
+   ],
+   "col": "#f2f2f2",
+   "lens": null
+  },
+  {
+   "id": "postal",
+   "s": "shoe",
+   "ic": "🥾",
+   "tr": "Postal",
+   "en": "combat boots",
+   "p": "armor",
+   "sec": [
+    "hp",
+    "dmg",
+    "stam"
+   ],
+   "col": "#2a2226",
+   "lens": null
+  },
+  {
+   "id": "platform",
+   "s": "shoe",
+   "ic": "👠",
+   "tr": "Platform Ayakkabı",
+   "en": "platform shoes",
+   "p": "stam",
+   "sec": [
+    "spd",
+    "xp",
+    "mana"
+   ],
+   "col": "#ff5fa2",
+   "lens": null
+  },
+  {
+   "id": "paten",
+   "s": "shoe",
+   "ic": "🛼",
+   "tr": "Paten",
+   "en": "roller skates",
+   "p": "spd",
+   "sec": [
+    "bike",
+    "stam",
+    "lira"
+   ],
+   "col": "#7bf7ff",
+   "lens": null
+  },
+  {
+   "id": "bez",
+   "s": "bag",
+   "ic": "👜",
+   "tr": "Bez Çanta",
+   "en": "tote bag",
+   "p": "bagx",
+   "sec": [
+    "lira",
+    "luck",
+    "hp"
+   ],
+   "col": "#2fa08f",
+   "lens": null
+  },
+  {
+   "id": "capraz",
+   "s": "bag",
+   "ic": "👛",
+   "tr": "Çapraz Çanta",
+   "en": "crossbody bag",
+   "p": "luck",
+   "sec": [
+    "lira",
+    "crit",
+    "bagx"
+   ],
+   "col": "#8e2438",
+   "lens": null
+  },
+  {
+   "id": "bel",
+   "s": "bag",
+   "ic": "💰",
+   "tr": "Bel Çantası",
+   "en": "bum bag",
+   "p": "lira",
+   "sec": [
+    "luck",
+    "spd",
+    "bagx"
+   ],
+   "col": "#ffd66b",
+   "lens": null
+  },
+  {
+   "id": "sirt",
+   "s": "bag",
+   "ic": "🎒",
+   "tr": "Sırt Çantası",
+   "en": "backpack",
+   "p": "bagx",
+   "sec": [
+    "stam",
+    "hp",
+    "mana"
+   ],
+   "col": "#6a2da0",
+   "lens": null
+  },
+  {
+   "id": "lastik",
+   "s": "bike",
+   "ic": "🛞",
+   "tr": "Neon Lastik",
+   "en": "neon tyres",
+   "p": "bike",
+   "sec": [
+    "boost",
+    "spd",
+    "luck"
+   ],
+   "col": "#7bf7ff",
+   "lens": null
+  },
+  {
+   "id": "zil",
+   "s": "bike",
+   "ic": "🔔",
+   "tr": "Zil",
+   "en": "bell",
+   "p": "luck",
+   "sec": [
+    "bike",
+    "lira",
+    "xp"
+   ],
+   "col": "#ffd66b",
+   "lens": null
+  },
+  {
+   "id": "zincirb",
+   "s": "bike",
+   "ic": "⛓",
+   "tr": "Krom Zincir",
+   "en": "chrome chain",
+   "p": "boost",
+   "sec": [
+    "bike",
+    "stam",
+    "dmg"
+   ],
+   "col": "#d8e0f0",
+   "lens": null
+  },
+  {
+   "id": "far",
+   "s": "bike",
+   "ic": "🔦",
+   "tr": "Neon Far",
+   "en": "neon headlight",
+   "p": "bike",
+   "sec": [
+    "crit",
+    "xp",
+    "boost"
+   ],
+   "col": "#ff5fa2",
+   "lens": null
+  }
+ ],
+ "GEARMAX": 30,
+ "FOOD": {
+  "simit": {
+   "ic": "🥯",
+   "tr": "simit",
+   "en": "sesame bagel",
+   "heal": 0.2,
+   "p": 25
+  },
+  "doner": {
+   "ic": "🥙",
+   "tr": "döner",
+   "en": "döner wrap",
+   "heal": 0.35,
+   "buff": "regen",
+   "p": 60
+  },
+  "borek": {
+   "ic": "🥟",
+   "tr": "börek",
+   "en": "savoury pastry",
+   "heal": 0.5,
+   "p": 80
+  },
+  "kaktus": {
+   "ic": "🌵",
+   "tr": "kaktüs meyvesi",
+   "w": "kaktüs",
+   "en": "cactus fruit",
+   "heal": 0.15,
+   "p": 0
+  },
+  "ayran": {
+   "ic": "🥛",
+   "tr": "ayran",
+   "en": "salty yoghurt drink",
+   "heal": 0.08,
+   "stam": 1,
+   "p": 30
+  },
+  "cay": {
+   "ic": "🫖",
+   "tr": "çay",
+   "en": "black tea",
+   "buff": "spd",
+   "stam": 0.5,
+   "p": 30
+  },
+  "kahve": {
+   "ic": "☕",
+   "tr": "Türk kahvesi",
+   "w": "kahve",
+   "en": "Turkish coffee",
+   "heal": 0.1,
+   "buff": "caffeine",
+   "p": 0
+  },
+  "baklava": {
+   "ic": "🍯",
+   "tr": "baklava",
+   "en": "baklava",
+   "heal": 0.1,
+   "buff": "dmg2",
+   "p": 70
+  },
+  "lokum": {
+   "ic": "🍬",
+   "tr": "lokum",
+   "en": "Turkish delight",
+   "buff": "regen",
+   "p": 40
+  },
+  "matcha": {
+   "ic": "🍵",
+   "tr": "matcha",
+   "en": "matcha",
+   "mana": 30,
+   "buff": "focus",
+   "p": 0
+  }
+ },
+ "FOODPICK": {
+  "simit": "simit",
+  "doner": "doner",
+  "borek": "borek",
+  "baklava": "baklava",
+  "cay": "cay",
+  "lokum": "lokum",
+  "matcha": "matcha",
+  "coffee": "kahve",
+  "fruit": "kaktus",
+  "ayran": "ayran"
+ },
+ "STACK": 10,
+ "BUFFS": {
+  "dmg2": {
+   "n": "DOUBLE DAMAGE",
+   "ic": "🍯",
+   "dur": 10
+  },
+  "spd": {
+   "n": "SPEED RUSH",
+   "ic": "🫖",
+   "dur": 10
+  },
+  "shield": {
+   "n": "NAZAR SHIELD",
+   "ic": "🧿",
+   "dur": 12
+  },
+  "regen": {
+   "n": "LOKUM REGEN",
+   "ic": "🍬",
+   "dur": 10
+  },
+  "lucky": {
+   "n": "GODS' FAVOUR",
+   "ic": "🎲",
+   "dur": 20
+  },
+  "focus": {
+   "n": "MATCHA FOCUS",
+   "ic": "🍵",
+   "dur": 45
+  },
+  "caffeine": {
+   "n": "CAFFEINE RUSH",
+   "ic": "☕",
+   "dur": 30
+  }
+ },
+ "NZREG": {
+  "mid": "Midtown",
+  "yes": "Yeşiltepe",
+  "dag": "Işıkdağ",
+  "kiyi": "River & beach",
+  "uzak": "Far away"
+ },
+ "NZ_SPOTS": [
+  [
+   -21.5,
+   -16.2,
+   "mid"
+  ],
+  [
+   60,
+   -74,
+   "mid"
+  ],
+  [
+   -100,
+   30,
+   "mid"
+  ],
+  [
+   70,
+   72,
+   "mid"
+  ],
+  [
+   -108,
+   -94,
+   "mid"
+  ],
+  [
+   28,
+   72,
+   "mid"
+  ],
+  [
+   20,
+   -68,
+   "mid"
+  ],
+  [
+   -30,
+   -70,
+   "mid"
+  ],
+  [
+   106,
+   -34,
+   "mid"
+  ],
+  [
+   -44,
+   -146,
+   "mid"
+  ],
+  [
+   -54,
+   -170,
+   "mid"
+  ],
+  [
+   -4,
+   118,
+   "mid"
+  ],
+  [
+   30,
+   14,
+   "mid"
+  ],
+  [
+   -70,
+   52,
+   "mid"
+  ],
+  [
+   -146,
+   58,
+   "mid"
+  ],
+  [
+   -186,
+   -30,
+   "mid"
+  ],
+  [
+   -76,
+   22,
+   "mid"
+  ],
+  [
+   -176,
+   -176,
+   "mid"
+  ],
+  [
+   76,
+   -150,
+   "mid"
+  ],
+  [
+   -32,
+   58,
+   "mid"
+  ],
+  [
+   -96,
+   224,
+   "yes"
+  ],
+  [
+   12,
+   306,
+   "yes"
+  ],
+  [
+   -52,
+   214,
+   "yes"
+  ],
+  [
+   92,
+   300,
+   "yes"
+  ],
+  [
+   -130,
+   290,
+   "yes"
+  ],
+  [
+   40,
+   250,
+   "yes"
+  ],
+  [
+   -20,
+   280,
+   "yes"
+  ],
+  [
+   70,
+   228,
+   "yes"
+  ],
+  [
+   -80,
+   318,
+   "yes"
+  ],
+  [
+   120,
+   268,
+   "yes"
+  ],
+  [
+   -382,
+   -296,
+   "dag"
+  ],
+  [
+   -336,
+   -262,
+   "dag"
+  ],
+  [
+   -420,
+   -340,
+   "dag"
+  ],
+  [
+   -306,
+   -322,
+   "dag"
+  ],
+  [
+   -444,
+   -262,
+   "dag"
+  ],
+  [
+   -360,
+   -384,
+   "dag"
+  ],
+  [
+   -404,
+   -214,
+   "dag"
+  ],
+  [
+   -282,
+   -258,
+   "dag"
+  ],
+  [
+   -214,
+   0,
+   "kiyi"
+  ],
+  [
+   -182,
+   104,
+   "kiyi"
+  ],
+  [
+   -238,
+   -140,
+   "kiyi"
+  ],
+  [
+   122,
+   8,
+   "kiyi"
+  ],
+  [
+   134,
+   -172,
+   "kiyi"
+  ],
+  [
+   138,
+   160,
+   "kiyi"
+  ],
+  [
+   -256,
+   -60,
+   "kiyi"
+  ],
+  [
+   -262,
+   120,
+   "kiyi"
+  ],
+  [
+   592,
+   -18,
+   "uzak"
+  ],
+  [
+   588,
+   322,
+   "uzak"
+  ],
+  [
+   614,
+   -276,
+   "uzak"
+  ],
+  [
+   626,
+   6,
+   "uzak"
+  ]
+ ],
+ "NZLINES": [
+  [
+   "Nazar değmesin!",
+   "may the evil eye not touch you — what you say when something is too good"
+  ],
+  [
+   "Maşallah!",
+   "\"God has willed it\" — praise that keeps the evil eye away"
+  ],
+  [
+   "Göz değdi.",
+   "\"the eye touched it\" — why something good suddenly broke"
+  ],
+  [
+   "Tahtaya vur!",
+   "knock on wood!"
+  ],
+  [
+   "Kem gözlere şiş!",
+   "\"a skewer in the evil eyes!\" — a very old charm"
+  ],
+  [
+   "Şeytan kulağına kurşun.",
+   "\"lead in the devil's ear\" — touch wood, don't jinx it"
+  ],
+  [
+   "Mavi boncuk",
+   "blue bead — the classic nazar"
+  ],
+  [
+   "Uğur getirir.",
+   "it brings good luck"
+  ],
+  [
+   "Kısmet",
+   "fate, what is meant for you"
+  ],
+  [
+   "Göz",
+   "eye"
+  ],
+  [
+   "Koruma",
+   "protection"
+  ],
+  [
+   "Uğurlu",
+   "lucky, auspicious"
+  ],
+  [
+   "Nazarlık",
+   "a nazar charm you hang up"
+  ],
+  [
+   "Allah korusun",
+   "God protect (us)"
+  ],
+  [
+   "Şans",
+   "luck"
+  ],
+  [
+   "Bol şans!",
+   "lots of luck! — good luck!"
+  ]
+ ],
+ "NZREW": [
+  {
+   "n": 10,
+   "t": "+50 max HP"
+  },
+  {
+   "n": 20,
+   "t": "Nazar radar on the minimap + epic \"Nazar Gözü\" sunglasses"
+  },
+  {
+   "n": 30,
+   "t": "+8% damage, permanently"
+  },
+  {
+   "n": 40,
+   "t": "Legendary \"Mavi Boncuk\" necklace"
+  },
+  {
+   "n": 50,
+   "t": "5000₺, three perk cards and the title NAZAR KRALİÇESİ"
+  }
+ ],
+ "PERKS": [
+  {
+   "id": "keskin",
+   "ic": "🗡",
+   "tr": "KESKİN",
+   "en": "sharp",
+   "max": 5,
+   "w": 10,
+   "c": "#ff5fa2",
+   "d": "+12% damage with every weapon"
+  },
+  {
+   "id": "seri",
+   "ic": "⚡",
+   "tr": "SERİ EL",
+   "en": "quick hand",
+   "max": 4,
+   "w": 9,
+   "c": "#ff5fa2",
+   "d": "Your attacks recover 8% faster"
+  },
+  {
+   "id": "kritik",
+   "ic": "💥",
+   "tr": "KRİTİK",
+   "en": "critical",
+   "max": 4,
+   "w": 9,
+   "c": "#ff5fa2",
+   "d": "+6% chance of a CRIT (×1.8 damage)"
+  },
+  {
+   "id": "dayanikli",
+   "ic": "❤️",
+   "tr": "DAYANIKLI",
+   "en": "tough",
+   "max": 5,
+   "w": 10,
+   "c": "#7bf7ff",
+   "d": "+40 max HP, right now"
+  },
+  {
+   "id": "zirh",
+   "ic": "🛡",
+   "tr": "ZIRH",
+   "en": "armour",
+   "max": 4,
+   "w": 8,
+   "c": "#7bf7ff",
+   "d": "Take 7% less damage from everything"
+  },
+  {
+   "id": "sifa",
+   "ic": "💚",
+   "tr": "ŞİFALI VURUŞ",
+   "en": "healing blow",
+   "max": 3,
+   "w": 7,
+   "c": "#7bf7ff",
+   "d": "Every kill heals 2% of your max HP"
+  },
+  {
+   "id": "nisanci",
+   "ic": "🎯",
+   "tr": "NİŞANCI",
+   "en": "marksman",
+   "max": 3,
+   "w": 6,
+   "c": "#ff5fa2",
+   "d": "+20% damage with ranged weapons"
+  },
+  {
+   "id": "nefes2",
+   "ic": "🌬",
+   "tr": "İKİNCİ NEFES",
+   "en": "second wind",
+   "max": 1,
+   "w": 5,
+   "c": "#7bf7ff",
+   "d": "Once every 90s, falling under 20% HP heals you 35%"
+  },
+  {
+   "id": "dans",
+   "ic": "💃",
+   "tr": "DANS KRALİÇESİ",
+   "en": "dance queen",
+   "max": 2,
+   "w": 6,
+   "c": "#b06bff",
+   "d": "Dance Blast hits 40% harder and 20% wider"
+  },
+  {
+   "id": "sadik",
+   "ic": "🐶",
+   "tr": "SADIK",
+   "en": "loyal",
+   "max": 2,
+   "w": 6,
+   "c": "#b06bff",
+   "d": "Bandit Strike: 25% shorter cooldown, bites 50% harder"
+  },
+  {
+   "id": "ofke",
+   "ic": "🔥",
+   "tr": "ÖFKE",
+   "en": "fury",
+   "max": 1,
+   "w": 5,
+   "c": "#ff5fa2",
+   "d": "Every kill-streak tier adds +6% damage"
+  },
+  {
+   "id": "miknatis",
+   "ic": "🧲",
+   "tr": "MIKNATIS",
+   "en": "magnet",
+   "max": 2,
+   "w": 7,
+   "c": "#ffd66b",
+   "d": "Coins and pickups fly to you from 60% further away"
+  },
+  {
+   "id": "zengin",
+   "ic": "💰",
+   "tr": "ZENGİN",
+   "en": "rich",
+   "max": 3,
+   "w": 7,
+   "c": "#ffd66b",
+   "d": "+15% lira from every coin"
+  },
+  {
+   "id": "caliskan",
+   "ic": "📈",
+   "tr": "ÇALIŞKAN",
+   "en": "hard-working",
+   "max": 3,
+   "w": 8,
+   "c": "#ffd66b",
+   "d": "+10% XP from everything"
+  },
+  {
+   "id": "pedal",
+   "ic": "🚲",
+   "tr": "PEDAL",
+   "en": "pedal",
+   "max": 2,
+   "w": 6,
+   "c": "#ffd66b",
+   "d": "Bike: +10% top speed, boosts cost 20% less stamina"
+  },
+  {
+   "id": "maraton",
+   "ic": "🏃‍♀️",
+   "tr": "MARATON",
+   "en": "marathon",
+   "max": 3,
+   "w": 7,
+   "c": "#7bf7ff",
+   "d": "+25 max stamina, sprinting costs 15% less"
+  },
+  {
+   "id": "buyucu",
+   "ic": "🔮",
+   "tr": "BÜYÜCÜ",
+   "en": "sorcerer",
+   "max": 3,
+   "w": 7,
+   "c": "#b06bff",
+   "d": "+20 max mana, skills cost 10% less mana"
+  },
+  {
+   "id": "sansli",
+   "ic": "🍀",
+   "tr": "ŞANSLI",
+   "en": "lucky",
+   "max": 3,
+   "w": 6,
+   "c": "#ffd66b",
+   "d": "+25% chance of gear and food drops"
+  },
+  {
+   "id": "ogrenci",
+   "ic": "🎓",
+   "tr": "ÖĞRENCİ",
+   "en": "student",
+   "max": 3,
+   "w": 6,
+   "c": "#b06bff",
+   "d": "+2 INT right now (every INT = +8% XP)"
+  },
+  {
+   "id": "asci",
+   "ic": "🍳",
+   "tr": "AŞÇI",
+   "en": "cook",
+   "max": 2,
+   "w": 5,
+   "c": "#7bf7ff",
+   "d": "Food from your backpack heals 40% more"
+  },
+  {
+   "id": "hizli",
+   "ic": "👟",
+   "tr": "HIZLI",
+   "en": "fast",
+   "max": 3,
+   "w": 7,
+   "c": "#7bf7ff",
+   "d": "+6% running speed"
+  }
+ ],
+ "MILESTONES": [
+  {
+   "lv": 5,
+   "ic": "🎒",
+   "t": "ÇANTA BÜYÜDÜ · BIGGER BACKPACK",
+   "d": "+4 backpack slots, and [color=#5fb0ff][b]rare (blue)[/b][/color] gear can drop now."
+  },
+  {
+   "lv": 10,
+   "ic": "🧿",
+   "t": "NAZAR KALKANI · NEW SKILL [6]",
+   "d": "Press [b]6[/b]: an evil-eye shield that blocks [b]all[/b] damage for 5 seconds."
+  },
+  {
+   "lv": 15,
+   "ic": "🚲",
+   "t": "NEON DIAMOND BACK",
+   "d": "Your bike gets neon underglow and [b]+12% top speed[/b]."
+  },
+  {
+   "lv": 20,
+   "ic": "💜",
+   "t": "DESTANSI · EPIC",
+   "d": "[color=#c07bff][b]Epic (purple)[/b][/color] gear can drop now, and +4 more backpack slots."
+  },
+  {
+   "lv": 25,
+   "ic": "🌠",
+   "t": "YILDIZ YAĞMURU · NEW SKILL [7]",
+   "d": "Press [b]7[/b]: call down a rain of neon stars on everything around you."
+  },
+  {
+   "lv": 30,
+   "ic": "👑",
+   "t": "EFSANE · LEGEND",
+   "d": "[color=#ffd66b][b]Legendary (gold)[/b][/color] gear can drop now — and a golden aura."
+  }
+ ],
+ "INVTABS": [
+  [
+   "gear",
+   "🎽 KUŞANIM"
+  ],
+  [
+   "bag",
+   "🎒 ÇANTA"
+  ],
+  [
+   "cards",
+   "🃏 KARTLAR"
+  ],
+  [
+   "nazar",
+   "🧿 KOLEKSİYON"
+  ],
+  [
+   "quests",
+   "📜 GÖREVLER"
+  ],
+  [
+   "stats",
+   "📊 DURUM"
+  ]
+ ],
+ "TIPS": {
+  "levels": {
+   "t": "⭐ LEVELS 2.0 · SEVİYELER",
+   "l": [
+    "Every level now takes a bit more XP than the last — but every level [b]pays out[/b].",
+    "Each level up: [b]+12 max HP[/b], [b]+3% damage[/b], [b]+3 mana[/b], [b]+2 stamina[/b], and a [b]perk card[/b] you choose.",
+    "Every [b]5th level[/b] unlocks something big: a bigger backpack, new skills on [b]6[/b] and [b]7[/b], a neon bike, better gear.",
+    "XP from everything grows with your level too, so missions and lessons always stay worth doing.",
+    "Fainting costs some lira and XP — but [b]never a level[/b]."
+   ]
+  },
+  "moblv": {
+   "t": "🎯 MONSTER LEVELS",
+   "l": [
+    "Every monster has a [b]level tag[/b] over its head now.",
+    "Colours: [color=#9a94a8]grey[/color] far weaker · [color=#5fff9e]green[/color] weaker · [b]white[/b] your level · [color=#ffb03a]orange[/color] +2 · [color=#ff3b3b]red[/color] +3 or more.",
+    "They come in around [b]your[/b] level, so they toughen up as you do. Yeşiltepe, the outskirts and Mount Işıkdağ run hotter.",
+    "Higher level = more HP and harder hits — and more XP when it drops."
+   ]
+  },
+  "gear": {
+   "t": "🕶 GEAR · KUŞANIM",
+   "l": [
+    "Monsters, chests and bosses drop [b]gear[/b] — the glowing thing with a beam of light. Walk over it.",
+    "Five slots: [b]🕶 sunglasses, 💍 jewellery, 👟 shoes, 👜 bag, 🚲 bike part[/b]. Each piece gives stats, and you can see it on Torii.",
+    "The colour is the rarity: [color=#d8d4e8][b]common[/b][/color] → [color=#5fff9e][b]uncommon[/b][/color] → [color=#5fb0ff][b]rare[/b][/color] → [color=#c07bff][b]epic[/b][/color] → [color=#ffd66b][b]legendary[/b][/color]. Rarer = more and bigger stats. Better rarities unlock as you level.",
+    "Press [b]I[/b] to open your inventory: compare pieces (green = better than what you wear), put them on, or sell the rest for lira."
+   ]
+  },
+  "bag": {
+   "t": "🎒 BACKPACK · ÇANTA",
+   "l": [
+    "Turkish food no longer gets eaten the moment you touch it — it goes into your [b]backpack[/b].",
+    "Press [b]H[/b] to eat: it picks the smallest snack that heals what you are missing. Or open the backpack ([b]I[/b]) and choose.",
+    "Each food does something different — [i]börek[/i] heals a lot, [i]çay[/i] makes you fast, [i]baklava[/i] doubles your damage.",
+    "Buy more at [b]Five Sips ☕[/b]. Every food you eat teaches its Turkish name."
+   ]
+  },
+  "nazar": {
+   "t": "🧿 HIDDEN NAZAR BEADS · GİZLİ NAZARLAR",
+   "l": [
+    "There are [b]50 hidden nazar beads[/b] around the world — Midtown, Yeşiltepe, Mount Işıkdağ, the river, the beach, even abroad.",
+    "Look for a faint [b]blue light[/b] rising into the sky. Every bead gives XP, lira and a Turkish saying about the evil eye.",
+    "Every [b]10[/b] beads unlocks a reward. At 20 the minimap starts showing beads near you.",
+    "Your progress, region by region, is in the inventory ([b]I[/b]) under 🧿."
+   ]
+  },
+  "phases": {
+   "t": "⚠️ BOSS PHASES",
+   "l": [
+    "Big bosses now fight in [b]phases[/b]. When their health drops past a mark they [b]change[/b]: faster, harder, new attacks, backup.",
+    "The banner tells you what just changed. Watch for purple shots to dodge and for bosses that charge in a straight line — step aside."
+   ]
+  },
+  "quests": {
+   "t": "📜 SIDE QUESTS · YAN GÖREVLER",
+   "l": [
+    "People around the map have their own stories for you now. Look for a gold [b]![/b] over someone's head — and on the minimap.",
+    "Every story has [b]3 parts[/b]. Talk with [b]E[/b]; each part shows its recommended level.",
+    "Your active quest gets a [color=#3dff9e][b]green marker[/b][/color] and its own gold line under your mission. [b]J[/b] opens the quest log.",
+    "They run alongside the main story — you can do both at once. Rewards include lira, XP and [b]named gear you can't get anywhere else[/b]."
+   ]
+  },
+  "race": {
+   "t": "🏁 RACES · YARIŞ",
+   "l": [
+    "Ride through the glowing [b]rings[/b] in order. The [b]first ring starts the clock[/b].",
+    "The arrow and the minimap always point at the next ring. Some races need the bike — hop on with [b]E[/b].",
+    "Some races have a [b]rival[/b]. Beat them to the last ring. [i]yarış[/i] = race."
+   ]
+  },
+  "chase": {
+   "t": "🏃 CHASES · KOVALAMACA",
+   "l": [
+    "Someone is running away — [b]catch them[/b] by getting right up close (running or on the bike).",
+    "The arrow follows them. Let them get too far away for too long and they escape — then you start again."
+   ]
+  },
+  "escort": {
+   "t": "🛡 ESCORTS · KORUMA",
+   "l": [
+    "Someone needs you to get them somewhere safely. They only walk while you stay [b]close[/b].",
+    "Monsters will come for them. Their health is on the right. If it runs out, you start over."
+   ]
+  },
+  "deliver": {
+   "t": "📦 DELIVERIES · KURYE",
+   "l": [
+    "Pick the package up, then get it to the marked place [b]before the timer runs out[/b].",
+    "The bike is your friend. Some packages are [b]fragile[/b] — crash and they break. [i]Acele et![/i] = hurry up!"
+   ]
+  },
+  "photo": {
+   "t": "📸 PHOTO HUNTS · FOTOĞRAF",
+   "l": [
+    "Find what you are asked to photograph (a 📸 floats above it).",
+    "Point the camera at it — get it on screen, reasonably close — and press [b]T[/b] to take the photo."
+   ]
+  },
+  "choice": {
+   "t": "💬 TURKISH CHOICES",
+   "l": [
+    "Some people now ask you to [b]answer in Turkish[/b]. Pick the right sentence with [b]1–4[/b].",
+    "A wrong answer never ends the mission — they react, and you try again. The English is always shown."
+   ]
+  },
+  "perks": {
+   "t": "⭐ PERK KARTI · PERK CARDS",
+   "l": [
+    "[b]How this works:[/b] every time you level up you get a card pack.",
+    "Open it, pick [b]one of three[/b] perks, and it is yours forever. The same perk can be picked again to rank it up (the dots show how far).",
+    "Every 5th level also unlocks something big. Each card name is a Turkish word — the English is right under it."
+   ]
+  }
+ },
+ "CHESTLOOT": [
+  {
+   "id": "para",
+   "n": "Para Sandığı 💰",
+   "w": 30
+  },
+  {
+   "id": "cephane",
+   "n": "Cephane Sandığı 🧿",
+   "w": 22
+  },
+  {
+   "id": "silah",
+   "n": "Silah Sandığı 🗡",
+   "w": 26
+  },
+  {
+   "id": "hazine",
+   "n": "Hazine Sandığı ✨",
+   "w": 12
+  },
+  {
+   "id": "kitap",
+   "n": "Kitap Sandığı 📚",
+   "w": 10
+  }
+ ],
+ "CHEST_SPOTS": [
+  [
+   -118,
+   -96
+  ],
+  [
+   64,
+   -118
+  ],
+  [
+   -96,
+   84
+  ],
+  [
+   96,
+   72
+  ],
+  [
+   -24,
+   -150
+  ],
+  [
+   128,
+   -40
+  ],
+  [
+   -330,
+   -300
+  ],
+  [
+   -30,
+   262
+  ],
+  [
+   86,
+   296
+  ],
+  [
+   -252,
+   -262
+  ],
+  [
+   6,
+   300
+  ],
+  [
+   -160,
+   140
+  ]
+ ],
+ "CHEST_KEEPERS": [
+  "okuz",
+  "mummy",
+  "witch",
+  "skeleton",
+  "scorpion",
+  "ghost",
+  "zombie"
+ ],
+ "WSPOTS": [
+  [
+   -152,
+   54
+  ],
+  [
+   -146,
+   66
+  ],
+  [
+   -186,
+   104
+  ],
+  [
+   -176,
+   92
+  ],
+  [
+   -180,
+   -20
+  ],
+  [
+   -172,
+   -32
+  ],
+  [
+   -44,
+   132
+  ],
+  [
+   24,
+   138
+  ],
+  [
+   -118,
+   124
+  ],
+  [
+   76,
+   -132
+  ],
+  [
+   -156,
+   -116
+  ],
+  [
+   44,
+   -148
+  ],
+  [
+   -88,
+   142
+  ],
+  [
+   132,
+   -150
+  ],
+  [
+   118,
+   150
+  ],
+  [
+   -196,
+   40
+  ],
+  [
+   88,
+   -60
+  ],
+  [
+   -12,
+   -136
+  ]
+ ]
+}

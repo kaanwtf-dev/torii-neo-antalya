@@ -5,6 +5,10 @@
 # quiz; from level 4 a grammar question can join it. Right answers +15 XP, wrong ones -6 HP and go on
 # the "missed" list (7.2's tavla replays it later). Progress lives in torii_save exactly like 7.2:
 # lesson, lk, unit, ul, words, missed. A level-up saves at once; SKIP THIS LESSON (or K) tests out.
+# Batch side: every quiz of 3+ questions ends with 7.2's score toast (perfect = +40 XP + full mana, nextQ),
+# the missed list comes back as real questions (missed_qs: tavla's pre-game quiz, Old Soul's final test,
+# rememberMiss/clearMiss), tavla_quiz_set() = tvQuizSet, and walking onto the beach / club / music spot teaches
+# its words (zoneTeach). Answer sounds + red flash live in quiz_ui.gd; +10 mana per right answer in skills.gd.
 class_name Lessons
 extends Node
 
@@ -47,8 +51,8 @@ func unit() -> int: return max(1, _gi("unit", 1))
 func unit_lessons(u: int) -> Array: return course.filter(func(L): return L["u"] == u)
 
 func xp(n: int) -> void:
-	var up := SaveBridge.gain_xp(n)
-	if up:
+	var up := Stats.gain_xp(n)                  # INT, gear and focus bonuses like 7.2's gainXP; LevelUp shows it
+	if up and LevelUp.me == null:
 		hud.banner("LEVEL %d ✨" % SaveBridge.get_i("lvl", 1))
 		torii.max_hp = SaveBridge.get_i("mh", 100); torii.heal_full()
 		SaveBridge.write()                  # 7.2's levelUpShow() saves: a level earned from kills is never lost
@@ -67,7 +71,10 @@ func safe() -> bool:
 		if e.global_position.distance_squared_to(torii.global_position) < 150: return false
 	return true
 
-func _process(_dt: float) -> void:
+var _zone_t := 0.0
+func _process(dt: float) -> void:
+	_zone_t -= dt
+	if _zone_t <= 0: _zone_t = .5; _zone_teach()
 	hud.skip_btn.visible = (active or pend) and not skipping       # 7.2's updateSkipBtn()
 	if pend and not skipping and safe():
 		pend = false; next_lesson()
@@ -95,7 +102,8 @@ func next_lesson() -> void:
 	SaveBridge.data["ul"] = ul + 1
 	SaveBridge.data["lesson"] = max(_gi("lesson"), course.find(L) + 1)
 	cur_lesson = L; active = true
-	hud.banner("📖 UNIT %d · part %d/3" % [L["u"], L["part"]])
+	hud.banner("📖 UNIT %d · part %d/3\n[font_size=18]\"%s\" — %d/3 of this unit[/font_size]" % [L["u"], L["part"], L["t"], L["part"]])
+	Bus.emit_ev("sfx", {"name": "ding"})
 	_lesson_body(L)
 
 func _lesson_body(L: Dictionary) -> void:
@@ -103,7 +111,7 @@ func _lesson_body(L: Dictionary) -> void:
 	lines.append_array(L["lines"])
 	quiz.show_lesson("📖 UNIT %d (%d/3) — %s" % [L["u"], L["part"], L["ut"]], lines, func():
 		quiz.run(build_session(L), func(score):
-			xp(25); var rw := _reward(); _summary(score); _finish_lesson()
+			xp(25); var rw := _reward(); _finish_lesson()
 			hud.toast("🎓 Unit %d, part %d complete! +25 XP · %s" % [L["u"], L["part"], rw], 7.5),
 			"📖 UNIT %d · PART %d/3" % [L["u"], L["part"]]))
 
@@ -111,17 +119,27 @@ func _finish_lesson() -> void:
 	active = false; cur_lesson = {}; SaveBridge.write()
 
 func _reward() -> String:
-	match randi() % 3:
-		0: torii.hp = min(torii.max_hp, torii.hp + 30); torii.hp_changed.emit(torii.hp, torii.max_hp); return "+30 HP ❤"
-		1: SaveBridge.data["lira"] = _gi("lira") + 45; return "+45₺ 💰"
-		_: SaveBridge.data["ammo"] = _gi("ammo") + 2; return "+2 nazar beads 🧿"
+	match randi() % 4:
+		0:
+			torii.hp = min(torii.max_hp, torii.hp + 30); torii.hp_changed.emit(torii.hp, torii.max_hp)
+			if Fx.me: Fx.me.flash("heal")
+			return "+30 HP ❤"
+		1: SaveBridge.data["lira"] = _gi("lira") + 45; Bus.emit_ev("lira", {"delta": 45}); Bus.emit_ev("sfx", {"name": "coin"}); return "+45₺ 💰"
+		2: SaveBridge.data["ammo"] = _gi("ammo") + 2; Bus.emit_ev("sfx", {"name": "cash"}); return "+2 nazar beads 🧿"
+		_:
+			if torii.has_method("add_mana"): torii.add_mana(float(torii.max_mana))
+			return "mana fully restored 🔮"
 
-func _summary(score: Array) -> void:
+# nextQ's end of queue: every quiz with more than 2 questions (quiz_ui.gd calls it; skipped quizzes don't)
+func summary(score: Array) -> void:
 	if score.size() <= 2: return
 	var right := score.count(true)
 	hud.toast("📊 Quiz done: %d/%d correct%s" % [right, score.size(),
 		" — MÜKEMMEL! Perfect! 🌟" if right == score.size() else (" — Aferin! 👏" if right >= score.size() * .7 else " — keep going, you'll get it 💪")], 7.0)
-	if right == score.size(): xp(40)
+	if right == score.size():
+		xp(40)
+		if torii.has_method("add_mana"): torii.add_mana(float(torii.max_mana))
+		Bus.emit_ev("sfx", {"name": "fanfare"})
 
 # ---- K: prove you already know it with 3 questions (trySkipLesson) ----
 func try_skip() -> void:
@@ -218,3 +236,63 @@ func _vocab_quiz() -> void:
 		var g: Dictionary = data["GQ"].pick_random()
 		qs.append({"kind": "mc", "vis": "✍️", "text": g["q"], "opts": g["opts"], "a": int(g["a"]), "expl": g.get("expl", "")})
 	quiz.run(qs, func(_s): SaveBridge.write())
+
+# ---- the missed list as questions again (TRK-10). 7.2 stored HTML; the quiz box shows BBCode ----
+func missed_qs(n := 99) -> Array:
+	var out := []
+	var missed: Array = SaveBridge.data["missed"] if SaveBridge.data.get("missed") is Array else []
+	for m in missed:
+		if not (m is Dictionary) or not (m.get("q") is Dictionary): continue
+		var q: Dictionary = (m["q"] as Dictionary).duplicate(true)
+		for f in ["text", "expl"]:
+			if q.get(f) is String: q[f] = Rich.to_bb(q[f])
+		if q.get("kind", "mc") == "mc" and not (q.get("opts") is Array): continue
+		if q.get("kind") == "order" and not (q.get("words") is Array): continue
+		if q.get("kind") == "fill" and q.get("answer") == null: continue
+		out.append(q)
+	out.shuffle()
+	return out.slice(0, n)
+
+static func qkey(q: Dictionary) -> String:
+	return Rich.plain(str(q.get("text", ""))) + "|" + "".join(q.get("words", []) if q.get("words") is Array else [])
+
+func vocab_q(pool: Array) -> Dictionary: return _vocab_q(pool)
+
+func grammar_q() -> Dictionary:
+	var g: Dictionary = data["GQ"].pick_random()
+	return {"kind": "mc", "vis": "✍️", "text": g["q"], "opts": g["opts"], "a": int(g["a"]), "expl": g.get("expl", "")}
+
+# GQ[i] as a quiz question (the NPC grammar tutors' lesson quizzes, 7.2's runLesson)
+func gq(i: int) -> Dictionary:
+	var g: Dictionary = data["GQ"][clampi(i, 0, data["GQ"].size() - 1)]
+	return {"kind": "mc", "vis": "📖", "text": g["q"], "opts": g["opts"], "a": int(g["a"]), "expl": g.get("expl", "")}
+
+# tvQuizSet(): 5 questions before every tavla game — her mistakes first, then lessons she has had, then words
+func tavla_quiz_set() -> Array:
+	var out := []; var used := {}
+	var add := func(q: Dictionary):
+		var k := qkey(q)
+		if k == "|" or used.has(k) or out.size() >= 5: return
+		used[k] = true; out.append(q)
+	for q in missed_qs(): add.call(q)
+	var seen: Array = course.slice(0, maxi(1, _gi("lesson")))
+	seen.shuffle()
+	for L in seen:
+		if out.size() >= 5: break
+		for q in build_session(L): add.call(q)
+	var learned: Array = data["WORDS"].filter(func(w): return _words().has(w["tr"]))
+	var pool: Array = learned if learned.size() >= 5 else data["WORDS"].filter(func(w): return w["t"] == 1)
+	var guard := 0
+	while out.size() < 5 and guard < 40:
+		guard += 1; add.call(_vocab_q(pool))
+	return out.slice(0, 5)
+
+# zoneTeach(): the beach, the club strip and the music spot teach their words when she walks in
+func _zone_teach() -> void:
+	if torii == null or Overlay.any(): return
+	var x := torii.global_position.x; var z := torii.global_position.z
+	if x > 400: return                       # abroad
+	if x > 102: teach("plaj"); teach("deniz"); teach("palmiye")
+	if x > 84 and x < 100 and z > -26 and z < 22: teach("gece kulübü")
+	var mx := x - 20; var mz := z - 62
+	if mx * mx + mz * mz < 180: teach("müzik")

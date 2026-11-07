@@ -9,6 +9,42 @@ Audited 2026-11-04 against **ALPHA 7.2 · POLYGON GIRL** (`torii-neo-antalya-ALP
 
 ## 0. Progress
 
+**Batch 2+ "Game game" (all systems) — built + wired 2026-11-07, not committed, no window playtest yet.** Ten systems in parallel,
+then one integrator (main.gd wiring, API fixes, clean parse, `--autoplay` runs). Kaan's goal: port all of 7.2 AND add PS1-era depth.
+- **Combat & movement** (player.gd, combat.gd, lockon.gd, torii_pose.gd): light 3-hit chains + heavy (RIGHT mouse, hold to charge),
+  slam, dash, dodge roll with i-frames (Left Ctrl), block + parry (hold Z), lock-on (Tab), stamina, coyote jump + buffer, ledge climb,
+  fainting/respawn → PLY-01..06, CMB-01/02/03/08, CAM-01..04, BIK-01..04/06, CRT-04, PRG-19 (faint part), UI-12.
+- **Monsters** (enemy.gd, shot.gd, spawner.gd, mob_models.gd, ally.gd, bandit.gd): 8 archetypes with tells, wind-ups, stagger,
+  roaming + night packs, minibosses, elites, boss phases/enrage, stinky Cruze, Bandit bites, Josh squad → ENM-01..13, BND-01..03,
+  ALY-01, HAZ-01, CMB-V01, STY-12, STY-37, UI-23.
+- **Weapons** (arsenal.gd, weapon_wheel.gd, projectile.gd): guns + one ammo pool, heavy volley, durability/breaking, hold-Q wheel,
+  weapon/ammo drops, bassD in melee too → WPN-01..08, CMB-06, UI-34, PRG-28.
+- **Skills** (skills.gd): 10 skills on R / 1..0, buffs/debuffs, cooldown rewards, boss battle quiz, mana from right answers →
+  SKL-01..03, BND-02, BUF-01/02, CMB-07, TRK-03, TRK-20, STY-11.
+- **Progression** (items.gd, stats.gd, levelup.gd, inventory_ui.gd): 50 nazars, food + H, gear + rarities, chests + keeper duels,
+  kill coins/XP labels, perks, milestones, tip cards, I/J bag → PRG-01..08/11..16/20/22/23/30, UI-15/25/26/27, CRT-01, CMB-05.
+- **HUD** (hud.gd, minimap.gd, hotbar.gd): bars (HP/mana/stamina/XP), stats block + clock, minimap, compass, objective marker, boss bar,
+  lock reticle, buff chips, weapon panel → HUD-01/02, UI-16/17/18/20/29/33, DN-04, TRK-18 (status lines).
+- **Sound + juice** (audio.gd, fx.gd): every sound synthesised, music stems day/night/combat + intro theme, TTS, M/V keys; sparks,
+  slashes, shockwaves, hit-stop, flashes, labels → SND-01..05, UI-10, UI-38, PFX-01, FX-04, FX-05 (no drunk blur), HUD-03/04, UI-22,
+  UI-36, TRK-14.
+- **Side stuff** (shops.gd, quests.gd, tutors.gd, tavla.gd, tavla_ui.gd, hotspots.gd, lessons.gd, quiz_ui.gd, npc.gd): Five Sips +
+  Kuyumcu, 5 quest chains, 11 grammar tutors + Old Soul, 7 tavla tables, Kaan's door/contracts/airport, zone words → PRG-17/18/21,
+  STY-17..28, STY-30, STY-35/36, TRK-01/02/04..11/15/16/17/21/22, WLD-01/05/06/07, CRT-03.
+- **Story + menus** (missions.gd, cutscene.gd, menus.gd, tips.gd): calls as cutscenes, boss intros, Hellspace scenes, opening + credits,
+  gods with 7.2's rules, deliver/photo polish, title (CONTINUE / NEW GAME with a Downloads safety copy), pause/options, guide, patch
+  notes, sunglasses (G), fullscreen (X), E prompt line → STY-01..09/13..16/31, UI-02/04/08/09/11/13/14/19/21/28/32, UI-V01, PRG-10,
+  ENM-09, CMB-V02.
+- **World** (sky.gd, world_life.gd, interactables.gd, intro.gd): day/night sky (DAYK), sun/moon/stars/clouds, lamp pools + halos by
+  the hour, PS1 dither + NIGHT GRADE pass, cars/birds/blimp/plane, Josh, fountains, simit carts, DJ booth, VHS intro → DN-01..03,
+  SKY-01..04, FX-01..03, WLD-03, STY-29, STY-32, STY-33, UI-03, UI-05 (GRAFİK in Menus), UI-06.
+- **Still open:** BIK-05 (bike gear parts, level-15 underglow), PLY-07 (braid swing — no braid bones), CMB-04 (kill streaks: only
+  `Stats.streak_tier` exists, nobody sets it), PRG-09 (visible gear), PRG-24 (outfit per level), UI-07 (UI scale slider), FX-06
+  (ambient scenery animation), WLD-08 (auto quality governor / decor thinning), TRK-19 (INT sources, partial), CRT-02 (the Mac .app
+  export itself). Nobody emits `quiz_answer` / `quest_done` yet (quiz_ui and quests play their own sounds, so it's fine).
+- **Integrator notes:** see AI_HANDOFF.md log 2026-11-07 for the API fixes. Checks: clean script load of every file, a normal boot to
+  the title, `--autoplay` on a scratch copy of the dev save.
+
 **Batch 1 "Safety net + controls back" — done 2026-11-05** (Kaan: macOS desktop build, she drags her 7.2 save file in).
 - **Save in:** first launch with no save shows 💾 BRING YOUR SAVE (drag the file 7.2 makes with SAVE & LOAD → SAVE TO A FILE onto
   the window, LOAD FROM A FILE, or a transfer code); 💾 SAVE & LOAD panel (bottom right) saves to Downloads, loads, drag-drop any

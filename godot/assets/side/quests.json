@@ -1,0 +1,1136 @@
+{
+ "QGIVERS": [
+  {
+   "id": "fatma",
+   "name": "FATMA TEYZE 🐱",
+   "x": -24,
+   "z": 253,
+   "chat": [
+    "Pamuk says hello. She doesn't. But she thinks it. 🐱",
+    "Çay? Always çay. ☕"
+   ]
+  },
+  {
+   "id": "ahmet",
+   "name": "HALICI AHMET 🧶",
+   "x": -156,
+   "z": 58.5,
+   "chat": [
+    "Nothing for sale today — for YOU, everything is free! ...No. But a good price.",
+    "<i>Güle güle kullan!</i> 🧶"
+   ]
+  },
+  {
+   "id": "riza",
+   "name": "KAPTAN RIZA ⚓",
+   "x": -186,
+   "z": 90,
+   "chat": [
+    "Nermin and I have çay every evening now. ⚓💌",
+    "The sea is calm today. <i>Deniz sakin.</i>"
+   ]
+  },
+  {
+   "id": "mert",
+   "name": "MERT 📓",
+   "x": -6,
+   "z": -50,
+   "chat": [
+    "I quit smoking, abla. For real this time. 😤",
+    "Page six is framed on my wall now. 📓"
+   ]
+  },
+  {
+   "id": "hakan",
+   "name": "HIZLI HAKAN 🚲",
+   "x": -242,
+   "z": -218,
+   "chat": [
+    "Queen of the mountain. I say it with only a little pain. 🚲",
+    "Rematch next year. Maybe."
+   ]
+  }
+ ],
+ "QUESTS": [
+  {
+   "id": "kedi",
+   "giver": "fatma",
+   "t": "PAMUK NEREDE? · WHERE IS PAMUK?",
+   "parts": [
+    {
+     "n": "Kayıp kedi · The lost cat",
+     "rl": 3,
+     "xp": 150,
+     "intro": [
+      "Kızım! Kızım! 😿 <i>(My girl! My girl!)</i>",
+      "My cat <b>Pamuk</b> ran off this morning. White, fluffy, judgemental. <i>Pamuk</i> means cotton.",
+      "The neighbours have seen her all over the hill. If you find her, take a <b>photo</b> — I just need to know she's all right!"
+     ],
+     "steps": [
+      {
+       "t": "photo",
+       "n": 3,
+       "bn": "PAMUK NEREDE?",
+       "lab": "Find Pamuk's three hiding spots and photograph her 🐱📸",
+       "cats": [
+        [
+         70,
+         289
+        ],
+        [
+         -92,
+         327
+        ],
+        [
+         112,
+         251
+        ]
+       ]
+      },
+      {
+       "t": "talk",
+       "lab": "Show Fatma Teyze the photos 📸"
+      }
+     ],
+     "outro": [
+      "*she flicks through the photos* Maşallah! 😻 She's fine! She's just... <b>everywhere</b>.",
+      "Thank you, kızım. <i>kedi</i> = cat · <i>fotoğraf</i> = photo."
+     ],
+     "reward": {
+      "lira": 150,
+      "teach": [
+       "kedi"
+      ]
+     }
+    },
+    {
+     "n": "Eve dönüş · The way home",
+     "rl": 3,
+     "xp": 200,
+     "intro": [
+      "She's by the swings at the playground now. But imps from the city have started <b>chasing cats</b>. 😾",
+      "Walk her home to me. Stay close — she only follows people she trusts."
+     ],
+     "steps": [
+      {
+       "t": "goto",
+       "x": 2,
+       "z": 300,
+       "lab": "Go to the playground swings 🛝"
+      },
+      {
+       "t": "escort",
+       "from": [
+        4,
+        302
+       ],
+       "path": [
+        [
+         6,
+         289
+        ],
+        [
+         -10,
+         262
+        ],
+        [
+         -22,
+         256
+        ]
+       ],
+       "mk": "cat",
+       "name": "Pamuk",
+       "hp": 90,
+       "sp": 3.1,
+       "waves": 3,
+       "every": 9,
+       "per": 2,
+       "mob": "imp",
+       "bn": "KORU ONU · PROTECT HER",
+       "lab": "Walk Pamuk home — keep the imps off her 🐱",
+       "wait": "😿 miyav?",
+       "safe": "Pamuk is home!"
+      }
+     ],
+     "outro": [
+      "PAMUK! 😻 *squeezes the cat, who tolerates it*",
+      "You are a good girl, Torii. Here — my late husband's sunglasses. He would want them to go somewhere <b>stylish</b>."
+     ],
+     "reward": {
+      "lira": 200,
+      "gear": {
+       "b": "cateye",
+       "r": "cap+1",
+       "rmax": 3,
+       "lv": 0,
+       "n": "Kedi Gözü"
+      }
+     }
+    },
+    {
+     "n": "Lokum servisi · Lokum delivery",
+     "rl": 4,
+     "xp": 260,
+     "intro": [
+      "To thank everyone who looked for Pamuk, I made <b>lokum</b>. 🍬",
+      "Take a box to Nuri, Hüseyin and Selim — quickly, before it goes sticky in the sun! <b>Two and a half minutes.</b>"
+     ],
+     "steps": [
+      {
+       "t": "deliver",
+       "from": [
+        -24,
+        253
+       ],
+       "stops": [
+        [
+         -96,
+         214,
+         "Nuri: \"Eline sağlık!\" (Bless your hands!)"
+        ],
+        [
+         -52,
+         203,
+         "Hüseyin: \"Afiyet olsun!\" (Enjoy!)"
+        ],
+        [
+         -128,
+         280,
+         "Selim: \"Çok tatlı!\" (So sweet!)"
+        ]
+       ],
+       "time": 150,
+       "bn": "LOKUM SERVİSİ",
+       "lab": "Deliver lokum to three neighbours ⏱🍬"
+      },
+      {
+       "t": "talk",
+       "lab": "Tell Fatma Teyze it's done"
+      }
+     ],
+     "outro": [
+      "The whole hill smells of rosewater now. 🌹 Teşekkür ederim, kızım.",
+      "Take a box for yourself. And come for çay any time — Pamuk likes you. She won't show it. But she does."
+     ],
+     "reward": {
+      "lira": 260,
+      "bag": {
+       "lokum": 3
+      },
+      "teach": [
+       "teşekkürler"
+      ]
+     }
+    }
+   ]
+  },
+  {
+   "id": "carsi",
+   "giver": "ahmet",
+   "t": "ÇARŞI HİKAYESİ · THE BAZAAR",
+   "parts": [
+    {
+     "n": "Halı satışı · Selling a rug",
+     "rl": 6,
+     "xp": 220,
+     "intro": [
+      "Hoş geldin, abla! 🧶 Remember me? You haggled me DOWN. Nobody haggles me down.",
+      "A customer wants my best kilim — a proper Istanbul teyze, Turkish only. Help me talk to her. We split the profit!"
+     ],
+     "steps": [
+      {
+       "t": "choice",
+       "x": -156,
+       "z": 58.5,
+       "who": "MÜŞTERİ TEYZE · the customer",
+       "whoShort": "the customer",
+       "lab": "Sell the rug — in Turkish 🧶",
+       "q": "\"Merhaba kızım. <b>Bu kilim ne kadar?</b>\" <i>(Hello dear. How much is this rug?)</i>",
+       "opts": [
+        {
+         "t": "Bin lira, efendim.",
+         "en": "A thousand lira, madam.",
+         "ok": true,
+         "r": "Bin lira mı?! 😲"
+        },
+        {
+         "t": "Ben bir kilimim.",
+         "en": "I am a rug.",
+         "r": "...Are you all right, dear? 😐"
+        },
+        {
+         "t": "Hesap lütfen.",
+         "en": "The bill, please.",
+         "r": "I haven't bought anything yet! 😂"
+        },
+        {
+         "t": "İyi geceler.",
+         "en": "Good night.",
+         "r": "It is the middle of the day, kızım."
+        }
+       ]
+      },
+      {
+       "t": "choice",
+       "x": -156,
+       "z": 58.5,
+       "who": "MÜŞTERİ TEYZE · the customer",
+       "whoShort": "the customer",
+       "lab": "Sell the rug — in Turkish 🧶",
+       "q": "\"Bin lira mı? <b>Çok pahalı!</b>\" <i>(A thousand? Too expensive!)</i>",
+       "opts": [
+        {
+         "t": "Ama el yapımı! Sekiz yüz olsun.",
+         "en": "But it's handmade! Let's say eight hundred.",
+         "ok": true,
+         "r": "Hmm... el yapımı... 🤔"
+        },
+        {
+         "t": "Tamam, bedava.",
+         "en": "Okay, it's free.",
+         "r": "*Ahmet faints behind you* 😵"
+        },
+        {
+         "t": "Acıktım.",
+         "en": "I'm hungry.",
+         "r": "...Then go and eat, dear. After you sell me the rug."
+        },
+        {
+         "t": "Görüşürüz!",
+         "en": "See you!",
+         "r": "Where are you going? I want the rug!"
+        }
+       ]
+      },
+      {
+       "t": "choice",
+       "x": -156,
+       "z": 58.5,
+       "who": "MÜŞTERİ TEYZE · the customer",
+       "whoShort": "the customer",
+       "lab": "Sell the rug — in Turkish 🧶",
+       "q": "\"Tamam, <b>alıyorum!</b>\" <i>(Fine — I'll take it!)</i> What do you say as she pays?",
+       "hint": "There is a special phrase for this in Turkish.",
+       "opts": [
+        {
+         "t": "Güle güle kullanın!",
+         "en": "Use it happily! (what you say after a sale)",
+         "ok": true,
+         "r": "Sağ ol kızım! 🧶😊"
+        },
+        {
+         "t": "Seni seviyorum.",
+         "en": "I love you.",
+         "r": "...I'm married, dear. 😳"
+        },
+        {
+         "t": "Kaç para?",
+         "en": "How much money?",
+         "r": "We JUST agreed! 😂"
+        },
+        {
+         "t": "Nerede?",
+         "en": "Where is it?",
+         "r": "The rug is right here, kızım."
+        }
+       ]
+      }
+     ],
+     "outro": [
+      "Sekiz yüz lira! 💰 You are a natural. Half is yours — a deal is a deal.",
+      "<i>Güle güle kullanın</i> — \"use it with joy\". We say it every time something is sold. Now you know."
+     ],
+     "reward": {
+      "lira": 400
+     }
+    },
+    {
+     "n": "Yankesici · The pickpocket",
+     "rl": 6,
+     "xp": 240,
+     "intro": [
+      "ABLA! My cash box — gone! 😱 That kid in the hood just ran off with it!",
+      "He runs a loop through the west district — catch him before he disappears!"
+     ],
+     "steps": [
+      {
+       "t": "chase",
+       "path": [
+        [
+         -156,
+         50
+        ],
+        [
+         -160,
+         40
+        ],
+        [
+         -160,
+         0
+        ],
+        [
+         -120,
+         0
+        ],
+        [
+         -120,
+         -40
+        ],
+        [
+         -80,
+         -40
+        ],
+        [
+         -80,
+         0
+        ],
+        [
+         -120,
+         40
+        ],
+        [
+         -150,
+         44
+        ]
+       ],
+       "sp": 9.2,
+       "bn": "YANKESİCİ! · PICKPOCKET!",
+       "lab": "Catch the pickpocket with Ahmet's cash box 🏃",
+       "tag": "💰 YANKESİCİ",
+       "caught": "The cash box is safe!"
+      },
+      {
+       "t": "talk",
+       "lab": "Bring the cash box back to Ahmet 💰"
+      }
+     ],
+     "outro": [
+      "*counts every lira twice* All there! Aferin! 👏",
+      "But the kid shouted something as he ran: \"The <b>Ağa</b> wants his cut.\" ...That is not good, abla."
+     ],
+     "reward": {
+      "lira": 300,
+      "teach": [
+       "hırsız"
+      ]
+     }
+    },
+    {
+     "n": "Kara Çarşı Ağası · The Black Market Boss",
+     "rl": 7,
+     "xp": 400,
+     "intro": [
+      "The Ağa runs the black market under the bazaar. Fake nazars, fake saffron, fake EVERYTHING.",
+      "Every trader pays him, or their stall \"has an accident\". Tonight he comes to collect. Stand with us?"
+     ],
+     "steps": [
+      {
+       "t": "boss",
+       "boss": "aga",
+       "x": -140,
+       "z": 62,
+       "bn": "KARA ÇARŞI AĞASI 💰🔥",
+       "lab": "Defeat the Black Market Boss ⚔️",
+       "phases": [
+        {
+         "at": 0.66,
+         "bn": "SAHTE PARA · FAKE MONEY",
+         "sub": "He's throwing counterfeit coins — dodge the purple!",
+         "ops": [
+          [
+           "caster"
+          ]
+         ]
+        },
+        {
+         "at": 0.33,
+         "bn": "ADAMLARI · HIS GANG",
+         "sub": "The pickpockets are back, and he's furious",
+         "ops": [
+          [
+           "summon",
+           "thot",
+           3
+          ],
+          [
+           "enrage",
+           1.2
+          ]
+         ]
+        }
+       ]
+      },
+      {
+       "t": "talk",
+       "lab": "Tell Ahmet the bazaar is free"
+      }
+     ],
+     "outro": [
+      "The whole çarşı is cheering! 🎉 Nobody pays the Ağa ever again.",
+      "And look — his famous gold chain. He won't be needing it. It's yours."
+     ],
+     "reward": {
+      "lira": 500,
+      "gear": {
+       "b": "zincir",
+       "r": 3,
+       "lv": 1,
+       "n": "Ağa'nın Zinciri"
+      }
+     }
+    }
+   ]
+  },
+  {
+   "id": "kaptan",
+   "giver": "riza",
+   "t": "KAPTAN RIZA · THE OLD CAPTAIN",
+   "parts": [
+    {
+     "n": "Vapur yarışı · The ferry race",
+     "rl": 8,
+     "xp": 260,
+     "intro": [
+      "Ahoy, genç kız! ⚓ Kaptan Rıza. Forty years on the water. The ferry never beats me — and it never will.",
+      "My knees are done, though. Race the ferry for me: over the bridge, the far bank and back. <b>On your bike!</b>"
+     ],
+     "steps": [
+      {
+       "t": "race",
+       "bike": true,
+       "time": 70,
+       "pts": [
+        [
+         -186,
+         84
+        ],
+        [
+         -190,
+         48
+        ],
+        [
+         -192,
+         12
+        ],
+        [
+         -214,
+         0
+        ],
+        [
+         -238,
+         0
+        ],
+        [
+         -214,
+         0
+        ],
+        [
+         -190,
+         -12
+        ],
+        [
+         -186,
+         -44
+        ],
+        [
+         -178,
+         10
+        ],
+        [
+         -184,
+         60
+        ],
+        [
+         -186,
+         88
+        ]
+       ],
+       "bn": "VAPUR YARIŞI · FERRY RACE",
+       "lab": "Race the ferry: bridge, far bank, back 🚲⛴"
+      },
+      {
+       "t": "talk",
+       "lab": "Back to the Kaptan ⚓"
+      }
+     ],
+     "outro": [
+      "HA! The ferry is still tying up and you are already back! 😂",
+      "<i>Kaptan</i> is the same word in Turkish, you know. Some things need no translation."
+     ],
+     "reward": {
+      "lira": 250,
+      "teach": [
+       "kaptan"
+      ]
+     }
+    },
+    {
+     "n": "Liman hayaletleri · Harbour ghosts",
+     "rl": 8,
+     "xp": 300,
+     "intro": [
+      "At night the old sailors come back. Ghosts, genç kız — my old crew. 👻",
+      "Nobody at the yacht club believes me. Bring me <b>photos</b>. Three. Then send them back to sleep."
+     ],
+     "steps": [
+      {
+       "t": "photo",
+       "n": 3,
+       "mob": "ghost",
+       "x": -184,
+       "z": 100,
+       "range": 45,
+       "bn": "LİMAN HAYALETLERİ",
+       "lab": "Photograph 3 harbour ghosts 👻📸"
+      },
+      {
+       "t": "kill",
+       "n": 4,
+       "mob": "ghost",
+       "x": -184,
+       "z": 100,
+       "lab": "Send 4 ghosts back to sleep 👻",
+       "spawn": {
+        "n": 2,
+        "mob": "ghost",
+        "x": -184,
+        "z": 100,
+        "r": 10
+       }
+      },
+      {
+       "t": "talk",
+       "lab": "Show the Kaptan the photos ⚓"
+      }
+     ],
+     "outro": [
+      "*squints at the photo* ...That is Hasan. He still owes me fifty lira. 😤",
+      "Thank you. They can rest now. And the yacht club can eat their words."
+     ],
+     "reward": {
+      "lira": 300
+     }
+    },
+    {
+     "n": "Kaptanın mektubu · The captain's letter",
+     "rl": 9,
+     "xp": 380,
+     "intro": [
+      "One more thing, and it is the hardest. 💌",
+      "Forty years ago I wrote a letter to <b>Nermin</b>. I never sent it. She drinks her çay outside Five Sips every evening.",
+      "Take it to her — quickly, before I lose my nerve and call you back!"
+     ],
+     "steps": [
+      {
+       "t": "deliver",
+       "from": [
+        -186,
+        90
+       ],
+       "to": [
+        26,
+        16
+       ],
+       "time": 80,
+       "bn": "KAPTANIN MEKTUBU",
+       "lab": "Get the letter to Nermin Hanım at Five Sips — fast! 💌⏱",
+       "nermin": true
+      },
+      {
+       "t": "talk",
+       "lab": "Go back and tell the Kaptan 💌"
+      }
+     ],
+     "outro": [
+      "*he can't sit still* ...Well? What did she say?",
+      "... \"<b>Neden bu kadar geç kaldın?</b>\" — \"What took you so long?\" 😭⚓",
+      "Here — my ship's bell. For your bicycle. You earned it, kaptan."
+     ],
+     "reward": {
+      "lira": 450,
+      "gear": {
+       "b": "zil",
+       "r": "cap+1",
+       "rmax": 4,
+       "lv": 0,
+       "n": "Kaptan Zili"
+      },
+      "teach": [
+       "mektup"
+      ]
+     }
+    }
+   ]
+  },
+  {
+   "id": "defter",
+   "giver": "mert",
+   "t": "MERT'İN DEFTERİ · MERT'S NOTEBOOK",
+   "parts": [
+    {
+     "n": "Kayıp sayfalar · The lost pages",
+     "rl": 4,
+     "xp": 180,
+     "intro": [
+      "Abla! It's me, Mert. Yes — the \"sigara içen insan sağlıklı insandır\" Mert. I have since learned. 😬",
+      "The wind took my Turkish notebook — the one I made for people learning the language. Five pages, all over Midtown. Help me find them?"
+     ],
+     "steps": [
+      {
+       "t": "collect",
+       "item": "sayfa",
+       "n": 5,
+       "lab": "Find Mert's 5 notebook pages around Midtown 📄",
+       "pickups": [
+        [
+         -40,
+         -40
+        ],
+        [
+         20,
+         -20
+        ],
+        [
+         -60,
+         20
+        ],
+        [
+         40,
+         40
+        ],
+        [
+         -20,
+         82
+        ]
+       ],
+       "pages": [
+        [
+         "Merhaba, benim adım Torii.",
+         "Hello, my name is Torii."
+        ],
+        [
+         "Türkçe öğreniyorum.",
+         "I am learning Turkish."
+        ],
+        [
+         "Köpeğimin adı Bandit.",
+         "My dog's name is Bandit."
+        ],
+        [
+         "Antalya'ya gitmek istiyorum.",
+         "I want to go to Antalya."
+        ],
+        [
+         "Kaan çok komik.",
+         "Kaan is very funny."
+        ]
+       ]
+      },
+      {
+       "t": "talk",
+       "lab": "Bring the pages back to Mert 📓"
+      }
+     ],
+     "outro": [
+      "All five! Wait... these sentences are all about <b>you</b>. 😳",
+      "...I may have written this notebook after I met you at Old Soul. It is a very good notebook. Shh."
+     ],
+     "reward": {
+      "lira": 150,
+      "int": 1,
+      "teach": [
+       "defter",
+       "sayfa"
+      ]
+     }
+    },
+    {
+     "n": "Sınav · The test",
+     "rl": 4,
+     "xp": 200,
+     "intro": [
+      "A notebook is useless if nobody learns from it. Let me test you, abla. Two questions. Bandit is watching — no cheating."
+     ],
+     "steps": [
+      {
+       "t": "choice",
+       "x": -6,
+       "z": -50,
+       "who": "MERT 📓",
+       "whoShort": "Mert",
+       "lab": "Mert's test 📓",
+       "q": "\"<b>Antalya'ya gitmek istiyorum.</b>\" — what does it mean?",
+       "opts": [
+        {
+         "t": "I want to go to Antalya.",
+         "ok": true,
+         "r": "Doğru! 🎉 <i>(Correct!)</i> <b>-mek istiyorum</b> = \"I want to...\""
+        },
+        {
+         "t": "I went to Antalya yesterday.",
+         "r": "That would be <i>Dün Antalya'ya gittim</i>."
+        },
+        {
+         "t": "Antalya is very beautiful.",
+         "r": "That would be <i>Antalya çok güzel</i>."
+        },
+        {
+         "t": "Where is Antalya?",
+         "r": "That would be <i>Antalya nerede?</i>"
+        }
+       ]
+      },
+      {
+       "t": "choice",
+       "x": -6,
+       "z": -50,
+       "who": "MERT 📓",
+       "whoShort": "Mert",
+       "lab": "Mert's test 📓",
+       "q": "How do you say \"<b>My dog's name is Bandit</b>\"?",
+       "opts": [
+        {
+         "t": "Köpeğimin adı Bandit.",
+         "ok": true,
+         "r": "Mükemmel! <i>(Perfect!)</i> köpek → köpeğim → köpeğimin: the k softens to ğ."
+        },
+        {
+         "t": "Benim köpek Bandit adı.",
+         "r": "All the words, none of the order. 😅"
+        },
+        {
+         "t": "Kedimin adı Bandit.",
+         "r": "Bandit is going to be very offended. <i>kedi</i> = cat! 🐱"
+        },
+        {
+         "t": "Köpeğim çok tatlı değil.",
+         "r": "<i>değil</i> = NOT. Bandit is very cute — take that back!"
+        }
+       ]
+      }
+     ],
+     "outro": [
+      "İkisi de doğru! Both right! You'll be fluent by summer, abla. ☕"
+     ],
+     "reward": {
+      "lira": 200,
+      "int": 1
+     }
+    },
+    {
+     "n": "Son sayfa · The last page",
+     "rl": 5,
+     "xp": 300,
+     "intro": [
+      "There was a sixth page. The most important one. An imp just snatched it off my table and RAN. 😤",
+      "It's heading for the park! Get it back!"
+     ],
+     "steps": [
+      {
+       "t": "chase",
+       "mk": "imp",
+       "path": [
+        [
+         -6,
+         -56
+        ],
+        [
+         0,
+         -40
+        ],
+        [
+         20,
+         -44
+        ],
+        [
+         26,
+         -62
+        ],
+        [
+         14,
+         -76
+        ],
+        [
+         0,
+         -64
+        ]
+       ],
+       "sp": 8.8,
+       "tag": "📄 SON SAYFA",
+       "bn": "SON SAYFA · THE LAST PAGE",
+       "lab": "Chase the imp with the last page 👹📄",
+       "caught": "The page is safe!"
+      },
+      {
+       "t": "talk",
+       "lab": "Give Mert the last page 📄"
+      }
+     ],
+     "outro": [
+      "*unfolds it* ...It's the last sentence of the notebook.",
+      "<b>\"Bu defteri Torii için yazdım.\"</b> — \"I wrote this notebook for Torii.\" 🥹",
+      "Keep these glasses too. They were my grandfather's. He was a teacher. He would have liked you."
+     ],
+     "reward": {
+      "lira": 300,
+      "int": 2,
+      "gear": {
+       "b": "round",
+       "r": "cap+1",
+       "rmax": 3,
+       "lv": 0,
+       "n": "Mert'in Gözlüğü"
+      }
+     }
+    }
+   ]
+  },
+  {
+   "id": "dag",
+   "giver": "hakan",
+   "t": "DAĞIN KRALI · KING OF THE MOUNTAIN",
+   "parts": [
+    {
+     "n": "Zirveye · To the summit",
+     "rl": 10,
+     "xp": 320,
+     "intro": [
+      "Ooo, a Diamond Back. 😏 I'm Hızlı Hakan — \"Fast Hakan\". This mountain is MINE.",
+      "Think you can ride to the top in under 80 seconds? The rings show the way. Go on, surprise me."
+     ],
+     "steps": [
+      {
+       "t": "race",
+       "bike": true,
+       "time": 80,
+       "pts": [
+        [
+         -246,
+         -226
+        ],
+        [
+         -287.7,
+         -227.4
+        ],
+        [
+         -442,
+         -220
+        ],
+        [
+         -452,
+         -342.7
+        ],
+        [
+         -354,
+         -357.5
+        ],
+        [
+         -338.9,
+         -283.8
+        ],
+        [
+         -389.3,
+         -273
+        ],
+        [
+         -394,
+         -300.1
+        ],
+        [
+         -382,
+         -300
+        ]
+       ],
+       "bn": "ZİRVEYE · TO THE SUMMIT",
+       "lab": "Ride to the top of Işıkdağ in time ⛰🚲"
+      },
+      {
+       "t": "talk",
+       "lab": "Ride back down to Hakan"
+      }
+     ],
+     "outro": [
+      "Huh. Not bad for a city girl. <i>Fena değil.</i> (Not bad.)",
+      "But anyone can go UP. Real riders race DOWN."
+     ],
+     "reward": {
+      "lira": 250,
+      "teach": [
+       "dağ"
+      ]
+     }
+    },
+    {
+     "n": "İniş · The descent",
+     "rl": 10,
+     "xp": 360,
+     "intro": [
+      "Summit to my garage, you and me. Loser buys the çay. 🏁",
+      "Meet me at the top."
+     ],
+     "steps": [
+      {
+       "t": "goto",
+       "x": -382,
+       "z": -300,
+       "lab": "Ride up to the summit to meet Hakan ⛰"
+      },
+      {
+       "t": "race",
+       "bike": true,
+       "time": 60,
+       "pts": [
+        [
+         -382,
+         -300
+        ],
+        [
+         -394,
+         -300.1
+        ],
+        [
+         -389.3,
+         -273
+        ],
+        [
+         -338.9,
+         -283.8
+        ],
+        [
+         -354,
+         -357.5
+        ],
+        [
+         -452,
+         -342.7
+        ],
+        [
+         -442,
+         -220
+        ],
+        [
+         -287.7,
+         -227.4
+        ],
+        [
+         -246,
+         -226
+        ]
+       ],
+       "rival": {
+        "name": "HIZLI HAKAN",
+        "sp": 17,
+        "top": 16723320
+       },
+       "bn": "İNİŞ · DOWNHILL",
+       "lab": "Beat Hakan to the bottom 🏁"
+      }
+     ],
+     "outro": [
+      "...I let you win. 😤 <i>*he did not let you win*</i>",
+      "The çay is on me. <i>Kazandın!</i> — you won."
+     ],
+     "reward": {
+      "lira": 350
+     }
+    },
+    {
+     "n": "Dağın kralı · King of the mountain",
+     "rl": 11,
+     "xp": 500,
+     "intro": [
+      "Okay. Rematch. Winner takes the title — and my chain.",
+      "...Also, I MAY have let some öküz loose on the road to slow you down. Totally fair. 🐂"
+     ],
+     "steps": [
+      {
+       "t": "kill",
+       "n": 3,
+       "mob": "okuz",
+       "x": -262,
+       "z": -300,
+       "lab": "Clear the 3 öküz Hakan set loose 🐂",
+       "spawn": {
+        "n": 3,
+        "mob": "okuz",
+        "x": -262,
+        "z": -300,
+        "r": 10
+       }
+      },
+      {
+       "t": "race",
+       "bike": true,
+       "time": 85,
+       "pts": [
+        [
+         -246,
+         -226
+        ],
+        [
+         -287.7,
+         -227.4
+        ],
+        [
+         -442,
+         -220
+        ],
+        [
+         -452,
+         -342.7
+        ],
+        [
+         -354,
+         -357.5
+        ],
+        [
+         -338.9,
+         -283.8
+        ],
+        [
+         -389.3,
+         -273
+        ],
+        [
+         -394,
+         -300.1
+        ],
+        [
+         -382,
+         -300
+        ]
+       ],
+       "rival": {
+        "name": "HIZLI HAKAN",
+        "sp": 16.5,
+        "top": 16723320
+       },
+       "bn": "DAĞIN KRALI · KING OF THE MOUNTAIN",
+       "lab": "Beat Hakan to the summit — for the title 👑"
+      }
+     ],
+     "outro": [
+      "*sits on the cairn, out of breath* ...<i>Dağın kraliçesi.</i> Queen of the mountain. Fair and square.",
+      "Take it. The Işıkdağ chain. It never slips — unlike me, apparently."
+     ],
+     "reward": {
+      "lira": 600,
+      "gear": {
+       "b": "zincirb",
+       "r": 4,
+       "lv": 1,
+       "n": "Işıkdağ Zinciri"
+      }
+     }
+    }
+   ]
+  }
+ ],
+ "QMODELS": {
+  "fatma": "female",
+  "ahmet": "male",
+  "riza": "male",
+  "mert": "male",
+  "hakan": "male"
+ }
+}

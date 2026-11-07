@@ -4,6 +4,11 @@
 # So every arm gets ARMS_DOWN first, then the old rotation on top; elbows get the old rotation
 # expressed in the turned-down arm's frame (conjugated). Legs, body and head rest exactly as before.
 # Rotations are three.js Euler 'XYZ' (R = Rx * Ry * Rz) — same axes in Godot (y up, +z = her front).
+# Signs: arm/leg x < 0 = forward/up, knee > 0 and elbow < 0 fold, body x > 0 leans forward, body y < 0
+# turns her weapon side (+x arm) through. 7.2's walk/idle/ride/dance/swing are untouched; the Godot moveset
+# adds the 3 combo swings (+ kick versions), heavy wind-up/release, slam, roll tuck, block, ledge hang/climb,
+# hurt flinch, cast, eat, bike tumble/lie/get-up/wobble and the mouse-pitch lean. Those are drawn ON TOP of
+# update() with a blend weight (w), so they ease in and out.
 class_name ToriiPose
 extends RefCounted
 
@@ -32,20 +37,27 @@ func _side(s: int) -> String:
 	return "p" if s > 0 else "m"
 
 # ---- the same little helpers poseTorii used ----
+# w < 1 blends the new pose over whatever update() already put on that bone this frame, so the action
+# poses (swings, block, cast...) ease in and out of the walk/idle instead of popping
+var w := 1.0
+func _rq(i: int, q: Quaternion) -> void:
+	if w >= .999: sk.set_bone_pose_rotation(i, q)
+	elif w > .001: sk.set_bone_pose_rotation(i, sk.get_bone_pose_rotation(i).slerp(q, w))
 func leg(s: int, x: float, z: float = 0.0) -> void:
-	sk.set_bone_pose_rotation(b["leg_" + _side(s)], eul(x, 0, z))
+	_rq(b["leg_" + _side(s)], eul(x, 0, z))
 func knee(s: int, v: float) -> void:            # knees only fold backwards
-	sk.set_bone_pose_rotation(b["kn_" + _side(s)], eul(max(0.0, v)))
+	_rq(b["kn_" + _side(s)], eul(max(0.0, v)))
 func arm(s: int, x: float, y: float = 0.0, z: float = 0.0) -> void:
-	sk.set_bone_pose_rotation(b["arm_" + _side(s)], eul(x, y, z) * _down[s])
+	_rq(b["arm_" + _side(s)], eul(x, y, z) * _down[s])
 func elbow(s: int, v: float) -> void:           # elbows only fold forwards
 	var d: Quaternion = _down[s]
-	sk.set_bone_pose_rotation(b["elb_" + _side(s)], d.inverse() * eul(min(0.0, v)) * d)
+	_rq(b["elb_" + _side(s)], d.inverse() * eul(min(0.0, v)) * d)
 func body(x: float, y: float, z: float, lift: float = 0.0) -> void:
-	sk.set_bone_pose_rotation(b["body"], eul(x, y, z))
-	sk.set_bone_pose_position(b["body"], body_rest + Vector3(0, lift, 0))
+	_rq(b["body"], eul(x, y, z))
+	var to := body_rest + Vector3(0, lift, 0)
+	sk.set_bone_pose_position(b["body"], to if w >= .999 else sk.get_bone_pose_position(b["body"]).lerp(to, maxf(0.0, w)))
 func head(x: float, y: float = 0.0, z: float = 0.0) -> void:
-	sk.set_bone_pose_rotation(b["head"], eul(x, y, z))
+	_rq(b["head"], eul(x, y, z))
 
 # on the bike (7.2's onBike branch): crouched over the bars, pedalling, banking with the bike
 func ride(t: float, bike_speed: float, lean: float) -> void:
@@ -79,6 +91,7 @@ func swing(p: float) -> void:
 
 # moving: walking/running; spd: ground speed (m/s); air: not on the ground; vy: vertical speed
 func update(dt: float, t: float, moving: bool, spd: float, air: bool, vy: float) -> void:
+	w = 1.0
 	spd = min(9.0, spd)
 	ph += (spd * 1.15 if moving else 0.0) * dt
 	var w := ph
@@ -114,3 +127,149 @@ func update(dt: float, t: float, moving: bool, spd: float, air: bool, vy: float)
 		arm(-1, -1.15 - rise * .55, 0, .34); elbow(-1, -.55)
 		arm(1, -1.15 - rise * .55, 0, -.34); elbow(1, -.55)
 		body(-rise * .14, 0, 0, 0)
+
+# ======== the Godot moveset (new; same rig, same helpers) ========
+var spin := 0.0                    # extra turn of her whole model (spin kick) — the player applies it
+
+# blend envelope: in over `fin`, out over the last `fout` of p (0..1)
+static func env(p: float, fin := .1, fout := .3) -> float:
+	return smoothstep(0.0, fin, p) * (1.0 - smoothstep(1.0 - fout, 1.0, p))
+
+# the light combo: step 0 forehand slash, 1 rising backhand, 2 two-handed overhead finisher.
+# p = 0..1 through the move; the strike itself is the fast middle part
+func combo(step: int, p: float, kick := false) -> void:
+	w = env(p, .1, .32); spin = 0.0
+	var s := smoothstep(.26, .48, p)
+	if kick: _kick(step, p, s); w = 1.0; return
+	match step:
+		0:
+			arm(1, lerpf(-1.1, -1.45, s), 0, lerpf(-1.3, .6, s)); elbow(1, lerpf(-1.1, -.15, s))
+			arm(-1, lerpf(-.3, .5, s), 0, .3); elbow(-1, -.9)
+			body(lerpf(.05, .14, s), lerpf(.55, -.6, s), -.05 * s, -.04 * s); head(0, lerpf(-.2, .25, s))
+			leg(-1, -.38 * s); leg(1, .3 * s); knee(-1, .35 * s); knee(1, .2)
+		1:
+			arm(1, lerpf(-.35, -2.5, s), 0, lerpf(.75, -.95, s)); elbow(1, lerpf(-1.4, -.2, s))
+			arm(-1, lerpf(.4, -.4, s), 0, .35); elbow(-1, -1.0)
+			body(lerpf(.16, -.06, s), lerpf(-.5, .5, s), .06 * s, -.03); head(0, lerpf(.2, -.2, s))
+			leg(1, -.3 * s); leg(-1, .26 * s); knee(1, .3 * s); knee(-1, .22)
+		_:
+			arm(1, lerpf(-2.95, -.35, s), 0, lerpf(-.15, -.1, s)); elbow(1, lerpf(-1.3, -.1, s))
+			arm(-1, lerpf(-2.6, -.5, s), 0, lerpf(.2, .1, s)); elbow(-1, lerpf(-1.2, -.4, s))
+			body(lerpf(-.18, .5, s), lerpf(.15, -.15, s), 0, lerpf(.06, -.12, s)); head(.25 * s)
+			leg(-1, -.7 * s); knee(-1, .6 * s); leg(1, .45 * s); knee(1, .5 * s)
+	w = 1.0
+
+# bare hands: front snap kick, roundhouse with the other leg, spinning finisher (7.2's kick: chamber + snap)
+func _kick(step: int, p: float, s: float) -> void:
+	var ch := smoothstep(0.0, .28, p)              # the knee comes up first
+	arm(-1, -1.2, 0, -.3); elbow(-1, -1.8); arm(1, -1.0, 0, .3); elbow(1, -1.8)   # guard up
+	match step:
+		0:
+			leg(1, lerpf(-.2, -1.5, ch)); knee(1, lerpf(1.7, .1, s) * ch + .05); knee(-1, .18)
+			body(-.15 * ch, 0, 0); head(.1)
+		1:
+			leg(-1, lerpf(-.2, -1.25, ch), .6 * s); knee(-1, lerpf(1.6, .15, s) * ch + .05); knee(1, .2)
+			body(-.05, .45 * s, -.28 * ch); head(0, -.2 * s)
+		_:
+			leg(1, lerpf(-.3, -1.4, ch), .3); knee(1, lerpf(1.5, .1, s) * ch + .05); knee(-1, .22)
+			body(-.12, 0, .2 * ch); spin = s * TAU
+
+# heavy attack. Wind-up (held: charge 0..1 makes her tremble), then the release p 0..1
+func heavy_wind(t: float, a: float, charge: float) -> void:
+	w = smoothstep(0.0, 1.0, a)
+	var tr := sin(t * 60.0) * .03 * charge
+	arm(1, -2.9, 0, -.55); elbow(1, -1.5); arm(-1, -2.7, 0, .5); elbow(-1, -1.4)
+	body(-.22, .65, tr, -.06 - charge * .07); head(-.1, -.3)
+	leg(-1, -.35); leg(1, .35); knee(-1, .45 + charge * .2); knee(1, .4 + charge * .2)
+	w = 1.0
+func heavy_go(p: float) -> void:
+	w = 1.0 - smoothstep(.62, 1.0, p)
+	var s := smoothstep(0.0, .3, p)
+	arm(1, lerpf(-2.9, -.25, s), 0, lerpf(-.55, .15, s)); elbow(1, lerpf(-1.5, -.05, s))
+	arm(-1, lerpf(-2.7, -.45, s), 0, .2); elbow(-1, -.3)
+	body(lerpf(-.22, .55, s), lerpf(.65, -.55, s), 0, lerpf(-.06, -.16, s)); head(.2 * s)
+	leg(-1, -.8 * s); knee(-1, .8 * s); leg(1, .55 * s); knee(1, .6 * s)
+	w = 1.0
+
+# jump attack: weapon overhead and knees tucked on the way down, then a deep crouch on impact (p 0..1)
+func slam_air() -> void:
+	arm(1, -3.0, 0, -.2); elbow(1, -.4); arm(-1, -2.8, 0, .2); elbow(-1, -.5)
+	leg(-1, -1.0); leg(1, -.6); knee(-1, 1.6); knee(1, 1.3); body(-.1, 0, 0); head(.2)
+func slam_land(p: float) -> void:
+	w = 1.0 - smoothstep(.45, 1.0, p)
+	arm(1, -.55, 0, -.1); elbow(1, -.1); arm(-1, -.4, 0, .5); elbow(-1, -.3)
+	leg(-1, -1.0); leg(1, .3); knee(-1, 1.4); knee(1, 1.5); body(.6, 0, 0, -.35); head(.3)
+	w = 1.0
+
+# dodge roll: a tight tuck — the player flips the whole model round her hips
+func roll() -> void:
+	leg(-1, -1.7); leg(1, -1.6); knee(-1, 2.2); knee(1, 2.1)
+	arm(-1, -1.4, 0, -.2); arm(1, -1.4, 0, .2); elbow(-1, -1.9); elbow(1, -1.9)
+	body(.6, 0, 0, -.2); head(.6)
+
+# guard up (hold Z): weapon arm across the front, the other arm covering, knees soft. k = blend 0..1
+func block(k: float) -> void:
+	w = k
+	arm(1, -1.55, 0, .95); elbow(1, -1.25); arm(-1, -1.25, 0, -.7); elbow(-1, -1.7)
+	body(.12, -.15, 0, -.05); head(.1); leg(-1, -.2); leg(1, .15); knee(-1, .3); knee(1, .3)
+	w = 1.0
+
+# hanging off a ledge by both hands, then pulling herself up and over (p 0..1)
+func ledge_hang(t: float) -> void:
+	arm(-1, -3.0, 0, -.15); arm(1, -3.0, 0, .15); elbow(-1, -.25); elbow(1, -.25)
+	leg(-1, .05 + sin(t * 3.0) * .1); leg(1, -.05 - sin(t * 3.0) * .1); knee(-1, .25); knee(1, .3)
+	body(-.05, 0, 0); head(-.25)
+func ledge_climb(p: float) -> void:
+	var up := smoothstep(0.0, .55, p)
+	var over := smoothstep(.5, 1.0, p)
+	arm(-1, lerpf(-3.0, -.6, up), 0, -.2); arm(1, lerpf(-3.0, -.6, up), 0, .2)
+	elbow(-1, lerpf(-.3, -1.6, up) * (1.0 - over) - .1); elbow(1, lerpf(-.3, -1.6, up) * (1.0 - over) - .1)
+	leg(1, lerpf(0.0, -1.4, up) * (1.0 - over)); knee(1, lerpf(.3, 1.9, up) * (1.0 - over))
+	leg(-1, .2 * up * (1.0 - over)); knee(-1, .3 + .6 * up * (1.0 - over))
+	body(.35 * up * (1.0 - over * .8), 0, 0, -.1 * up * (1.0 - over)); head(.2 * up * (1.0 - over))
+
+# a hit she didn't block: rocks back (p 0..1 through the flinch)
+func flinch(p: float) -> void:
+	w = 1.0 - smoothstep(.3, 1.0, p)
+	body(-.32, .15, .08); head(-.35, 0, .1)
+	arm(-1, -.5, 0, .5); arm(1, -.5, 0, -.5); elbow(-1, -.6); elbow(1, -.6)
+	w = 1.0
+
+# casting a skill: both hands pushed out, a little pulse (skills set the player's cast_t)
+func cast(t: float, k := 1.0) -> void:
+	w = k
+	arm(-1, -1.75, 0, -.25); arm(1, -1.75, 0, .25); elbow(-1, -.15); elbow(1, -.15)
+	body(-.08, 0, 0, .04 + sin(t * 14.0) * .02); head(-.15)
+	w = 1.0
+
+# eating: hand to mouth, chewing nods
+func eat(t: float, k := 1.0) -> void:
+	w = k
+	arm(1, -1.9, 0, .55); elbow(1, -2.3 + sin(t * 12.0) * .15)
+	head(.12 + sin(t * 12.0) * .06); body(.05, 0, 0)
+	w = 1.0
+
+# off the bike (7.2's wipe): curled up flying, flat on her front, pushing herself back up (p 0..1)
+func tumble(t: float) -> void:
+	roll()
+	arm(-1, -2.2 + sin(t * 26.0) * .6, 0, -.9); arm(1, -2.2 + cos(t * 26.0) * .6, 0, .9)
+func lie() -> void:
+	leg(-1, 0, .05); leg(1, 0, -.05); knee(-1, .1); knee(1, .15)
+	arm(-1, -2.9, 0, -.25); arm(1, -2.9, 0, .25); elbow(-1, -.2); elbow(1, -.2)
+	body(0, 0, 0); head(-.4)
+func getup(p: float) -> void:
+	var q := smoothstep(.25, 1.0, p)
+	leg(-1, lerpf(-1.4, 0, q)); knee(-1, lerpf(1.9, .05, q)); leg(1, lerpf(.2, 0, q)); knee(1, lerpf(2.2, .05, q))
+	arm(-1, lerpf(-1.2, 0, q), 0, .1); arm(1, lerpf(-1.2, 0, q), 0, -.1); elbow(-1, lerpf(-.4, -.16, q)); elbow(1, lerpf(-.4, -.16, q))
+	body(lerpf(.7, 0, q), 0, 0, lerpf(-.3, 0, q)); head(lerpf(-.3, 0, q))
+# 'zor tuttun!' — arms flailing while she fights to keep the bike up (k fades it out)
+func wobble(t: float, k: float) -> void:
+	w = clampf(k, 0.0, 1.0)
+	arm(-1, -2.2 + sin(t * 30.0) * .6, 0, -.9); arm(1, -2.2 + cos(t * 30.0) * .6, 0, .9)
+	elbow(-1, -.4); elbow(1, -.4)
+	w = 1.0
+
+# 7.2: her upper body leans with the mouse pitch so aiming reads on screen (added on top of the body bone)
+func aim(pitch: float) -> void:
+	var i: int = b["body"]
+	sk.set_bone_pose_rotation(i, eul(clampf(pitch * .3, -.18, .3)) * sk.get_bone_pose_rotation(i))

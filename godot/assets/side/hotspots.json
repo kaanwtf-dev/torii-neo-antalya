@@ -1,0 +1,207 @@
+{
+ "HOTSPOTS": [
+  {
+   "n": "Jayna Gyro 🥙",
+   "x": 60,
+   "z": 50
+  },
+  {
+   "n": "Safeway 🛒",
+   "x": 60,
+   "z": -52
+  },
+  {
+   "n": "Trader Joe's 🛍",
+   "x": -100,
+   "z": 28
+  },
+  {
+   "n": "Tower Bridge 🌉",
+   "x": -214,
+   "z": 0
+  },
+  {
+   "n": "LowBrau 🍺",
+   "x": -20,
+   "z": 52
+  },
+  {
+   "n": "Old Soul Coffee ☕",
+   "x": -20,
+   "z": -40
+  },
+  {
+   "n": "State Capitol 🏛",
+   "x": -60,
+   "z": 48
+  },
+  {
+   "n": "Club Holo 🪩",
+   "x": 101,
+   "z": -24
+  },
+  {
+   "n": "The Marina ⚓",
+   "x": -182,
+   "z": 96
+  },
+  {
+   "n": "Grand Bazaar 🧿",
+   "x": -140,
+   "z": 40
+  },
+  {
+   "n": "Zeybek Arena 🤼",
+   "x": -180,
+   "z": -20
+  },
+  {
+   "n": "The Beach 🏖",
+   "x": 120,
+   "z": 20
+  },
+  {
+   "n": "The Airport ✈️",
+   "x": -10,
+   "z": 92
+  },
+  {
+   "n": "West Bank 🌆",
+   "x": -256,
+   "z": -20
+  },
+  {
+   "n": "Yeşiltepe 🏘",
+   "x": 6,
+   "z": 270
+  },
+  {
+   "n": "Mount Işıkdağ ⛰",
+   "x": -288,
+   "z": -228
+  },
+  {
+   "n": "Temple Coffee ☕",
+   "x": -60,
+   "z": -54
+  },
+  {
+   "n": "Scorpio Coffee ☕",
+   "x": 60,
+   "z": -6
+  }
+ ],
+ "CONTRACTS": [
+  {
+   "n": 1,
+   "d": "One. Just to get you moving."
+  },
+  {
+   "n": 2,
+   "d": "A pair."
+  },
+  {
+   "n": 3,
+   "d": "Three of them."
+  },
+  {
+   "n": 4,
+   "d": "Four. Bandit will earn his dinner."
+  },
+  {
+   "n": 5,
+   "d": "Five at once — as many as I can get hold of."
+  }
+ ],
+ "HIRE": [
+  {
+   "k": null,
+   "n": "Karışık · Whatever turns up",
+   "m": 0.85,
+   "e": "🎲"
+  },
+  {
+   "k": "imp",
+   "n": "İmp",
+   "m": 1,
+   "e": "👹"
+  },
+  {
+   "k": "zombie",
+   "n": "Zombi",
+   "m": 1.15,
+   "e": "🧟"
+  },
+  {
+   "k": "thot",
+   "n": "Evil Thot",
+   "m": 1.1,
+   "e": "💅"
+  },
+  {
+   "k": "ghost",
+   "n": "Hayalet · Ghost",
+   "m": 1.35,
+   "e": "👻"
+  },
+  {
+   "k": "skeleton",
+   "n": "İskelet",
+   "m": 1.4,
+   "e": "💀"
+  },
+  {
+   "k": "scorpion",
+   "n": "Akrep · Scorpion",
+   "m": 1.25,
+   "e": "🦂"
+  },
+  {
+   "k": "witch",
+   "n": "Cadı · Witch",
+   "m": 1.55,
+   "e": "🧙"
+  },
+  {
+   "k": "mummy",
+   "n": "Mumya · Mummy",
+   "m": 1.65,
+   "e": "🧻"
+  },
+  {
+   "k": "okuz",
+   "n": "Öküz",
+   "m": 1.75,
+   "e": "🐂"
+  },
+  {
+   "k": "driver",
+   "n": "Terrible Driver",
+   "m": 2.3,
+   "e": "🚗"
+  }
+ ],
+ "KAANLINES": [
+  [
+   "Sen söyle, ben ayarlarım.",
+   "You say the word, I arrange it."
+  ],
+  [
+   "Param var, tanıdığım da var. 😌",
+   "I have money, and I have contacts."
+  ],
+  [
+   "Dikkatli ol, tamam mı?",
+   "Be careful, alright?"
+  ],
+  [
+   "Ben buradan izliyorum. Çayım da var.",
+   "I am watching from here. I have my tea too."
+  ],
+  [
+   "Bu iş bana pahalıya patlıyor ama sen değersin.",
+   "This is costing me, but you are worth it."
+  ]
+ ],
+ "FEE_PER": 240
+}

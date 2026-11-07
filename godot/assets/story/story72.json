@@ -1,0 +1,770 @@
+{
+ "patches": [
+  {
+   "v": "ALPHA 7.2",
+   "t": "POLYGON GIRL · A REAL 3D YOU",
+   "groups": [
+    [
+     "❤ Your save is safe",
+     [
+      "Nothing about your progress changed. Same controls, no new keys."
+     ]
+    ],
+    [
+     "💃 Your new body",
+     [
+      "You are a proper [b]old-PlayStation 3D model[/b] now: one body that bends smoothly at the shoulders, elbows, hips and knees instead of stacked pieces.",
+      "Still you: the pink top with the star, denim (a [b]denim skirt[/b] now), white sneakers, your box braids with the cyan beads, gold hoops and your painted face.",
+      "Everything works on the new body: walking, running, riding the bike, dancing, flying off the bike, phone calls, fighting, your outfits, shoes, bags and sunglasses.",
+      "Lory got the same body in her dark colours. Mirror twins."
+     ]
+    ],
+    [
+     "🙏 Thank you",
+     [
+      "Your body is based on the free [b]PSX Secretary Character[/b] by [b]Vinrax[/b] (itch.io), dressed up as you."
+     ]
+    ]
+   ]
+  },
+  {
+   "v": "ALPHA 7.1",
+   "t": "BLUE HOUR · THE PS1 LOOK",
+   "groups": [
+    [
+     "❤ Your save is safe",
+     [
+      "Nothing about your progress changed. Same controls, no new keys."
+     ]
+    ],
+    [
+     "🌃 A new kind of night",
+     [
+      "Nights are [b]deep blue[/b] now, with stars and a soft haze that swallows the far side of the city.",
+      "Street lamps glow [b]warm orange[/b] and light up the ground under them. Follow the pools of light home.",
+      "Apartment windows switch on after dark. Every building has its own rooms lit, and they go dark again in the morning."
+     ]
+    ],
+    [
+     "🧱 Real walls, real streets",
+     [
+      "Brick apartments, cream Mediterranean blocks with shutters and little balconies, glass office towers.",
+      "Paving slabs, cracked asphalt, beach sand, boardwalk planks, grass, and [b]terracotta roofs[/b] in Yeşiltepe.",
+      "Everything has that crunchy old-PlayStation look on purpose."
+     ]
+    ],
+    [
+     "📺 Old-console picture",
+     [
+      "A light PS1-style colour dither sits over the picture. Not a fan? [b]PAUSE → 🎞 NIGHT GRADE[/b] switches it off together with the night filter."
+     ]
+    ]
+   ]
+  },
+  {
+   "v": "ALPHA 7.0",
+   "t": "NEON NIGHTS · THE BIG ONE",
+   "groups": [
+    [
+     "❤ Your save is safe",
+     [
+      "You keep your [b]level[/b], your words, your missions, everything. The XP bar was re-measured for the new levels, and you get [b]one perk card for every level you already earned[/b] — press [b]I[/b] to open them.",
+      "Controls are the same as before. The only new keys: [b]I[/b] bag & gear · [b]J[/b] quests · [b]H[/b] eat a snack · [b]T[/b] take a photo · [b]6[/b] and [b]7[/b] new skills."
+     ]
+    ],
+    [
+     "🌆 A whole new look",
+     [
+      "Everyone is rebuilt as real 3D models with textures: [b]Torii[/b] (braids, beads and a painted face), [b]Bandit[/b], [b]Kaan[/b], every person in the city and every monster.",
+      "New palms, trees and cars, soft smoke and sparkles, a proper backgammon board on every tavla table, and the Old Soul regulars actually [b]sit[/b] at their tables now.",
+      "The [b]🎨 GRAFİK[/b] setting decides how detailed the models are, so slower laptops stay smooth (it applies the next time you open the game)."
+     ]
+    ],
+    [
+     "📼 The intro",
+     [
+      "An 80s neon opening, purple and gold, with a card for each of the three stars. Turn the sound on for it. [b]Any key skips it.[/b]"
+     ]
+    ],
+    [
+     "⭐ Levels that matter",
+     [
+      "Each level takes a bit more XP than the last — and [b]every[/b] level makes you stronger: [b]+12 max HP, +3% damage, +3 mana, +2 stamina[/b].",
+      "Every level also gives a [b]perk card[/b]: pick one of three, keep it forever (21 perks, most can rank up).",
+      "Every [b]5th level[/b] unlocks something big: a bigger bag (5), [b]Nazar Kalkanı on 6[/b] (10), a neon bike (15), epic gear (20), [b]Yıldız Yağmuru on 7[/b] (25), legendary gear (30).",
+      "Monsters have [b]levels[/b] now (the tag over their heads) and grow with you.",
+      "Fainting costs a little lira and XP — [b]never a level[/b]."
+     ]
+    ],
+    [
+     "🎒 Bag & gear · press I",
+     [
+      "[b]Gear with stats[/b]: sunglasses, jewellery, shoes, bags and bike parts in five rarities. It drops from monsters and chests, and you can [b]see[/b] it on Torii.",
+      "A [b]backpack[/b] of snacks and drinks. [b]H[/b] eats the best one for the moment.",
+      "[b]50 hidden nazar beads[/b] around the world, with a prize every 10. Kuyumcu Zeynep in the bazaar sells gear."
+     ]
+    ],
+    [
+     "🎬 Story",
+     [
+      "Missions open with a [b]phone call[/b] scene ([b]E[/b] next line, [b]ESC[/b] skip). Between them: [b]meanwhile, at Hellspace Wealth…[/b] Karen is plotting.",
+      "New kinds of mission: [b]races[/b], [b]chases[/b], [b]escorts[/b], [b]timed deliveries[/b], [b]photo hunts[/b] (press [b]T[/b]) and [b]Turkish choices[/b]. Big bosses fight in [b]phases[/b].",
+      "[b]Side quests[/b] (press [b]J[/b]): five people around town have a story for you — look for the [b]![/b] over their heads."
+     ]
+    ],
+    [
+     "📘 Help when you need it",
+     [
+      "The first time you meet anything new, a short card explains it. All of them live in [b]PAUSE (P) → 📘 GUIDE[/b], along with your own numbers."
+     ]
+    ],
+    [
+     "🔧 Fixed",
+     [
+      "Kaan's monster service sent some contracts to the wrong part of the map (Trader Joe's, LowBrau, the Capitol, the Bazaar, the Arena, the Airport, Scorpio Coffee). They all go to the right places now."
+     ]
+    ]
+   ]
+  },
+  {
+   "v": "ALPHA 6.0",
+   "t": "THROUGH THE FRONT DOOR",
+   "groups": [
+    [
+     "🚪 Kaan's flat",
+     [
+      "The big ugly staircase is gone. [b]Walk into the front door[/b] of Midtown Ev and you go up to the balcony; walk into it up there and you come back down.",
+      "It also turns out that staircase was [b]deleting the building's own walls[/b] — which is why you could walk straight through the flat. Fixed."
+     ]
+    ],
+    [
+     "🔧 Fixed",
+     [
+      "Falling off the bike no longer [b]sinks her into the ground[/b] — she lies on it properly now."
+     ]
+    ]
+   ]
+  },
+  {
+   "v": "ALPHA 5.9",
+   "t": "SAVES THAT LAST",
+   "groups": [
+    [
+     "💾 Keep a real file",
+     [
+      "Browsers clear their own storage sometimes — Safari especially, after a week or two of not playing. So now you can keep your progress as an actual [b]file[/b].",
+      "[b]SAVE & LOAD → SAVE TO A FILE[/b] puts it in your Downloads. That file never disappears.",
+      "To restore it, [b]just drag the file onto the game window[/b]. No codes, no copy-paste.",
+      "The game also asks your browser to [b]keep[/b] its storage instead of treating it as disposable."
+     ]
+    ]
+   ]
+  },
+  {
+   "v": "ALPHA 5.8",
+   "t": "BIG SCREEN INTERFACE",
+   "groups": [
+    [
+     "🔍 Interface size",
+     [
+      "The size slider in [b]PAUSE[/b] now scales the [b]whole interface[/b] — health and stamina bars, the skill buttons, the minimap, the corner buttons — not just the text.",
+      "It goes up to [b]300%[/b] now. On a 4K TV try somewhere around 180–250%."
+     ]
+    ]
+   ]
+  },
+  {
+   "v": "ALPHA 5.7",
+   "t": "TAKING A TUMBLE",
+   "groups": [
+    [
+     "🚲 Coming off the bike",
+     [
+      "Crash and she now [b]flies[/b] — how far depends entirely on how fast she was going.",
+      "She lands, [b]slides to a stop face-down[/b], lies there a moment, then pushes herself back up. The faster the crash, the further she goes and the longer she stays down.",
+      "The bike stays where it fell."
+     ]
+    ],
+    [
+     "🌳 Solid world",
+     [
+      "Trees, café tables and the street sculptures [b]block you[/b] now. You used to ride straight through them.",
+      "Clip one slowly and you just lose speed; hit one at pace and you go over the bars."
+     ]
+    ],
+    [
+     "⚡ Stamina",
+     [
+      "[b]Boost costs stamina[/b] — you are standing on the pedals for it.",
+      "[b]Drifting is free.[/b] It is a technique, not effort, and charging for it would only discourage the best thing the bike does.",
+      "Pedalling slowly refills the bar between boosts."
+     ]
+    ]
+   ]
+  },
+  {
+   "v": "ALPHA 5.7",
+   "t": "KAAN'IN TELEFONU · KAAN MAKES CALLS",
+   "groups": [
+    [
+     "🔊 Voices",
+     [
+      "Two bugs fixed that were stopping the monsters speaking out loud in Edge and Chrome — nothing for you to do, it just works now.",
+      "If your computer has no Turkish voice installed, the game uses whatever voice it does have instead of going silent.",
+      "Press [b]V[/b] twice any time to check what it is doing."
+     ]
+    ],
+    [
+     "🗺 The edge of the world",
+     [
+      "The map no longer just [b]stops[/b]. Past the boundary the land ends in [b]open water[/b], and across it there is forest, mountains and a far-off city skyline.",
+      "The river under Tower Bridge [b]runs the whole length of the map[/b] now instead of stopping halfway and leaving blocked empty ground.",
+      "The [b]minimap scrolls with you[/b] now instead of being fixed to the old, much smaller map — it shows hills, roads, the river, chests, and arrows pointing to whatever you are chasing."
+     ]
+    ],
+    [
+     "🔧 Fixed",
+     [
+      "The stairs to Kaan were running [b]through the apartment building[/b]. They now go up the front of it, from the street to the balcony, with nothing in the way.",
+      "Guarded chests no longer ambush you: walk up, and press [b]E[/b] when you are ready to break the lock."
+     ]
+    ],
+    [
+     "📞 Kaan helps you hunt",
+     [
+      "There are [b]stairs up to his balcony[/b] now — he has been standing up there since the very first build with no way to reach him.",
+      "When a [b]hunt gate[/b] is asking you to kill monsters, Kaan can go and [b]find some for you[/b] instead of you combing the whole city.",
+      "This is [b]not a side quest[/b]. They are the same monsters your hunt already wants, the kills count toward it exactly the same, and the XP, lira and drops are the normal ones.",
+      "Pick the [b]species[/b] — ghosts, witches, öküz, eleven in all — and he will send only that kind. The one your hunt needs is [b]marked ⚑[/b].",
+      "They turn up at a real place — Jayna Gyro, Tower Bridge, the Marina, Mount Işıkdağ, 18 locations — and the arrow points you there.",
+      "You pay a [b]finder's fee[/b] (from 240₺ each). He will never send more than your hunt still needs, and he has nothing to sell you when you are not on one."
+     ]
+    ],
+    [
+     "🚬 Cigarettes",
+     [
+      "Now [b]−28 HP[/b] instead of −12. Still +25 mana.",
+      "They no longer drift toward you like other pickups, and the pickup radius is tiny — [b]you have to walk into one on purpose[/b]."
+     ]
+    ],
+    [
+     "🗒 This panel",
+     [
+      "Every update from now on shows a list like this once, with the version number."
+     ]
+    ]
+   ]
+  },
+  {
+   "v": "ALPHA 4.5",
+   "t": "ROADS, WATER, VOICES",
+   "groups": [
+    [
+     "🛣 Fixed",
+     [
+      "Roads over the hills were flat tiles and looked like a broken staircase. They are painted into the ground itself now.",
+      "The river and the sea were drawing [b]underneath[/b] the city's road surface, which is why the water looked like tarmac."
+     ]
+    ],
+    [
+     "🔊 Voices",
+     [
+      "Press [b]V[/b] twice for a voice self-test — it reports whether your browser actually made a sound.",
+      "The monsters' own synthesised voice now follows the real Turkish vowels, and carries on its own if the browser refuses to speak."
+     ]
+    ]
+   ]
+  },
+  {
+   "v": "ALPHA 4.4",
+   "t": "THE HILLS",
+   "groups": [
+    [
+     "⛰ Fixed",
+     [
+      "Hills were rising invisibly underneath the flat city and starting mid-air at the edge — that giant step is gone.",
+      "Houses sit on [b]level plots[/b] now, so no more buried walls or floating fences.",
+      "Render resolution raised: it was a 6x upscale, which is why every diagonal looked like stairs."
+     ]
+    ]
+   ]
+  },
+  {
+   "v": "ALPHA 4.1",
+   "t": "THE LIVING CITY",
+   "groups": [
+    [
+     "🔥 Combat",
+     [
+      "Kill streaks up to [b]x3[/b] XP and lira. Coins fly to you now."
+     ]
+    ],
+    [
+     "🚲 The bike",
+     [
+      "Hold [b]SPACE[/b] in a turn to [b]drift[/b]. Hit something and it is a coin flip whether you go down.",
+      "Ride through a monster to hurt it — and probably yourself."
+     ]
+    ],
+    [
+     "🧰 Chests",
+     [
+      "12 guarded chests. Press [b]E[/b] to break the lock, then beat the keeper one-on-one; [b]Bandit holds off everyone else[/b]."
+     ]
+    ],
+    [
+     "🕶 Sunglasses",
+     [
+      "Press [b]G[/b]."
+     ]
+    ]
+   ]
+  },
+  {
+   "v": "ALPHA 4.0",
+   "t": "A BIGGER WORLD",
+   "groups": [
+    [
+     "🌍 New",
+     [
+      "[b]Mount Işıkdağ[/b] — ride to the top.",
+      "[b]Yeşiltepe[/b], a hillside suburb with neighbours and their own lessons.",
+      "A real [b]day and night cycle[/b] that follows your actual clock.",
+      "[b]SPACE[/b] to jump, [b]SHIFT[/b] to sprint (green stamina bar)."
+     ]
+    ]
+   ]
+  }
+ ],
+ "tips": {
+  "levels": {
+   "t": "⭐ LEVELS 2.0 · SEVİYELER",
+   "l": [
+    "Every level now takes a bit more XP than the last — but every level [b]pays out[/b].",
+    "Each level up: [b]+12 max HP[/b], [b]+3% damage[/b], [b]+3 mana[/b], [b]+2 stamina[/b], and a [b]perk card[/b] you choose.",
+    "Every [b]5th level[/b] unlocks something big: a bigger backpack, new skills on [b]6[/b] and [b]7[/b], a neon bike, better gear.",
+    "XP from everything grows with your level too, so missions and lessons always stay worth doing.",
+    "Fainting costs some lira and XP — but [b]never a level[/b]."
+   ]
+  },
+  "moblv": {
+   "t": "🎯 MONSTER LEVELS",
+   "l": [
+    "Every monster has a [b]level tag[/b] over its head now.",
+    "Colours: [color=#9a94a8]grey[/color] far weaker · [color=#5fff9e]green[/color] weaker · [b]white[/b] your level · [color=#ffb03a]orange[/color] +2 · [color=#ff3b3b]red[/color] +3 or more.",
+    "They come in around [b]your[/b] level, so they toughen up as you do. Yeşiltepe, the outskirts and Mount Işıkdağ run hotter.",
+    "Higher level = more HP and harder hits — and more XP when it drops."
+   ]
+  },
+  "race": {
+   "t": "🏁 RACES · YARIŞ",
+   "l": [
+    "Ride through the glowing [b]rings[/b] in order. The [b]first ring starts the clock[/b].",
+    "The arrow and the minimap always point at the next ring. Some races need the bike — hop on with [b]E[/b].",
+    "Some races have a [b]rival[/b]. Beat them to the last ring. [i]yarış[/i] = race."
+   ]
+  },
+  "chase": {
+   "t": "🏃 CHASES · KOVALAMACA",
+   "l": [
+    "Someone is running away — [b]catch them[/b] by getting right up close (running or on the bike).",
+    "The arrow follows them. Let them get too far away for too long and they escape — then you start again."
+   ]
+  },
+  "escort": {
+   "t": "🛡 ESCORTS · KORUMA",
+   "l": [
+    "Someone needs you to get them somewhere safely. They only walk while you stay [b]close[/b].",
+    "Monsters will come for them. Their health is on the right. If it runs out, you start over."
+   ]
+  },
+  "deliver": {
+   "t": "📦 DELIVERIES · KURYE",
+   "l": [
+    "Pick the package up, then get it to the marked place [b]before the timer runs out[/b].",
+    "The bike is your friend. Some packages are [b]fragile[/b] — crash and they break. [i]Acele et![/i] = hurry up!"
+   ]
+  },
+  "photo": {
+   "t": "📸 PHOTO HUNTS · FOTOĞRAF",
+   "l": [
+    "Find what you are asked to photograph (a 📸 floats above it).",
+    "Point the camera at it — get it on screen, reasonably close — and press [b]T[/b] to take the photo."
+   ]
+  },
+  "choice": {
+   "t": "💬 TURKISH CHOICES",
+   "l": [
+    "Some people now ask you to [b]answer in Turkish[/b]. Pick the right sentence with [b]1–4[/b].",
+    "A wrong answer never ends the mission — they react, and you try again. The English is always shown."
+   ]
+  },
+  "phases": {
+   "t": "⚠️ BOSS PHASES",
+   "l": [
+    "Big bosses now fight in [b]phases[/b]. When their health drops past a mark they [b]change[/b]: faster, harder, new attacks, backup.",
+    "The banner tells you what just changed. Watch for purple shots to dodge and for bosses that charge in a straight line — step aside."
+   ]
+  },
+  "quests": {
+   "t": "📜 SIDE QUESTS · YAN GÖREVLER",
+   "l": [
+    "People around the map have their own stories for you now. Look for a gold [b]![/b] over someone's head — and on the minimap.",
+    "Every story has [b]3 parts[/b]. Talk with [b]E[/b]; each part shows its recommended level.",
+    "Your active quest gets a [b][color=#3dff9e]green marker[/color][/b] and its own gold line under your mission. [b]J[/b] opens the quest log.",
+    "They run alongside the main story — you can do both at once. Rewards include lira, XP and [b]named gear you can't get anywhere else[/b]."
+   ]
+  },
+  "gear": {
+   "t": "🕶 GEAR · KUŞANIM",
+   "l": [
+    "Monsters, chests and bosses drop [b]gear[/b] — the glowing thing with a beam of light. Walk over it.",
+    "Five slots: [b]🕶 sunglasses, 💍 jewellery, 👟 shoes, 👜 bag, 🚲 bike part[/b]. Each piece gives stats, and you can see it on Torii.",
+    "The colour is the rarity: [b][color=#d8d4e8]common[/color][/b] → [b][color=#5fff9e]uncommon[/color][/b] → [b][color=#5fb0ff]rare[/color][/b] → [b][color=#c07bff]epic[/color][/b] → [b][color=#ffd66b]legendary[/color][/b]. Rarer = more and bigger stats. Better rarities unlock as you level.",
+    "Press [b]I[/b] to open your inventory: compare pieces (green = better than what you wear), put them on, or sell the rest for lira."
+   ]
+  },
+  "bag": {
+   "t": "🎒 BACKPACK · ÇANTA",
+   "l": [
+    "Turkish food no longer gets eaten the moment you touch it — it goes into your [b]backpack[/b].",
+    "Press [b]H[/b] to eat: it picks the smallest snack that heals what you are missing. Or open the backpack ([b]I[/b]) and choose.",
+    "Each food does something different — [i]börek[/i] heals a lot, [i]çay[/i] makes you fast, [i]baklava[/i] doubles your damage.",
+    "Buy more at [b]Five Sips ☕[/b]. Every food you eat teaches its Turkish name."
+   ]
+  },
+  "nazar": {
+   "t": "🧿 HIDDEN NAZAR BEADS · GİZLİ NAZARLAR",
+   "l": [
+    "There are [b]50 hidden nazar beads[/b] around the world — Midtown, Yeşiltepe, Mount Işıkdağ, the river, the beach, even abroad.",
+    "Look for a faint [b]blue light[/b] rising into the sky. Every bead gives XP, lira and a Turkish saying about the evil eye.",
+    "Every [b]10[/b] beads unlocks a reward. At 20 the minimap starts showing beads near you.",
+    "Your progress, region by region, is in the inventory ([b]I[/b]) under 🧿."
+   ]
+  }
+ },
+ "replies": [
+  [
+   "Tamam bebeğim, hallederim!",
+   "Okay baby, I'll handle it!"
+  ],
+  [
+   "Hemen gidiyorum!",
+   "I'm on my way right now!"
+  ],
+  [
+   "Olur, merak etme!",
+   "Sure — don't worry!"
+  ],
+  [
+   "Anlaştık!",
+   "Deal!"
+  ],
+  [
+   "Hadi bakalım!",
+   "Here we go!"
+  ],
+  [
+   "Tamamdır!",
+   "Consider it done!"
+  ],
+  [
+   "Tabii ki!",
+   "Of course!"
+  ],
+  [
+   "Geliyorum!",
+   "I'm coming!"
+  ]
+ ],
+ "gods": [
+  {
+   "id": "yazi",
+   "name": "YAZI · God of Heads 🪙",
+   "x": -70,
+   "z": 28,
+   "col": "#ffd66b",
+   "greet": [
+    "I am [b]Yazı[/b] — the side of the coin that lands face-up. 🪙",
+    "Mortals call it luck. We call it [i]kader[/i] — fate. In Turkish, a coin toss is [b]yazı tura[/b].",
+    "Gamble with me, Torii. Nothing in this city is truly random... except me."
+   ]
+  },
+  {
+   "id": "tura",
+   "name": "TURA · God of Tails 🎲",
+   "x": 34,
+   "z": -104,
+   "col": "#7bf7ff",
+   "greet": [
+    "My brother Yazı talks too much. I am [b]Tura[/b]. The other side. 🎲",
+    "[i]Şans[/i] = luck. [i]Kader[/i] = fate. Idiots think they are the same word.",
+    "Call it in the air. If you are wrong, you pay. If you are right... we shall see."
+   ]
+  },
+  {
+   "id": "kader",
+   "name": "KADER · Mother of Fate 🔮",
+   "x": -108,
+   "z": -26,
+   "col": "#b06bff",
+   "greet": [
+    "My sons are children playing with coins. I am [b]Kader[/b] — Fate herself. 🔮",
+    "You have flipped twice. Now flip against ME, and I will show you what the twins never could.",
+    "Choose. [i]Yazı mı, tura mı?[/i]"
+   ]
+  }
+ ],
+ "hell": {
+  "avo": {
+   "screen": "LAST SEEN:\nbuying avocados 🥑\nnew habit: TURKISH ⚠️",
+   "lines": [
+    [
+     "karen",
+     "Torii. Our former Senior Associate. Buying... [b]avocados[/b]. Having a [b]life[/b].",
+     ""
+    ],
+    [
+     "karen",
+     "And now she is learning [b]TURKISH[/b]? That is how it starts. First a language. Then a plane ticket. Then she never comes back.",
+     ""
+    ],
+    [
+     "imp",
+     "*eager screeching*",
+     "chitter"
+    ],
+    [
+     "karen",
+     "Yes, Gary. Send the interns. [b]All[/b] the interns.",
+     ""
+    ]
+   ]
+  },
+  "doner": {
+   "screen": "LAST SEEN:\nJayna Gyro 🥙\nzombie ambush: FAILED",
+   "lines": [
+    [
+     "karen",
+     "The zombies failed. Our [b]zombies[/b]. They have done unpaid overtime since 2019 — they are dead inside [i]and[/i] out.",
+     ""
+    ],
+    [
+     "zomb",
+     "Braaaains... I mean... [i]timesheets[/i]...",
+     "groan"
+    ],
+    [
+     "karen",
+     "Put the whole floor on it. Accounting. Legal. The ones in the parking lot. I want her too tired to conjugate a single verb.",
+     ""
+    ]
+   ]
+  },
+  "cruze": {
+   "screen": "LAST SEEN:\nwashing a 2017 Cruze\nCRUZE: CLEAN ✨ (!!)",
+   "lines": [
+    [
+     "karen",
+     "She washed the Cruze. The [b]filthy[/b] Cruze. That car was our most loyal employee.",
+     ""
+    ],
+    [
+     "imp",
+     "*sad little screech*",
+     "chitter"
+    ],
+    [
+     "karen",
+     "So she wants the beach? Fine. Send the Towel Thieves. [b]Nobody[/b] relaxes on my watch.",
+     ""
+    ]
+   ]
+  },
+  "anne": {
+   "screen": "LAST SEEN:\nStockton · mom's börek 🥟\nbrother: ???",
+   "lines": [
+    [
+     "karen",
+     "Her mother made [b]börek[/b]. Family support. Home cooking. Do you know what that does to productivity?",
+     ""
+    ],
+    [
+     "karen",
+     "And the brother in the tinfoil hat. Is he one of ours?",
+     ""
+    ],
+    [
+     "zomb",
+     "No, ma'am. That's Josh. He's... just like that.",
+     "groan"
+    ],
+    [
+     "karen",
+     "...Book flights. Wherever she goes, the monsters go.",
+     ""
+    ]
+   ]
+  },
+  "liv": {
+   "screen": "LAST SEEN:\nLivermore · old photos 📷\nTURKISH: FLUENT-ISH ⚠️⚠️",
+   "lines": [
+    [
+     "karen",
+     "Cameroon. Arizona. Livermore. Every trip, she comes home [b]stronger[/b].",
+     ""
+    ],
+    [
+     "karen",
+     "Words. Friends. A dog. A man on a balcony who sends her mission briefings by text.",
+     ""
+    ],
+    [
+     "karen",
+     "Clear my calendar.",
+     "karen"
+    ],
+    [
+     "karen",
+     "It is time for her... [b]exit interview[/b].",
+     ""
+    ]
+   ]
+  },
+  "karen": {
+   "screen": "!! SYSTEM ERROR !!\nCEO: DEFEATED\nfloor 46: on fire",
+   "lines": [
+    [
+     "karen",
+     "This... isn't over... I have a three o'clock...",
+     "karen"
+    ],
+    [
+     "imp",
+     "*concerned screech*",
+     "chitter"
+    ],
+    [
+     "karen",
+     "Get me the organisers of that [b]Zeybek Tournament[/b]. I am entering.",
+     ""
+    ]
+   ]
+  },
+  "arena": {
+   "screen": "LAST SEEN:\nZeybek Arena 🏆\nCEO: lost ROUND 3",
+   "lines": [
+    [
+     "karen",
+     "Round three. I lost [b]round three[/b]. To a woman with braids and a [b]dog[/b].",
+     ""
+    ],
+    [
+     "karen",
+     "Fine. If I can't beat her... I will make her [b]miss her flight[/b].",
+     ""
+    ],
+    [
+     "zomb",
+     "Ma'am... how?",
+     "groan"
+    ],
+    [
+     "karen",
+     "Get me the worst driver in the state.",
+     ""
+    ]
+   ]
+  },
+  "bday": {
+   "screen": "LAST SEEN:\nKaan's birthday 🎂\nMOOD: happy ⚠️⚠️⚠️",
+   "lines": [
+    [
+     "karen",
+     "A birthday party. Baklava. Flowers. They are... [b]happy[/b].",
+     ""
+    ],
+    [
+     "imp",
+     "*happy screeching*",
+     "chitter"
+    ],
+    [
+     "karen",
+     "[b]Stop smiling, Gary.[/b]",
+     ""
+    ],
+    [
+     "karen",
+     "The Terrible Driver is ready. Let's see her catch a plane [i]now[/i].",
+     "honk"
+    ]
+   ]
+  }
+ },
+ "epilogue": {
+  "screen": "LAST SEEN:\nANTALYA, TURKEY 🌴\nSTATUS: gone. for good.",
+  "lines": [
+   [
+    "karen",
+    "...Fine.",
+    ""
+   ],
+   [
+    "karen",
+    "[b]FINE.[/b]",
+    "karen"
+   ],
+   [
+    "imp",
+    "*hopeful screech*",
+    "chitter"
+   ],
+   [
+    "karen",
+    "...Does Antalya have offices?",
+    ""
+   ]
+  ]
+ },
+ "opening_title": [
+  [
+   "U",
+   "BİR KAAN YAPIMI · a Kaan production"
+  ],
+  [
+   "A",
+   "NEO ANTALYA"
+  ],
+  [
+   "B",
+   "somewhere between Sacramento and the Mediterranean"
+  ]
+ ],
+ "opening_tower": [
+  [
+   "B",
+   "but in the tallest tower in the city…",
+   "#ff4d4d"
+  ],
+  [
+   "U",
+   "someone is watching."
+  ]
+ ],
+ "meanwhile": [
+  [
+   "U",
+   "SONRA… · MEANWHILE"
+  ],
+  [
+   "A",
+   "HELLSPACE WEALTH",
+   "#ff4d4d"
+  ],
+  [
+   "B",
+   "top floor · corner office"
+  ]
+ ]
+}

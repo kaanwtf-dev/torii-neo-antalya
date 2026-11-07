@@ -4,26 +4,33 @@ Kaan switches between Claude (Claude Code) and ChatGPT when one runs out of cred
 **Whoever works on this project: read this first, and update it before you stop.**
 Project rules live in `CLAUDE.md` (they apply to both of us). Newest entry on top.
 
-## Current state (2026-11-05)
+## Current state (2026-11-07)
 
 - **ONE version = the Godot 4 project in `godot/`** (Godot 4.7.2, GL Compatibility; run: `godot --path godot`).
   The HTML game is FROZEN at ALPHA 7.2 (`torii-neo-antalya-ALPHA-7.2.html`, still Torii's live link at
   https://kaanwtf-dev.github.io/torii-neo-antalya/). No HTML work. Web export is the last, optional step.
-- **What Godot has:** Torii's sheet model with 7.2's poses, the real city (exported from 7.2), Bandit, the bike,
-  NPCs on the two sheet bases, Kaan on his balcony, the 16-unit Turkish course, all 20 missions + hunt gates,
-  and `SaveBridge` reading/writing the same `torii_save` dict (keeps every field it doesn't own).
-- **What it doesn't have:** see **`godot/PORT_GAPS.md`** (gap audit of 2026-11-04: 222 verified gaps + 5 critic
-  gaps, 109 features already covered, P0/P1/P2 + 12 port batches with settings). Machine-readable rows with
-  evidence: `godot/port_gaps.json`. Don't re-audit; update the doc as gaps get fixed.
-- **Decided by Kaan 2026-11-05:** macOS **desktop** build (no web export for now). Her 7.2 save comes in by her
-  dragging the file 7.2 makes (SAVE & LOAD → SAVE TO A FILE) onto the Godot game's first-launch "bring your save"
-  screen (or a LOAD FROM A FILE button), always through SaveBridge. Controls go back to exactly 7.2's (PORT_GAPS §4
-  rows 14-16 reverted). The hold-Q weapon wheel comes back in batch 4. Export templates (~1 GB) are not installed:
-  ask Kaan before downloading.
-- **Batch 1 done (2026-11-05)** — see PORT_GAPS.md §0. **Next: batch 2 "Core loop + feedback base"** (fainting/respawn, checkpoints,
-  invisible lamp walls, world bounds, hit feedback; PORT_GAPS §5 says Opus · High), waiting for Kaan's go.
-- Stale claims in older log lines: "down at 0 HP = back at Kaan's" (gone with mission1.gd; at 0 HP nothing
-  happens now) and "weapons wear per hit" (7.2 wears per swing).
+- **Kaan's goal (2026-11-06): "a game game"** — 7.2 is the concept; Godot ports all of it AND adds PS1-era depth
+  (Medievil / Tenchu / Spyro / Ape Escape): light/heavy combos, dodge roll, lock-on, block + parry, stamina, jump
+  with coyote time, ledge climb, roaming monsters (harder at night, minibosses), loot, skills, sound for everything.
+- **Godot version is now ALPHA 8.0 · GAME GAME** (`Menus.GAME_VER`, from `assets/story/godot.json`). Batch 2+
+  (10 parallel systems, wired by one integrator on 2026-11-07) is in the working tree, **NOT committed yet**.
+- **How it's wired:** `scripts/main.gd` builds the world, Torii, Bandit, the bike, loads her save, then creates
+  every system as a child Node with `static var me` (order matters, see the comments in `_ready`). Systems talk
+  over `scripts/bus.gd` (`Bus.on` / `Bus.emit_ev`, reset at the top of `_ready`). Every screen that pauses her
+  goes through `Overlay`. One E dispatcher in main (`_interact`, 7.2's interact() order); the bike and the gods
+  read E themselves first.
+- **Keys:** all of 7.2's keys keep their meaning. NEW: RIGHT mouse = heavy attack (hold to charge; with a gun =
+  volley), Left Ctrl = dodge roll, hold Z = block (just before a hit = parry), Tab = lock-on / next target,
+  ledge climb is automatic, 0 / 8 / 9 = skills 10 / 8 / 9 (extensions of 1..N). Who reads which key: main.gd
+  `_inputs()` comment.
+- **Save:** still 7.2's `torii_save` via `SaveBridge` (keeps unknown keys). New Godot-only fields: `gPatch`,
+  `gGfx`, `gGlow`, `gGrade`, `side`, `npc.allmastered`, `musicOn` (7.2 runtime var, now persisted); `musVol`,
+  `sfxVol`, `voiceOn` moved from 7.2's `torii_opts` into `torii_save`.
+- **Open gaps:** `godot/PORT_GAPS.md` §0 (batch 2+ entry) lists what's left (bike tuning/underglow, braid swing,
+  kill streaks, visible gear, outfits per level, UI scale, ambient scenery animation, auto quality governor, the
+  Mac .app export). Machine-readable rows: `godot/port_gaps.json`. Don't re-audit.
+- **Not done yet:** a real playtest in a window (only parse + headless runs so far), commit, Mac export
+  (export templates ~1 GB: ask Kaan first).
 
 ## Things Kaan wants every time
 - Before doing anything: recommend which model/effort settings to use, and ask him first.
@@ -31,6 +38,43 @@ Project rules live in `CLAUDE.md` (they apply to both of us). Newest entry on to
 - Never put Torii's real photo (`assets/screenshots/torii face.jpg`) in git — it's ignored on purpose.
 
 ## Log
+- 2026-11-07 Claude (parent session): **finished the paused full-game build** (ALPHA 8.0 · GAME GAME). The model session's 12-agent build had stopped on the usage limit with 8 systems written but none wired in; this session resumed the 2 cut-off builders (story+menus, sky+world), then an integrator wired every system into main.gd and a smoke agent fixed what broke. Proof: headless boots clean, `--brawl=SEC` combat bot (combos/rolls/blocks/lock-on/skills/faint, prints a BRAWL line) runs with no script errors, 3-mission autoplay from a fresh save, `tests/godot_save.js` ALL CHECKS PASS. New dev flags: `--brawl=SEC`, `--inv` (open the bag before a `--shot=`). Screenshots: `tools/shots/`. Known small bugs (smoke report): "Kaan is waiting" pin after the last mission, a lesson's first page is only the title, mob speech bubbles overlap their Lv plates, STAMINA label hard to read, 3 toasts stack at startup. Not playtested by hand yet.
+- 2026-11-07 Claude (integrator): **batch 2+ "game game" wired into `main.gd`.** Ten systems built in parallel,
+  then one integrator wired them, fixed the API mismatches and got a clean parse. New files in `godot/scripts/`:
+  `bus.gd` (Bus), `combat.gd` (Combat: light/heavy chains, slam, dash), `lockon.gd` (LockOn), `arsenal.gd` (Arsenal:
+  guns, ammo, durability, hold-Q wheel, drops) + `weapon_wheel.gd` + `projectile.gd`, `skills.gd` (Skills: 10 skills,
+  buffs, boss battle quiz), `hotbar.gd` + `minimap.gd` (HUD parts), `audio.gd` (Audio: 117 synthesised sounds, music
+  stems, TTS) + `fx.gd` (Fx: sparks, slashes, rings, hit-stop), `items.gd` (Items: nazars, food, gear, chests, loot),
+  `stats.gd` (Stats: 7.2 stat()), `levelup.gd` (LevelUp: level-up show, perks, tip cards), `inventory_ui.gd` (I/J bag),
+  `spawner.gd` (Spawner: roaming/night mobs, minibosses, stinky Cruze), `ally.gd` (Josh squad), `mob_models.gd`
+  (code-built monsters), `shops.gd`, `quests.gd`, `tutors.gd`, `tavla.gd` + `tavla_ui.gd`, `hotspots.gd` (Kaan's
+  door, contracts, airport), `cutscene.gd` (calls, boss intros, Hellspace, opening, credits), `menus.gd` (title,
+  pause/options, guide, patch notes, toggle bar, E prompt line), `tips.gd` (new first-time cards), `sky.gd`
+  (SkyCycle: day/night sky, PS1 dither + NIGHT GRADE pass), `world_life.gd` (cars, birds, blimp, plane),
+  `interactables.gd` (Josh, fountains, simit carts, DJ booth), `intro.gd` (VHS intro + cast cards). Data:
+  `assets/items/items.json`, `assets/side/*.json`, `assets/story/godot.json` + `story72.json`.
+  **Keys (new):** RIGHT mouse heavy, Left Ctrl roll, hold Z block/parry, Tab lock-on, ledge climb automatic, 0/8/9
+  skills. **Bus events:** enemy_died, enemy_hit, player_hit, player_attack, pickup, level_up, sfx, skill_used, lira,
+  xp, faint, respawn, mission_start, mission_done, night, plus new: boss_quiz, ammo, weapon_equip, weapon_new,
+  weapon_broke, weapon_gained, gear_gained, bag_changed, duel, dj, gfx, voice, enemy_tell, enemy_notice,
+  enemy_attack, mob_talk, quiz_answer (listened to by Audio/Fx; nobody emits it yet), quest_done (same).
+  **Save fields:** 7.2 names for everything 7.2 has (ammo, weap, wi, dur, bassD, gear, eq, gu, bag, nz, perks, pp,
+  msd, tips, mh, mm, ms, lira, int, cigs, npc, q, qa, mastered, bounty, gate, next, mid, done, shades, kills...);
+  new Godot-only: gPatch, gGfx, gGlow, gGrade, side, npc.allmastered, musicOn (+ musVol/sfxVol/voiceOn moved in
+  from torii_opts). **Integrator fixes:** Fx.hitstop <-> player.hitstop infinite recursion (Fx now owns
+  time_scale alone); Menus called SkyCycle gfx/glow functions that sky.gd dropped (Menus owns GRAFİK gGfx + NEON
+  GLOW gGlow again, SkyCycle owns NIGHT GRADE gGrade; both read gGlow as "on unless false"); NEW GAME keeps gGrade;
+  HUD clock reads SkyCycle.clock_text(); Tts.say goes through Audio.speak; mission pickups now run Items.effect
+  (7.2 collect(): word/XP/heal) and emit Bus pickup kind 'mission'; cutscene skyline set_pixel out of bounds;
+  `--autoplay` closes tip cards and picks perks so it doesn't stall; player step-up onto kerbs/ramp lips never
+  fired (it used the velocity move_and_slide had already zeroed) so she was stuck at the foot of Tower Bridge —
+  fixed; `--fxtest` / `--lessontest` / `--godkey` first clear the story's opening call scene (`_dev_clear`), and
+  `--godkey` now uses a real shrine (gods are positional in the new missions.gd). Checks run (scratch saves):
+  every script loads, normal boot to the title, `--autoplay=3` (missions 1-3 + gates, lvl 11→12), `--fxtest`
+  (river, bridge, checkpoint, hit, faint all OK), `--godkey` (coin toss stays open), `--savecheck` (no keys lost). Arsenal.roll_damage already used `rdmg` as a
+  multiplier. Dev: `--apdebug` prints the autoplay state every 100 ticks; roaming monsters are off in
+  --shot/--lessontest/--fxtest/--godkey/--savecheck/--fps/--probe runs. Note: headless runs end with a libc++
+  "recursive_mutex lock failed" abort on quit (it happened before the wiring too; harmless, after the run).
 - 2026-11-05 Claude: **batch 1 "Safety net + controls back"** in `godot/` (details: PORT_GAPS.md §0). New: `scripts/overlay.gd` (`Overlay.open/close/any/just_closed` — the one gate for "a box is up": enemies, shots, her controls and damage, mission clocks), `scripts/rich.gd` (HTML ⇄ BBCode, `plain()` for key compares), `scripts/save_ui.gd` (BRING YOUR SAVE / SAVE & LOAD, drag-drop via `files_dropped`, native file dialog, Downloads export, transfer code). `SaveBridge`: `migrate()` (7.2 applySave repairs), `save_text()`, `import_text()` (freezes writes until the scene reloads), `export_text()`, `code()`, `file_name()`. Hud: `say()/next_line()/skip_say()` replace `call_box`; `choose()` cb gets -1 when closed; `toast(t, dur=6, bad=false)` stack. Player: camera is a top-level Camera3D driven by `_camera()` (port of updateCam), `heading` = bike direction, `yaw` = camera/her facing, new actions `turn_left/turn_right` (arrows). Dev flags: `--import=FILE` (same as dropping a file), `--savecheck` (load+repair+resume, write, print), `--welcome` (show BRING YOUR SAVE in a shot), `--godkey` (E at a god shrine via the real input path). Note: `--lessontest` needs a window (frame_post_draw never fires headless). Test: `tests/godot_save.js` (~6 min, needs `godot` on PATH).
 - 2026-11-05 Claude: **gap audit done** → `godot/PORT_GAPS.md` + `godot/port_gaps.json`. Workflow: 6 area mappers (combat, progression/save, story, Turkish, UI, world/sound), an adversarial verifier per area, a completeness critic, a writer (14 agents, all at High). 222 gaps kept, 1 refuted, 5 critic-only, 10 blind spots. Hand spot-check confirmed CRT-01, CMB-01, PLY-01, UI-01, WLD-V01. Biggest risks: a desktop build cannot see her browser save; kill level-ups are not saved until the next mission/lesson write; pre-7.0 saves would get `lvlv:2` without their migration. Index files for re-auditing live only in that session's scratchpad (rebuild from the 7.2 file if needed).
 - 2026-10-27 Claude: **all 20 missions ported** (generic engine). `tools/missions/convert_missions.py` turns 7.2's

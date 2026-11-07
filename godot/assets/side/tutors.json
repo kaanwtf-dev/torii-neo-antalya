@@ -1,0 +1,773 @@
+{
+ "LESSONS": {
+  "iyor": {
+   "title": "-iyor · Happening Now",
+   "lines": [
+    "\"-iyor\" works like English \"<b>-ing</b>\". <i>Dans ediyorum</i> = I am dancing 💃",
+    "Verb stem + iyor + person: gel → <i>gel<b>iyorum</b></i> (I'm coming) · git → <i>gid<b>iyor</b></i> (she's going — t softens to d!)",
+    "Negative: slip in -m- : <i>iç<b>m</b>iyorum</i> = I am NOT drinking 🚭"
+   ],
+   "qs": [
+    7,
+    8,
+    9
+   ]
+  },
+  "mi": {
+   "title": "mi? · The Floating Question",
+   "lines": [
+    "Turkish makes questions with a tiny floating word: <b>mi / mı / mu / mü</b> ❓",
+    "It vowel-harmonizes with the word before it: <i>Güzel <b>mi</b>?</i> (Is it beautiful?) · <i>Türk <b>mü</b>sün?</i>",
+    "<i>Kokteyl var <b>mı</b>?</i> = Is there a cocktail? (asking for a friend 🍹)"
+   ],
+   "qs": [
+    4,
+    5,
+    6
+   ]
+  },
+  "poss": {
+   "title": "Possessives · -im / -in",
+   "lines": [
+    "<b>benim ...-im</b> = my · <b>senin ...-in</b> = your",
+    "<i>benim köpeğ<b>im</b></i> = my dog 🐶 (k softens to ğ!)",
+    "<i>senin bisiklet<b>in</b></i> = your bike 🚲 · Add -le for \"with\": <i>köpeğim<b>le</b></i> = with my dog"
+   ],
+   "qs": [
+    14,
+    15,
+    24
+   ]
+  },
+  "ecek": {
+   "title": "-ecek / -acak · The Future",
+   "lines": [
+    "Stem + <b>-ecek</b> (after e i ö ü) or <b>-acak</b> (after a ı o u), then the person ending.",
+    "<i>gel<b>eceğim</b></i> = I will come 🚶‍♀️ · <i>yap<b>acağım</b></i> = I will do · <i>yağmur yağ<b>acak</b></i> = it will rain 🌧",
+    "The k softens to ğ before a vowel — that is why it is <i>geleceğim</i>, not \"gelecekim\".",
+    "Negative slips -mi/-mı in front: <i>gel<b>meyeceğim</b></i> = I will not come 🙅‍♀️"
+   ],
+   "qs": [
+    0,
+    3,
+    7
+   ]
+  },
+  "di": {
+   "title": "-di · The Past You Saw",
+   "lines": [
+    "For things you witnessed yourself. Stem + <b>-di / -dı / -du / -dü</b> (or -ti/-tı/-tu/-tü after a hard consonant).",
+    "<i>git<b>tim</b></i> = I went 🚶‍♀️ · <i>gör<b>düm</b></i> = I saw 👀 · <i>oku<b>du</b></i> = she read 📖",
+    "Compare with -miş, which is for things you only heard about. <i>gelmiş</i> = apparently he came 🤷‍♀️",
+    "Hüseyin's thirty years of stories are all in -di, because he was there for every one."
+   ],
+   "qs": [
+    1,
+    4,
+    8
+   ]
+  },
+  "meli": {
+   "title": "-meli / -malı · Must and Should",
+   "lines": [
+    "Stem + <b>-meli</b> (e i ö ü) or <b>-malı</b> (a ı o u) = ought to, should, must.",
+    "<i>git<b>meliyim</b></i> = I must go · <i>çay iç<b>melisin</b></i> = you should drink tea 🍵",
+    "<i>Birisi bir şey yap<b>malı</b></i> = somebody should do something — the teyze's favourite sentence.",
+    "For a softer \"have to\" Turkish also uses <i>lazım</i>: <i>gitmem lazım</i> = I need to go."
+   ],
+   "qs": [
+    2,
+    5,
+    9
+   ]
+  },
+  "se": {
+   "title": "-se / -sa · If",
+   "lines": [
+    "Stem + <b>-se / -sa</b> sets up a condition. <i>Yağmur yağ<b>arsa</b></i> = if it rains 🌧",
+    "<i>Vaktim ol<b>sa</b> yürürdüm</i> = if I had time, I would walk 🐕",
+    "Paired with <i>-ardı/-erdi</i> it becomes the \"would have\" of things that never happened.",
+    "<b>Keşke</b> + -se is the great Turkish sigh: <i>keşke gelsen</i> = if only you would come 💭"
+   ],
+   "qs": [
+    6,
+    10,
+    11
+   ]
+  },
+  "plural": {
+   "title": "Plurals · -ler / -lar",
+   "lines": [
+    "e-type harmony: <b>e i ö ü → -ler</b> · <b>a ı o u → -lar</b>",
+    "<i>ev<b>ler</b></i> = houses 🏠 · <i>araba<b>lar</b></i> = cars 🚗",
+    "BUT after numbers, no plural! <i>iki köpek</i> = two dogs (never \"iki köpekler\") 🔢"
+   ],
+   "qs": [
+    0,
+    1,
+    3
+   ]
+  },
+  "vowel": {
+   "title": "Vowel Harmony · The Deep Magic",
+   "lines": [
+    "Every suffix listens to the LAST vowel of the word. This is the engine of all Turkish 🎛️",
+    "i-type suffixes have 4 forms (ı/i/u/ü): <i>plaj<b>da</b></i>, <i>ev<b>de</b></i>, <i>Antalya'<b>dan</b></i>",
+    "-de/-da = at · -e/-a = to · -den/-dan = from. Rawr. 🦖"
+   ],
+   "qs": [
+    10,
+    11,
+    12,
+    13
+   ]
+  },
+  "loc": {
+   "title": "At the Café · -de/-da + Ordering",
+   "lines": [
+    "<b>-de / -da</b> = at, in: <i>kafe<b>de</b></i> = at the café ☕ · <i>plaj<b>da</b></i> = at the beach",
+    "Ordering: <i>Bir çay lütfen</i> = one tea please · <i>Hesap lütfen</i> = the bill please 🧾",
+    "When food arrives, they say: <i>Afiyet olsun!</i> = enjoy your meal 😋"
+   ],
+   "qs": [
+    10,
+    11,
+    23
+   ]
+  }
+ },
+ "NPCS": [
+  {
+   "id": "diskoking",
+   "x": 86,
+   "z": -26,
+   "name": "DISKOTEK KING 👑",
+   "lesson": "iyor",
+   "body": "male",
+   "task": {
+    "kind": "kill",
+    "mob": null,
+    "n": 8,
+    "desc": "Defeat 8 monsters — keep the dance floor safe"
+   },
+   "reward": {
+    "lira": 100,
+    "msg": "👑 <b>+100₺</b> — \"The floor is safe. Sen bir kraliçesin.\" <i>(You are a queen.)</i>"
+   },
+   "greet": [
+    "Merhaba dansçı kız! 💃 <i>(Hello dancer girl!)</i> I am the Diskotek King.",
+    "My club speaks only Turkish after midnight. Let me teach you the <b>-iyor</b> tense — the tense of RIGHT NOW, of the dance floor!"
+   ],
+   "chat": [
+    "Dans ediyorum! 🕺 <i>(I am dancing!)</i>",
+    "Gece daha yeni başlıyor! <i>(The night is just beginning!)</i>"
+   ]
+  },
+  {
+   "id": "djcat",
+   "x": 101,
+   "z": -28,
+   "name": "DJ COOL CAT 🐱",
+   "lesson": "mi",
+   "body": "female",
+   "task": {
+    "kind": "collect",
+    "item": "cocktail",
+    "n": 3,
+    "desc": "Bring 3 cocktails for the booth (don't drink them all)",
+    "spots": [
+     [
+      96,
+      -40
+     ],
+     [
+      118,
+      -20
+     ],
+     [
+      126,
+      10
+     ],
+     [
+      104,
+      30
+     ],
+     [
+      140,
+      -60
+     ]
+    ]
+   },
+   "reward": {
+    "lira": 80,
+    "mana_full": true,
+    "msg": "🐱 <b>+80₺, mana FULL</b> — \"Miyav. Teşekkürler.\" 😎"
+   },
+   "greet": [
+    "Miyav. 🐱 I am DJ Cool Cat. I ask the important questions...",
+    "And in Turkish, questions FLOAT. Let me teach you the magic little word <b>mi</b>."
+   ],
+   "chat": [
+    "Müzik mi? Aşk mı? İkisi de. 🎧 <i>(Music or love? Both.)</i>"
+   ]
+  },
+  {
+   "id": "banditfriend",
+   "x": 24,
+   "z": -66,
+   "name": "BANDIT'S FRIEND 🦴",
+   "lesson": "poss",
+   "body": "golddog",
+   "task": {
+    "kind": "collect",
+    "item": "bone",
+    "n": 1,
+    "desc": "His bone washed up on the beach — find it! 🏖️",
+    "spots": [
+     [
+      128,
+      42
+     ]
+    ]
+   },
+   "reward": {
+    "bandit_cd": 18,
+    "msg": "🦴 <b>Bandit Strike cooldown 25s → 18s!</b> The dogs are allies now."
+   },
+   "greet": [
+    "Hav hav! 🐶 <i>(Woof woof — but you knew that.)</i>",
+    "Bandit's best friend here. Dogs understand possession deeply: MY bone. Let me teach you <b>-im/-in</b>... then find my bone. Lütfen."
+   ],
+   "chat": [
+    "Hav! Kemiğim nerede? 🦴 <i>(Where is my bone?)</i>"
+   ]
+  },
+  {
+   "id": "cousins",
+   "x": -16,
+   "z": -4,
+   "name": "LITTLE BLONDE COUSINS 👧👦",
+   "lesson": "plural",
+   "body": "people",
+   "task": {
+    "kind": "collect",
+    "item": "shell",
+    "n": 5,
+    "desc": "They want 5 seashells for their collection 🐚",
+    "spots": [
+     [
+      112,
+      -60
+     ],
+     [
+      120,
+      -20
+     ],
+     [
+      130,
+      15
+     ],
+     [
+      116,
+      45
+     ],
+     [
+      138,
+      70
+     ],
+     [
+      126,
+      -95
+     ],
+     [
+      144,
+      30
+     ]
+    ]
+   },
+   "reward": {
+    "lira": 60,
+    "xp": 40,
+    "msg": "👧👦 <b>+60₺ +40 XP</b> — \"TEŞEKKÜRLEEER!\" they scream in harmony"
+   },
+   "greet": [
+    "Torii abla! Torii abla! 👋 <i>(Big sis Torii!)</i>",
+    "We know Turkish numbers AND plurals! Wanna learn? It's -ler or -lar, the vowels DECIDE, it's SO cool—"
+   ],
+   "chat": [
+    "Bir, iki, üç, dört, beş! 🖐️ <i>(1, 2, 3, 4, 5!)</i>"
+   ]
+  },
+  {
+   "id": "dino",
+   "x": -52,
+   "z": 52,
+   "name": "DİNOZOR EFENDİ 🦖",
+   "lesson": "vowel",
+   "body": "dino",
+   "task": {
+    "kind": "kill",
+    "mob": null,
+    "n": 10,
+    "desc": "Defeat 10 monsters — the Capitol lawn must stay peaceful"
+   },
+   "reward": {
+    "int": 1,
+    "msg": "🦖 <b>+1 INT</b> — \"65 million years of vowel harmony wisdom. Rawr.\""
+   },
+   "greet": [
+    "*adjusts fez* Merhaba. Evet, I am a dinosaur in Turkish clothes. 🦖🧿",
+    "I have watched this language evolve for 65 million years. Sit, child. <b>Vowel harmony</b> is the deep magic."
+   ],
+   "chat": [
+    "Rawr demek \"merhaba\" demek. Bazı dillerde. <i>(Rawr means hello. In some languages.)</i>"
+   ]
+  },
+  {
+   "id": "fivesips",
+   "x": 20,
+   "z": 16,
+   "name": "FIVE SIPS OWNER ☕",
+   "lesson": "loc",
+   "body": "male",
+   "task": {
+    "kind": "collect",
+    "item": "simit",
+    "n": 4,
+    "desc": "The café is out of simit — bring 4 from Trader Joe's district",
+    "spots": [
+     [
+      -104,
+      28
+     ],
+     [
+      -96,
+      34
+     ],
+     [
+      -110,
+      40
+     ],
+     [
+      -92,
+      26
+     ],
+     [
+      -100,
+      44
+     ]
+    ]
+   },
+   "reward": {
+    "lira": 50,
+    "msg": "☕ <b>+50₺ & SHOP OPEN!</b> Talk to him anytime to buy supplies."
+   },
+   "greet": [
+    "Hoş geldin kızım. ☕ <i>(Welcome, my girl.)</i> Five sips — that's all a proper Turkish coffee needs.",
+    "Sit. Before you buy anything, learn to ORDER like a local. The suffix <b>-de/-da</b>..."
+   ],
+   "chat": []
+  },
+  {
+   "id": "bahci",
+   "x": -96,
+   "z": 214,
+   "name": "BAHÇIVAN NURİ 🌱",
+   "lesson": "ecek",
+   "body": "male",
+   "task": {
+    "kind": "kill",
+    "mob": "okuz",
+    "n": 3,
+    "desc": "Three öküz have been trampling the gardens — see them off",
+    "spawn": true
+   },
+   "reward": {
+    "lira": 260,
+    "xp": 140,
+    "msg": "🌱 <b>+260₺</b> — \"Bahçem kurtuldu! My garden is saved. Sen bir meleksin.\""
+   },
+   "greet": [
+    "Kolay gelsin! 🌱 <i>(May it come easy — what you say to someone working.)</i>",
+    "Öküzler bahçemi çiğniyor. The oxen are trampling my garden. If you deal with them, I will teach you how Turkish talks about the <b>future</b> — because I am planning next spring already."
+   ],
+   "chat": [
+    "Domates ekiyorum. 🍅 <i>(I am planting tomatoes.)</i>",
+    "Yağmur yağacak. <i>(It is going to rain.)</i>"
+   ]
+  },
+  {
+   "id": "cocuk",
+   "x": 6,
+   "z": 300,
+   "name": "DEFNE (7) 🪁",
+   "lesson": "mi",
+   "body": "female",
+   "task": {
+    "kind": "collect",
+    "item": "cocktail",
+    "n": 2,
+    "desc": "Defne lost her kite — bring her 2 bright things to trade",
+    "spots": [
+     [
+      20,
+      290
+     ],
+     [
+      -14,
+      312
+     ],
+     [
+      30,
+      318
+     ],
+     [
+      -4,
+      280
+     ]
+    ]
+   },
+   "reward": {
+    "lira": 90,
+    "xp": 120,
+    "msg": "🪁 <b>Defne is delighted.</b> \"Teşekkürler abla!\" <i>(Thanks big sister!)</i>"
+   },
+   "greet": [
+    "Abla! Abla! 🪁 <i>(Big sister! — what a kid calls any older girl.)</i>",
+    "Uçurtmam ağaca takıldı. My kite is stuck in the tree. Do you have anything shiny to trade? I know a question trick I can teach you — the little word <b>mi</b>!"
+   ],
+   "chat": [
+    "Oynuyor musun? <i>(Are you playing?)</i>",
+    "Annem çağırıyor! <i>(Mum is calling!)</i>"
+   ]
+  },
+  {
+   "id": "bakkal",
+   "x": -52,
+   "z": 203,
+   "name": "BAKKAL HÜSEYİN 🥖",
+   "lesson": "di",
+   "body": "male",
+   "task": {
+    "kind": "kill",
+    "mob": null,
+    "n": 10,
+    "desc": "Clear 10 monsters off the Yeşiltepe streets",
+    "spawn": true,
+    "pool": [
+     "imp",
+     "zombie",
+     "thot"
+    ]
+   },
+   "reward": {
+    "lira": 300,
+    "xp": 180,
+    "ammo": 12,
+    "msg": "🥖 <b>+300₺ and beads.</b> \"Afiyet olsun. Mahalle sana borçlu.\" <i>(The neighbourhood owes you.)</i>"
+   },
+   "greet": [
+    "Hoş geldin komşu! 🥖 <i>(Welcome, neighbour!)</i> I have run this shop for thirty years.",
+    "Thirty years means a lot of stories, and stories need the <b>past tense</b>. Clear my street and I will teach you -di."
+   ],
+   "chat": [
+    "Ekmek taze! <i>(The bread is fresh!)</i>",
+    "Veresiye yok! <i>(No credit!)</i> 😄"
+   ]
+  },
+  {
+   "id": "komsu",
+   "x": 86,
+   "z": 296,
+   "name": "MERAKLI TEYZE 👀",
+   "lesson": "meli",
+   "body": "female",
+   "task": {
+    "kind": "kill",
+    "mob": null,
+    "n": 6,
+    "desc": "Teyze insists it is not safe — prove it by clearing 6 monsters",
+    "spawn": true,
+    "pool": [
+     "imp",
+     "zombie"
+    ]
+   },
+   "reward": {
+    "lira": 200,
+    "xp": 150,
+    "msg": "👀 <b>+200₺</b> — \"Ben demiştim! I said so! But you were brave, kızım.\" 🍪"
+   },
+   "greet": [
+    "Kızım, sen kimin kızısın? 👀 <i>(Girl, whose daughter are you? — the classic teyze opener.)</i>",
+    "This neighbourhood has gone downhill. Somebody <b>should</b> do something about it. Funnily enough that is exactly the grammar I can teach you: <b>-meli</b>, must and should."
+   ],
+   "chat": [
+    "Perdeden bakıyorum. <i>(I am watching from behind the curtain.)</i>",
+    "Çay içmelisin! <i>(You should drink tea!)</i>"
+   ]
+  },
+  {
+   "id": "kopekci",
+   "x": -128,
+   "z": 280,
+   "name": "KÖPEKÇİ SELİM 🐕",
+   "lesson": "se",
+   "body": "male",
+   "task": {
+    "kind": "kill",
+    "mob": null,
+    "n": 12,
+    "desc": "Walk the hill with him — clear 12 monsters along the way",
+    "spawn": true,
+    "pool": [
+     "imp",
+     "zombie",
+     "ghost"
+    ]
+   },
+   "reward": {
+    "lira": 280,
+    "xp": 200,
+    "msg": "🐕 <b>+280₺</b> — his dog and Bandit have become inseparable. <i>arkadaş</i> = friend."
+   },
+   "greet": [
+    "Ooo, senin köpeğin de var! 🐕 <i>(Oh, you have a dog too!)</i> Bandit, değil mi?",
+    "I walk these hills every evening. If I had more time I <b>would</b> walk them all day — and that \"would\" is the grammar I can give you: <b>-se</b>."
+   ],
+   "chat": [
+    "Köpekler koşuyor. <i>(The dogs are running.)</i>",
+    "Yürüyüş yapıyoruz. <i>(We are going for a walk.)</i>"
+   ]
+  }
+ ],
+ "SOUL": [
+  {
+   "u": 1,
+   "id": "ayse",
+   "n": "AYŞE TEYZE",
+   "d": "the çay auntie — refills your glass before it is empty",
+   "hi": [
+    "Gel gel, otur kızım! Çayın hazır. ☕",
+    "Merhaba demeyi bilmeyen adam olmaz. Unit 1 benden."
+   ],
+   "x": -31.0,
+   "z": -55.5,
+   "body": "female"
+  },
+  {
+   "u": 2,
+   "id": "joanna",
+   "n": "JOANNA",
+   "d": "Torii's best friend — knows every one of her secrets",
+   "hi": [
+    "TORİİİİ! 😭 Seni özledim!",
+    "Okay okay okay — introductions, numbers, \"I am / you are\". Unit 2. Sit."
+   ],
+   "x": -26.6,
+   "z": -55.5,
+   "body": "female"
+  },
+  {
+   "u": 3,
+   "id": "sam",
+   "n": "BARISTA SAM",
+   "d": "perpetually stressed, speaks in latte foam metaphors",
+   "hi": [
+    "Order up! Uh — I mean — <i>buyurun!</i> ☕",
+    "Ordering, commands, directions. Unit 3. I do this 400 times a day."
+   ],
+   "x": -22.2,
+   "z": -55.5,
+   "body": "male"
+  },
+  {
+   "u": 4,
+   "id": "banditman",
+   "n": "HUMANOID BANDIT",
+   "d": "still a dog. just upright today. nobody at the café discusses it.",
+   "at": [
+    0.95,
+    0,
+    -1.2
+   ],
+   "hi": [
+    "Hav— ahem. <i>Merhaba.</i> 🐶",
+    "*sits back down on his haunches, then remembers, and stands again*",
+    "MY bone. MY ball. MY human. Possession, Unit 4. I am an expert in this."
+   ],
+   "x": -17.8,
+   "z": -55.5,
+   "body": "banditman"
+  },
+  {
+   "u": 5,
+   "id": "kaanguitar",
+   "n": "KAAN 🎸",
+   "d": "her fiancé, playing the same four chords forever",
+   "hi": [
+    "Bebeğim! Otur, sana bir şey çalayım. ❤",
+    "The past tense, and telling the time. Unit 5. Where we started."
+   ],
+   "x": -13.4,
+   "z": -55.5,
+   "body": "kaan"
+  },
+  {
+   "u": 6,
+   "id": "gavin",
+   "n": "GAVIN",
+   "d": "Torii's brother — makes beats, ignores deadlines",
+   "hi": [
+    "Yo sis. Listen to this one. 🎧",
+    "The future tense and making suggestions. Unit 6. \"Let's\" is my whole personality."
+   ],
+   "x": -9.0,
+   "z": -55.5,
+   "body": "male"
+  },
+  {
+   "u": 7,
+   "id": "komsu",
+   "n": "THE OLD NEIGHBOUR",
+   "d": "long hair, long beard, one bicycle, infinite stories",
+   "hi": [
+    "HEYYY! Bisikletimi gördün mü? 🚲",
+    "Requests, wanting things, and TELLING STORIES. Unit 7. Oh I have stories."
+   ],
+   "x": -31.0,
+   "z": -50.9,
+   "body": "male"
+  },
+  {
+   "u": 8,
+   "id": "fatcat",
+   "n": "THE FAT CAT",
+   "d": "enormous. fluffy. from the old neighbourhood. a legend.",
+   "hi": [
+    "*mrrrrrp* 🐈",
+    "Comparisons. Unit 8. I am bigger than every other cat. This is a fact, not an opinion."
+   ],
+   "x": -26.6,
+   "z": -50.9,
+   "body": "fatcat"
+  },
+  {
+   "u": 9,
+   "id": "mert",
+   "n": "MERT",
+   "d": "chain-smoking, moustachioed, furious, patriotic about a country he has never visited",
+   "hi": [
+    "*lights a Camel Soft off the previous Camel Soft*",
+    "\"Sigara içen insan, sağlıklı insandır.\" <i>(A person who smokes is a healthy person.)</i> This is science.",
+    "Obligation, likes, dislikes, and GIVING ADVICE. Unit 9. I have advice about everything."
+   ],
+   "x": -22.2,
+   "z": -50.9,
+   "body": "male"
+  },
+  {
+   "u": 10,
+   "id": "trick",
+   "n": "THE GODS OF TRICKERY",
+   "d": "they speak in the plural. they are one guy.",
+   "hi": [
+    "<b>\"Trick me, trick me, gods of Trickery.\"</b> Say it back. Go on.",
+    "Conditionals. IF. MAYBE. PERHAPS. Unit 10. Nothing is certain, least of all us."
+   ],
+   "x": -17.8,
+   "z": -50.9,
+   "body": "male"
+  },
+  {
+   "u": 11,
+   "id": "cleo",
+   "n": "CLEO",
+   "d": "Josh's cat. she has seen things in that garage.",
+   "hi": [
+    "*stares at a spot slightly above your head*",
+    "Complaints, apologies, and REPORTED SPEECH. Unit 11. I know what everyone said about you."
+   ],
+   "x": -13.4,
+   "z": -50.9,
+   "body": "cleo"
+  },
+  {
+   "u": 12,
+   "id": "sahin",
+   "n": "ŞAHİN THE DRIVER",
+   "d": "knows every street. has opinions about all of them.",
+   "hi": [
+    "Nereye abla? 🚕",
+    "\"The street THAT...\" \"The guy WHO...\" Relative clauses. Unit 12. My whole job is describing places."
+   ],
+   "x": -9.0,
+   "z": -50.9,
+   "body": "male"
+  },
+  {
+   "u": 13,
+   "id": "cousins2",
+   "n": "THE LITTLE COUSINS",
+   "d": "blonde, small, extremely loud, know everything about everyone",
+   "hi": [
+    "TORİİ ABLA! TORİİ ABLA!",
+    "Duyduk ki— <i>(We heard that—)</i> the -miş tense! Unit 13! Everything we know is a rumour!"
+   ],
+   "x": -31.0,
+   "z": -46.3,
+   "body": "people"
+  },
+  {
+   "u": 14,
+   "id": "noel",
+   "n": "NOEL BABA",
+   "d": "yes, that one. he summers in Antalya. he is from here, actually.",
+   "hi": [
+    "Ho ho— <i>merhaba</i> kızım! 🎅",
+    "\"Back in my day...\" The past habitual. Unit 14. I have a LOT of days to draw from."
+   ],
+   "x": -26.6,
+   "z": -46.3,
+   "body": "male"
+  },
+  {
+   "u": 15,
+   "id": "ece",
+   "n": "DR. ECE",
+   "d": "linguist. will explain a suffix until the sun goes down.",
+   "hi": [
+    "Ah! A learner! Sit, sit. 📚",
+    "The passive voice and word-building suffixes. Unit 15. My favourite unit. My FAVOURITE."
+   ],
+   "x": -22.2,
+   "z": -46.3,
+   "body": "female"
+  },
+  {
+   "u": 16,
+   "id": "kusum",
+   "n": "KUŞUM 🐦",
+   "d": "a green budgie on a brass perch. has listened to this family for sixteen years.",
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "hi": [
+    "*a small green budgie hops sideways along a brass bar and tilts his head at you*",
+    "Bana <b>\"Kuşum\"</b> derler. <i>(They call me Kuşum — \"my little bird\".)</i> Herkes böyle der. 🐦",
+    "On altı yıl bu evde oturdum. Herkesi dinledim. <i>(Sixteen years in this house. I listened to everyone.)</i>",
+    "Ve en çok duyduğum kelime <b>\"keşke\"</b> oldu. <i>(And the word I heard most was \"keşke\" — if only.)</i>",
+    "Pişmanlık ve olmayan geçmiş. Unit 16. Son ünite, canım. <i>(Regret and the past that never happened. The final unit.)</i>"
+   ],
+   "x": -17.8,
+   "z": -46.3,
+   "body": "kusum"
+  }
+ ],
+ "SOUL_POS": [
+  -20,
+  -60
+ ]
+}

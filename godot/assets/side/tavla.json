@@ -1,0 +1,735 @@
+{
+ "TRASH": [
+  [
+   "Nasıl çaktım ama!",
+   "How I nailed you!"
+  ],
+  [
+   "Böyle koyarlar işte götüne.",
+   "That's how they stick it to you."
+  ],
+  [
+   "Karı gibi oynama, düzgün oyna!",
+   "Stop playing soft, play properly!"
+  ],
+  [
+   "Zarım altın gibi.",
+   "My dice are like gold."
+  ],
+  [
+   "Hadi oyna, çay soğuyor.",
+   "Play already, the tea is getting cold."
+  ],
+  [
+   "Satranç mı bu?",
+   "Is this chess?"
+  ],
+  [
+   "Ağlama sonra.",
+   "Don't come crying afterwards."
+  ],
+  [
+   "Kapıyı kapattım, buyur geç.",
+   "I closed the point — go ahead, try to pass."
+  ],
+  [
+   "Bara buyur!",
+   "Off to the bar with you!"
+  ],
+  [
+   "Kırdım seni!",
+   "I broke you!"
+  ],
+  [
+   "Yedim seni.",
+   "I ate you."
+  ],
+  [
+   "Mars kokusu geliyor.",
+   "I smell a gammon coming."
+  ],
+  [
+   "Zar tutmuyor sende.",
+   "The dice just don't hold for you."
+  ],
+  [
+   "Bu oyunu bebekler bile bilir.",
+   "Even babies know this game."
+  ],
+  [
+   "Sen bu masaya erken geldin.",
+   "You came to this table too soon."
+  ],
+  [
+   "Elin titriyor mu?",
+   "Is your hand shaking?"
+  ],
+  [
+   "Amatör işi.",
+   "Amateur stuff."
+  ],
+  [
+   "Vay anasını!",
+   "Well I'll be damned!"
+  ],
+  [
+   "Oynasana be!",
+   "Just PLAY, would you!"
+  ],
+  [
+   "Çok düşünme, kafan yanar.",
+   "Don't think so hard, you'll fry your brain."
+  ],
+  [
+   "Bende şeş şeş var, sende ne var?",
+   "I've got double six — what have you got?"
+  ],
+  [
+   "Zar benim kanka.",
+   "The dice belong to me, buddy."
+  ],
+  [
+   "Hoca geldi, ders başlasın.",
+   "The teacher has arrived — class begins."
+  ],
+  [
+   "Bu masada ağlayan çok oldu.",
+   "Many have wept at this table."
+  ],
+  [
+   "Taşlarını topla, bitti bu iş.",
+   "Pack up your checkers, this is over."
+  ],
+  [
+   "Şansın varmış.",
+   "You got lucky."
+  ],
+  [
+   "Hile mi yaptın sen?",
+   "Did you just cheat?"
+  ],
+  [
+   "Yok artık!",
+   "No WAY!"
+  ],
+  [
+   "Allah Allah!",
+   "Well I never!"
+  ],
+  [
+   "Zarı öp de at.",
+   "Kiss the dice before you throw them."
+  ],
+  [
+   "Kolay gelsin, lazım olacak.",
+   "Good luck — you're going to need it."
+  ],
+  [
+   "Baban da böyle oynardı.",
+   "Your father played like this too."
+  ],
+  [
+   "Çayını iç, sonra düşünürsün.",
+   "Drink your tea, think later."
+  ],
+  [
+   "Bu ne ya!",
+   "What IS this!"
+  ],
+  [
+   "Kaç kere kırdım, saydın mı?",
+   "How many times have I hit you — did you count?"
+  ],
+  [
+   "Evime giremezsin.",
+   "You cannot enter my home board."
+  ],
+  [
+   "Altı kapı kurdum, buyur.",
+   "I built six points. Go on then."
+  ],
+  [
+   "Tavlayı sevmiyorsun galiba.",
+   "I don't think you actually like tavla."
+  ],
+  [
+   "Zarlar seni sevmiyor.",
+   "The dice do not love you."
+  ],
+  [
+   "Bir daha at, belki düzelir.",
+   "Roll again, maybe it fixes itself."
+  ],
+  [
+   "Ben yaşlıyım ama zarım genç.",
+   "I am old but my dice are young."
+  ],
+  [
+   "Otur oturduğun yerde.",
+   "Sit down and stay in your lane."
+  ],
+  [
+   "Yenilmek de bir sanattır.",
+   "Losing is an art form too."
+  ],
+  [
+   "Beni yenersen tavlayı bırakırım.",
+   "If you beat me I'll quit tavla forever."
+  ],
+  [
+   "Bu hamle beş dakika sürdü.",
+   "That move took you five minutes."
+  ],
+  [
+   "Sabrım taştı.",
+   "My patience has run out."
+  ],
+  [
+   "Ustan kim senin?",
+   "Who taught you, exactly?"
+  ],
+  [
+   "Bu iş bende.",
+   "I've got this."
+  ],
+  [
+   "Kader diyorsun ama beceriksizlik bu.",
+   "You call it fate — this is incompetence."
+  ],
+  [
+   "Rövanş ister misin? He he.",
+   "Want a rematch? Heh heh."
+  ]
+ ],
+ "KAANTALK": [
+  [
+   "Bebeğim... emin misin?",
+   "Baby... are you sure about that?"
+  ],
+  [
+   "Sana tavla öğretmemem gerekirdi.",
+   "I never should have taught you tavla."
+  ],
+  [
+   "Aşkım, o taşı oraya koyma. Koydun. Tamam.",
+   "My love, don't put that there. You did. Okay."
+  ],
+  [
+   "Seni seviyorum ama bu berbat bir hamleydi.",
+   "I love you but that was a terrible move."
+  ],
+  [
+   "Zar bana çalışıyor, bana ne?",
+   "The dice work for me, what can I do?"
+  ],
+  [
+   "Kaybedince sarılırım, söz.",
+   "I'll hug you when you lose, promise."
+  ],
+  [
+   "Anneme söyleyeceğim bu hamleyi.",
+   "I am telling my mother about that move."
+  ],
+  [
+   "Ay, üzüldüm. Yok, üzülmedim.",
+   "Aw, I feel bad. No I don't."
+  ],
+  [
+   "Kırdım. Öpücük ister misin?",
+   "I hit you. Want a kiss?"
+  ],
+  [
+   "Bu masada aşk yok, tavla var.",
+   "There is no love at this table, only tavla."
+  ],
+  [
+   "Bandit bile daha iyi oynuyor.",
+   "Even Bandit plays better than this."
+  ],
+  [
+   "Kızma. Kızıyorsun. Kızma.",
+   "Don't get mad. You're getting mad. Don't."
+  ],
+  [
+   "Zarı bir daha atsam mı? 😇",
+   "Should I roll that again? 😇"
+  ],
+  [
+   "Sen Türkçe öğren, tavlayı bana bırak.",
+   "You learn Turkish, leave tavla to me."
+  ],
+  [
+   "Mars olursan akşam yemeği benden.",
+   "If I gammon you, dinner is on me."
+  ],
+  [
+   "Bak şimdi kapı kurdum. Görüyor musun aşkım?",
+   "Look, I made a point. Do you see it, my love?"
+  ],
+  [
+   "Bu ne cesaret bebeğim!",
+   "What courage, baby!"
+  ],
+  [
+   "Tamam tamam, yavaş oyna. Bekliyorum.",
+   "Okay okay, play slowly. I'm waiting."
+  ],
+  [
+   "Nişanlım beni yenemez.",
+   "My fiancée cannot beat me."
+  ],
+  [
+   "Sen kazanırsan bulaşıkları yıkarım.",
+   "If you win I'll do the dishes."
+  ],
+  [
+   "Yanlış. Ama tatlısın.",
+   "Wrong. But you're cute."
+  ],
+  [
+   "Zar attım, kader konuştu. Kader ben oldum.",
+   "I rolled, fate spoke. Fate turned out to be me."
+  ],
+  [
+   "Bunu düğünde anlatacağım.",
+   "I am telling this story at the wedding."
+  ],
+  [
+   "Hadi bakalım aşkım, göster kendini.",
+   "Come on my love, show me what you've got."
+  ]
+ ],
+ "KAANCHEAT": [
+  [
+   "Bu zar sayılmaz. Elimden kaydı.",
+   "That roll doesn't count. It slipped."
+  ],
+  [
+   "Masaya çarptı, tekrar atıyorum.",
+   "It hit the edge, I'm rolling again."
+  ],
+  [
+   "Görmedin sen onu. Yeniden.",
+   "You didn't see that. Again."
+  ],
+  [
+   "Bandit'e çarptı zar. Geçersiz.",
+   "The dice hit Bandit. Invalid."
+  ],
+  [
+   "Nişanlı ayrıcalığı bebeğim. 😎",
+   "Fiancé privileges, baby. 😎"
+  ]
+ ],
+ "TAUNT": {
+  "slow": [
+   [
+    "Hadi oynaaa!",
+    "Come onnn, play!"
+   ],
+   [
+    "Satranç mı bu?",
+    "Is this chess?"
+   ],
+   [
+    "Zar bekliyor abla.",
+    "The dice are waiting, sis."
+   ],
+   [
+    "Düşünme, oyna.",
+    "Don't think, just play."
+   ],
+   [
+    "Çay soğudu ya.",
+    "The tea has gone cold."
+   ],
+   [
+    "Sabah oldu neredeyse.",
+    "It's almost morning."
+   ],
+   [
+    "Karar ver artık!",
+    "Make up your mind already!"
+   ],
+   [
+    "Uyudun mu?",
+    "Did you fall asleep?"
+   ]
+  ],
+  "theyHit": [
+   [
+    "Nasıl çaktım ama!",
+    "How I nailed you, huh!"
+   ],
+   [
+    "Kırdım seni!",
+    "I broke you!"
+   ],
+   [
+    "Ağlama şimdi.",
+    "Don't cry now."
+   ],
+   [
+    "Bara buyur!",
+    "Off to the bar with you!"
+   ],
+   [
+    "Böyle koyarlar işte.",
+    "That's how they stick it to you."
+   ],
+   [
+    "Oldu mu şimdi?",
+    "How do you like that now?"
+   ],
+   [
+    "Yedim seni!",
+    "I ate you!"
+   ],
+   [
+    "Bu ev benim!",
+    "This house is mine!"
+   ],
+   [
+    "Nerede o taşın? 😋",
+    "Where's your checker now?"
+   ],
+   [
+    "Bara! Bara! Bara!",
+    "Bar! Bar! Bar!"
+   ],
+   [
+    "Al sana kapı!",
+    "Here's a closed door for you!"
+   ],
+   [
+    "Otur oturduğun yerde.",
+    "Sit down where you are."
+   ],
+   [
+    "Kırık taşın selam söyledi.",
+    "Your broken checker says hi."
+   ]
+  ],
+  "sheHit": [
+   [
+    "Hile var bunda!",
+    "There's cheating in this!"
+   ],
+   [
+    "Zar tutmuyor ya!",
+    "The dice just won't hold!"
+   ],
+   [
+    "Şanslısın sadece.",
+    "You're just lucky."
+   ],
+   [
+    "Hadi be!",
+    "Oh come on!"
+   ],
+   [
+    "Yok artık ya!",
+    "No way!"
+   ],
+   [
+    "Bu zarlar bozuk.",
+    "These dice are broken."
+   ],
+   [
+    "Allah Allah!",
+    "Well I never!"
+   ],
+   [
+    "Bir daha yapamazsın.",
+    "You can't do that twice."
+   ],
+   [
+    "Kızdım şimdi.",
+    "Now I'm angry."
+   ]
+  ],
+  "theirDouble": [
+   [
+    "DÜŞEŞ! Gördün mü?",
+    "DOUBLE SIX! Did you see that?"
+   ],
+   [
+    "Zar benden yana.",
+    "The dice are on my side."
+   ],
+   [
+    "Bu iş bitti sayılır.",
+    "This is basically over."
+   ],
+   [
+    "Zar dediğin böyle atılır.",
+    "THAT is how you roll dice."
+   ],
+   [
+    "Elim ateş gibi!",
+    "My hand is on fire!"
+   ],
+   [
+    "Bereket versin zarlara.",
+    "Bless these dice."
+   ]
+  ],
+  "herDouble": [
+   [
+    "Yine mi?!",
+    "Again?!"
+   ],
+   [
+    "Zarları değiştirelim.",
+    "Let's change these dice."
+   ],
+   [
+    "Vay be...",
+    "Well damn..."
+   ],
+   [
+    "Hep sana geliyor ya!",
+    "It keeps coming to you!"
+   ],
+   [
+    "Şansın bitecek.",
+    "Your luck will run out."
+   ]
+  ],
+  "theyWin": [
+   [
+    "Mars ettim seni!",
+    "I gammoned you!"
+   ],
+   [
+    "Bir daha oynayalım mı? 😏",
+    "Shall we play again?"
+   ],
+   [
+    "Kolay gelsin!",
+    "Better luck next time!"
+   ],
+   [
+    "Çayı sen ısmarlıyorsun.",
+    "You're buying the tea."
+   ],
+   [
+    "Öğrenirsin, merak etme.",
+    "You'll learn, don't worry."
+   ],
+   [
+    "Bu masa benim masam.",
+    "This table is my table."
+   ]
+  ],
+  "theyLose": [
+   [
+    "Zar yüzünden!",
+    "It was the dice!"
+   ],
+   [
+    "Rövanş istiyorum.",
+    "I want a rematch."
+   ],
+   [
+    "İyi oynadın, kabul.",
+    "You played well, I admit it."
+   ],
+   [
+    "Bugün günüm değil.",
+    "Today is not my day."
+   ],
+   [
+    "Işık gözüme geldi.",
+    "The light was in my eyes."
+   ],
+   [
+    "Bir daha, bir daha!",
+    "Again, again!"
+   ]
+  ],
+  "start": [
+   [
+    "Zarlar konuşsun.",
+    "Let the dice speak."
+   ],
+   [
+    "Bakalım tavlayı biliyor musun.",
+    "Let's see if you actually know tavla."
+   ],
+   [
+    "Buyur, ilk zar senin.",
+    "Go ahead, first roll is yours."
+   ],
+   [
+    "Karı gibi oynama, düzgün oyna.",
+    "Don't play soft — play properly. (rude, old-school)"
+   ],
+   [
+    "Çayını al, oturt kendini.",
+    "Get your tea and settle in."
+   ],
+   [
+    "Kaybedince ağlamak yok.",
+    "No crying when you lose."
+   ]
+  ],
+  "menace": [
+   [
+    "SENİ MARS EDECEĞİM.",
+    "I WILL GAMMON YOU."
+   ],
+   [
+    "BU MASADAN KAÇAMAZSIN.",
+    "YOU CANNOT LEAVE THIS TABLE."
+   ],
+   [
+    "ZARLAR BENİ SEVİYOR.",
+    "THE DICE LOVE ME."
+   ],
+   [
+    "TAVLA BENİM KANIMDA VAR.",
+    "TAVLA IS IN MY BLOOD."
+   ],
+   [
+    "DEDEM DE BÖYLE KAZANIRDI.",
+    "MY GRANDFATHER WON LIKE THIS TOO."
+   ],
+   [
+    "GÜLÜYOR MUSUN? GÜL.",
+    "ARE YOU LAUGHING? LAUGH."
+   ],
+   [
+    "BU MASADA 40 YIL GEÇTİ.",
+    "FORTY YEARS PASSED AT THIS TABLE."
+   ],
+   [
+    "ZARI BEN YARATTIM.",
+    "I INVENTED THE DICE."
+   ],
+   [
+    "SENİ BURADA BIRAKACAĞIM.",
+    "I WILL LEAVE YOU HERE."
+   ]
+  ]
+ },
+ "TVFLAVOR": [
+  "*he has not blinked in four minutes*",
+  "*somewhere, a çay glass shatters*",
+  "*leans in far too close to the board*",
+  "*cracks every knuckle individually*",
+  "*the dice are still warm*",
+  "*has not stopped smiling since 1994*",
+  "*a single bead of sweat rolls down YOUR forehead*",
+  "*the tea has gone cold. he has not noticed.*",
+  "*slowly turns the board 3 degrees for no reason*",
+  "*whispers something to the dice*",
+  "*Bandit growls from outside*",
+  "*maintains eye contact while sipping*"
+ ],
+ "ZAR": [
+  "",
+  "yek",
+  "dü",
+  "se",
+  "cihar",
+  "penç",
+  "şeş"
+ ],
+ "DBL": {
+  "1": "hep yek",
+  "2": "dubara",
+  "3": "düse",
+  "4": "dörtcihar",
+  "5": "dubeş",
+  "6": "düşeş"
+ },
+ "TVNPC": [
+  {
+   "id": "cin",
+   "name": "ÇAYLAK CİN",
+   "short": "Çaylak",
+   "title": "\"the rookie\" — but he cheats",
+   "mob": "imp",
+   "diff": 3,
+   "cap": 150,
+   "time": 80,
+   "x": -16,
+   "z": 30
+  },
+  {
+   "id": "kahveci",
+   "name": "KAHVECİ ZOMBİ",
+   "short": "Kahveci",
+   "title": "plays on his lunch break. forever.",
+   "mob": "zombie",
+   "diff": 4,
+   "cap": 300,
+   "time": 75,
+   "x": 66,
+   "z": -14
+  },
+  {
+   "id": "kibar",
+   "name": "KİBAR KIZ",
+   "short": "Kibar",
+   "title": "smiles the entire time she destroys you",
+   "mob": "thot",
+   "diff": 5,
+   "cap": 700,
+   "time": 65,
+   "x": -58,
+   "z": -58
+  },
+  {
+   "id": "nine",
+   "name": "CADI NİNE",
+   "short": "Nine",
+   "title": "seventy years at the same table",
+   "mob": "witch",
+   "diff": 7,
+   "cap": 1200,
+   "time": 60,
+   "x": -138,
+   "z": 52
+  },
+  {
+   "id": "mumya",
+   "name": "EMEKTAR MUMYA",
+   "short": "Mumya",
+   "title": "undefeated since 1340 BC",
+   "mob": "mummy",
+   "diff": 8,
+   "cap": 3000,
+   "time": 50,
+   "x": -178,
+   "z": -14
+  },
+  {
+   "id": "seytan",
+   "name": "TAVLA ŞEYTANI",
+   "short": "Şeytan",
+   "title": "the Devil of Tavla · never once misplayed",
+   "mob": "karen",
+   "diff": 10,
+   "cap": 9999,
+   "time": 40,
+   "x": -104,
+   "z": -92
+  },
+  {
+   "id": "kaan",
+   "name": "KAAN ❤",
+   "short": "Kaan",
+   "title": "your fiancé. he taught you. he cheats. 3 free re-rolls.",
+   "mob": "kaan",
+   "diff": 15,
+   "cap": 25000,
+   "time": 35,
+   "cheat": 3,
+   "deep": true,
+   "x": -32,
+   "z": -16
+  }
+ ]
+}

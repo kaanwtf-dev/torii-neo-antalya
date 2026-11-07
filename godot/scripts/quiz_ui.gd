@@ -2,7 +2,9 @@
 # the lesson one line per page (E / Enter / Space, like 7.2's dialogue box), multiple choice (click or
 # 1-4), type-the-answer (accents optional), tap-the-words-in-order (Enter checks), progress dots,
 # ✅/❌ feedback with the explanation, and QUİZİ GEÇ (K) on the quizzes 7.2 lets her skip.
-# It's an overlay: the fight stops while it's open.
+# It's an overlay: the fight stops while it's open. Every quiz of 3+ questions ends with the score toast
+# (Lessons.summary, 7.2's nextQ); answers make 7.2's sounds (fx.yes / fx.chuckle / fx.no) and a wrong one
+# flashes the screen red (vig('hurt')).
 class_name QuizUI
 extends CanvasLayer
 
@@ -122,6 +124,7 @@ func _next() -> void:
 	_reset()
 	if queue.is_empty():
 		_show(false)
+		if total > 2 and Lessons.me: Lessons.me.summary(score)
 		var cb := done_cb; done_cb = Callable()
 		if cb.is_valid(): cb.call(score)
 		return
@@ -186,8 +189,13 @@ func _submit_order() -> void:
 
 func _finish(ok: bool, correct: String) -> void:
 	lock = true; score.append(ok); _dots()
-	if ok: feed.text = "[color=#3dff9e]DOĞRU! ✅ Correct! +15 XP[/color]"
+	if ok:
+		feed.text = "[color=#3dff9e]DOĞRU! ✅ Correct! +15 XP +10 mana[/color]"
+		Bus.emit_ev("sfx", {"name": "yes"})
+		if randf() < .35: Bus.emit_ev("sfx", {"name": "chuckle"})
 	else:
+		Bus.emit_ev("sfx", {"name": "no"})
+		if Fx.me: Fx.me.flash("hurt")
 		feed.text = "[color=#ff4d6d]Wrong ❌[/color] Answer: [b]%s[/b]" % correct
 		if cur.get("expl", "") != "": feed.text += "\n[color=#8ff2ff]%s[/color]" % cur["expl"]
 	answered.emit(ok, cur)
