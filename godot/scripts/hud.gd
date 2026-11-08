@@ -232,7 +232,7 @@ func objective_point() -> Variant:
 	return null
 
 func objective(t: String) -> void: obj.text = "[right]%s[/right]" % t
-func banner(t: String) -> void: ban.text = "[center]%s[/center]" % t; _ban_t = 3.0
+func banner(t: String, dur := 3.0) -> void: ban.text = "[center]%s[/center]" % t; _ban_t = dur
 
 # 7.2's toast(html, ms, bad): up to three stacked, each on its own timer; bold words in cyan like .toast b;
 # a red border for warnings
@@ -528,6 +528,7 @@ func _draw_hud() -> void:
 	if not busy:
 		_draw_buffs()
 		_draw_weapon()
+		_draw_streak()
 
 func _draw_bars() -> void:
 	# the level badge
@@ -705,6 +706,22 @@ func _draw_buffs() -> void:
 		_cv.draw_rect(Rect2(r.position + Vector2(3, r.size.y - 2), Vector2((w - 3) * clampf(left / mx, 0, 1), 2)), C_CYAN)
 		_text(_cv, r.position + Vector2(9, 15), tx, 12, Color("ffe9fb"))
 		x += w + 6
+
+# 7.2's #streakT: kills in a row (from 2) above the weapon box, in the tier's colour with its multiplier;
+# the thin line under it is the 7 s she has left for the next kill
+func _draw_streak() -> void:
+	var sk := sys("Streaks")
+	if not sk or int(sk.get("count")) < 2: return
+	var n := int(sk.get("count"))
+	var t: Dictionary = sk.call("tier")
+	var col := Color(str(t["c"])) if not t.is_empty() else Color("cfc0e8")
+	var tx := "🔥 %d" % n + ("  ×%.2f" % float(t["m"]) if not t.is_empty() else "")
+	var w := _font.get_string_size(tx, HORIZONTAL_ALIGNMENT_LEFT, -1, 13).x + 18
+	var r := Rect2(10, 640, w, 22)
+	_cv.draw_rect(r, Color(20 / 255.0, 8 / 255.0, 38 / 255.0, .82))
+	_cv.draw_rect(Rect2(r.position, Vector2(3, r.size.y)), col)
+	_cv.draw_rect(Rect2(r.position + Vector2(3, r.size.y - 2), Vector2((w - 3) * clampf(float(sk.get("left")) / 7.0, 0, 1), 2)), col)
+	_text(_cv, r.position + Vector2(9, 16), tx, 13, col)
 
 # the weapon she's holding: rarity colour, damage, durability (7.2's 🔧 uses, ∞ for the unbreakable ones), ammo
 func _draw_weapon() -> void:

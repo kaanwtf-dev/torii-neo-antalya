@@ -514,9 +514,11 @@ func _die() -> void:
 	remove_from_group("enemies"); collision_layer = 0
 	if plate and is_instance_valid(plate): plate.queue_free(); plate = null
 	SaveBridge.data["kills"] = SaveBridge.get_i("kills") + 1
+	var mult: float = Streaks.me.bump() if is_instance_valid(Streaks.me) else 1.0    # 7.2 killEnemy: bumpStreak(), streakMult()
+	var sxp := int(round(xp * mult))
 	var paid := false
 	if Lessons.me:
-		if not Items.me: Lessons.me.xp(xp); paid = true     # Items._on_kill pays XP (and the streak) when it's wired
+		if not Items.me: Lessons.me.xp(sxp); paid = true    # Items._on_kill pays XP (× the streak) when it's wired
 		Lessons.me.lesson_tick()
 		match type:
 			"ghost": Lessons.me.teach("hayalet")
@@ -526,8 +528,8 @@ func _die() -> void:
 	sfx(snd, p); sfx("enemy_die", p)
 	var hud := _hud()
 	if Fx.me:                       # a kill should read instantly: big number, ring of sparks, a thump
-		Fx.me.label(p + Vector3(0, tag_h + .8, 0), "+%d XP" % xp, Color("8ff2ff"), 1.5)
-		Fx.me.puff(p + Vector3(0, 1.4, 0), [Color("b06bff"), Color("8ff2ff")], 18, 2.2, 2.6, .9, .6)
+		Fx.me.label(p + Vector3(0, tag_h + .8, 0), "+%d XP" % sxp + (" ×%.2f" % mult if mult > 1 else ""), Color("ffd66b") if mult > 1 else Color("8ff2ff"), 1.5)
+		Fx.me.puff(p + Vector3(0, 1.4, 0), [Color("ffd66b"), Color("ff5fa2"), Color("8ff2ff")] if mult > 1 else [Color("b06bff"), Color("8ff2ff")], int(round(10 + mult * 8)), 2.2, 2.6, .9, .6)
 		Fx.me.shake(.5 if flags.has("boss") else (.35 if flags.has("mini") else .12))
 		if randf() < .3: Fx.me.label(p + Vector3(0, tag_h * base_scale + .25, 0), ["\"Ahhh...\"", "\"Yeter!\" (Enough!)", "\"Hayır!\" (No!)"].pick_random(), Color("ffd6e8"), 1.8, true, BUBBLE_LIFT)
 	if elite and not flags.has("boss") and hud:
@@ -545,10 +547,10 @@ func _die() -> void:
 	if flags.has("boss"):
 		if hud: hud.banner("💥 %s DEFEATED!\n[font_size=16]Boss down![/font_size]" % mname)
 		if Fx.me: Fx.me.puff(p + Vector3(0, 1.5, 0), Fx.CONF, 30, 3.5, 3.5, 1.3)
-	var purse := randi_range(40, 60) if elite else randi_range(6, 18)
+	var purse := int(round((randi_range(40, 60) if elite else randi_range(6, 18)) * mult))   # lira scales with the streak too
 	died.emit(self)
 	Bus.emit_ev("enemy_died", {"enemy": self, "pos": p, "kind": type, "elite": elite, "xp": xp, "boss": flags.has("boss"),
-		"mini": flags.has("mini"), "level": level, "lira": purse, "roam": has_meta("roam"), "xp_paid": paid})
+		"mini": flags.has("mini"), "level": level, "lira": purse, "roam": has_meta("roam"), "xp_paid": paid, "mult": mult})
 
 func _death_anim(dt: float) -> void:
 	dead_t += dt

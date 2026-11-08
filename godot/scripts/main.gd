@@ -85,6 +85,8 @@ func _ready() -> void:
 	# ---- the game systems (each one is a Node with `static var me`; they talk over Bus) ----
 	# weapons: Q tap / hold-Q wheel, guns + ammo, durability, drops (after equip_from_save)
 	var ars := Arsenal.new(); ars.name = "Arsenal"; add_child(ars); ars.setup(p)
+	# kill streaks (before Items, so a reload starts at 0 before her stats are pushed)
+	var streaks := Streaks.new(); streaks.name = "Streaks"; add_child(streaks); streaks.setup(p, hud)
 	# nazars, food, gear, chests, kill loot (setup is a coroutine: no await), then the level-up show + perks,
 	# then the I / J bag
 	var items := Items.new(); items.name = "Items"; add_child(items); items.setup(world, p, hud)
