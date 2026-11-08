@@ -229,7 +229,8 @@ func puff(at: Vector3, color, n: int, spread: float, up: float, life: float, gro
 		if c >= n: break
 
 # 7.2: label(x,y,z,txt,color,life,bubble). Plain labels float up; bubbles (people talking) stay put
-func label(at: Vector3, text: String, color := Color.WHITE, life := 1.1, bubble := false) -> void:
+# lift >= 0: the label's BOTTOM sits that many px above the point (a monster's bubble clears its Lv plate)
+func label(at: Vector3, text: String, color := Color.WHITE, life := 1.1, bubble := false, lift := -1.0) -> void:
 	var L: Dictionary = _labs[0]
 	for x in _labs:
 		if x["life"] <= 0: L = x; break
@@ -242,7 +243,7 @@ func label(at: Vector3, text: String, color := Color.WHITE, life := 1.1, bubble 
 		n.add_theme_stylebox_override("normal", sb)
 	else: n.remove_theme_stylebox_override("normal")
 	n.reset_size()
-	L["p"] = at; L["vy"] = 0.0 if bubble else 1.1; L["life"] = life; L["max"] = life
+	L["p"] = at; L["vy"] = 0.0 if bubble else 1.1; L["life"] = life; L["max"] = life; L["lift"] = lift
 
 func shake(t: float) -> void: shake_t = maxf(shake_t, t)
 
@@ -652,5 +653,6 @@ func _process(dt: float) -> void:
 		L["life"] -= dt; L["p"].y += L["vy"] * dt
 		if L["life"] <= 0 or not cam or cam.is_position_behind(L["p"]): n.visible = false; continue
 		n.visible = true
-		n.position = cam.unproject_position(L["p"]) * ratio - n.size / 2.0
+		var lift: float = L.get("lift", -1.0)
+		n.position = cam.unproject_position(L["p"]) * ratio - (n.size / 2.0 if lift < 0 else Vector2(n.size.x / 2.0, n.size.y + lift))
 		n.modulate.a = minf(1.0, L["life"] / L["max"] * 2.0)

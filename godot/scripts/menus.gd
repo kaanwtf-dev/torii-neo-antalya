@@ -438,7 +438,7 @@ func _guide_list() -> Array:
 		"Tap [b]Q[/b] or the mouse wheel = next weapon · [b]HOLD Q[/b] weapon wheel · [b]E[/b] talk, open, get on and off the bike",
 		"[b]1-0[/b] skills ([b]R[/b] is Dance Blast too) · [b]I[/b] bag & gear · [b]J[/b] quests · [b]H[/b] eat your best snack · [b]T[/b] take a photo",
 		"[b]C[/b] look behind · [b]G[/b] sunglasses · [b]V[/b] monster voices · [b]M[/b] music · [b]X[/b] fullscreen · [b]P[/b] pause",
-		"Lessons and quizzes: [b]1-4[/b] to answer · [b]E[/b] next line · [b]K[/b] skip"]})
+		"Lessons and quizzes: [b]1-4[/b] to answer · [b]E[/b] next line · [b]K[/b] skip · [b]H[/b] buy a 💡 hint (15₺, one per question)"]})
 	out.append({"id": "fight", "ic": "⚔️", "n": "Fighting", "t": "DÖVÜŞ · FIGHTING", "sub": ["combo", "roll", "block", "lockon"]})
 	var mana := "You: [b]%d / %d[/b] mana right now." % [int(torii.get("mana")), int(torii.get("max_mana"))] if torii else ""
 	out.append({"id": "skills", "ic": "✨", "n": "Skills", "tip": "skills", "x": [mana] if mana != "" else []})

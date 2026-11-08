@@ -237,8 +237,11 @@ func banner(t: String) -> void: ban.text = "[center]%s[/center]" % t; _ban_t = 3
 # 7.2's toast(html, ms, bad): up to three stacked, each on its own timer; bold words in cyan like .toast b;
 # a red border for warnings
 func toast(t: String, dur := 6.0, bad := false) -> void:
+	if OS.get_cmdline_user_args().has("--toastlog"): print("TOAST %d %s" % [Time.get_ticks_msec(), Rich.plain(t)])
 	while toasts.get_child_count() >= 3:
 		var old := toasts.get_child(0); toasts.remove_child(old); old.queue_free()
+	if toasts.get_child_count() >= 2:          # a third one coming: the oldest steps aside soon, so three don't wall her off
+		var o := toasts.get_child(0); o.set_meta("t", minf(float(o.get_meta("t", 1.2)), 1.2))
 	var p := PanelContainer.new(); p.mouse_filter = Control.MOUSE_FILTER_IGNORE; p.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
 	var sb := StyleBoxFlat.new(); sb.bg_color = Color(20 / 255.0, 8 / 255.0, 38 / 255.0, .92)
 	sb.border_color = Color("ff3b3b") if bad else Color("ff5fa2"); sb.set_border_width_all(2); sb.set_corner_radius_all(10)
@@ -468,7 +471,7 @@ func _stats_text() -> void:
 
 # ---- drawing helpers ----
 func _text(c: CanvasItem, at: Vector2, t: String, sz: int, col: Color, al := HORIZONTAL_ALIGNMENT_LEFT, w := -1.0) -> void:
-	c.draw_string_outline(_font, at, t, al, w, sz, 4, Color(0, 0, 0, .85))
+	c.draw_string_outline(_font, at, t, al, w, sz, 4, Color(0, 0, 0, .85 * col.a))   # the outline fades with the text
 	c.draw_string(_font, at, t, al, w, sz, col)
 
 func _grad(r: Rect2, a: Color, b: Color) -> void:

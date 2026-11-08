@@ -266,8 +266,7 @@ func _process(dt: float) -> void:
 		_idle_t -= dt
 		if gate.is_empty() and _idle_t <= 0:
 			_idle_t = 1.0
-			hud.objective("[color=#5fff9e][b]🌴 FREE PLAY[/b][/color]\n[color=#e8e4f8]The gods, the tables and Old Soul are all open[/color]"
-				if SaveBridge.data.get("done") == true else "[color=#ff9ecf]Kaan is waiting... ❤[/color]")
+			hud.objective(_idle_text())
 		return
 	if Overlay.any(): return      # calls, quizzes and choices pause the clock
 	var st := _st()
@@ -696,12 +695,20 @@ func _effects(e: Dictionary) -> void:
 	var msg: String = e.get("msg", "")
 	if msg != "" and not msg.begins_with("🆕 [b]"): hud.toast(msg, 7.0)
 
+# the pin between missions: Kaan's waiting, or free play once the last mission is behind her (even when the
+# finale's `done` flag never got saved, e.g. she quit during the ending)
+func _idle_text(next_i := -1) -> String:
+	if next_i < 0: next_i = SaveBridge.get_i("next")
+	if SaveBridge.data.get("done") == true or next_i >= M.size():
+		return "[color=#5fff9e][b]🌴 FREE PLAY[/b][/color]\n[color=#e8e4f8]The gods, the tables and Old Soul are all open[/color]"
+	return "[color=#ff9ecf]Kaan is waiting... ❤[/color]"
+
 func _complete() -> void:
 	_end_step()
 	beam.visible = false
 	for p in pickups: if is_instance_valid(p["node"]): p["node"].queue_free()
 	pickups = []
-	hud.objective("[color=#ff9ecf]Kaan is waiting... ❤[/color]")
+	hud.objective(_idle_text(idx + 1))
 	hud.banner("✅ MISSION COMPLETE!\n[font_size=16]+%d XP ❤[/font_size]" % int(m["xp"]))
 	# Kaan's "Aferin bebeğim!" over the balcony, confetti, the fanfare (7.2 missionComplete)
 	var k: Node3D = Cutscene.me.kaan() if Cutscene.me else null

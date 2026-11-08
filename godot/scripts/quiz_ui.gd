@@ -2,6 +2,8 @@
 # the lesson one line per page (E / Enter / Space, like 7.2's dialogue box), multiple choice (click or
 # 1-4), type-the-answer (accents optional), tap-the-words-in-order (Enter checks), progress dots,
 # ✅/❌ feedback with the explanation, and QUİZİ GEÇ (K) on the quizzes 7.2 lets her skip.
+# New in 8.0: 💡 İPUCU (H or click) — one hint per question for HINT_COST lira: two wrong answers vanish,
+# the first letters of a typed answer appear, or the first word of a sentence drops into place.
 # It's an overlay: the fight stops while it's open. Every quiz of 3+ questions ends with the score toast
 # (Lessons.summary, 7.2's nextQ); answers make 7.2's sounds (fx.yes / fx.chuckle / fx.no) and a wrong one
 # flashes the screen red (vig('hurt')).
@@ -35,6 +37,9 @@ var picked: Array = []
 var pool: Array = []
 var pages: Array = []
 var qskip: Button
+var hbtn: Button
+var _hinted := false
+const HINT_COST := 15         # lira per hint (food is 25-80₺, the coin toss stakes 40₺)
 var _run := 0                 # bumps every quiz, so a stale feedback timer can't touch the next one
 
 func _ready() -> void:
@@ -61,6 +66,10 @@ func _ready() -> void:
 	slot = HFlowContainer.new(); order_box.add_child(slot)
 	bank = HFlowContainer.new(); order_box.add_child(bank)
 	var ok_btn := Button.new(); ok_btn.text = "CHECK ✓"; ok_btn.pressed.connect(_submit_order); order_box.add_child(ok_btn)
+	hbtn = Button.new(); hbtn.focus_mode = Control.FOCUS_NONE; hbtn.visible = false
+	hbtn.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
+	hbtn.add_theme_font_size_override("font_size", 14); hbtn.add_theme_color_override("font_color", Color("ffd66b"))
+	hbtn.pressed.connect(use_hint); v.add_child(hbtn)
 	feed = RichTextLabel.new(); feed.bbcode_enabled = true; feed.fit_content = true; feed.custom_minimum_size = Vector2(700, 0)
 	feed.add_theme_font_size_override("normal_font_size", 17); feed.add_theme_font_size_override("bold_font_size", 17); v.add_child(feed)
 	cont = _lab(v, 13, Color("7bf7ff")); cont.text = "[E] continue"; cont.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
@@ -81,11 +90,25 @@ func _show(on: bool) -> void:
 func show_lesson(title: String, lines: Array, then: Callable) -> void:
 	_reset(); _show(true); lesson_cb = then; pages = lines.duplicate()
 	tag.text = title; vis.text = "📖"
+	if pages.size() > 1:                    # the lesson's own title goes on top of its first line, not on a page alone
+		pages[1] = "%s\n\n%s" % [pages[0], pages[1]]; pages.pop_front()
 	_page()
 
 func _page() -> void:
 	text.text = str(pages[0]) if pages.size() else ""
 	cont.visible = true
+	_place_lesson()
+
+# a lesson reads like 7.2's dialogue box: a box low on the screen that fits the page (quizzes get the big panel)
+func _place_lesson() -> void:
+	panel.size = Vector2(740, 0)
+	await get_tree().process_frame
+	if not lesson_cb.is_valid(): return
+	panel.reset_size(); panel.size.x = 740
+	panel.position = Vector2(110, 720 - panel.size.y - 70)
+
+func _place_quiz() -> void:
+	panel.position = Vector2(110, 120); panel.size = Vector2(740, 480)
 
 func _next_page() -> void:
 	pages.pop_front()
@@ -96,7 +119,7 @@ func _next_page() -> void:
 func run(qs: Array, on_done: Callable, tag_text := "TURKISH QUIZ 🇹🇷", skippable := false) -> void:
 	_run += 1
 	queue = qs.duplicate(); done_cb = on_done; score = []; total = qs.size(); lesson_cb = Callable(); pages = []
-	tag.text = tag_text; _show(true); qskip.visible = skippable; _next()
+	tag.text = tag_text; _place_quiz(); _show(true); qskip.visible = skippable; _next()
 
 # 7.2's quizSkipAll(): drop the rest of the quiz and move on
 func skip_all() -> void:
@@ -111,7 +134,7 @@ func _reset() -> void:
 	for c in opts.get_children(): c.queue_free()
 	for c in prog.get_children(): c.queue_free()
 	opts.visible = false; fill.visible = false; order_box.visible = false; cont.visible = false
-	feed.text = ""; hint.text = ""
+	feed.text = ""; hint.text = ""; hbtn.visible = false
 
 func _dots() -> void:
 	for c in prog.get_children(): c.queue_free()
@@ -149,6 +172,8 @@ func _next() -> void:
 			for i in cur["opts"].size():
 				var b := Button.new(); b.text = "%d. %s" % [i + 1, cur["opts"][i]]; b.custom_minimum_size = Vector2(340, 44)
 				b.add_theme_font_size_override("font_size", 18); b.pressed.connect(_pick.bind(i)); opts.add_child(b)
+	_hinted = false; hbtn.visible = true; hbtn.disabled = false
+	hbtn.text = "💡 İPUCU · HINT — %d₺  (you have %d₺)   [H]" % [HINT_COST, SaveBridge.get_i("lira")]
 	if cur.has("say"): Tts.say(cur["say"])
 
 func _draw_order() -> void:
@@ -170,7 +195,7 @@ static func norm(s: String) -> String:
 	return " ".join(s.split(" ", false)).strip_edges()
 
 func _pick(i: int) -> void:
-	if lock: return
+	if lock or (opts.get_child(i) as Button).disabled: return
 	var a := int(cur["a"])
 	opts.get_child(i).modulate = Color("3dff9e") if i == a else Color("ff4d6d")
 	if i != a: opts.get_child(a).modulate = Color("3dff9e")
@@ -188,7 +213,7 @@ func _submit_order() -> void:
 	_finish(norm(" ".join(picked)) == norm(" ".join(cur["words"])), " ".join(cur["words"]))
 
 func _finish(ok: bool, correct: String) -> void:
-	lock = true; score.append(ok); _dots()
+	lock = true; score.append(ok); _dots(); hbtn.visible = false
 	if ok:
 		feed.text = "[color=#3dff9e]DOĞRU! ✅ Correct! +15 XP +10 mana[/color]"
 		Bus.emit_ev("sfx", {"name": "yes"})
@@ -213,6 +238,9 @@ func _unhandled_input(e: InputEvent) -> void:
 		elif e.keycode == KEY_K and qskip.visible:
 			skip_all()
 			get_viewport().set_input_as_handled()
+		elif e.keycode == KEY_H and hbtn.visible:
+			use_hint()
+			get_viewport().set_input_as_handled()
 		elif order_box.visible and enter:
 			_submit_order()
 			get_viewport().set_input_as_handled()
@@ -220,3 +248,46 @@ func _unhandled_input(e: InputEvent) -> void:
 			var i: int = e.keycode - KEY_1
 			if i < opts.get_child_count(): _pick(i)
 			get_viewport().set_input_as_handled()
+
+# 💡 İPUCU: one paid hint per question. Multiple choice: all but one wrong answer fade out (with only two
+# answers, the first letter shows instead). Typed: the first third of the answer is typed in for her, the rest
+# shown as blanks. Word order: the first word (two, in a long sentence) drops into place.
+func use_hint() -> void:
+	if not open or lock or _hinted or not hbtn.visible or lesson_cb.is_valid(): return
+	var have := SaveBridge.get_i("lira")
+	if have < HINT_COST:
+		Bus.emit_ev("sfx", {"name": "no"})
+		feed.text = "[color=#ff4d6d]Not enough lira for a hint — it costs %d₺, you have %d₺.[/color] [i]Monsters and missions pay.[/i]" % [HINT_COST, have]
+		return
+	Stats.add_lira(-HINT_COST); _hinted = true; hbtn.disabled = true
+	hbtn.text = "💡 İPUCU used  (−%d₺)" % HINT_COST
+	Bus.emit_ev("sfx", {"name": "coin"})
+	match cur.get("kind", "mc"):
+		"fill":
+			var acc: Array = cur["answer"] if cur["answer"] is Array else [cur["answer"]]
+			var ans := str(acc[0])
+			var n := clampi(ceili(ans.length() / 3.0), 1, maxi(1, ans.length() - 1))
+			var mask := ans.substr(0, n)
+			for i in range(n, ans.length()): mask += " " if ans[i] == " " else "_"
+			hint.text = "💡 %s" % mask
+			fill.text = ans.substr(0, n); fill.caret_column = n; fill.grab_focus.call_deferred()
+		"order":
+			var words: Array = cur["words"]
+			pool.append_array(picked); picked = []
+			for i in (2 if words.size() >= 5 else 1):
+				var at := pool.find(words[i])
+				if at == -1: break
+				picked.append(pool[at]); pool.remove_at(at)
+			hint.text = "💡 The first word is in place — now the rest!" if picked.size() == 1 else "💡 The first %d words are in place — now the rest!" % picked.size()
+			_draw_order()
+		_:
+			var a := int(cur["a"])
+			var wrong := []
+			for i in opts.get_child_count(): if i != a: wrong.append(i)
+			if wrong.size() < 2:
+				hint.text = "💡 It starts with “%s…”" % str(cur["opts"][a]).substr(0, 1)
+			else:
+				wrong.shuffle()
+				for i in wrong.slice(0, wrong.size() - 1):
+					var b := opts.get_child(i) as Button; b.disabled = true; b.modulate = Color(1, 1, 1, .22)
+				hint.text = "💡 Two answers left — one of them is right."

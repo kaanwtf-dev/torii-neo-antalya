@@ -116,6 +116,7 @@ var _tts_voice := {}                # lang -> voice id
 var _tts_look := {}                 # lang -> last look-up time
 var _thr: Thread
 var _abort := false
+var _tasks: Array[int] = []           # babble jobs on the WorkerThreadPool: every one is waited for (Godot needs that)
 var _applied := false
 
 static func sfx(name: String, pos: Variant = null, vol := 1.0, pitch := 1.0) -> void:
@@ -400,14 +401,16 @@ func mob_talk(kind: String, pos: Vector3, slow := false, line: Array = []) -> vo
 	if idx >= 0 and not slow and _babble.has(key):
 		_play_babble(_babble[key], vol * solo)
 	else:
-		WorkerThreadPool.add_task(func():
+		_tasks.append(WorkerThreadPool.add_task(func():
+			if _abort: return
 			var s := Syn.new(); s.begin(3.5); s.babble(str(line[0]), V[1], rate); s.trim()
-			_play_babble.call_deferred(s.to_wav(), vol * solo))
+			if not _abort: _play_babble.call_deferred(s.to_wav(), vol * solo)))
 	if has_tts and not DisplayServer.tts_is_speaking():                     # never talk over a Turkish lesson
 		var en_line := line.size() > 2 and int(line[2]) == 1
 		say(str(line[0]), "en" if en_line else "tr", rate, V[1], vol, false)
 
 func _play_babble(w: AudioStreamWAV, vol: float) -> void:
+	if _abort: return                                          # quitting: a late job plays nothing
 	var p := _free2(false); p.stream = w; p.volume_db = linear_to_db(maxf(.001, vol)); p.pitch_scale = 1.0; p.play()
 
 # TTS with 7.2's fallbacks: the language's voice, else any voice at all; looks again every 2 s while it
@@ -436,6 +439,9 @@ func _voice_for(lang: String) -> String:
 # ---- music mixing ----
 func _process(dt: float) -> void:
 	if not _applied and not SaveBridge.data.is_empty(): apply_settings()
+	for i in range(_tasks.size() - 1, -1, -1):                # finished babble jobs: collect them
+		if WorkerThreadPool.is_task_completed(_tasks[i]):
+			WorkerThreadPool.wait_for_task_completion(_tasks[i]); _tasks.remove_at(i)
 	dt = minf(dt, .1)
 	_scan_t -= dt
 	if _scan_t <= 0:
@@ -473,6 +479,7 @@ func _scan() -> void:
 
 # a stem is ready: join the others in time (they're all whole multiples of the 9.6 s day loop)
 func _got_stem(k: String, w: AudioStreamWAV) -> void:
+	if _abort: return                                          # quitting: a late job plays nothing
 	var p: AudioStreamPlayer = _stems[k]; p.stream = w
 	var at := 0.0
 	for o in _stems.values():
@@ -490,9 +497,26 @@ func _got_intro(w: AudioStreamWAV) -> void: _intro_wav = w
 
 func _exit_tree() -> void:
 	_abort = true
+	_join()
+	if me == self: me = null
+
+# the orderly quit (main._quit): hush every player and the voices, then let every background sound job finish
+# BEFORE the engine tears down — a job or a voice still running at teardown crashed Godot on quit
+func shutdown() -> void:
+	_abort = true
+	set_process(false)                                        # nothing may start the music again while we go
+	DisplayServer.tts_stop()
+	for p in _p2: p.stop()
+	for p in _p3: if is_instance_valid(p): p.stop()
+	for k in _stems: _stems[k].stop()
+	if _intro: _intro.stop()
+	_join()
+
+func _join() -> void:
 	if _thr and _thr.is_started(): _thr.wait_to_finish()
 	if _intro_task != -1: WorkerThreadPool.wait_for_task_completion(_intro_task); _intro_task = -1
-	if me == self: me = null
+	for id in _tasks: WorkerThreadPool.wait_for_task_completion(id)
+	_tasks.clear()
 
 # ---- rendering (background thread) ----
 func _render_all() -> void:

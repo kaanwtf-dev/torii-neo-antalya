@@ -4,7 +4,7 @@ Kaan switches between Claude (Claude Code) and ChatGPT when one runs out of cred
 **Whoever works on this project: read this first, and update it before you stop.**
 Project rules live in `CLAUDE.md` (they apply to both of us). Newest entry on top.
 
-## Current state (2026-11-07)
+## Current state (2026-11-08)
 
 - **ONE version = the Godot 4 project in `godot/`** (Godot 4.7.2, GL Compatibility; run: `godot --path godot`).
   The HTML game is FROZEN at ALPHA 7.2 (`torii-neo-antalya-ALPHA-7.2.html`, still Torii's live link at
@@ -13,7 +13,12 @@ Project rules live in `CLAUDE.md` (they apply to both of us). Newest entry on to
   (Medievil / Tenchu / Spyro / Ape Escape): light/heavy combos, dodge roll, lock-on, block + parry, stamina, jump
   with coyote time, ledge climb, roaming monsters (harder at night, minibosses), loot, skills, sound for everything.
 - **Godot version is now ALPHA 8.0 · GAME GAME** (`Menus.GAME_VER`, from `assets/story/godot.json`). Batch 2+
-  (10 parallel systems, wired by one integrator on 2026-11-07) is in the working tree, **NOT committed yet**.
+  (10 parallel systems, wired by one integrator on 2026-11-07) is committed (20cdbb2) and pushed. Kaan played it once
+  in a window (2026-11-07); his reports so far: a crash on quit (fixed 11-08), wants paid hints in quizzes (done 11-08).
+- **Quitting goes through `main._quit()`** (`auto_accept_quit = false`): save, `Audio.shutdown()` (stops players + TTS,
+  waits for the render thread / intro task / every babble task), unpause, wait, `_drop_statics()`, quit. Don't call
+  `get_tree().quit()` from game code; send `NOTIFICATION_WM_CLOSE_REQUEST` instead. Test runs MUST pass
+  `--savedir=<scratch dir>` or they write Kaan's real Godot save on quit.
 - **How it's wired:** `scripts/main.gd` builds the world, Torii, Bandit, the bike, loads her save, then creates
   every system as a child Node with `static var me` (order matters, see the comments in `_ready`). Systems talk
   over `scripts/bus.gd` (`Bus.on` / `Bus.emit_ev`, reset at the top of `_ready`). Every screen that pauses her
@@ -29,8 +34,7 @@ Project rules live in `CLAUDE.md` (they apply to both of us). Newest entry on to
 - **Open gaps:** `godot/PORT_GAPS.md` §0 (batch 2+ entry) lists what's left (bike tuning/underglow, braid swing,
   kill streaks, visible gear, outfits per level, UI scale, ambient scenery animation, auto quality governor, the
   Mac .app export). Machine-readable rows: `godot/port_gaps.json`. Don't re-audit.
-- **Not done yet:** a real playtest in a window (only parse + headless runs so far), commit, Mac export
-  (export templates ~1 GB: ask Kaan first).
+- **Not done yet:** the open gaps above, Mac export (export templates ~1 GB: ask Kaan first).
 
 ## Things Kaan wants every time
 - Before doing anything: recommend which model/effort settings to use, and ask him first.
@@ -38,6 +42,16 @@ Project rules live in `CLAUDE.md` (they apply to both of us). Newest entry on to
 - Never put Torii's real photo (`assets/screenshots/torii face.jpg`) in git — it's ignored on purpose.
 
 ## Log
+- 2026-11-08 Claude: **quit crash, quiz hints, smoke-test bugs.** Kaan's quit aborted with `recursive_mutex lock failed`
+  (never reproduced here). Fix = orderly quit (see Current state): headless `--verbose` exits had leaked 2 audio
+  playbacks on the Music bus (late `_got_stem` deferred calls started music after stop); now 0 leaks, windowed
+  `--quittest=tts|reload` clean. New dev flags: `--quittest=tts|reload|close`, `--continue` (skip intro, press
+  CONTINUE), `--toastlog` (print every toast), `--lessontest --hint`. **💡 İPUCU** in `quiz_ui.gd`: H or click, 15₺,
+  one per question (MC: all but one wrong answer fade; typed: first third typed in + blanks; word order: first word
+  placed, two in 5+ word sentences); guide line added. Smoke bugs: pin says FREE PLAY after the last mission
+  (`Missions._idle_text`), lessons are a compact box low on screen with the title merged into page 1, monster bubbles
+  sit above their Lv plates (`Enemy.say` / `head_point`, `Fx.label(..., lift)`), bar text outlines fade with the bar
+  (the "dark STAMINA text"), a third toast makes the oldest fade within 1.2 s.
 - 2026-11-07 Claude (parent session): **finished the paused full-game build** (ALPHA 8.0 · GAME GAME). The model session's 12-agent build had stopped on the usage limit with 8 systems written but none wired in; this session resumed the 2 cut-off builders (story+menus, sky+world), then an integrator wired every system into main.gd and a smoke agent fixed what broke. Proof: headless boots clean, `--brawl=SEC` combat bot (combos/rolls/blocks/lock-on/skills/faint, prints a BRAWL line) runs with no script errors, 3-mission autoplay from a fresh save, `tests/godot_save.js` ALL CHECKS PASS. New dev flags: `--brawl=SEC`, `--inv` (open the bag before a `--shot=`). Screenshots: `tools/shots/`. Known small bugs (smoke report): "Kaan is waiting" pin after the last mission, a lesson's first page is only the title, mob speech bubbles overlap their Lv plates, STAMINA label hard to read, 3 toasts stack at startup. Not playtested by hand yet.
 - 2026-11-07 Claude (integrator): **batch 2+ "game game" wired into `main.gd`.** Ten systems built in parallel,
   then one integrator wired them, fixed the API mismatches and got a clean parse. New files in `godot/scripts/`:

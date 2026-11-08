@@ -357,6 +357,13 @@ func _make_plate() -> void:
 	plate_bar.position = Vector2(0, 21); plate_bar.mouse_filter = Control.MOUSE_FILTER_IGNORE; plate.add_child(plate_bar)
 	plate.set_meta("w", w)
 
+# where its head is, for speech: the same point the Lv plate hangs from. say() puts the bubble above the plate
+const BUBBLE_LIFT := 28.0      # px: the plate hangs 22 px over head_point and is ~24 px tall
+func head_point() -> Vector3: return global_position + Vector3(0, tag_h * base_scale + .25, 0)
+
+func say(txt: String, col := Color("ffd6e8"), life := 2.6) -> void:
+	if Fx.me: Fx.me.label(head_point(), txt, col, life, true, BUBBLE_LIFT)
+
 func _plate_update() -> void:
 	if not plate or not Fx.me or not Fx.me.cam: return
 	var cam: Camera3D = Fx.me.cam
@@ -522,7 +529,7 @@ func _die() -> void:
 		Fx.me.label(p + Vector3(0, tag_h + .8, 0), "+%d XP" % xp, Color("8ff2ff"), 1.5)
 		Fx.me.puff(p + Vector3(0, 1.4, 0), [Color("b06bff"), Color("8ff2ff")], 18, 2.2, 2.6, .9, .6)
 		Fx.me.shake(.5 if flags.has("boss") else (.35 if flags.has("mini") else .12))
-		if randf() < .3: Fx.me.label(p + Vector3(0, tag_h, 0), ["\"Ahhh...\"", "\"Yeter!\" (Enough!)", "\"Hayır!\" (No!)"].pick_random(), Color("ffd6e8"), 1.8, true)
+		if randf() < .3: Fx.me.label(p + Vector3(0, tag_h * base_scale + .25, 0), ["\"Ahhh...\"", "\"Yeter!\" (Enough!)", "\"Hayır!\" (No!)"].pick_random(), Color("ffd6e8"), 1.8, true, BUBBLE_LIFT)
 	if elite and not flags.has("boss") and hud:
 		hud.banner("👑 EPIC %s DOWN!\n[font_size=16]+%d XP[/font_size]" % [mname, xp])
 	if flags.has("mini"):
@@ -804,7 +811,7 @@ func _charge(dt: float, dir: Vector3, d: float) -> Vector3:
 				ch_dir = dir; atk_hit = false
 				_set_state("crun", 1.35)
 				sfx("rev", global_position)
-				if Fx.me and randf() < .6: Fx.me.label(global_position + Vector3(0, tag_h + .3, 0), "\"BEN GEÇERİM!\" (I am coming through!)", Color("ffd6e8"), 2.0, true)
+				if randf() < .6: say("\"BEN GEÇERİM!\" (I am coming through!)", Color("ffd6e8"), 2.0)
 			return Vector3.ZERO
 		"crun":
 			rotation.y = atan2(ch_dir.x, ch_dir.z)
@@ -845,7 +852,7 @@ func _summon(dt: float, d: float) -> void:
 	sum_t = 3.0 if enraged else 8.0
 	var a := randf() * TAU
 	Enemy.spawn(get_parent(), "thot" if randf() < .5 else "zombie", global_position + Vector3(cos(a) * 4, 0, sin(a) * 4), torii)
-	if Fx.me: Fx.me.label(global_position + Vector3(0, tag_h + .9, 0), "\"EVERYONE — MEETING, NOW!\" 📢", Color("ff5fa2"), 2.6, true)
+	say("\"EVERYONE — MEETING, NOW!\" 📢", Color("ff5fa2"), 2.6)
 	sfx("karen", global_position)
 
 # ghosts fade out now and then: hits pass through, and they drift faster
@@ -898,7 +905,7 @@ func _talk(chance: float) -> void:
 	var lines: Array = TALK.get(type, [["Hey!", ""]])
 	var ln: Array = lines.pick_random()
 	var txt := "\"%s\"" % ln[0] + ((" (%s)" % ln[1]) if str(ln[1]) != "" else "")
-	Fx.me.label(global_position + Vector3(0, tag_h + .5, 0), txt, Color("ffd6e8"), 2.6, true)
+	say(txt, Color("ffd6e8"), 2.6)
 	sfx(snd, global_position)
 	var now := Time.get_ticks_msec()
 	if voice_on and str(ln[1]) != "" and now - _voice_ms > 2600 and global_position.distance_to(torii.global_position) < 20.0:

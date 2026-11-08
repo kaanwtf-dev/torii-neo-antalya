@@ -21,6 +21,7 @@ const LAMP_MAX := 12                 # the web renderer handles a handful of lig
 func _ready() -> void:
 	Bus.reset()                        # Bus subscriptions are static: a reload (NEW GAME, a loaded file) starts clean
 	Overlay.reset()                    # a reload (after loading a save file) starts with nothing open
+	get_tree().auto_accept_quit = false   # quitting goes through _quit(): save, stop the voices and sound jobs first
 	_inputs()
 	var box := SubViewportContainer.new()
 	box.stretch = true; box.stretch_shrink = PIXEL
@@ -111,6 +112,7 @@ func _ready() -> void:
 	var tips := Tips.new(); add_child(tips); tips.setup(p)
 	if "--godkey" in OS.get_cmdline_user_args(): _dev_godkey(m, p, hud); return
 	if "--fxtest" in OS.get_cmdline_user_args(): _dev_fxtest(p, hud); return
+	for a in OS.get_cmdline_user_args(): if a.begins_with("--quittest="): _dev_quittest(a.substr(11))
 	for a in OS.get_cmdline_user_args():                # dev: --probe=x0,x1,z prints the ground height every metre
 		if a.begins_with("--probe="):
 			var v := a.substr(8).split(",")
@@ -135,19 +137,56 @@ func _ready() -> void:
 	for a in OS.get_cmdline_user_args(): if a.begins_with("--brawl="): _dev_brawl(p, float(a.substr(8)))
 	# the real start: VHS intro -> title (CONTINUE / NEW GAME starts the story). Dev runs skip both.
 	if not _dev() and not Missions.dev_run():
+		if "--continue" in OS.get_cmdline_user_args():          # dev: skip the VHS intro and press CONTINUE on the title
+			menus.title(); await get_tree().process_frame; menus._continue(); return
 		Intro.run(self, menus.title, world, [p, ban, null])
 
 # closing the window saves first (7.2 saved at every event; this catches whatever happened since). Not
 # before a save exists (BRING YOUR SAVE still up), and SaveBridge itself refuses while an import waits.
 func _notification(what: int) -> void:
-	if what == NOTIFICATION_WM_CLOSE_REQUEST and not SaveBridge.data.is_empty():
-		SaveBridge.write()
+	if what == NOTIFICATION_WM_CLOSE_REQUEST: _quit()
+
+# the orderly quit (close button, Cmd+Q): save, hush the voices, let every background sound job finish, drop the
+# cached materials, THEN quit. Left to the engine's own teardown, a voice mid-sentence or a sound job still running
+# crashed Godot on quit ("recursive_mutex lock failed")
+var _quitting := false
+func _quit() -> void:
+	if _quitting: return
+	_quitting = true
+	if not SaveBridge.data.is_empty(): SaveBridge.write()
+	if Audio.me: Audio.me.shutdown()
+	else: DisplayServer.tts_stop()
+	get_tree().paused = false
+	for i in 3: await get_tree().process_frame
+	await get_tree().create_timer(.2, true).timeout          # the speech engine reports its cancel before we go
+	_drop_statics()
+	get_tree().quit()
+
+# every static cache that holds a resource (materials, textures, scenes, scripts) — all rebuilt lazily when needed
+static func _drop_statics() -> void:
+	Enemy._scenes.clear(); Enemy._red = null; Enemy._tell = null; Enemy._tell_red = null; Enemy._shadow_mesh = null
+	Npc._scenes.clear(); MobModels._mats.clear(); Projectile._mats.clear(); Projectile._glow = null
+	Shot._m.clear(); Tavla._board_tex = null; Hud._cls.clear(); InventoryUI._cls.clear()
 
 # drop every static Callable (Bus subs hold lambdas bound to the player & co) while the scripts are still
 # alive — left to the engine's own shutdown they crashed Godot on quit (recursive_mutex lock failed)
 func _exit_tree() -> void:
 	Bus.reset()
 	InventoryUI.quest_panel = Callable(); Enemy._cb_hit = Callable(); Enemy._cb_atk = Callable()
+	_drop_statics()
+
+# developer check only: --quittest=tts|reload|close quits the way the quit crash was seen, and prints QUITTEST
+func _dev_quittest(mode: String) -> void:
+	await get_tree().create_timer(2.0).timeout
+	if mode == "reload":
+		if not get_tree().has_meta("qt_reloaded"):
+			get_tree().set_meta("qt_reloaded", true); print("QUITTEST reloading"); get_tree().reload_current_scene(); return
+		await get_tree().create_timer(2.0).timeout
+	if mode == "tts" and Audio.me:
+		print("QUITTEST tts=", Audio.me.say("Merhaba! Bugün çok güzel bir gün, değil mi? Hadi biraz Türkçe konuşalım.", "tr"))
+		await get_tree().create_timer(.4).timeout
+	print("QUITTEST quitting via close request")
+	get_tree().root.propagate_notification(NOTIFICATION_WM_CLOSE_REQUEST)
 
 # dev runs (autoplay, lesson test, screenshots) never stop at the BRING YOUR SAVE screen
 func _dev() -> bool:
@@ -295,9 +334,20 @@ func _dev_lessontest(L: Lessons, q: QuizUI, hud: Hud) -> void:
 	await RenderingServer.frame_post_draw
 	if dir != "": get_viewport().get_texture().get_image().save_png(dir + "/l_quiz.png")
 	var n := 0
+	var hint := "--hint" in OS.get_cmdline_user_args()      # also buy a 💡 hint once per question kind (shot each)
+	if hint: SaveBridge.data["lira"] = 100
+	var hinted := {}
 	while QuizUI.open and n < 40:
 		n += 1
-		match q.cur.get("kind", "mc"):
+		var kind: String = q.cur.get("kind", "mc")
+		if hint and not hinted.has(kind):
+			hinted[kind] = true
+			var h := InputEventKey.new(); h.keycode = KEY_H; h.pressed = true; q._unhandled_input(h)
+			await get_tree().create_timer(.3).timeout
+			await RenderingServer.frame_post_draw
+			if dir != "": get_viewport().get_texture().get_image().save_png(dir + "/l_hint_%s.png" % kind)
+			print("LESSONTEST hint ", kind, " lira=", SaveBridge.get_i("lira"))
+		match kind:
 			"fill": q.fill.text = str(q.cur["answer"][0] if q.cur["answer"] is Array else q.cur["answer"]); q._submit_fill()
 			"order": q.picked = q.cur["words"].duplicate(); q.pool = []; q._submit_order()
 			_: q._pick(int(q.cur["a"]))
