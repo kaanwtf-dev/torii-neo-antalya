@@ -6,7 +6,7 @@
 # Rotations are three.js Euler 'XYZ' (R = Rx * Ry * Rz) — same axes in Godot (y up, +z = her front).
 # Signs: arm/leg x < 0 = forward/up, knee > 0 and elbow < 0 fold, body x > 0 leans forward, body y < 0
 # turns her weapon side (+x arm) through. 7.2's walk/idle/ride/dance/swing are untouched; the Godot moveset
-# adds the 3 combo swings (+ kick versions), heavy wind-up/release, slam, roll tuck, block, ledge hang/climb,
+# adds the 3 combo swings and the heavy wind-up/release (+ kick versions), slam, roll tuck, block, ledge hang/climb,
 # hurt flinch, cast, eat, bike tumble/lie/get-up/wobble and the mouse-pitch lean. Those are drawn ON TOP of
 # update() with a blend weight (w), so they ease in and out.
 class_name ToriiPose
@@ -175,16 +175,27 @@ func _kick(step: int, p: float, s: float) -> void:
 			body(-.12, 0, .2 * ch); spin = s * TAU
 
 # heavy attack. Wind-up (held: charge 0..1 makes her tremble), then the release p 0..1
-func heavy_wind(t: float, a: float, charge: float) -> void:
+func heavy_wind(t: float, a: float, charge: float, kick := false) -> void:
 	w = smoothstep(0.0, 1.0, a)
 	var tr := sin(t * 60.0) * .03 * charge
+	if kick:                                       # bare hands: guard up, kicking knee chambered high, torso wound back
+		arm(-1, -1.2, 0, -.3); elbow(-1, -1.8); arm(1, -1.0, 0, .3); elbow(1, -1.8)
+		leg(1, -1.15, .35); knee(1, 1.9); leg(-1, -.08); knee(-1, .3 + charge * .2)
+		body(-.2, .5, tr, -.04 - charge * .05); head(.1, -.3)
+		w = 1.0; return
 	arm(1, -2.9, 0, -.55); elbow(1, -1.5); arm(-1, -2.7, 0, .5); elbow(-1, -1.4)
 	body(-.22, .65, tr, -.06 - charge * .07); head(-.1, -.3)
 	leg(-1, -.35); leg(1, .35); knee(-1, .45 + charge * .2); knee(1, .4 + charge * .2)
 	w = 1.0
-func heavy_go(p: float) -> void:
+func heavy_go(p: float, kick := false) -> void:
 	w = 1.0 - smoothstep(.62, 1.0, p)
 	var s := smoothstep(0.0, .3, p)
+	if kick:                                       # the snap: a roundhouse, the leg sweeps round from her side
+		arm(-1, -1.2, 0, -.3); elbow(-1, -1.8); arm(1, lerpf(-1.0, .4, s), 0, .3); elbow(1, -1.4)
+		leg(1, lerpf(-1.15, -1.45, s), lerpf(.35, .05, s)); knee(1, lerpf(1.9, .1, smoothstep(0.0, .22, p)) + .05)
+		leg(-1, -.05); knee(-1, .25)
+		body(lerpf(-.2, -.3, s), lerpf(.5, -.55, s), -.12 * s, -.06); head(0, lerpf(-.3, .3, s))
+		w = 1.0; return
 	arm(1, lerpf(-2.9, -.25, s), 0, lerpf(-.55, .15, s)); elbow(1, lerpf(-1.5, -.05, s))
 	arm(-1, lerpf(-2.7, -.45, s), 0, .2); elbow(-1, -.3)
 	body(lerpf(-.22, .55, s), lerpf(.65, -.55, s), 0, lerpf(-.06, -.16, s)); head(.2 * s)
@@ -273,3 +284,124 @@ func wobble(t: float, k: float) -> void:
 func aim(pitch: float) -> void:
 	var i: int = b["body"]
 	sk.set_bone_pose_rotation(i, eul(clampf(pitch * .3, -.18, .3)) * sk.get_bone_pose_rotation(i))
+
+# ======== braid swing (7.2's tor.braids) ========
+# Her model is one mesh, but the braids down her back are their own island of it, skinned 100% to the head.
+# braid_rig() gives that island one extra bone, "braid" (a child of the head, pivot at the top of the braids;
+# the weights fade from the head at the top to the braid bone at the tips), on a COPY of her mesh and skin
+# (Lory is built from the same glb and keeps the originals). At rest the bone does nothing, so she looks
+# exactly the same. braids() swings it on a spring from how fast the braid tips move in her head's frame:
+# running trails them back, side steps / turns / bike leans swing them sideways, falling lifts them,
+# stops and landings bounce. They only swing away from her back, never into it. If anything about the mesh
+# isn't what we expect, there's no braid bone and nothing changes.
+var _br := -1                      # the braid bone (-1: no braid swing)
+var _br_tip := Vector3.ZERO        # a point near the braid tips, in the head bone's space
+var _br_prev := Vector3.ZERO
+var _br_has := false
+var _br_a := Vector2.ZERO          # x: swing back (+ = out behind her), y: sideways (+ = towards her +x)
+var _br_v := Vector2.ZERO
+
+func braid_rig(mi: MeshInstance3D) -> bool:
+	var mesh := mi.mesh as ArrayMesh
+	var skin := mi.skin
+	if mesh == null or skin == null or mesh.get_surface_count() != 1 or sk.find_bone("braid") >= 0: return false
+	var head_b := -1
+	var named := false
+	for i in skin.get_bind_count():
+		if skin.get_bind_name(i) == &"head": head_b = i; named = true
+		elif String(skin.get_bind_name(i)) == "" and skin.get_bind_bone(i) == b["head"]: head_b = i
+	if head_b < 0: return false
+	var arr := mesh.surface_get_arrays(0)
+	var pos: PackedVector3Array = arr[Mesh.ARRAY_VERTEX]
+	var bones: PackedInt32Array = arr[Mesh.ARRAY_BONES]
+	var wts: PackedFloat32Array = arr[Mesh.ARRAY_WEIGHTS]
+	var idx: PackedInt32Array = arr[Mesh.ARRAY_INDEX]
+	var n := pos.size()
+	if n == 0 or idx.is_empty() or bones.size() != wts.size() or bones.size() % n != 0: return false
+	var per := bones.size() / n
+	# islands of the mesh: joined by triangles and by vertices that sit on the same spot (UV seams)
+	var par := []; par.resize(n)
+	for i in n: par[i] = i
+	for k in range(0, idx.size() - 2, 3):
+		_join(par, idx[k], idx[k + 1]); _join(par, idx[k + 1], idx[k + 2])
+	var spot := {}
+	for i in n:
+		var key := Vector3i((pos[i] * 10000.0).round())
+		if spot.has(key): _join(par, i, spot[key])
+		else: spot[key] = i
+	# the braids = the one island that is all head (by its strongest weight) and hangs well below the head
+	var head_y := skin.get_bind_pose(head_b).affine_inverse().origin.y
+	var isl := {}
+	for i in n:
+		var r := _root(par, i)
+		if not isl.has(r): isl[r] = {"v": [], "head": true, "lo": INF, "hi": -INF}
+		var d: Dictionary = isl[r]
+		d["v"].append(i); d["lo"] = minf(d["lo"], pos[i].y); d["hi"] = maxf(d["hi"], pos[i].y)
+		var best := 0
+		for j in per:
+			if wts[i * per + j] > wts[i * per + best]: best = j
+		if bones[i * per + best] != head_b: d["head"] = false
+	var found := []
+	for r in isl:
+		if isl[r]["head"] and isl[r]["lo"] < head_y - .2: found.append(isl[r])
+	if found.size() != 1: return false
+	var br: Dictionary = found[0]
+	var vs: Array = br["v"]
+	var top: float = br["hi"]
+	var ln: float = top - br["lo"]
+	if vs.size() < 40 or vs.size() > 400 or ln < .25: return false
+	var zs := 0.0; var zn := 0
+	for i in vs:
+		if pos[i].y > top - .06:
+			zs += pos[i].z; zn += 1
+	var piv := Vector3(0, top, zs / maxf(1, zn))     # mesh space: the top of the braids, centred
+	# the bone (rest = the pivot in the head's frame) and its bind, on copies of the skin and mesh
+	var hb := skin.get_bind_pose(head_b)
+	var rest := Transform3D(Basis(), hb * piv)
+	var nskin: Skin = skin.duplicate()
+	var bind_i := nskin.get_bind_count()
+	_br = sk.add_bone("braid")
+	sk.set_bone_parent(_br, b["head"]); sk.set_bone_rest(_br, rest); sk.reset_bone_pose(_br)
+	if named: nskin.add_named_bind("braid", rest.affine_inverse() * hb)
+	else: nskin.add_bind(_br, rest.affine_inverse() * hb)
+	for i in vs:
+		var f := clampf((top - pos[i].y) / ln, 0.0, 1.0)    # 0 at the top (stays on her head) .. 1 at the tips
+		for j in per:
+			bones[i * per + j] = 0; wts[i * per + j] = 0.0
+		bones[i * per] = head_b; wts[i * per] = 1.0 - f
+		bones[i * per + 1] = bind_i; wts[i * per + 1] = f
+	arr[Mesh.ARRAY_BONES] = bones; arr[Mesh.ARRAY_WEIGHTS] = wts
+	var nm := ArrayMesh.new()
+	nm.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES, arr, [], {}, Mesh.ARRAY_FLAG_USE_8_BONE_WEIGHTS if per == 8 else 0)
+	nm.surface_set_material(0, mesh.surface_get_material(0)); nm.surface_set_name(0, mesh.surface_get_name(0))
+	mi.skin = nskin; mi.mesh = nm
+	_br_tip = rest.origin + Vector3(0, -ln * .8, 0)
+	print_verbose("ToriiPose: braid bone on %d vertices, %.2f long" % [vs.size(), ln])
+	return true
+
+func _root(par: Array, x: int) -> int:
+	while par[x] != x:
+		par[x] = par[par[x]]; x = par[x]
+	return x
+func _join(par: Array, a: int, c: int) -> void:
+	par[_root(par, a)] = _root(par, c)
+
+# every frame, after the body pose and the model's transform are set (the player calls it from _model_xf)
+func braids(dt: float, t: float) -> void:
+	if _br < 0 or dt <= 0.0: return
+	var hg := sk.global_transform * sk.get_bone_global_pose(b["head"])
+	var tip := hg * _br_tip
+	var v := (tip - _br_prev) / dt if _br_has else Vector3.ZERO
+	_br_prev = tip; _br_has = true
+	if v.length() > 40.0: v = Vector3.ZERO              # a teleport, not a run
+	var lv := hg.basis.orthonormalized().inverse() * v  # in her head's frame: +z = where she faces, +x = her +x side
+	var want := Vector2(clampf(lv.z * .075 - lv.y * .05, 0.0, .7) + sin(t * 1.3) * .03, clampf(-lv.x * .06, -.3, .3))
+	var left := minf(dt, .1)
+	while left > 0.0:                                   # a bouncy spring (small steps keep it stable)
+		var h := minf(left, 1.0 / 120.0); left -= h
+		_br_v += ((want - _br_a) * 110.0 - _br_v * 10.0) * h
+		_br_a += _br_v * h
+	if _br_a.x < -.02: _br_a.x = -.02; _br_v.x = maxf(0.0, _br_v.x) * .3     # her back stops them
+	if _br_a.x > .75: _br_a.x = .75; _br_v.x = minf(0.0, _br_v.x)
+	if absf(_br_a.y) > .35: _br_a.y = signf(_br_a.y) * .35; _br_v.y = 0.0
+	sk.set_bone_pose_rotation(_br, eul(_br_a.x, 0, _br_a.y))
