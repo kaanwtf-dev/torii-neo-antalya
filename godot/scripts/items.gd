@@ -254,12 +254,14 @@ func equip_gear(u: int) -> void:
 	if not old.is_empty() and int(old["u"]) == u: return
 	_apply_flat(old, -1); SaveBridge.data["eq"][sl] = u; _apply_flat(it, 1)
 	Stats.apply(player); _sfx("ding"); _save()
+	Bus.emit_ev("gear_eq", {"slot": sl, "item": it})
 
 func unequip_gear(sl: String) -> void:
 	var old := eq_item(sl)
 	if old.is_empty(): return
 	_apply_flat(old, -1); SaveBridge.data["eq"][sl] = null
 	Stats.apply(player); _save()
+	Bus.emit_ev("gear_eq", {"slot": sl, "item": {}})
 
 func sell_gear(u: int, quiet := false) -> void:
 	var it := {}

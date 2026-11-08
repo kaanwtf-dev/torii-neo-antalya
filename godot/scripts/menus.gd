@@ -358,33 +358,9 @@ func set_shades(on: bool, quiet := false) -> void:
 		if hud and hud.has_method("toast"): hud.toast("🕶 Sunglasses on. Çok havalı! [i](So cool!)[/i]" if on else "🕶 Sunglasses off.", 3.0)
 		Audio.sfx("menu_select"); SaveBridge.write()
 
+# the frame style and colours follow the sunglasses she wears in the eye slot (GearLook, 7.2 buildShadesInto)
 func _build_shades() -> void:
-	if not torii or torii.get("pose") == null: return
-	var sk: Skeleton3D = torii.pose.sk
-	var hb := sk.find_bone("head")
-	if hb < 0: return
-	var ba := BoneAttachment3D.new(); ba.bone_name = "head"; sk.add_child(ba)
-	_shades = Node3D.new(); _shades.name = "Shades"; ba.add_child(_shades)
-	# measured once in the world: from the head bone up to the top of her head (≈ 2.2 above her feet)
-	var bone_xf: Transform3D = sk.global_transform * sk.get_bone_global_pose(hb)
-	var hp := bone_xf.origin
-	var hh := clampf(torii.global_position.y + 2.2 - hp.y, .15, .6)
-	var f: Vector3 = torii.facing() if torii.has_method("facing") else Vector3.FORWARD
-	var right := f.cross(Vector3.UP).normalized()
-	var eye := hp + Vector3.UP * hh * .45 + f * hh * .5
-	_shades.transform = bone_xf.affine_inverse() * Transform3D(Basis(right, Vector3.UP, -f), eye)
-	var m := StandardMaterial3D.new(); m.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED; m.albedo_color = Color("16101e")
-	var rim := StandardMaterial3D.new(); rim.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED; rim.albedo_color = PINK
-	var s := hh
-	for sx in [-1.0, 1.0]:
-		_part(Vector3(s * .34, s * .17, .02), Vector3(sx * s * .2, 0, 0), m)
-		_part(Vector3(s * .02, s * .02, s * .55), Vector3(sx * s * .38, s * .04, s * .26), rim)    # the arms back over her ears
-	_part(Vector3(s * .1, s * .03, .02), Vector3(0, s * .05, 0), rim)
-
-func _part(size: Vector3, at: Vector3, mat: Material) -> void:
-	var mi := MeshInstance3D.new(); var bm := BoxMesh.new(); bm.size = size; mi.mesh = bm
-	mi.material_override = mat; mi.position = at; mi.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
-	_shades.add_child(mi)
+	if GearLook.me: _shades = GearLook.me.shades_node()
 
 # ---------------------------------------------------------------- WHAT'S NEW (PATCHES / showPatch)
 func _patch_later() -> void:

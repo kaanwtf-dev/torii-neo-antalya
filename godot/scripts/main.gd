@@ -88,6 +88,8 @@ func _ready() -> void:
 	# nazars, food, gear, chests, kill loot (setup is a coroutine: no await), then the level-up show + perks,
 	# then the I / J bag
 	var items := Items.new(); items.name = "Items"; add_child(items); items.setup(world, p, hud)
+	# what she wears shows on her: shades style, jewellery, bags, skates / platforms (Bus gear_eq)
+	var gl := GearLook.new(); gl.name = "GearLook"; add_child(gl); gl.setup(p)
 	var lu := LevelUp.new(); lu.name = "LevelUp"; add_child(lu); lu.setup(p, hud)
 	var inv := InventoryUI.new(); inv.name = "InventoryUI"; add_child(inv); inv.setup(p)
 	# skills on R / 1..0, buffs, the boss battle quiz (Bandit Strike drives Bandit)
