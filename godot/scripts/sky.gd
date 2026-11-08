@@ -52,6 +52,7 @@ var neon := 1.0                  # 7.2's st.neon: 1 = full night, 0 = noon
 var night := false
 var dawn_mix := 0.0
 var dawn_target := 0.0
+var fog_min := 0.0               # Quality's floor for a shorter VIEW (fogs over before the far plane)
 var _pin_h := -1.0
 var _t := 0.0
 var _sent := false
@@ -403,7 +404,7 @@ func _tick(force: bool) -> void:
 	if env:
 		env.background_color = fogc
 		env.fog_light_color = fogc
-		env.fog_density = lerpf(DAY_FOG_D, NIGHT_FOG_D, k)
+		env.fog_density = maxf(lerpf(DAY_FOG_D, NIGHT_FOG_D, k), fog_min)
 		env.ambient_light_source = Environment.AMBIENT_SOURCE_COLOR
 		env.ambient_light_color = (st["hemiS"] as Color).lerp(st["hemiG"], .35)
 		env.ambient_light_energy = float(st["hemiI"]) * 1.05

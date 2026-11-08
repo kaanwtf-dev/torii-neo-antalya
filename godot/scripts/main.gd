@@ -96,6 +96,8 @@ func _ready() -> void:
 	# both must exist before Missions.setup so the story waits for the title
 	var cut := Cutscene.new(); add_child(cut); cut.setup(world, p, hud)
 	var menus := Menus.new(); add_child(menus); menus.setup(p, hud, save_ui)
+	# the auto quality governor (7.2 autoGfx): a slow Mac steps GRAFİK / VIEW down on its own, with a toast
+	var qual := Quality.new(); add_child(qual); qual.setup(p, hud)
 	m.setup(world, p, hud, lessons)
 	# roaming monsters, night packs, minibosses, the stinky Cruze
 	var spawner := Spawner.new(); spawner.name = "Spawner"; add_child(spawner); spawner.setup(world, p)

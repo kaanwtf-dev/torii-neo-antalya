@@ -202,7 +202,7 @@ func _wipe() -> void:
 		return
 	f.store_string(raw); f.close()
 	var keep := {}
-	for k in ["musVol", "sfxVol", "voiceOn", "musicOn", "shades", "gGfx", "gGlow", "gGrade", "gPatch"]:
+	for k in ["musVol", "sfxVol", "voiceOn", "musicOn", "shades", "gGfx", "gGlow", "gGrade", "gPatch", "gView", "gManual"]:
 		if SaveBridge.data.has(k): keep[k] = SaveBridge.data[k]
 	SaveBridge.data = keep
 	SaveBridge.write()
@@ -268,6 +268,8 @@ func open_pause() -> void:
 		_opt_text(), CYAN, 15)
 	if SkyCycle.me:
 		_opt_btns["grade"] = _btn(r1, "", func(): SkyCycle.me.toggle_grade(); SaveBridge.write(); _opt_text(), CYAN, 15)
+	if Quality.me:                         # VIEW distance (Quality's gView; the auto governor shortens it on a slow Mac)
+		_opt_btns["view"] = _btn(_row(v), "", func(): Quality.me.cycle_view(); _opt_text(), CYAN, 15)
 	var r2 := _row(v)
 	_opt_btns["voice"] = _btn(r2, "", func():
 		if Audio.me: Audio.me.set_voice(not Audio.me.voice_on)
@@ -312,6 +314,7 @@ func _opt_text() -> void:
 	_opt_btns["gfx"].text = "🎨 GRAFİK: %s" % ["PS1", "SHARP", "SMOOTH"][clampi(SaveBridge.get_i("gGfx"), 0, 2)]
 	_opt_btns["glow"].text = "✨ NEON GLOW: %s" % ("ON" if _glow_on() else "OFF")
 	if SkyCycle.me and _opt_btns.has("grade"): _opt_btns["grade"].text = SkyCycle.me.grade_label()
+	if Quality.me and _opt_btns.has("view"): _opt_btns["view"].text = Quality.me.view_label()
 	_opt_btns["voice"].text = "🔊 MONSTER VOICES: %s" % ("ON" if Audio.me == null or Audio.me.voice_on else "OFF")
 	_opt_btns["shades"].text = "🕶 SHADES: %s" % ("ON" if _shades_on() else "OFF")
 	_opt_btns["fs"].text = "⛶ FULLSCREEN [X]"
@@ -325,6 +328,7 @@ func _glow_on() -> bool: return SaveBridge.data.get("gGlow", true) != false
 # Menus owns GRAFİK and NEON GLOW; sky.gd only owns NIGHT GRADE (gGrade) and hides its halos on gGlow false.
 func _cycle_gfx() -> void:
 	SaveBridge.data["gGfx"] = (SaveBridge.get_i("gGfx") + 1) % 3
+	if Quality.me: Quality.me.mark_manual()     # she chose: the auto governor stops (7.2 GFX.manual)
 	_apply_gfx()
 	_opt_text()
 
