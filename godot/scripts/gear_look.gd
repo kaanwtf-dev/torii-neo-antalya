@@ -72,6 +72,8 @@ func refresh() -> void:
 		"capraz": _crossbody(bc)
 		"bel": _bumbag(bc)
 		"sirt": _backpack(bc)
+	# the backpack hangs just behind her braids: keep their swing (wf/pose braids()) from going through it
+	if torii.pose.get("braid_max") != null: torii.pose.braid_max = .08 if str(bb.get("id", "")) == "sirt" else .75
 
 # a node in her model space that follows `bone` (her rest pose has unrotated bones, so this is just the
 # bone's rest transform undone)
