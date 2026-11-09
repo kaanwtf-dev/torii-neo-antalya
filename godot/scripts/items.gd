@@ -614,7 +614,7 @@ func effect(T: String) -> void:
 			else: heal(12); _sfx("heal"); Stats.gain_xp(2)
 		"tavla": add_mana(20); _teach("tavla"); _sfx("ding"); Stats.gain_xp(2)
 		"glasses":
-			SaveBridge.data["int"] = SaveBridge.get_i("int") + 1; _teach("gözlük"); _sfx("ding")
+			SaveBridge.data["int"] = SaveBridge.get_i("int") + 1; _teach("gözlük"); _sfx("ding"); _sfx("chuckle")
 			_toast("👓 +1 INT! Turkish: [b]zeka[/b] = intelligence · XP bonus +8%"); Stats.gain_xp(4)
 		"cig":
 			_teach("sigara"); _sfx("cough"); Stats.gain_xp(3)

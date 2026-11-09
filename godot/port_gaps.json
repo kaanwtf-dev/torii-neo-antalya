@@ -2794,10 +2794,10 @@
    "area": "TRK",
    "id": "TRK-19",
    "feature": "INT stat sources",
-   "status": "partial",
+   "status": "done",
    "html_ref": "glasses pickup 10802 (+1 INT), Kitap Sandığı chest 8290 (+2), ogrenci 9128 (+2), quest rewards 12705/12721/12731, dino 15963 (+1); used in gainXP 8990 (+8% XP each)",
-   "godot_ref": "save_bridge.gd:77 (reads int for the XP bonus); nothing writes int",
-   "gap": "The INT XP bonus from her 7.2 save is applied, but no source in Godot can raise INT any more, and INT is never shown.",
+   "godot_ref": "items.gd effect('glasses') + _chest_won 'kitap', levelup.gd take_perk 'ogrenci', quests.gd _reward (defter chain in quests.json), tutors.gd _reward (dino in tutors.json), stats.gd gain_xp; shown in hud.gd _stats_text + inventory_ui.gd stats tab",
+   "gap": "Done (batch 2+, checked 2026-11-08): every 7.2 source raises int with 7.2's toast, the HUD stats block shows INT like 7.2's #stats.",
    "player_impact": "low",
    "effort": "S",
    "depends_on": [
