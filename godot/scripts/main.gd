@@ -92,6 +92,8 @@ func _ready() -> void:
 	var items := Items.new(); items.name = "Items"; add_child(items); items.setup(world, p, hud)
 	var lu := LevelUp.new(); lu.name = "LevelUp"; add_child(lu); lu.setup(p, hud)
 	var inv := InventoryUI.new(); inv.name = "InventoryUI"; add_child(inv); inv.setup(p)
+	# the bike's parts (worn bike-slot gear) and the level-15 neon underglow (7.2 applyBikeLook2)
+	var blook := BikeLook.new(); blook.name = "BikeLook"; add_child(blook); blook.setup(bike, p)
 	# skills on R / 1..0, buffs, the boss battle quiz (Bandit Strike drives Bandit)
 	var skills := Skills.new(); skills.name = "Skills"; add_child(skills); skills.setup(p, hud, ban)
 	# cutscenes (calls, boss intros, Hellspace, opening, credits) and the title / pause / guide / patch menus;
@@ -500,6 +502,8 @@ func _dev_shot(p: Node3D) -> void:
 		for n in all: modes[n.mode] = modes.get(n.mode, 0) + 1
 		print("NPCS ", all.size(), " ", modes, " kaan at ", all.filter(func(n): return n.mode == "kaan").map(func(n): return n.global_position))
 	if front: p.yaw = PI; p.cam_off = PI; p.snap_camera()
+	for a in OS.get_cmdline_user_args():                    # --bikelook=... shots: close the story's opening call first
+		if a.begins_with("--bikelook="): await get_tree().create_timer(.5).timeout; await _dev_clear(_hud)
 	if "--bike" in OS.get_cmdline_user_args():
 		p.global_position = Vector3(-20, .05, -10); p._get_on()
 		Input.action_press("move_forward")
