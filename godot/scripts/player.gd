@@ -877,7 +877,7 @@ func _model_xf(dt: float) -> void:
 	if _sq < .999: b = b.scaled(Vector3(1.0 + (1.0 - _sq) * .5, _sq, 1.0 + (1.0 - _sq) * .5))
 	var P := Vector3(0, piv, 0)
 	model.transform = Transform3D(b, P - b * P)
-	if pose: pose.braids(dt, t)
+	if pose: pose.braids(dt, t, on_bike)
 
 # curbs, ramp lips and steps up to 45 cm: she steps up onto them instead of stopping dead (7.2 used a height
 # map and never had edges; the exported city has real ones, like the lip at the foot of Tower Bridge)
@@ -978,6 +978,7 @@ func _camera(dt: float) -> void:
 # after a teleport (flights, respawns): put the camera straight behind her instead of sweeping across town
 func snap_camera() -> void:
 	_cam_snap = true
+	if pose: pose.braid_reset()
 
 # ---------------- the bike (7.2's Diamond Back) ----------------
 func _get_on() -> void:

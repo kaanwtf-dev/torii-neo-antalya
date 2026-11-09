@@ -387,15 +387,27 @@ func _join(par: Array, a: int, c: int) -> void:
 	par[_root(par, a)] = _root(par, c)
 
 # every frame, after the body pose and the model's transform are set (the player calls it from _model_xf)
-func braids(dt: float, t: float) -> void:
+# after a teleport: forget where the tips were, so the jump doesn't fling them
+func braid_reset() -> void:
+	_br_has = false
+
+# bike: on the bike they hang outward in corners and flutter in the wind (7.2's bike branch)
+func braids(dt: float, t: float, bike := false) -> void:
 	if _br < 0 or dt <= 0.0: return
 	var hg := sk.global_transform * sk.get_bone_global_pose(b["head"])
 	var tip := hg * _br_tip
-	var v := (tip - _br_prev) / dt if _br_has else Vector3.ZERO
+	var d := tip - _br_prev if _br_has else Vector3.ZERO
 	_br_prev = tip; _br_has = true
-	if v.length() > 40.0: v = Vector3.ZERO              # a teleport, not a run
-	var lv := hg.basis.orthonormalized().inverse() * v  # in her head's frame: +z = where she faces, +x = her +x side
-	var want := Vector2(clampf(lv.z * .075 - lv.y * .05, 0.0, .7) + sin(t * 1.3) * .03, clampf(-lv.x * .06, -.3, .3))
+	if d.length() > 3.0: d = Vector3.ZERO               # a teleport (respawn, door, flight), not a ride: 3 m in one tick
+	var v := (d / dt).limit_length(20.0)
+	var hb := hg.basis.orthonormalized().inverse()
+	var lv := hb * v                                    # in her head's frame: +z = where she faces, +x = her +x side
+	var want := Vector2(clampf(lv.z * .075 - lv.y * .05, 0.0, .58) + sin(t * 1.3) * .03, clampf(-lv.x * .06, -.3, .3))
+	if bike:
+		var dn := hb * Vector3.DOWN                     # which way is down from her (leaning) head
+		var fw := clampf(lv.z / 12.0, 0.0, 1.0)
+		want.x += sin(t * 7.0) * .18 * fw               # wind flutter
+		want.y = clampf(want.y + atan2(dn.x, -dn.y) * 2.0, -.33, .33)   # hang out of the corner, past straight down
 	var left := minf(dt, .1)
 	while left > 0.0:                                   # a bouncy spring (small steps keep it stable)
 		var h := minf(left, 1.0 / 120.0); left -= h
