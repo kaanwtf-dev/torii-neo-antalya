@@ -701,9 +701,10 @@ func _coins_tick(dt: float) -> void:
 			c["live"] = false; g.visible = false
 
 # ---------------------------------------------------------------- kills (killEnemy + lootDrop)
-# d = {enemy, pos, kind, elite, xp, boss, mini, level, lira, roam}. enemy.gd's _die() already pays the
-# base XP (through Lessons, which saves a level-up right away = CRT-01), the kill count and the mini-boss
-# purse; here: the XP bonuses (ÇALIŞKAN, gear, matcha), the coins, the loot, ŞİFALI VURUŞ.
+# d = {enemy, pos, kind, elite, xp, boss, mini, level, lira, roam, xp_paid, mult}. enemy.gd's _die() pays the
+# kill count, the mini-boss purse and bumps the kill streak (mult; the purse is already × mult); here: the
+# kill XP × the streak (7.2 killEnemy: Math.round(e.xp * mult)) with its bonuses (ÇALIŞKAN, gear, matcha),
+# the coins, the loot, ŞİFALI VURUŞ. (xp_paid = enemy.gd paid the base XP itself: only when Items isn't up.)
 func _on_kill(d: Dictionary) -> void:
 	if not world: return
 	var at: Vector3 = d.get("pos", Vector3.ZERO)
@@ -714,8 +715,9 @@ func _on_kill(d: Dictionary) -> void:
 	var kind: String = str(d.get("kind", ""))
 	var luck := 1.0 + Stats.stat("luck")
 	var xp := int(d.get("xp", 0))
-	if Lessons.me: Stats.gain_xp(Stats.xp_bonus(xp), Vector3.INF, true)      # the base XP is paid already
-	else: Stats.gain_xp(xp, at + Vector3(0, 3.1, 0))
+	var sxp := int(round(xp * float(d.get("mult", 1.0))))
+	var paid := (xp + Stats.xp_bonus(xp)) if d.get("xp_paid", false) else 0
+	Stats.gain_xp(sxp + Stats.xp_bonus(sxp) - paid, Vector3.INF, true)        # raw: enemy.gd shows the +XP label
 	if Stats.pk("sifa") > 0 and _alive(): heal(int(round(player.max_hp * .02 * Stats.pk("sifa"))))
 	# lira flies to her (7.2: 6-18, elites 40-60)
 	var purse := int(d.get("lira", randi_range(40, 60) if elite else randi_range(6, 18)))
