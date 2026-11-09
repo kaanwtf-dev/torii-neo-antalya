@@ -483,6 +483,10 @@ func _dev_shot(p: Node3D) -> void:
 		walk = walk or a == "--walk"; front = front or a == "--front"
 		if a == "--fps": _fps_probe()
 	if path == "": return
+	if "--clear" in OS.get_cmdline_user_args():           # --clear: close the story's opening call first
+		await get_tree().create_timer(.4).timeout
+		var hs := get_tree().root.find_children("*", "Hud", true, false)
+		if hs.size(): await _dev_clear(hs[0])
 	for a in OS.get_cmdline_user_args():
 		if a.begins_with("--mobs="):                        # --mobs=zombie,ghost,... : line some up in front of her
 			var kinds := a.substr(7).split(",")
@@ -510,7 +514,10 @@ func _dev_shot(p: Node3D) -> void:
 		if "--turn" in OS.get_cmdline_user_args(): Input.action_press("move_left")
 		if "--side" in OS.get_cmdline_user_args(): p.cam_off = PI / 2
 		p.snap_camera()
-	elif walk: Input.action_press("move_forward")
+	elif walk:
+		if "--close" in OS.get_cmdline_user_args():      # --close: close-ups instead (<path>_<view>_<stand|run>.png)
+			await _dev_closeups(p, path.get_basename()); get_tree().quit(); return
+		Input.action_press("move_forward")
 	if "--hit" in OS.get_cmdline_user_args():
 		await get_tree().create_timer(1.3).timeout
 		p._attack()
@@ -523,6 +530,19 @@ func _dev_shot(p: Node3D) -> void:
 	await RenderingServer.frame_post_draw
 	get_viewport().get_texture().get_image().save_png(path)
 	get_tree().quit()
+
+# dev only (--shot=PATH --walk --close [--clear]): her from the front, side and back, standing then running
+func _dev_closeups(p: Node3D, base: String) -> void:
+	var c := Camera3D.new(); c.fov = 40; p.add_child(c); c.make_current()
+	for run in [false, true]:
+		if run: Input.action_press("move_forward")
+		await get_tree().create_timer(1.2 if run else .6).timeout
+		for v in [["front", Vector3(0, 1.3, -4.4)], ["side", Vector3(4.4, 1.3, 0)], ["back", Vector3(0, 1.5, 4.4)]]:
+			c.position = v[1]; c.look_at(p.to_global(Vector3(0, 1.15, 0)))
+			await get_tree().process_frame
+			await RenderingServer.frame_post_draw
+			print("CLOSEUP ", v[0], " run=", run, " braid=", p.pose._br_a if p.pose else null)
+			get_viewport().get_texture().get_image().save_png("%s_%s_%s.png" % [base, v[0], "run" if run else "stand"])
 
 func _inputs() -> void:
 	# 7.2's keys: A/D strafe, the arrows ←/→ TURN her (and steer the bike like A/D), ↑/↓ walk like W/S

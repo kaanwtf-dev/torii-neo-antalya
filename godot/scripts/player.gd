@@ -156,6 +156,8 @@ func setup(torii_scene: PackedScene) -> void:
 	var sk := _find_skeleton(model)
 	if sk:
 		pose = ToriiPose.new(sk)
+		for mi in model.find_children("*", "MeshInstance3D", true, false):      # her braids get a swing bone
+			if pose.braid_rig(mi): break
 		# her weapon hand: 7.2 hangs it .3 below the elbow of her +x arm, in the arms-down frame
 		var ba := BoneAttachment3D.new(); ba.bone_name = "elb_p"; sk.add_child(ba)
 		hand = Node3D.new(); hand.basis = Basis(Vector3(0, 0, 1), ToriiPose.ARMS_DOWN); ba.add_child(hand)
@@ -841,17 +843,17 @@ func _pose(dt: float, ground: float) -> void:
 	elif combat.state == "light": pose.combo(combat.step, combat.st / maxf(.01, combat.dur), kick)
 	elif combat.state == "dash": pose.combo(0, clampf(combat.st / combat.dur, 0.0, 1.0), kick)
 	elif combat.state == "heavy":
-		if combat.phase == "wind": pose.heavy_wind(t, minf(1.0, combat.st / .15), combat.charge)
-		else: pose.heavy_go(combat.st / maxf(.01, combat.dur))
+		if combat.phase == "wind": pose.heavy_wind(t, minf(1.0, combat.st / .15), combat.charge, kick)
+		else: pose.heavy_go(combat.st / maxf(.01, combat.dur), kick)
 	elif combat.state == "slam":
 		if combat.phase == "air": pose.slam_air()
 		else: pose.slam_land(combat.st / .38)
 	elif combat.state == "shock": pose.cast(t)
 	else:
-		if not air: pose.aim(pitch)
 		if blocking: pose.block(minf(1.0, (t - _block_t0) / .08))
 		if cast_t > 0: pose.cast(t, minf(1.0, cast_t / .15))
 		elif eat_t > 0: pose.eat(t, minf(1.0, eat_t / .2))
+		if not air: pose.aim(pitch)                        # after cast: the lean stays on while she shoots
 	if _flinch_t > 0:
 		_flinch_t -= dt; pose.flinch(1.0 - _flinch_t / .3)
 	_model_xf(dt)
@@ -875,6 +877,7 @@ func _model_xf(dt: float) -> void:
 	if _sq < .999: b = b.scaled(Vector3(1.0 + (1.0 - _sq) * .5, _sq, 1.0 + (1.0 - _sq) * .5))
 	var P := Vector3(0, piv, 0)
 	model.transform = Transform3D(b, P - b * P)
+	if pose: pose.braids(dt, t, on_bike)
 
 # curbs, ramp lips and steps up to 45 cm: she steps up onto them instead of stopping dead (7.2 used a height
 # map and never had edges; the exported city has real ones, like the lip at the foot of Tower Bridge)
@@ -975,6 +978,7 @@ func _camera(dt: float) -> void:
 # after a teleport (flights, respawns): put the camera straight behind her instead of sweeping across town
 func snap_camera() -> void:
 	_cam_snap = true
+	if pose: pose.braid_reset()
 
 # ---------------- the bike (7.2's Diamond Back) ----------------
 func _get_on() -> void:
