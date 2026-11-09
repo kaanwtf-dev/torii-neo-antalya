@@ -415,6 +415,6 @@ func braids(dt: float, t: float, bike := false) -> void:
 		_br_v += ((want - _br_a) * 110.0 - _br_v * 10.0) * h
 		_br_a += _br_v * h
 	if _br_a.x < -.02: _br_a.x = -.02; _br_v.x = maxf(0.0, _br_v.x) * .3     # her back stops them
-	if _br_a.x > .75: _br_a.x = .75; _br_v.x = minf(0.0, _br_v.x)
+	if _br_a.x > braid_max: _br_a.x = braid_max; _br_v.x = minf(0.0, _br_v.x)
 	if absf(_br_a.y) > .35: _br_a.y = signf(_br_a.y) * .35; _br_v.y = 0.0
 	sk.set_bone_pose_rotation(_br, eul(_br_a.x, 0, _br_a.y))
