@@ -130,6 +130,7 @@ func update(dt: float, t: float, moving: bool, spd: float, air: bool, vy: float)
 
 # ======== the Godot moveset (new; same rig, same helpers) ========
 var spin := 0.0                    # extra turn of her whole model (spin kick) — the player applies it
+var braid_max := .75               # how far the braids may swing out behind her (GearLook lowers it under a backpack)
 
 # blend envelope: in over `fin`, out over the last `fout` of p (0..1)
 static func env(p: float, fin := .1, fout := .3) -> float:
