@@ -477,8 +477,9 @@ func _dev_shot(p: Node3D) -> void:
 		walk = walk or a == "--walk"; front = front or a == "--front"
 		if a == "--fps": _fps_probe()
 	if path == "": return
+	if "--nocall" in OS.get_cmdline_user_args() and _hud: await _dev_clear(_hud)     # --nocall: the opening call out of the shot
 	for a in OS.get_cmdline_user_args():
-		if a.begins_with("--mobs="):                        # --mobs=zombie,ghost,... : line some up in front of her
+		if a.begins_with("--mobs="):                       # --mobs=zombie,ghost,... : line some up in front of her
 			var kinds := a.substr(7).split(",")
 			for i in kinds.size():
 				var close := "--hit" in OS.get_cmdline_user_args()      # --hit: within sword reach, and she swings
@@ -546,6 +547,9 @@ func _build_world(w: Node3D) -> void:
 	# (tools/city/merge_city.py), cut into 60 m chunks; every chunk is solid ground/walls for her
 	var city: Node3D = load("res://assets/city/city.glb").instantiate()
 	w.add_child(city)
+	# the scenery that moves on its own (club neon, ferry, windmill, gods' coins, water): lifted out of the frozen
+	# chunks before they become colliders
+	var amb := Ambient.new(); amb.name = "Ambient"; add_child(amb); amb.setup(w, city)
 	_solidify(city)
 	Tint.apply(city)
 	var data = JSON.parse_string(FileAccess.get_file_as_string("res://assets/city/city_data.json"))
