@@ -3,7 +3,8 @@
 # lastik = neon tyres in the item's colour, zil = a gold bell on the bar, zincirb = a chrome chainring,
 # far = a neon headlight (a real SpotLight3D that lights the road at night). Small code meshes on the
 # bike model (bike.glb, +z forward like 7.2), flat colours, glow where 7.2 glowed. Rebuilt only when
-# her level-15 state or the worn part changes (player.stats_changed fires on equip / unequip / level-up).
+# her level-15 state or the worn part changes (player.stats_changed fires on equip / unequip / level-up,
+# and on most regen frames too, so refresh() bails out on the raw level / worn uid / gear list first).
 # Dev: --bikelook=lastik,zil,zincirb,far,glow shows those parts whatever the save says (screenshots only).
 class_name BikeLook
 extends Node
@@ -11,6 +12,10 @@ extends Node
 var bike: Node3D
 var player: Node
 var _key := "?"
+var _raw_neon := false        # cheap early-out inputs: stats_changed fires most frames (stamina/mana regen)
+var _raw_uid: Variant = "?"
+var _raw_gear: Variant = null
+var _raw_n := -1
 var _glow: Node3D
 var _bell: MeshInstance3D
 var _ring: MeshInstance3D
@@ -50,7 +55,14 @@ func _col(id: String) -> Color:
 
 func refresh() -> void:
 	if not is_instance_valid(bike): return
+	if _key == "dev": return
 	var neon := Stats.lvl() >= 15
+	var eq = SaveBridge.data.get("eq")
+	var uid: Variant = eq.get("bike") if eq is Dictionary else null
+	var gear = SaveBridge.data.get("gear")
+	var n: int = gear.size() if gear is Array else -1
+	if _key != "?" and neon == _raw_neon and typeof(uid) == typeof(_raw_uid) and uid == _raw_uid and n == _raw_n and is_same(gear, _raw_gear): return
+	_raw_neon = neon; _raw_uid = uid; _raw_gear = gear; _raw_n = n
 	var pr := _part()
 	var pid: String = pr[0]; var pc: Color = pr[1]
 	var key := "%s|%s|%s" % [neon, pid, pc.to_html()]
