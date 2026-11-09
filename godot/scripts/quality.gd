@@ -60,8 +60,8 @@ func apply_view() -> void:
 	var cam = torii.get("cam") if torii else null
 	if cam is Camera3D: (cam as Camera3D).far = far
 	if SkyCycle.me:
-		# FAR keeps the sky's own fog; shorter views fog over (~95%) before the far plane so nothing pops
-		SkyCycle.me.fog_min = 0.0 if view() == 0 else 3.0 / (far * .86)
+		# FAR keeps the sky's own fog; shorter views fog ~91% at the far plane (what FAR already ships with) so nothing pops
+		SkyCycle.me.fog_min = 0.0 if view() == 0 else 2.4 / far
 		SkyCycle.me._tick(true)
 
 # ---------------------------------------------------------------- the governor
@@ -76,6 +76,11 @@ func _playing() -> bool:
 		if not DisplayServer.window_is_focused() or DisplayServer.window_get_mode() == DisplayServer.WINDOW_MODE_MINIMIZED: return false
 	return true
 
+# the pause menu pauses the tree, so _process never sees it: re-warm when she comes back
+func _notification(what: int) -> void:
+	if what == NOTIFICATION_UNPAUSED:
+		_warm = maxf(_warm, REWARM); _low_t = 0.0; _win.clear(); _win_t = 0.0
+
 func _process(_dt: float) -> void:
 	var now := Time.get_ticks_usec()
 	var fdt := float(now - _last_us) / 1e6 if _last_us > 0 else 0.0
@@ -83,7 +88,8 @@ func _process(_dt: float) -> void:
 	if not _playing():
 		_warm = maxf(_warm, REWARM); _low_t = 0.0; _win.clear(); _win_t = 0.0
 		return
-	if fdt <= 0.0 or fdt > .25: return                 # a load / shader hitch, or the first frame back
+	if fdt <= 0.0 or fdt > 1.0: return                 # a load, or the first frame back after a stall
+	fdt = minf(fdt, .5)                                # a really slow Mac still counts (the window median skips lone hitches)
 	if _warm > 0.0: _warm -= fdt; return
 	if _cool > 0.0: _cool -= fdt; return
 	_win.append(1.0 / _fake if _fake > 0.0 else fdt); _win_t += fdt

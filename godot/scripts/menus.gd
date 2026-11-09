@@ -202,7 +202,9 @@ func _wipe() -> void:
 		return
 	f.store_string(raw); f.close()
 	var keep := {}
-	for k in ["musVol", "sfxVol", "voiceOn", "musicOn", "shades", "gGfx", "gGlow", "gGrade", "gPatch", "gView", "gManual"]:
+	for k in ["musVol", "sfxVol", "voiceOn", "musicOn", "shades", "gGfx", "gGlow", "gGrade", "gPatch"]:
+		if SaveBridge.data.has(k): keep[k] = SaveBridge.data[k]
+	for k in ["gView", "gManual"]:         # Quality's VIEW + "she picked it herself"
 		if SaveBridge.data.has(k): keep[k] = SaveBridge.data[k]
 	SaveBridge.data = keep
 	SaveBridge.write()
