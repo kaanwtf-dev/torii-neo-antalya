@@ -107,6 +107,18 @@ func _ui() -> void:
 	for c in [_who, _line, _next, _skip, _title]: c.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	_set_ui(false)
 
+# 🔠 TEXT SIZE (UiScale): bigger subtitles; the letterbox grows to hold them (100% = the numbers above)
+func _fs() -> void:
+	for c in [_who, _line, _next, _skip, _title]: UiScale.apply(c)
+	var ex := _sub_h() - 70.0
+	var w := UiScale.wide(740, 860)
+	_line.size = Vector2(w, 70.0 + ex); _line.position = Vector2((960.0 - w) / 2.0, 646.0 - ex); _who.position.x = _line.position.x
+	_who.size.y = UiScale.wide(22, 44); _who.position.y = _line.position.y - UiScale.wide(24, 50)
+	_next.position.y = 690.0 - (UiScale.px(14) - 14); _skip.position.x = 780.0 - (UiScale.px(12) - 12) * 10.0
+
+# the subtitle box's height: 70 at 100%, room for three lines at the bigger sizes
+func _sub_h() -> float: return 70.0 if UiScale.k() <= 1.0 else minf(170.0, 80.0 * UiScale.k())
+
 func _set_ui(on: bool) -> void:
 	for c in [_who, _line, _next, _skip, _title]: c.visible = on
 
@@ -137,7 +149,7 @@ func play(list: Array, cb := Callable()) -> void:
 	if hud: _hud_was = hud.visible; hud.visible = false
 	if torii and torii.cam: cam.global_transform = torii.cam.global_transform
 	cam.current = true
-	_bars_to = 92.0; _set_ui(true); _title_a = 0.0
+	_fs(); _bars_to = 92.0 + _sub_h() - 70.0; _set_ui(true); _title_a = 0.0
 	_shot(0)
 
 func _shot(k: int) -> void:
@@ -153,7 +165,7 @@ func _shot(k: int) -> void:
 	_line.text = str(cur.get("line", ""))
 	var has_line := _line.text != ""
 	_who.visible = has_line; _line.visible = has_line
-	if cur.has("title"): _title.text = str(cur["title"]); _title_a = 0.01
+	if cur.has("title"): _title.text = UiScale.bb(str(cur["title"]), 1.4); _title_a = 0.01
 	else: _title_a = 0.0
 	_title.modulate.a = _title_a
 	if cur.has("say") and str(cur["say"]) != "": Audio.speak(str(cur["say"]))
@@ -202,7 +214,7 @@ func _process(dt: float) -> void:
 	_t += dt
 	# letterbox bars, title fade, flash
 	_bars = move_toward(_bars, _bars_to, dt * 260.0)
-	_top.size = Vector2(960, _bars); _bot.position = Vector2(0, 720 - _bars); _bot.size = Vector2(960, _bars)
+	_top.size = Vector2(960, minf(_bars, 92.0)); _bot.position = Vector2(0, 720 - _bars); _bot.size = Vector2(960, _bars)
 	_top.visible = _bars > .5; _bot.visible = _bars > .5
 	if _title_a > 0: _title_a = minf(1.0, _title_a + dt * 2.5); _title.modulate.a = _title_a
 	_flash_a = maxf(0.0, _flash_a - dt * 2.2); _flash.color = Color(1, 1, 1, _flash_a)

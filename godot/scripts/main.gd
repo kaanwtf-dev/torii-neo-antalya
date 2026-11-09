@@ -141,6 +141,7 @@ func _ready() -> void:
 			hud.toast("💾 The main save was unreadable — restored from a backup instead. You may have lost a few minutes, no more.", 9.0, true)
 	for a in OS.get_cmdline_user_args(): if a.begins_with("--autoplay="): _dev_autoplay(m, p, lessons, quiz, hud, int(a.substr(11)))
 	if "--lessontest" in OS.get_cmdline_user_args(): _dev_lessontest(lessons, quiz, hud)
+	UiScale.dev(self, hud)                  # dev: --fs=1.75 (text size for this run), --fsdemo=DIR (shots of every text box)
 	_dev_shot(p)
 	for a in OS.get_cmdline_user_args(): if a.begins_with("--brawl="): _dev_brawl(p, float(a.substr(8)))
 	# the real start: VHS intro -> title (CONTINUE / NEW GAME starts the story). Dev runs skip both.
