@@ -548,6 +548,9 @@ func _build_world(w: Node3D) -> void:
 	# (tools/city/merge_city.py), cut into 60 m chunks; every chunk is solid ground/walls for her
 	var city: Node3D = load("res://assets/city/city.glb").instantiate()
 	w.add_child(city)
+	# the scenery that moves on its own (club neon, ferry, windmill, gods' coins, water): lifted out of the frozen
+	# chunks before they become colliders
+	var amb := Ambient.new(); amb.name = "Ambient"; add_child(amb); amb.setup(w, city)
 	_solidify(city)
 	Tint.apply(city)
 	var data = JSON.parse_string(FileAccess.get_file_as_string("res://assets/city/city_data.json"))
