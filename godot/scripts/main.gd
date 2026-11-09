@@ -477,9 +477,8 @@ func _dev_shot(p: Node3D) -> void:
 		walk = walk or a == "--walk"; front = front or a == "--front"
 		if a == "--fps": _fps_probe()
 	if path == "": return
-	if "--nocall" in OS.get_cmdline_user_args() and _hud: await _dev_clear(_hud)     # --nocall: the opening call out of the shot
 	for a in OS.get_cmdline_user_args():
-		if a.begins_with("--mobs="):                       # --mobs=zombie,ghost,... : line some up in front of her
+		if a.begins_with("--mobs="):                        # --mobs=zombie,ghost,... : line some up in front of her
 			var kinds := a.substr(7).split(",")
 			for i in kinds.size():
 				var close := "--hit" in OS.get_cmdline_user_args()      # --hit: within sword reach, and she swings
