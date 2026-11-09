@@ -53,7 +53,7 @@ func _sb(bg: Color, border: Color, bw := 2, rad := 10, pad := 10) -> StyleBoxFla
 	s.set_corner_radius_all(rad); s.set_content_margin_all(pad); return s
 
 func _rich(parent: Node, text: String, size := 15, w := 0.0) -> RichTextLabel:
-	var r := RichTextLabel.new(); r.bbcode_enabled = true; r.fit_content = true; r.scroll_active = false; r.text = text
+	var r := RichTextLabel.new(); r.bbcode_enabled = true; r.fit_content = true; r.scroll_active = false; r.text = UiScale.bb(text)
 	r.add_theme_color_override("default_color", TXT); r.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	for k in ["normal_font_size", "bold_font_size", "italics_font_size", "bold_italics_font_size"]: r.add_theme_font_size_override(k, size)
 	if w > 0: r.custom_minimum_size = Vector2(w, 0)
@@ -137,7 +137,7 @@ func _do(a: String, arg: String) -> void:
 func render() -> void:
 	if not panel.visible: return
 	money.text = "₺ %d · Lv %d" % [SaveBridge.get_i("lira"), Stats.lvl()]
-	for c in tabs_row.get_children(): c.queue_free()
+	for c in tabs_row.get_children(): tabs_row.remove_child(c); c.queue_free()      # gone now, so the row never measures 12 tabs
 	for tb in D["INVTABS"]:
 		var id: String = tb[0]
 		var label: String = tb[1]
@@ -154,6 +154,9 @@ func render() -> void:
 		"quests": _quests()
 		_: _stats()
 	scroll.scroll_vertical = 0
+	# 🔠 TEXT SIZE (UiScale): everything scales; the tabs grow less so they stay on one line, the list gets shorter
+	UiScale.apply(panel); UiScale.apply(tabs_row, 1.25)
+	scroll.custom_minimum_size.y = 540.0 - maxf(0.0, UiScale.k() - 1.0) * 90.0; panel.size = Vector2(900, 672)
 
 func _gear_card(parent: Node, it: Dictionary, cmp = null) -> void:
 	var I := Items.me

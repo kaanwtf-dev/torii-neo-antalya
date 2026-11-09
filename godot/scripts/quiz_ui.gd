@@ -53,6 +53,7 @@ func _ready() -> void:
 	tag = _lab(v, 14, Color("ffd66b")); tag.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	prog = HBoxContainer.new(); prog.alignment = BoxContainer.ALIGNMENT_CENTER; v.add_child(prog)
 	vis = _lab(v, 40, Color.WHITE); vis.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	vis.set_meta("fs_skip", true)             # the big emoji picture keeps its size; TEXT SIZE scales the words
 	text = RichTextLabel.new(); text.bbcode_enabled = true; text.fit_content = true; text.custom_minimum_size = Vector2(700, 0)
 	text.add_theme_font_size_override("normal_font_size", 20); text.add_theme_font_size_override("bold_font_size", 20)
 	text.add_theme_font_size_override("italics_font_size", 20); text.add_theme_color_override("default_color", Color.WHITE)
@@ -83,8 +84,19 @@ func _lab(parent: Node, size: int, col: Color) -> Label:
 
 func _show(on: bool) -> void:
 	panel.visible = on; open = on
+	if on: _fs()
 	if on: Overlay.open("quiz")
 	else: Overlay.close("quiz"); qskip.visible = false
+
+# 🔠 TEXT SIZE (UiScale): every word on the panel scales; the panel gets wider (and moves up) to keep it on screen
+func _w() -> float: return UiScale.wide(740, 940)
+func _fs() -> void:
+	UiScale.apply(panel)
+	text.custom_minimum_size.x = _w() - 40; feed.custom_minimum_size.x = _w() - 40
+
+func _process(_dt: float) -> void:
+	if panel.visible and not lesson_cb.is_valid() and panel.position.y + panel.size.y > 712.0:
+		panel.position.y = maxf(6.0, 712.0 - panel.size.y)
 
 # the lesson's explanation first, one line per page like 7.2's say() box, then whatever comes next
 func show_lesson(title: String, lines: Array, then: Callable) -> void:
@@ -101,14 +113,14 @@ func _page() -> void:
 
 # a lesson reads like 7.2's dialogue box: a box low on the screen that fits the page (quizzes get the big panel)
 func _place_lesson() -> void:
-	panel.size = Vector2(740, 0)
+	panel.size = Vector2(_w(), 0)
 	await get_tree().process_frame
 	if not lesson_cb.is_valid(): return
-	panel.reset_size(); panel.size.x = 740
-	panel.position = Vector2(110, 720 - panel.size.y - 70)
+	panel.reset_size(); panel.size.x = _w()
+	panel.position = Vector2((960 - _w()) / 2, maxf(6.0, 720 - panel.size.y - 70))
 
 func _place_quiz() -> void:
-	panel.position = Vector2(110, 120); panel.size = Vector2(740, 480)
+	panel.position = Vector2((960 - _w()) / 2, 120); panel.size = Vector2(_w(), 480)
 
 func _next_page() -> void:
 	pages.pop_front()
@@ -172,6 +184,9 @@ func _next() -> void:
 			for i in cur["opts"].size():
 				var b := Button.new(); b.text = "%d. %s" % [i + 1, cur["opts"][i]]; b.custom_minimum_size = Vector2(340, 44)
 				b.add_theme_font_size_override("font_size", 18); b.pressed.connect(_pick.bind(i)); opts.add_child(b)
+				UiScale.apply(b)
+				if UiScale.k() > 1.0:                # bigger text: two answers per row still, long ones wrap
+					b.custom_minimum_size = Vector2((_w() - 46) / 2, 44 * UiScale.k()); b.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	_hinted = false; hbtn.visible = true; hbtn.disabled = false
 	hbtn.text = "💡 İPUCU · HINT — %d₺  (you have %d₺)   [H]" % [HINT_COST, SaveBridge.get_i("lira")]
 	if cur.has("say"): Tts.say(cur["say"])
@@ -187,6 +202,7 @@ func _draw_order() -> void:
 		var b := Button.new(); b.text = pool[i]; b.pressed.connect(func():
 			if lock: return
 			picked.append(pool[i]); pool.remove_at(i); _draw_order()); bank.add_child(b)
+	UiScale.apply(order_box)
 
 static func norm(s: String) -> String:
 	s = s.to_lower()

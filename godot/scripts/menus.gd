@@ -42,6 +42,7 @@ var _prompt_t := 0.0
 var _mus: HSlider
 var _sfx: HSlider
 var _opt_btns := {}
+var _fs_prev: Control                  # the pause menu's sample text: shows the TEXT SIZE live
 var _shades: Node3D
 var _guide_secs := {}
 var _guide_scroll: ScrollContainer
@@ -91,7 +92,7 @@ func _rich(parent: Node, t: String, size := 16, col := Color("e8e4f8"), w := 0.0
 	for k in ["normal_font_size", "bold_font_size", "italics_font_size", "bold_italics_font_size"]: r.add_theme_font_size_override(k, size)
 	r.add_theme_color_override("default_color", col)
 	if w > 0: r.custom_minimum_size = Vector2(w, 0)
-	r.text = t; parent.add_child(r)
+	r.text = UiScale.bb(t); parent.add_child(r)
 	return r
 
 func _btn(parent: Node, t: String, cb: Callable, col := CYAN, size := 16, alt := true) -> Button:
@@ -202,7 +203,7 @@ func _wipe() -> void:
 		return
 	f.store_string(raw); f.close()
 	var keep := {}
-	for k in ["musVol", "sfxVol", "voiceOn", "musicOn", "shades", "gGfx", "gGlow", "gGrade", "gPatch"]:
+	for k in ["musVol", "sfxVol", "voiceOn", "musicOn", "shades", "gGfx", "gGlow", "gGrade", "gPatch", "gFs"]:
 		if SaveBridge.data.has(k): keep[k] = SaveBridge.data[k]
 	SaveBridge.data = keep
 	SaveBridge.write()
@@ -256,7 +257,7 @@ func open_pause() -> void:
 	_rich(v, "[center][b]⚙ AYARLAR · OPTIONS[/b][/center]", 24, PINK, 480)
 	var prev := _panel(PURP); v.add_child(prev)
 	var lvl := SaveBridge.get_i("lvl", 1)
-	_rich(prev, "[center]Örnek metin — [b]Merhaba Torii![/b] [i](paused)[/i]\n[color=#ff7ab0]HP %d / %d[/color] · LVL %d · %d₺[/center]" %
+	_fs_prev = _rich(prev, "[center]Örnek metin — [b]Merhaba Torii![/b] [i](paused)[/i]\n[color=#ff7ab0]HP %d / %d[/color] · LVL %d · %d₺[/center]" %
 		[int(torii.get("hp")) if torii else 0, int(torii.get("max_hp")) if torii else 0, lvl, SaveBridge.get_i("lira")], 15, Color("e8e4f8"), 440)
 	var A = Audio.me
 	_mus = _slider(v, "🎵 Müzik", int(A.mus_vol) if A else 16, func(x): if Audio.me: Audio.me.set_music_volume(int(x)))
@@ -274,6 +275,8 @@ func open_pause() -> void:
 		_opt_text(), CYAN, 15)
 	_opt_btns["shades"] = _btn(r2, "", func(): set_shades(not _shades_on()); _opt_text(), CYAN, 15)
 	_opt_btns["fs"] = _btn(r2, "", func(): toggle_fullscreen(); _opt_text(), CYAN, 15)
+	_opt_btns["text"] = _btn(_row(v), "", _cycle_fs, CYAN, 15)
+	UiScale.apply(_fs_prev)
 	var r3 := _row(v)
 	_btn(r3, "📘 REHBER · GUIDE", func(): open_guide(true), GOLD, 15)
 	_btn(r3, "📜 WHAT'S NEW", func(): show_patch(true), GOLD, 15)
@@ -315,6 +318,7 @@ func _opt_text() -> void:
 	_opt_btns["voice"].text = "🔊 MONSTER VOICES: %s" % ("ON" if Audio.me == null or Audio.me.voice_on else "OFF")
 	_opt_btns["shades"].text = "🕶 SHADES: %s" % ("ON" if _shades_on() else "OFF")
 	_opt_btns["fs"].text = "⛶ FULLSCREEN [X]"
+	if _opt_btns.has("text"): _opt_btns["text"].text = "🔠 YAZI BOYUTU · TEXT SIZE: %s" % UiScale.label()
 
 func _flag(k: String) -> bool: return SaveBridge.data.get(k, false) == true
 func _set_flag(k: String, v: bool) -> void: SaveBridge.data[k] = v
@@ -327,6 +331,20 @@ func _cycle_gfx() -> void:
 	SaveBridge.data["gGfx"] = (SaveBridge.get_i("gGfx") + 1) % 3
 	_apply_gfx()
 	_opt_text()
+
+# 🔠 YAZI BOYUTU · TEXT SIZE (save gFs, UiScale): 80 → 100 → 125 → 150 → 175 %, live (the HUD hears Bus "ui_scale")
+func _cycle_fs() -> void:
+	UiScale.cycle()
+	if is_instance_valid(_fs_prev): UiScale.apply(_fs_prev)
+	_opt_text()
+
+# bigger text makes a panel's header and buttons taller: its scroll box gives up the difference
+func _fit(p: Control, sc: ScrollContainer) -> void:
+	if UiScale.k() <= 1.0: return
+	await get_tree().process_frame
+	if not is_instance_valid(p) or not is_instance_valid(sc): return
+	var over := p.get_combined_minimum_size().y - 704.0
+	if over > 0: sc.custom_minimum_size.y = maxf(160.0, sc.custom_minimum_size.y - over)
 
 func _apply_display() -> void:
 	_apply_gfx(); _apply_glow()
@@ -411,6 +429,7 @@ func show_patch(force: bool) -> void:
 	for q in PATCHES.slice(1, 4): _rich(body, "[color=#b8b0d0]· [b]%s[/b] — %s[/color]" % [q["v"], q["t"]], 14, Color.WHITE, 630)
 	var r := _row(v)
 	_btn(r, "HADİ! · LET'S GO ▶", close_patch, PINK, 17, false)
+	UiScale.apply(p); _fit(p, sc)
 	_patch = _center_layer(p, .55)
 	_patch.gui_input.connect(func(e):
 		if e is InputEventMouseButton and e.pressed: close_patch())      # 7.2: clicking the backdrop closes it
@@ -526,6 +545,7 @@ func open_guide(from_pause := false) -> void:
 		chip.custom_minimum_size = Vector2(0, 0)
 	var r := _row(v)
 	_btn(r, "◀ GERİ · BACK [ESC]", close_guide, PINK, 16, false)
+	UiScale.apply(p); UiScale.apply(idx, 1.25); _fit(p, _guide_scroll)       # the index chips grow less: more room to read
 	_guide = _center_layer(p, .6)
 
 func _guide_jump(id: String) -> void:

@@ -267,12 +267,14 @@ func _show_tip(id: String) -> void:
 	var tips: Dictionary = SaveBridge.data["tips"] if SaveBridge.data.get("tips") is Dictionary else {}
 	tips[id] = 1; SaveBridge.data["tips"] = tips
 	for c in _tip_body.get_children(): c.queue_free()
-	_rich(_tip_body, "[color=#7bf7ff]📘 NASIL ÇALIŞIR · HOW IT WORKS[/color]", 13, Color.WHITE, 620)
-	_rich(_tip_body, "[b]%s[/b]" % T["t"], 22, Color("ffd66b"), 620)
-	for l in T["l"]: _rich(_tip_body, "• " + str(l).replace("[b]", "[b][color=#7bf7ff]").replace("[/b]", "[/color][/b]"), 16, Color("e8e4f8"), 620)
+	var tw := UiScale.wide(620, 900)          # 🔠 TEXT SIZE: a wider card, so bigger words still fit the screen
+	_rich(_tip_body, "[color=#7bf7ff]📘 NASIL ÇALIŞIR · HOW IT WORKS[/color]", 13, Color.WHITE, tw)
+	_rich(_tip_body, "[b]%s[/b]" % T["t"], 22, Color("ffd66b"), tw)
+	for l in T["l"]: _rich(_tip_body, "• " + str(l).replace("[b]", "[b][color=#7bf7ff]").replace("[/b]", "[/color][/b]"), 16, Color("e8e4f8"), tw)
 	var ok := Button.new(); ok.text = "ANLADIM · GOT IT ▶"; ok.focus_mode = Control.FOCUS_NONE; ok.add_theme_font_size_override("font_size", 16)
 	ok.size_flags_horizontal = Control.SIZE_SHRINK_CENTER; ok.pressed.connect(close_tip); _tip_body.add_child(ok)
-	_rich(_tip_body, "[center][color=#9a94a8]Enter / E / Space / Esc closes it[/color][/center]", 12, Color.WHITE, 620)
+	_rich(_tip_body, "[center][color=#9a94a8]Enter / E / Space / Esc closes it[/color][/center]", 12, Color.WHITE, tw)
+	UiScale.apply(_tip)
 	_tip.visible = true; _center(_tip); _tip_frame = Engine.get_process_frames()
 	Overlay.open("tip"); _sfx("ding")
 	SaveBridge.write()

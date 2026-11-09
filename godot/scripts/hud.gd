@@ -151,6 +151,17 @@ void fragment() {
 	var hl := Label.new(); hl.text = "🖱 Click to look around  ·  ESC to release the mouse"
 	hl.add_theme_font_size_override("font_size", 14); hl.add_theme_color_override("font_color", Color("bfeefc")); lock_hint.add_child(hl)
 	look_label = _label(Vector2(800, 656), "👁 LOOKING BACK [C]", 13, Color("ffd66b")); look_label.visible = false
+	_fs()
+
+# 🔠 TEXT SIZE (UiScale, save gFs): the text boxes re-scale from their built sizes and grow with it (100% = as above)
+func _fs() -> void:
+	for n in [_stats, obj, ban, box, toasts, lock_hint, skip_btn, _choice]: UiScale.apply(n)
+	var k := UiScale.k()
+	_stats.size = Vector2(UiScale.wide(330, 570), UiScale.wide(122, 214) + (24.0 if k > 1.0 else 0.0))
+	obj.size.y = UiScale.wide(110, 220); ban.size.y = UiScale.wide(70, 150)
+	ban.position.y = 236.0 + UiScale.wide(122, 214) - 122.0     # below the taller stats
+	lock_hint.size = Vector2.ZERO; skip_btn.size = Vector2.ZERO
+	if k != 1.0: box.size = Vector2(720, 130)
 
 func _label(at: Vector2, t: String, size: int, col: Color) -> Label:
 	var l := Label.new(); l.text = t; l.position = at; l.add_theme_font_size_override("font_size", size)
@@ -194,6 +205,7 @@ func bind(p: Node3D) -> void:
 	if _bound: return
 	_bound = true
 	for ev in ["xp", "lira", "level_up"]: Bus.on(ev, func(_d): _poll = 0.0)
+	Bus.on("ui_scale", func(_d): _fs())
 	Bus.on("enemy_hit", func(d):
 		var e = d.get("enemy")
 		if is_instance_valid(e) and e is Node3D: _recent[e] = 3.0)
@@ -232,7 +244,7 @@ func objective_point() -> Variant:
 	return null
 
 func objective(t: String) -> void: obj.text = "[right]%s[/right]" % t
-func banner(t: String) -> void: ban.text = "[center]%s[/center]" % t; _ban_t = 3.0
+func banner(t: String) -> void: ban.text = "[center]%s[/center]" % UiScale.bb(t); _ban_t = 3.0
 
 # 7.2's toast(html, ms, bad): up to three stacked, each on its own timer; bold words in cyan like .toast b;
 # a red border for warnings
@@ -248,13 +260,13 @@ func toast(t: String, dur := 6.0, bad := false) -> void:
 	sb.content_margin_left = 20; sb.content_margin_right = 20; sb.content_margin_top = 8; sb.content_margin_bottom = 8
 	p.add_theme_stylebox_override("panel", sb)
 	var r := RichTextLabel.new(); r.bbcode_enabled = true; r.fit_content = true; r.scroll_active = false
-	r.mouse_filter = Control.MOUSE_FILTER_IGNORE; _sizes(r, 17)
-	r.text = "[center]%s[/center]" % t.replace("[b]", "[b][color=#7bf7ff]").replace("[/b]", "[/color][/b]")
+	r.mouse_filter = Control.MOUSE_FILTER_IGNORE; _sizes(r, 17); UiScale.apply(r)      # built at 17, scaled once (a live change re-scales from 17)
+	r.text = "[center]%s[/center]" % UiScale.bb(t).replace("[b]", "[b][color=#7bf7ff]").replace("[/b]", "[/color][/b]")
 	# as wide as its longest line (7.2's toasts hug their text), 620 at most, so three don't wall her off
 	var widest := 0.0
 	var fnt := r.get_theme_font("bold_font")
-	for ln in _untag(t).split("\n"): widest = maxf(widest, fnt.get_string_size(ln, HORIZONTAL_ALIGNMENT_LEFT, -1, 17).x)
-	r.custom_minimum_size = Vector2(clampf(widest + 12.0, 160.0, 620.0), 0)
+	for ln in _untag(t).split("\n"): widest = maxf(widest, fnt.get_string_size(ln, HORIZONTAL_ALIGNMENT_LEFT, -1, UiScale.px(17)).x)
+	r.custom_minimum_size = Vector2(clampf(widest + 12.0, UiScale.wide(160.0, 280.0), UiScale.wide(620.0, 760.0)), 0)
 	p.add_child(r); p.set_meta("t", dur); toasts.add_child(p)
 
 static func _untag(t: String) -> String:
@@ -269,6 +281,7 @@ func say(who_: String, lines: Array, done := Callable()) -> void:
 
 func _show_line() -> void:
 	box.visible = true; Overlay.open("say")
+	if UiScale.k() != 1.0: box.size = Vector2(720, 130)      # bigger text: the box fits each line again
 	who.text = _say_who; line.text = str(_say_q[0]); hint.text = "[E] continue  ·  ESC skip"
 
 func next_line() -> void:
@@ -308,6 +321,9 @@ func choose(who_: String, text_: String, opts: Array, cb: Callable) -> void:
 		b.focus_mode = Control.FOCUS_NONE; b.pressed.connect(_pick_choice.bind(i)); v.add_child(b)
 	var h := Label.new(); h.text = "[1-%d] choose  ·  [E] close" % opts.size(); h.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
 	h.add_theme_color_override("font_color", Color("7bf7ff")); h.add_theme_font_size_override("font_size", 13); v.add_child(h)
+	UiScale.apply(_choice)
+	if UiScale.k() > 1.0:                                    # bigger text: long answers wrap inside the box
+		for b in v.get_children(): if b is Button: (b as Button).autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	_choice_cb = cb; _choice_n = opts.size()
 	Overlay.open("choice")
 
@@ -340,7 +356,14 @@ func _process(dt: float) -> void:
 	cross.visible = captured and not Overlay.any()
 	lock_hint.visible = not captured and not Overlay.any()
 	# toasts sit low (under her body, above the skill bar) like 7.2's; above the call box while it's up
-	toasts.position.y = 210.0 if box.visible else 300.0
+	# bigger text (UiScale): the call box grows up from the bottom edge, the toasts and a tall choice box stay on screen
+	if UiScale.k() == 1.0: toasts.position.y = 210.0 if box.visible else 300.0
+	else:
+		if box.visible: box.position.y = maxf(8.0, minf(560.0, 690.0 - box.size.y))      # bottom at 690 like 100%: clear of SAVE & LOAD
+		toasts.position.y = minf(210.0, box.position.y - 350.0) if box.visible else 300.0
+		var tm := maxf(340.0, toasts.get_combined_minimum_size().y)
+		toasts.size.y = tm; toasts.position.y = maxf(4.0 - 340.0 + minf(340.0, tm), toasts.position.y - (tm - 340.0))
+		if _choice: _choice.position.y = maxf(8.0, minf(200.0, 712.0 - _choice.size.y))
 	for p in toasts.get_children():
 		var left: float = p.get_meta("t") - dt; p.set_meta("t", left)
 		if left <= 0: toasts.remove_child(p); p.queue_free()
@@ -466,7 +489,7 @@ func _stats_text() -> void:
 	var tx := "\n".join(lines)
 	if _stats.text != tx: _stats.text = tx
 	# the SKIP button sits where the stats start; push them below it while it shows
-	_stats.position.y = STATS_Y + (70.0 if skip_btn.visible else 0.0)
+	_stats.position.y = STATS_Y + (UiScale.wide(70.0, 130.0) if skip_btn.visible else 0.0)
 	_stats.visible = not Overlay.any()
 
 # ---- drawing helpers ----
@@ -691,7 +714,7 @@ func _draw_buffs() -> void:
 	var list = sk.call("active_buffs")
 	if not (list is Array): return
 	var x := 12.0
-	var y := _stats.position.y + 124.0 if _stats.visible else STATS_Y + 70.0
+	var y := _stats.position.y + _stats.size.y + 2.0 if _stats.visible else STATS_Y + 70.0
 	for b in list:
 		if not (b is Dictionary): continue
 		var left := float(b.get("left", b.get("t", 0)))
