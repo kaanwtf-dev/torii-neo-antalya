@@ -161,7 +161,10 @@ func _fs() -> void:
 	obj.size.y = UiScale.wide(110, 220); ban.size.y = UiScale.wide(70, 150)
 	ban.position.y = 236.0 + UiScale.wide(122, 214) - 122.0     # below the taller stats
 	lock_hint.size = Vector2.ZERO; skip_btn.size = Vector2.ZERO
-	if k != 1.0: box.size = Vector2(720, 130)
+	# back to the built layout; at a bigger size _process moves them again next frame (so 100% after 175% = 100% again)
+	box.size = Vector2(720, 130); box.position.y = 560.0
+	toasts.size.y = 340.0; toasts.position.y = 210.0 if box.visible else 300.0
+	if _choice: _choice.position.y = 200.0
 
 func _label(at: Vector2, t: String, size: int, col: Color) -> Label:
 	var l := Label.new(); l.text = t; l.position = at; l.add_theme_font_size_override("font_size", size)
