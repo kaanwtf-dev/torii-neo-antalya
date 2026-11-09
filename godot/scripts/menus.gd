@@ -7,7 +7,8 @@
 #                "pause"); Müzik / Ses efekt sliders, GRAFİK, NEON GLOW, MONSTER VOICES, SUNGLASSES,
 #                FULLSCREEN, REHBER · GUIDE, WHAT'S NEW, DEVAM, SAVE & LOAD (save_ui.gd).
 #   patch notes  PATCHES / showPatch / closePatch: pops up once per version (save `gPatch`, new), lists
-#                this version's groups + the 3 before it. assets/story/godot.json "patch" is the top entry.
+#                this version's groups, the older Godot notes in full (dimmer), then the 3 7.x ones as one line each.
+#                assets/story/godot.json "patches" = the Godot notes, newest first (an old single "patch" still reads).
 #   guide        GUIDE / openGuide / closeGuide: every section, with her own numbers.
 #   toggle bar   #btns + #ver (bottom right, while the mouse is free) and the E prompt line (#prompt,
 #                setPrompt) over the skill bar: shops, quests, gods, fountains, simit carts, DJ, the bike.
@@ -24,8 +25,9 @@ const PINK := Color("ff5fa2")
 const CYAN := Color("7bf7ff")
 const GOLD := Color("ffd66b")
 const PURP := Color("b06bff")
-var GAME_VER := "ALPHA 8.0 · GAME GAME"
+var GAME_VER := "ALPHA 8.1 · SERİ"
 var PATCHES: Array = []
+var _gpatches := 0                     # how many of PATCHES are Godot notes (shown in full)
 var torii: CharacterBody3D
 var hud: CanvasLayer
 var save_ui: Node
@@ -57,7 +59,9 @@ func setup(p: CharacterBody3D, h: CanvasLayer, sui: Node) -> void:
 	var S = JSON.parse_string(FileAccess.get_file_as_string("res://assets/story/story72.json"))
 	if G is Dictionary:
 		GAME_VER = str(G.get("ver", GAME_VER))
-		if G.has("patch"): PATCHES.append(G["patch"])
+		if G.get("patches") is Array: PATCHES.append_array(G["patches"])
+		elif G.has("patch"): PATCHES.append(G["patch"])
+		_gpatches = PATCHES.size()
 	if S is Dictionary: PATCHES.append_array(S.get("patches", []))
 	_root = Control.new(); _root.set_anchors_preset(Control.PRESET_FULL_RECT); _root.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	add_child(_root)
@@ -407,8 +411,13 @@ func show_patch(force: bool) -> void:
 	for g in P["groups"]:
 		_rich(body, "[b]%s[/b]" % g[0], 17, GOLD, 630)
 		for l in g[1]: _rich(body, "· " + str(l), 15, Color("e8e4f8"), 630)
+	for q in PATCHES.slice(1, _gpatches):          # the older Godot notes stay readable, a bit dimmer
+		_rich(body, "[b]📜 %s · %s[/b]" % [q["v"], q["t"]], 17, Color("c9b8ff"), 630)
+		for g in q["groups"]:
+			_rich(body, "[b]%s[/b]" % g[0], 15, Color("d8c890"), 630)
+			for l in g[1]: _rich(body, "[color=#b8b0d0]· %s[/color]" % str(l), 14, Color.WHITE, 630)
 	_rich(body, "[b]📜 EARLIER[/b]", 17, GOLD, 630)
-	for q in PATCHES.slice(1, 4): _rich(body, "[color=#b8b0d0]· [b]%s[/b] — %s[/color]" % [q["v"], q["t"]], 14, Color.WHITE, 630)
+	for q in PATCHES.slice(maxi(1, _gpatches), maxi(1, _gpatches) + 3): _rich(body, "[color=#b8b0d0]· [b]%s[/b] — %s[/color]" % [q["v"], q["t"]], 14, Color.WHITE, 630)
 	var r := _row(v)
 	_btn(r, "HADİ! · LET'S GO ▶", close_patch, PINK, 17, false)
 	UiScale.apply(p); _fit(p, sc)

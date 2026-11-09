@@ -12,15 +12,20 @@ Project rules live in `CLAUDE.md` (they apply to both of us). Newest entry on to
 - **Kaan's goal (2026-11-06): "a game game"** — 7.2 is the concept; Godot ports all of it AND adds PS1-era depth
   (Medievil / Tenchu / Spyro / Ape Escape): light/heavy combos, dodge roll, lock-on, block + parry, stamina, jump
   with coyote time, ledge climb, roaming monsters (harder at night, minibosses), loot, skills, sound for everything.
-- **Godot version is now ALPHA 8.0 · GAME GAME** (`Menus.GAME_VER`, from `assets/story/godot.json`). Batch 2+
-  (10 parallel systems, wired by one integrator on 2026-11-07) is committed (20cdbb2) and pushed. Kaan played it once
-  in a window (2026-11-07); his reports so far: a crash on quit (fixed 11-08), wants paid hints in quizzes (done 11-08).
+- **Godot version is now ALPHA 8.1 · SERİ** (`Menus.GAME_VER`, from `assets/story/godot.json` "ver"). 8.1 = eight
+  parallel branches merged on `build/8.1` (2026-11-08, committed, NOT pushed, NOT on main yet): kill streaks, bike parts +
+  underglow, braid swing + bare-hand heavy kick, visible gear, TEXT SIZE, ambient scenery, auto quality governor, INT check.
+  Patch notes are now a list: godot.json `"patches"` (newest first; Menus shows the newest in full, older Godot notes dimmer,
+  then 3 one-liners from 7.x). 8.0 (20cdbb2 + 6c5082f) is on main and pushed. Kaan's reports so far: quit crash (fixed 11-08),
+  paid quiz hints (done 11-08).
 - **Quitting goes through `main._quit()`** (`auto_accept_quit = false`): save, `Audio.shutdown()` (stops players + TTS,
   waits for the render thread / intro task / every babble task), unpause, wait, `_drop_statics()`, quit. Don't call
   `get_tree().quit()` from game code; send `NOTIFICATION_WM_CLOSE_REQUEST` instead. Test runs MUST pass
   `--savedir=<scratch dir>` or they write Kaan's real Godot save on quit.
 - **How it's wired:** `scripts/main.gd` builds the world, Torii, Bandit, the bike, loads her save, then creates
-  every system as a child Node with `static var me` (order matters, see the comments in `_ready`). Systems talk
+  every system as a child Node with `static var me` (order matters, see the comments in `_ready`). 8.1 systems: `Streaks`
+  (streaks.gd), `GearLook` (gear_look.gd, Bus `gear_eq` {slot, item} from items.gd), `BikeLook` (bike_look.gd), `Quality`
+  (quality.gd), `Ambient` (ambient.gd, from `_build_world`); `UiScale` (ui_scale.gd) is a static helper, Bus `ui_scale` {k}. Systems talk
   over `scripts/bus.gd` (`Bus.on` / `Bus.emit_ev`, reset at the top of `_ready`). Every screen that pauses her
   goes through `Overlay`. One E dispatcher in main (`_interact`, 7.2's interact() order); the bike and the gods
   read E themselves first.
@@ -30,11 +35,11 @@ Project rules live in `CLAUDE.md` (they apply to both of us). Newest entry on to
   `_inputs()` comment.
 - **Save:** still 7.2's `torii_save` via `SaveBridge` (keeps unknown keys). New Godot-only fields: `gPatch`,
   `gGfx`, `gGlow`, `gGrade`, `side`, `npc.allmastered`, `musicOn` (7.2 runtime var, now persisted); `musVol`,
-  `sfxVol`, `voiceOn` moved from 7.2's `torii_opts` into `torii_save`.
-- **Open gaps:** `godot/PORT_GAPS.md` §0 (batch 2+ entry) lists what's left (bike tuning/underglow, braid swing,
-  kill streaks, visible gear, outfits per level, UI scale, ambient scenery animation, auto quality governor, the
-  Mac .app export). Machine-readable rows: `godot/port_gaps.json`. Don't re-audit.
-- **Not done yet:** the open gaps above, Mac export (export templates ~1 GB: ask Kaan first).
+  `sfxVol`, `voiceOn` moved from 7.2's `torii_opts` into `torii_save`. 8.1 adds `gFs` (text size, default 1.0), `gView`
+  (view distance FAR/MID/NEAR) and `gManual` (she picked GRAFİK/VIEW herself: the governor stops). NEW GAME keeps all three.
+- **Open gaps:** `godot/PORT_GAPS.md` §0 (batch 8.1 entry on top): only PRG-24 (outfit per level) and CRT-02 (the Mac .app
+  export) are left, both wait for Kaan. Machine-readable rows: `godot/port_gaps.json`. Don't re-audit.
+- **Not done yet:** merging `build/8.1` into main + push (Kaan decides), the open gaps above, Mac export (export templates ~1 GB: ask Kaan first).
 
 ## Things Kaan wants every time
 - Before doing anything: recommend which model/effort settings to use, and ask him first.
@@ -42,6 +47,14 @@ Project rules live in `CLAUDE.md` (they apply to both of us). Newest entry on to
 - Never put Torii's real photo (`assets/screenshots/torii face.jpg`) in git — it's ignored on purpose.
 
 ## Log
+- 2026-11-08 Claude (integrator): **ALPHA 8.1 · SERİ on `build/8.1`.** Merged wf/intel, quality, ambient, streaks, bike, pose,
+  gearlook, uiscale (`--no-ff`, in that order). One textual conflict: `hud.gd banner()` (streaks added a `dur` argument,
+  uiscale wrapped the text in `UiScale.bb`) → kept both. Integration edits: `torii_pose.gd braids()` now clamps at `braid_max`
+  (gearlook sets .08 under the backpack), the streak chip scales with TEXT SIZE, the patch-notes reader takes a list. Each new
+  `class_name` needs one `godot --headless --path godot --import` before a boot sees it. New dev flags: `--clear` (close the
+  opening call before a shot), `--close` (pose close-ups), `--gearshots=DIR`, `--gearlow`, `--bikelook=a,b`, `--fs=1.75`,
+  `--fsdemo=DIR`, `--fakefps=N` (governor test), `--ambientinfo`, `--ambient_t=SEC`. Changed from 7.2 on purpose: the streak's
+  7 s clock waits while an Overlay is up.
 - 2026-11-08 Claude: **quit crash, quiz hints, smoke-test bugs.** Kaan's quit aborted with `recursive_mutex lock failed`
   (never reproduced here). Fix = orderly quit (see Current state): headless `--verbose` exits had leaked 2 audio
   playbacks on the Music bus (late `_got_stem` deferred calls started music after stop); now 0 leaks, windowed

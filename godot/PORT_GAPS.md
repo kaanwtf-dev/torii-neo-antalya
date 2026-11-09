@@ -9,6 +9,19 @@ Audited 2026-11-04 against **ALPHA 7.2 · POLYGON GIRL** (`torii-neo-antalya-ALP
 
 ## 0. Progress
 
+**Batch 8.1 "parallel polish" — 8 branches merged on `build/8.1` 2026-11-08 (ALPHA 8.1 · SERİ), not playtested by hand yet.**
+- **Kill streaks** (streaks.gd, enemy.gd, items.gd, hud.gd): 7 s chain, ÜÇLÜ/ALTILI/ONLU/EFSANE/DURDURULAMAZ at 3/6/10/16/25
+  (×1.25..3.0 XP + lira), banner + fanfare + shake, 🔥 chip above the weapon box, "seri" toast; kills pay base XP again → CMB-04.
+- **Bike** (bike_look.gd, stats.gd): bike-slot parts on the bike, level-15 underglow, 7.2 additive bike stacking → BIK-05, PRG-09 (bike).
+- **Pose** (torii_pose.gd, player.gd): braid spring bone, bare-hand heavy kick, aim lean while shooting → PLY-07.
+- **Visible gear** (gear_look.gd): glasses, jewellery, bags, skates, platforms on Torii; a backpack limits the braid swing
+  (`ToriiPose.braid_max`) → PRG-09 (Torii). Combat boots skipped on purpose (sheet sneakers).
+- **Text size** (ui_scale.gd, save `gFs`): pause menu YAZI BOYUTU 80–175 % → UI-07.
+- **Ambient** (ambient.gd): club neon, ferry, windmill, gods' coins, water → FX-06.
+- **Quality governor** (quality.gd, saves `gView`, `gManual`): GRAFİK then VIEW steps on a slow Mac, 🔭 VIEW button → WLD-08.
+- **INT** (items.gd): every 7.2 source was already in; glasses chuckle added → PRG-23/TRK-19.
+- **Still open:** PRG-24 (outfit per level) and CRT-02 (the Mac .app export itself): both wait for Kaan.
+
 **Batch 2+ "Game game" (all systems) — built + wired 2026-11-07, not committed, no window playtest yet.** Ten systems in parallel,
 then one integrator (main.gd wiring, API fixes, clean parse, `--autoplay` runs). Kaan's goal: port all of 7.2 AND add PS1-era depth.
 - **Combat & movement** (player.gd, combat.gd, lockon.gd, torii_pose.gd): light 3-hit chains + heavy (RIGHT mouse, hold to charge),
@@ -38,10 +51,8 @@ then one integrator (main.gd wiring, API fixes, clean parse, `--autoplay` runs).
 - **World** (sky.gd, world_life.gd, interactables.gd, intro.gd): day/night sky (DAYK), sun/moon/stars/clouds, lamp pools + halos by
   the hour, PS1 dither + NIGHT GRADE pass, cars/birds/blimp/plane, Josh, fountains, simit carts, DJ booth, VHS intro → DN-01..03,
   SKY-01..04, FX-01..03, WLD-03, STY-29, STY-32, STY-33, UI-03, UI-05 (GRAFİK in Menus), UI-06.
-- **Still open:** BIK-05 (bike gear parts, level-15 underglow), PLY-07 (braid swing — no braid bones), CMB-04 (kill streaks: only
-  `Stats.streak_tier` exists, nobody sets it), PRG-09 (visible gear), PRG-24 (outfit per level), UI-07 (UI scale slider), FX-06
-  (ambient scenery animation), WLD-08 (auto quality governor / decor thinning), TRK-19 (INT sources, partial), CRT-02 (the Mac .app
-  export itself). Nobody emits `quiz_answer` / `quest_done` yet (quiz_ui and quests play their own sounds, so it's fine).
+- **Still open (then):** BIK-05, PLY-07, CMB-04, PRG-09, PRG-24, UI-07, FX-06, WLD-08, TRK-19, CRT-02. All but PRG-24 and
+  CRT-02 were closed by batch 8.1 above. Nobody emits `quiz_answer` / `quest_done` yet (quiz_ui and quests play their own sounds, so it's fine).
 - **Integrator notes:** see AI_HANDOFF.md log 2026-11-07 for the API fixes. Checks: clean script load of every file, a normal boot to
   the title, `--autoplay` on a scratch copy of the dev save.
 
@@ -181,7 +192,7 @@ Written but never shown or used: `lira` (never shown or spent), `ammo` (+2 from 
 | PFX-01, FX-04 | Particles: puffs, confetti, fireworks | missing | No dust, sparks, death bursts, confetti or smoke | medium | S | puff/updateParts 8797-8818, fireworkBurst 9001 | none |
 | CAM-03, HUD-04, UI-36, FX-05 | Screen feedback: shake, hurt/heal vignette, drunk blur, fades | missing | Hits are easy to miss. Travel cuts instantly. | medium | M | shakeT 17873, vig 5240, #deadO 14614 | player.gd:97-100 |
 | CMB-03 | Hit feedback on monsters | partial | No red flash, knockback, damage numbers or sparks (only a scale pop) | high | S | hitEnemy 9662-9679 | enemy.gd:61-63, 102 |
-| CMB-04 | Kill streaks | missing | Tier banners, XP/lira multiplier, HUD counter | medium | S | STREAK 9686-9721 | none |
+| CMB-04 | Kill streaks | done (8.1, streaks.gd) | Tier banners, XP/lira multiplier, HUD counter | medium | S | STREAK 9686-9721 | none |
 | ENM-02, UI-23 | Monster levels, Lv tags, level colours | missing | A level-18 Torii fights level-1 monsters, so late missions are trivial and XP isn't scaled | high | M | mobLevel 9346-9381, spawnEnemy 8287-8291 | enemy.gd:39-44 |
 | ENM-03 | Elite (EPIC) stats, crown, kill banner | changed | Godot elites have half the toughness, normal damage and half the XP, with no crown or EPIC DOWN banner | medium | S | spawnEnemy 8280-8294, killEnemy 9758 | enemy.gd:42-55 |
 | PRG-04 | XP gain formula and +XP feedback | partial | No Çalışkan/gear XP, focus ×2, streak, mob-level scaling or elite ×4 | medium | S | gainXP 8987-8996 | save_bridge.gd:75-86 |
@@ -257,11 +268,11 @@ Written but never shown or used: `lira` (never shown or spent), `ammo` (+2 from 
 | HUD-02, UI-29 | Crosshair, click-to-look hint, mouse feel | missing | Hint, crosshair, sens .0022 vs .0028, pitch limits | medium | S | initMouseLook 5193-5229 | player.gd:129-139 |
 | PLY-03 | Jump / landing feel | partial | Dust, landing thud, jump sound, no jumping while dancing | low | S | 10321-10336 | player.gd:165-168 |
 | PLY-05 | Dancing as a real state | changed | Slow, no sprint/jump/attack, dances while moving | low | S | dance 9382, 10275-10326 | player.gd:172-175 |
-| PLY-07 | Kick pose, aim lean, braid swing | missing | Leg kick, torso pitch, braids (sheet model may need braid bones) | low | M | poseTorii 10126, 10561-10567 | torii_pose.gd:71-79 |
+| PLY-07 | Kick pose, aim lean, braid swing | done (8.1) | Leg kick, torso pitch, braids (sheet model may need braid bones) | low | M | poseTorii 10126, 10561-10567 | torii_pose.gd:71-79 |
 | BIK-02 | Ramming monsters with the bike | missing | Damage, knock, stun, then her own crash roll | medium | S | bikeRam 10379-10398 | none |
 | BIK-03 | Drift (Space while turning) + XP/lira | missing | Space always boosts in Godot | medium | M | 10181-10207 | player.gd:200-201 |
 | BIK-04 | Boost costs stamina, pedalling refills it | missing | Free boost | low | S | 10217-10237 | player.gd:199-201 |
-| BIK-05 | Hills, stat('bike'), neon bike at 15, bike parts | missing | Fixed numbers | low | M | 10209-10216, applyBikeLook2 7282-7307 | player.gd:195-198 |
+| BIK-05 | Hills, stat('bike'), neon bike at 15, bike parts | done | 8.1: bike_look.gd parts + underglow, 7.2 stacking (hills/stat already in player.gd) | low | M | 10209-10216, applyBikeLook2 7282-7307 | player.gd:195-198 |
 | BIK-06 | Ride rules + prompt | partial | Prompt, can't dismount above 5 m/s, city only, first-mount toast, "can't fight on the bike" toast | low | S | interact 10908-10920 | player.gd:143-145, 178-187 |
 | ENM-07 | Archers/witches kiting + shots | changed | Range, rate, wall stops, hex slow, toasts | medium | S | 10037-10044, 9447-9484 | enemy.gd:95-100, shot.gd |
 | ENM-08 | Charge behaviour (öküz + boss charge phases) | changed | Wind-up label, range, cooldown, wall daze, gore shove | medium | S | 9988-10034 | enemy.gd:111-128 |
@@ -274,7 +285,7 @@ Written but never shown or used: `lira` (never shown or spent), `ammo` (+2 from 
 | CMB-V02 (verifier) | Boss phase-change feedback | partial | Rev sound, shake, red flash, burst | low | S | checkPhases 12497-12505 | enemy.gd:71-85 |
 | CTL-02 | Other 7.2 keys with no binding | missing | Reference only: G V X M P I J H Z 1-6 E. Each one is tracked in its own row. | medium | S | keydown 5126-5183 | main.gd:191-197 |
 | SKL-03, STY-11 | Skill-cooldown rewards | missing | Reward toasts promise shorter cooldowns. 7.2 never saved them, so re-derive from progress. | low | S | 12124, 12138, 15948 | none |
-| PRG-09 | Visible gear on Torii and the bike | missing | Every slot changed her look. Needs BoneAttachment pieces on the sheet model. | medium | L | applyGearLook 7230-7287, applyBikeLook2 7290-7307 | player.gd:43-59 |
+| PRG-09 | Visible gear on Torii and the bike | done (8.1, gear_look.gd + bike_look.gd; no boots) | Every slot changed her look. Needs BoneAttachment pieces on the sheet model. | medium | L | applyGearLook 7230-7287, applyBikeLook2 7290-7307 | player.gd:43-59 |
 | PRG-20 | Guarded chests (12, keeper duel) | missing | Money/ammo/weapon/book chests, guaranteed gear. Not saved in 7.2, so no save risk. | medium | L | CHESTLOOT 8279-8375 | none |
 | PRG-23, TRK-19 | INT stat: shown and raised | done | All 7.2 sources raise it (glasses, Kitap chest, ÖĞRENCİ perk, Mert's 3 quest parts, the dino) with 7.2's toasts; HUD stats shows 🧠 INT. Checked 2026-11-08. | low | S | glasses 10802, Kitap 8290, ogrenci 9128 | items.gd effect/_chest_won, levelup.gd take_perk, quests.gd/tutors.gd _reward, hud.gd _stats_text |
 | STY-04 | Opening cutscene for a brand-new game (+ WELCOME BACK banner) | missing | Only seen on a new game; Torii is past it | medium | M | playOpening 13665, 18021-18031 | missions.gd:56 |
@@ -288,9 +299,9 @@ Written but never shown or used: `lira` (never shown or spent), `ammo` (+2 from 
 | STY-35, WLD-07, TRK-15 | Place words (beach, club, music store) + start-of-game words | missing | She likely knows them already from 7.2 | low | S | zoneTeach 10861-10866 | none |
 | STY-36, TRK-17 | Walker greetings with English gloss | changed | Floating label with 5 glossed lines vs a toast with 4 unglossed ones | low | S | GREET 10670, updatePeds 10703-10708 | npc.gd:22, 76-80 |
 | TRK-21 | Lesson/quiz sounds + red flash + banner subtitle | missing | Needs SND-01 | low | M | 11622, 11813-11821 | none |
-| UI-05, WLD-08 | Graphics levels, auto quality governor, glow toggle | missing | Matters mostly for a web export. Also check whether the export dropped thinned decor. | low | M | GFX 5260, applyGfx 18047-18066, autoGfx 17973 | main.gd:5, player.gd:56 |
+| UI-05, WLD-08 | Graphics levels, auto quality governor, glow toggle | done (GRAFİK batch 2+, governor 8.1 quality.gd) | Matters mostly for a web export. Also check whether the export dropped thinned decor. | low | M | GFX 5260, applyGfx 18047-18066, autoGfx 17973 | main.gd:5, player.gd:56 |
 | UI-06, FX-03 | NIGHT GRADE: 15-bit dither, grade vignette, scanlines | missing | On by default in 7.2. Art-direction call (section 5). | medium | M | PS1P/drawFrame 5296-5335, optGrade 18108 | main.gd:5, 16-22 |
-| UI-07 | UI scale slider (TV play) | partial | No user control. Default font instead of the Courier neon look. | medium | S | optFs 456, applyOpts 18087 | project.godot stretch |
+| UI-07 | UI scale slider (TV play) | done (8.1, TEXT SIZE, ui_scale.gd) | No user control. Default font instead of the Courier neon look. | medium | S | optFs 456, applyOpts 18087 | project.godot stretch |
 | UI-08 | Fullscreen (X) + widescreen aspect | missing | 4:3 letterboxed. Set aspect to expand before building more UI. | medium | S | toggleFullscreen 18170 | project.godot |
 | UI-09 | Toggle button bar + version label | missing | No `GAME_VER` at all (Kaan's version rule needs one) | low | S | #btns 391-399, #ver 400 | none |
 | UI-19 | Mission box layout + side lines + FREE PLAY | partial | One cyan line instead of three styled lines. No quest, side-job or bounty lines. FREE PLAY only flashes. | medium | M | #missionBox 382 | missions.gd:210, hud.gd:23 |
@@ -299,7 +310,7 @@ Written but never shown or used: `lira` (never shown or spent), `ammo` (+2 from 
 | SKY-02 | Drifting clouds | missing | 12 planes | low | S | 5662-5671, 5715-5720 | none |
 | SKY-03 | Shooting stars | missing | Every 7-22 s | low | S | shootStar 5694-5742 | none |
 | FX-02 | Additive lamp pools and haze cones | partial | Draw as dark translucent shapes. Set BLEND_MODE_ADD at load. | low | S | 6080-6095 | Material_665/666 |
-| FX-06 | Ambient scenery animation (club pulse, ferry, water, windmill, gods' coins) | changed | All frozen in the merged chunks | low | M | loop 17889-17964 | city.glb |
+| FX-06 | Ambient scenery animation (club pulse, ferry, water, windmill, gods' coins) | done (8.1, ambient.gd) | All frozen in the merged chunks | low | M | loop 17889-17964 | city.glb |
 | WLD-03 | Traffic cars | missing | 6 neon cars, 8 damage, teach araba. Model to export. | medium | M | updateCars 10655-10669 | none |
 | CRT-04 (critic) | Torii's blob shadow | missing | Bandit and the monsters have one, she doesn't | low | S | blobShadow 5992, 7196 | player.gd:43-59 |
 

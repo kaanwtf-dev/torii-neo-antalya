@@ -1,80 +1,136 @@
 {
-  "ver": "ALPHA 8.0 · GAME GAME",
-  "patch": {
-    "v": "ALPHA 8.0",
-    "t": "GAME GAME · NEO ANTALYA, REBUILT",
-    "groups": [
-      [
-        "❤ Your save is safe",
+  "ver": "ALPHA 8.1 · SERİ",
+  "patches": [
+    {
+      "v": "ALPHA 8.1",
+      "t": "SERİ · STREAKS, BRAIDS AND BLING",
+      "groups": [
         [
-          "Same save as 7.2. Bring it in once with [b]💾 SAVE & LOAD[/b] and everything is there: your level, words, weapons, gear, beads and quests.",
-          "Every key you know still does the same thing. The new moves got new keys of their own."
-        ]
-      ],
-      [
-        "⚔️ Real fighting now",
+          "🔥 Kill streaks",
+          [
+            "Kill monsters less than 7 s apart and they chain up. At 3, 6, 10, 16 and 25 in a row you get a banner and more XP and lira, up to [b]×3[/b]!",
+            "A small 🔥 counter above your weapon shows the streak, and its line shows how long you have for the next kill. [i]seri[/i] = streak.",
+            "Bug fixed: monsters pay their XP again."
+          ]
+        ],
         [
-          "[b]F / click[/b] chains into a 3-hit combo. [b]RIGHT click[/b] is a heavy hit: hold it to charge, it breaks guards.",
-          "[b]Left Ctrl[/b] = dodge roll. Roll [i]through[/i] a hit and it can't touch you.",
-          "[b]Hold Z[/b] to block. Block right before a hit lands = [b]PARRY[/b]: the monster is stunned and wide open.",
-          "[b]Tab[/b] locks on to a monster (Tab again = the next one). The camera keeps you both in view.",
-          "Monsters wind up before they hit — watch for the flash and the sound, then roll or parry."
-        ]
-      ],
-      [
-        "🏃 Moving with weight",
+          "💃 You",
+          [
+            "Your braids swing now! They fly out behind you when you run or ride, swing when you turn and bounce when you land.",
+            "A heavy hit ([b]RIGHT click[/b]) with empty hands is a big roundhouse kick now.",
+            "While you shoot, your body keeps leaning with the mouse.",
+            "The gear you wear shows on you: your glasses, hoop earrings, the nazar necklace, the gold chain, the bracelet, bags, roller skates and platform shoes."
+          ]
+        ],
         [
-          "A better jump: you can still jump a moment after running off an edge, and a jump pressed just before landing still happens.",
-          "Jump at a low wall and you grab the ledge and climb up by yourself.",
-          "[b]Shift[/b] sprint, rolls and heavy hits use the green [b]stamina[/b] bar. Skills use the blue [b]mana[/b] bar."
-        ]
-      ],
-      [
-        "👹 A city that fights back",
+          "🚲 Your bike",
+          [
+            "Bike gear shows on the bike: [b]Neon Lastik[/b] glowing tyres, the gold [b]Zil[/b] (bell), the chrome [b]Krom Zincir[/b] (chain) and the pink [b]Neon Far[/b] (lamp) that lights the road at night.",
+            "From level 15 your Diamond Back gets its pink neon underglow.",
+            "Bike speed bonuses add up the 7.2 way again."
+          ]
+        ],
         [
-          "Monsters roam on their own now, and the night is [b]harder[/b]: more of them, tougher ones.",
-          "Minibosses walk around too. They hit hard and drop great stuff.",
-          "Every hit flashes, sparks and sounds like something. Every monster, every weapon, every step."
-        ]
-      ],
-      [
-        "🎒 Loot, skills and the city",
+          "🌊 The city moves",
+          [
+            "The beach club neon pulses, the ferry sails the river, the windmill turns, the gods' coins spin and the water bobs."
+          ]
+        ],
         [
-          "[b]1, 2, 3...[/b] (and [b]R[/b]) are your skills now, with cooldowns and the blue mana bar. New ones unlock as you level up.",
-          "Tap [b]Q[/b] for the next weapon, [b]hold Q[/b] for the weapon wheel. Guns shoot real bullets, and a right click fires a volley.",
-          "Monsters drop gear and coins, chests hide in the city, and the 50 nazar beads are out there again. [b]I[/b] = your bag, [b]J[/b] = quests.",
-          "The café, the jeweller, the tutors, Old Soul, the tavla tables and Kaan's monster service are all open again.",
-          "The trickster gods' shrines work any time now: 40₺ a flip, win 120₺ and their favour.",
-          "The sky follows your real clock, and a gold arrow over your head always points to the next goal."
-        ]
-      ],
-      [
-        "🎬 The story is a story again",
+          "⚙️ Settings",
+          [
+            "New [b]YAZI BOYUTU · TEXT SIZE[/b] in the pause menu ([b]P[/b]): 80% up to 175% for calls, toasts, lessons, quizzes, the guide and the bag.",
+            "If the game runs slow on your Mac, it lowers the graphics by itself and tells you. Want it back? [b]P → GRAFİK[/b], or the new [b]🔭 VIEW[/b] button."
+          ]
+        ],
         [
-          "Kaan's calls are little movies: the phone rings, you say [i]Alo?[/i], you answer him in Turkish, then the mission title.",
-          "After some missions you'll see what's happening at [b]Hellspace Wealth[/b]. Karen is not happy.",
-          "A brand new game has its opening scene, and the end has credits. [b]E[/b] = next line, [b]ESC[/b] = skip.",
-          "Nothing can hurt you while a scene plays."
-        ]
-      ],
-      [
-        "🧭 Menus and help",
-        [
-          "A title screen with [b]NEW GAME[/b] and [b]CONTINUE[/b]. New game asks first, and keeps a copy of your old save in Downloads.",
-          "[b]P[/b] pauses: music and sound volume, graphics, fullscreen, the guide, save & load.",
-          "[b]📘 GUIDE[/b] (in the pause menu) explains everything, with your own numbers.",
-          "First time you meet something new, a small card explains it once."
-        ]
-      ],
-      [
-        "🙏 Thank you",
-        [
-          "Your 3D body is made by Kaan from your model sheet, starting from the free [b]PSX Secretary Character[/b] by [b]Vinrax[/b] (itch.io).",
-          "Everyone else in the city is built on two base models Kaan made, one for the boys and one for the girls."
+          "💡 Small stuff",
+          [
+            "Stuck in a quiz? [b]💡 İPUCU[/b] (hint): press [b]H[/b] or click it. 15₺, one per question.",
+            "Monster speech bubbles sit above their level tags now.",
+            "Lessons show in a smaller box, so you still see the city.",
+            "Closing the game is safe now, no more crash on quit.",
+            "Finding glasses (+1 🧠 INT) makes its little chuckle again."
+          ]
         ]
       ]
-    ]
-  },
+    },
+    {
+      "v": "ALPHA 8.0",
+      "t": "GAME GAME · NEO ANTALYA, REBUILT",
+      "groups": [
+        [
+          "❤ Your save is safe",
+          [
+            "Same save as 7.2. Bring it in once with [b]💾 SAVE & LOAD[/b] and everything is there: your level, words, weapons, gear, beads and quests.",
+            "Every key you know still does the same thing. The new moves got new keys of their own."
+          ]
+        ],
+        [
+          "⚔️ Real fighting now",
+          [
+            "[b]F / click[/b] chains into a 3-hit combo. [b]RIGHT click[/b] is a heavy hit: hold it to charge, it breaks guards.",
+            "[b]Left Ctrl[/b] = dodge roll. Roll [i]through[/i] a hit and it can't touch you.",
+            "[b]Hold Z[/b] to block. Block right before a hit lands = [b]PARRY[/b]: the monster is stunned and wide open.",
+            "[b]Tab[/b] locks on to a monster (Tab again = the next one). The camera keeps you both in view.",
+            "Monsters wind up before they hit — watch for the flash and the sound, then roll or parry."
+          ]
+        ],
+        [
+          "🏃 Moving with weight",
+          [
+            "A better jump: you can still jump a moment after running off an edge, and a jump pressed just before landing still happens.",
+            "Jump at a low wall and you grab the ledge and climb up by yourself.",
+            "[b]Shift[/b] sprint, rolls and heavy hits use the green [b]stamina[/b] bar. Skills use the blue [b]mana[/b] bar."
+          ]
+        ],
+        [
+          "👹 A city that fights back",
+          [
+            "Monsters roam on their own now, and the night is [b]harder[/b]: more of them, tougher ones.",
+            "Minibosses walk around too. They hit hard and drop great stuff.",
+            "Every hit flashes, sparks and sounds like something. Every monster, every weapon, every step."
+          ]
+        ],
+        [
+          "🎒 Loot, skills and the city",
+          [
+            "[b]1, 2, 3...[/b] (and [b]R[/b]) are your skills now, with cooldowns and the blue mana bar. New ones unlock as you level up.",
+            "Tap [b]Q[/b] for the next weapon, [b]hold Q[/b] for the weapon wheel. Guns shoot real bullets, and a right click fires a volley.",
+            "Monsters drop gear and coins, chests hide in the city, and the 50 nazar beads are out there again. [b]I[/b] = your bag, [b]J[/b] = quests.",
+            "The café, the jeweller, the tutors, Old Soul, the tavla tables and Kaan's monster service are all open again.",
+            "The trickster gods' shrines work any time now: 40₺ a flip, win 120₺ and their favour.",
+            "The sky follows your real clock, and a gold arrow over your head always points to the next goal."
+          ]
+        ],
+        [
+          "🎬 The story is a story again",
+          [
+            "Kaan's calls are little movies: the phone rings, you say [i]Alo?[/i], you answer him in Turkish, then the mission title.",
+            "After some missions you'll see what's happening at [b]Hellspace Wealth[/b]. Karen is not happy.",
+            "A brand new game has its opening scene, and the end has credits. [b]E[/b] = next line, [b]ESC[/b] = skip.",
+            "Nothing can hurt you while a scene plays."
+          ]
+        ],
+        [
+          "🧭 Menus and help",
+          [
+            "A title screen with [b]NEW GAME[/b] and [b]CONTINUE[/b]. New game asks first, and keeps a copy of your old save in Downloads.",
+            "[b]P[/b] pauses: music and sound volume, graphics, fullscreen, the guide, save & load.",
+            "[b]📘 GUIDE[/b] (in the pause menu) explains everything, with your own numbers.",
+            "First time you meet something new, a small card explains it once."
+          ]
+        ],
+        [
+          "🙏 Thank you",
+          [
+            "Your 3D body is made by Kaan from your model sheet, starting from the free [b]PSX Secretary Character[/b] by [b]Vinrax[/b] (itch.io).",
+            "Everyone else in the city is built on two base models Kaan made, one for the boys and one for the girls."
+          ]
+        ]
+      ]
+    }
+  ],
   "tips": {
     "combo": {
       "t": "⚔️ COMBOS · KOMBO",
