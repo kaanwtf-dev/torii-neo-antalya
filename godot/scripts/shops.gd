@@ -116,6 +116,10 @@ func _when_free(cb: Callable) -> void:
 static func sign3d(text: String, col: Color, size := 64) -> Label3D:
 	var l := Label3D.new(); l.text = text; l.modulate = col; l.font_size = size; l.pixel_size = .01
 	l.billboard = BaseMaterial3D.BILLBOARD_ENABLED; l.shaded = false; l.double_sided = true
+	# hidden when the camera is right on top of it, so a sign never fills the screen (a quest giver and a tutor
+	# stand next to HOME, where she starts)
+	l.visibility_range_begin = 6.0; l.visibility_range_begin_margin = 1.0
+	l.visibility_range_fade_mode = GeometryInstance3D.VISIBILITY_RANGE_FADE_SELF
 	l.outline_size = 10; l.outline_modulate = Color(0, 0, 0, .8); l.texture_filter = BaseMaterial3D.TEXTURE_FILTER_NEAREST
 	return l
 

@@ -121,6 +121,21 @@ func _ready() -> void:
 	if "--godkey" in OS.get_cmdline_user_args(): _dev_godkey(m, p, hud); return
 	if "--fxtest" in OS.get_cmdline_user_args(): _dev_fxtest(p, hud); return
 	for a in OS.get_cmdline_user_args(): if a.begins_with("--quittest="): _dev_quittest(a.substr(11))
+	for a in OS.get_cmdline_user_args():                # dev: --near=x,z,r lists every visible 3D thing within r m
+		if a.begins_with("--near="):
+			var v := a.substr(7).split(","); var at := Vector2(float(v[0]), float(v[1])); var r := float(v[2]) if v.size() > 2 else 3.0
+			for _i in 30: await get_tree().process_frame
+			var cam3: Camera3D = p.get("cam")
+			if v[0] == "cam" and cam3: at = Vector2(cam3.global_position.x, cam3.global_position.z); print("NEAR cam at ", cam3.global_position)
+			for n in get_tree().root.find_children("*", "VisualInstance3D", true, false):
+				var q: Vector3 = (n as Node3D).global_position
+				if Vector2(q.x, q.z).distance_to(at) <= r and (n as Node3D).is_visible_in_tree():
+					var extra := (" text=" + (n as Label3D).text) if n is Label3D else ""
+					if n is MeshInstance3D and (n as MeshInstance3D).mesh:
+						var mi := n as MeshInstance3D; var mat = mi.material_override if mi.material_override else mi.mesh.surface_get_material(0)
+						extra = " mesh=%s aabb=%s mat=%s" % [mi.mesh.get_class(), mi.get_aabb().size, (mat as BaseMaterial3D).albedo_color.to_html() if mat is BaseMaterial3D else str(mat)]
+					print("NEAR ", n.get_class(), " ", n.get_path(), " pos=(%.1f,%.2f,%.1f)" % [q.x, q.y, q.z], extra)
+			get_tree().root.propagate_notification(NOTIFICATION_WM_CLOSE_REQUEST); return
 	for a in OS.get_cmdline_user_args():                # dev: --probe=x0,x1,z prints the ground height every metre
 		if a.begins_with("--probe="):
 			var v := a.substr(8).split(",")
@@ -424,9 +439,15 @@ func _dev_brawl(p: CharacterBody3D, sec: float) -> void:
 	for i in kinds.size():
 		Enemy.spawn(p.get_parent(), kinds[i], p.global_position + Vector3(cos(i * 1.3) * 7.0, 0, sin(i * 1.3) * 7.0), p)
 	var t0 := Time.get_ticks_msec(); var k := 0
+	var shot := ""                                      # --brawlshot=PATH: one frame the first time a streak hits 3
+	for a in OS.get_cmdline_user_args(): if a.begins_with("--brawlshot="): shot = a.substr(12)
 	while (Time.get_ticks_msec() - t0) / 1000.0 < sec:
 		await get_tree().create_timer(.1).timeout
 		k += 1
+		if shot != "" and Streaks.me and Streaks.me.count >= 3:
+			await get_tree().create_timer(.3).timeout
+			await RenderingServer.frame_post_draw
+			get_viewport().get_texture().get_image().save_png(shot); print("BRAWLSHOT ", Streaks.me.count); shot = ""
 		if LevelUp.me and Overlay.is_open("tip"): LevelUp.me.close_tip(); continue
 		if LevelUp.me and Overlay.is_open("perk"): LevelUp.me.pick_perk(0); continue
 		if _hud.box.visible: _hud.next_line(); continue
@@ -521,7 +542,15 @@ func _dev_shot(p: Node3D) -> void:
 		if "--close" in OS.get_cmdline_user_args():      # --close: close-ups instead (<path>_<view>_<stand|run>.png)
 			await _dev_closeups(p, path.get_basename()); get_tree().quit(); return
 		Input.action_press("move_forward")
-	if "--hit" in OS.get_cmdline_user_args():
+	if "--hit" in OS.get_cmdline_user_args() and "--heavy" in OS.get_cmdline_user_args():
+		# --hit --heavy: a heavy attack instead (bare hands = the kick); <path>_wind.png in the wind-up, then the release
+		await get_tree().create_timer(1.3).timeout
+		p.combat.heavy_press()
+		await get_tree().create_timer(.22).timeout
+		await RenderingServer.frame_post_draw
+		get_viewport().get_texture().get_image().save_png(path.get_basename() + "_wind.png")
+		await get_tree().create_timer(.3).timeout
+	elif "--hit" in OS.get_cmdline_user_args():
 		await get_tree().create_timer(1.3).timeout
 		p._attack()
 		await get_tree().create_timer(.18).timeout
@@ -659,14 +688,30 @@ func _checkpoints(w: Node3D) -> void:
 	for cp in CHECKPOINTS:
 		var g := Node3D.new(); g.position = Vector3(cp[0], 0, cp[1]); w.add_child(g)
 		var cm := CylinderMesh.new(); cm.top_radius = .7; cm.bottom_radius = .9; cm.height = 5; cm.cap_top = false; cm.cap_bottom = false
-		var pil := MeshInstance3D.new(); pil.mesh = cm; pil.material_override = pm; pil.position.y = 2.5; g.add_child(pil)
+		var m := pm.duplicate() as StandardMaterial3D        # its own copy: each pillar fades on its own
+		var pil := MeshInstance3D.new(); pil.mesh = cm; pil.material_override = m; pil.position.y = 2.5; g.add_child(pil)
 		var tm := TorusMesh.new(); tm.inner_radius = 1.02; tm.outer_radius = 1.18
 		var ring := MeshInstance3D.new(); ring.mesh = tm; ring.material_override = rm; ring.position.y = .15; g.add_child(ring)
-		checkpoints.append({"g": g, "x": float(cp[0]), "z": float(cp[1]), "name": cp[2], "cd": 0.0})
+		checkpoints.append({"g": g, "pil": pil, "m": m, "x": float(cp[0]), "z": float(cp[1]), "name": cp[2], "cd": 0.0})
+
+# the pillar fades out as she or the camera gets close, so it never walls off the view (she spawns inside the
+# HOME one, and the opening call is filmed there); the ring on the ground stays
+func _checkpoint_fade() -> void:
+	var cam: Camera3D = torii.get("cam")
+	var tp := torii.global_position
+	for c in checkpoints:
+		var d := Vector2(c["x"] - tp.x, c["z"] - tp.z).length()
+		if is_instance_valid(cam):
+			d = minf(d, Vector2(c["x"] - cam.global_position.x, c["z"] - cam.global_position.z).length())
+		var a := .3 * clampf((d - 3.0) / 6.0, 0.0, 1.0)
+		(c["m"] as StandardMaterial3D).albedo_color.a = a
+		(c["pil"] as MeshInstance3D).visible = a > .01
 
 # 7.2's updateCheckpoints(): full HP, a save, her new wake-up spot, a word or two
 func _checkpoint_tick(dt: float) -> void:
-	if not torii or not _hud or Overlay.any() or torii.dead: return
+	if not torii: return
+	_checkpoint_fade()                          # also during calls and menus (the opening call is filmed at HOME)
+	if not _hud or Overlay.any() or torii.dead: return
 	for c in checkpoints:
 		c["cd"] -= dt; c["g"].rotation.y += dt
 		var dx: float = c["x"] - torii.global_position.x
