@@ -76,6 +76,7 @@ static func _demo(main: Node, hud: Hud, dir: String) -> void:
 	if Menus.me: Menus.me.close_patch()
 	await main.call("_dev_clear", hud)         # the story's opening call scene / tip card
 	await main.get_tree().create_timer(1.0, true).timeout
+	if Menus.me: Menus.me.close_patch()        # an older save's patch notes pop up once that call is over
 	await _shot(main, dir, "hud")
 	var cs = Cutscene.me
 	if cs:
