@@ -9,7 +9,8 @@ Audited 2026-11-04 against **ALPHA 7.2 · POLYGON GIRL** (`torii-neo-antalya-ALP
 
 ## 0. Progress
 
-**Batch 8.1 "parallel polish" — 8 branches merged on `build/8.1` 2026-11-08 (ALPHA 8.1 · SERİ), not playtested by hand yet.**
+**Batch 8.1 "parallel polish" — 8 branches merged on `build/8.1` 2026-11-08 (ALPHA 8.1 · SERİ); windowed smoke test +
+merged-diff review 2026-11-09, on main and pushed. Kaan hasn't played it by hand yet.**
 - **Kill streaks** (streaks.gd, enemy.gd, items.gd, hud.gd): 7 s chain, ÜÇLÜ/ALTILI/ONLU/EFSANE/DURDURULAMAZ at 3/6/10/16/25
   (×1.25..3.0 XP + lira), banner + fanfare + shake, 🔥 chip above the weapon box, "seri" toast; kills pay base XP again → CMB-04.
 - **Bike** (bike_look.gd, stats.gd): bike-slot parts on the bike, level-15 underglow, 7.2 additive bike stacking → BIK-05, PRG-09 (bike).
