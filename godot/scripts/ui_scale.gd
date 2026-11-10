@@ -14,7 +14,10 @@ extends RefCounted
 const STEPS := [0.8, 1.0, 1.25, 1.5, 1.75]
 const KEYS_RICH := ["normal_font_size", "bold_font_size", "italics_font_size", "bold_italics_font_size", "mono_font_size"]
 
+static var dev_k := 0.0        # dev only (--fs=N): this run's text size, never written to the save
+
 static func k() -> float:
+	if dev_k > 0.0: return clampf(dev_k, 0.5, 3.0)
 	var v = SaveBridge.data.get("gFs", 1.0)
 	return clampf(float(v), 0.5, 3.0) if (v is float or v is int) else 1.0
 
@@ -54,7 +57,7 @@ static func cycle() -> void:
 	var nx: float = STEPS[0]
 	for s in STEPS:
 		if s > now + .001: nx = s; break
-	SaveBridge.data["gFs"] = nx
+	SaveBridge.data["gFs"] = nx; dev_k = 0.0
 	Bus.emit_ev("ui_scale", {"k": nx})
 
 # dev only: --fs=1.75 sets the text size for this run; --fsdemo=DIR opens every scaled box once, saves a
@@ -62,7 +65,7 @@ static func cycle() -> void:
 static func dev(main: Node, hud: Hud) -> void:
 	for a in OS.get_cmdline_user_args():
 		if a.begins_with("--fs="):
-			SaveBridge.data["gFs"] = float(a.substr(5)); Bus.emit_ev("ui_scale", {"k": k()})
+			dev_k = float(a.substr(5)); Bus.emit_ev("ui_scale", {"k": k()})
 		if a.begins_with("--fsdemo="): _demo(main, hud, a.substr(9))
 
 static func _shot(main: Node, dir: String, n: String) -> void:

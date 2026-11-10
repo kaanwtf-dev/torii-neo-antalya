@@ -33,6 +33,7 @@ var look_label: Label
 var cross: ColorRect
 var lock_hint: PanelContainer
 var _ban_t := 0.0
+var _ban_frame := -1        # the frame the banner text was last set (Streaks steps aside to a toast)
 var _say_who := ""
 var _say_q: Array = []
 var _say_done: Callable
@@ -247,7 +248,8 @@ func objective_point() -> Variant:
 	return null
 
 func objective(t: String) -> void: obj.text = "[right]%s[/right]" % t
-func banner(t: String, dur := 3.0) -> void: ban.text = "[center]%s[/center]" % UiScale.bb(t); _ban_t = dur
+func banner(t: String, dur := 3.0) -> void:
+	ban.text = "[center]%s[/center]" % UiScale.bb(t); _ban_t = dur; _ban_frame = Engine.get_process_frames()
 
 # 7.2's toast(html, ms, bad): up to three stacked, each on its own timer; bold words in cyan like .toast b;
 # a red border for warnings

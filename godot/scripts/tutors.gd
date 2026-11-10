@@ -45,15 +45,15 @@ func setup(w: Node3D, p: Node3D, h: Hud) -> void:
 		var body: Node3D = null
 		if str(T["body"]) in CRITTERS:
 			body = Npc.critter(T["body"]); world.add_child(body); body.position = Vector3(T["x"], y, T["z"])
-		var mk := Shops.sign3d("💬", Color("ffd66b"), 90); mk.position = Vector3(T["x"], y + 3.1, T["z"]); world.add_child(mk)
+		var mk := Shops.sign3d("💬", Color("ffd66b"), 90, 6.0); mk.position = Vector3(T["x"], y + 3.1, T["z"]); world.add_child(mk)
 		tutors.append({"T": T, "body": body, "mark": mk, "y": y})
 	for N in D["SOUL"]:
 		var y := Shops.ground_y(N["x"], N["z"], 8.0)
 		var body: Node3D = null
 		if str(N["body"]) in CRITTERS:
 			body = Npc.critter(N["body"]); world.add_child(body); body.position = Vector3(N["x"], y, N["z"])
-		var tag := Shops.sign3d("UNIT %d" % int(N["u"]), Color("8ff2ff"), 44); tag.position = Vector3(N["x"], y + 2.35, N["z"]); world.add_child(tag)
-		var lk := Shops.sign3d("🔒", Color("9a88c0"), 36); lk.position = Vector3(N["x"], y + 2.0, N["z"]); world.add_child(lk)
+		var tag := Shops.sign3d("UNIT %d" % int(N["u"]), Color("8ff2ff"), 44, 6.0); tag.position = Vector3(N["x"], y + 2.35, N["z"]); world.add_child(tag)
+		var lk := Shops.sign3d("🔒", Color("9a88c0"), 36, 6.0); lk.position = Vector3(N["x"], y + 2.0, N["z"]); world.add_child(lk)
 		var ring := MeshInstance3D.new(); var cm := CylinderMesh.new(); cm.top_radius = .9; cm.bottom_radius = .9; cm.height = .03; cm.radial_segments = 10
 		ring.mesh = cm; ring.material_override = MobModels.mat(Color("3dff9e"), true, .55); ring.position = Vector3(N["x"], y + .05, N["z"])
 		world.add_child(ring)

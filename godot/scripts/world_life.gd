@@ -28,6 +28,7 @@ var _halo_mats: Array = []
 var _t := 0.0
 var _hurt_cd := 0.0
 var _told := false
+var _view_far := 0.0        # Quality's VIEW far plane when shorter than FAR (0 = FAR, nothing changes)
 
 func _init() -> void: me = self
 
@@ -39,6 +40,20 @@ func setup(w: Node3D, p: Node3D) -> void:
 	for i in 9: _bird()
 	_blimp()
 	_plane()
+	set_view_far(_view_far)
+
+# the plane and the birds don't take fog, so at VIEW MID/NEAR they'd pop at the far plane: fade them out first
+# (the blimp orbits ~150 m from the camera, always inside the shortest view)
+func set_view_far(far: float) -> void:
+	_view_far = far if far < 399.0 else 0.0
+	var roots: Array = [plane] if plane else []
+	for b in birds: roots.append(b["g"])
+	for r in roots:
+		for mi in (r as Node).find_children("*", "GeometryInstance3D", true, false):
+			var g := mi as GeometryInstance3D
+			g.visibility_range_end = maxf(0.0, _view_far - 40.0)   # +-30 m fade either way stays inside the far plane
+			g.visibility_range_end_margin = 30.0 if _view_far > 0.0 else 0.0
+			g.visibility_range_fade_mode = GeometryInstance3D.VISIBILITY_RANGE_FADE_SELF if _view_far > 0.0 else GeometryInstance3D.VISIBILITY_RANGE_FADE_DISABLED
 
 # ---------------------------------------------------------------- cutting the frozen copies out
 func _strip_baked(root: Node) -> int:

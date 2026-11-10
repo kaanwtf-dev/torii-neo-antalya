@@ -54,9 +54,9 @@ func setup(w: Node3D, p: Node3D, h: Hud) -> void:
 	_layer.add_child(line)
 	for G in D["QGIVERS"]:
 		var y := Shops.ground_y(G["x"], G["z"])
-		var m := Shops.sign3d("!", Color("ffd66b"), 150); m.position = Vector3(G["x"], y + 3.3, G["z"]); world.add_child(m)
-		var lo := Shops.sign3d("⏳", Color("9a88c0"), 90); lo.position = Vector3(G["x"], y + 3.2, G["z"]); lo.visible = false; world.add_child(lo)
-		var nm := Shops.sign3d(G["name"], Color("8ff2ff"), 34); nm.position = Vector3(G["x"], y + 2.55, G["z"]); world.add_child(nm)
+		var m := Shops.sign3d("!", Color("ffd66b"), 150, 6.0); m.position = Vector3(G["x"], y + 3.3, G["z"]); world.add_child(m)
+		var lo := Shops.sign3d("⏳", Color("9a88c0"), 90, 6.0); lo.position = Vector3(G["x"], y + 3.2, G["z"]); lo.visible = false; world.add_child(lo)
+		var nm := Shops.sign3d(G["name"], Color("8ff2ff"), 34, 6.0); nm.position = Vector3(G["x"], y + 2.55, G["z"]); world.add_child(nm)
 		givers.append({"G": G, "mark": m, "low": lo, "y": y})
 	# the green quest marker and the arrow over her head (7.2's QSTATE.marker / nav)
 	marker = Node3D.new(); world.add_child(marker); marker.visible = false

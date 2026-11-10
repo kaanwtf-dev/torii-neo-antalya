@@ -51,11 +51,18 @@ func bump() -> float:
 	var t := tier()
 	if not t.is_empty() and shown != int(t["n"]):
 		shown = int(t["n"])
-		if hud: hud.banner("🔥 %s\n[font_size=16]×%.2f XP and lira · %d in a row[/font_size]" % [t["t"], t["m"], count], 2.2)
+		call_deferred("_announce", t, count)   # after the kill's own banners (epic / rare / boss / level up)
 		Bus.emit_ev("sfx", {"name": "fanfare"})
 		if Fx.me: Fx.me.shake(.2)
 	_sync_tier()
 	return mult()
+
+# the tier banner, unless the same kill already put one up: then it comes as a toast so both get read
+func _announce(t: Dictionary, n: int) -> void:
+	if not is_instance_valid(hud): return
+	if hud._ban_frame == Engine.get_process_frames():
+		hud.toast("🔥 [b]%s[/b] · ×%.2f XP and lira · %d in a row" % [t["t"], t["m"], n], 4.0)
+	else: hud.banner("🔥 %s\n[font_size=16]×%.2f XP and lira · %d in a row[/font_size]" % [t["t"], t["m"], n], 2.2)
 
 func _process(dt: float) -> void:
 	if count <= 0 or Overlay.any(): return

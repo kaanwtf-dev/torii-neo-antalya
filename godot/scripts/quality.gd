@@ -59,6 +59,7 @@ func apply_view() -> void:
 	var far: float = VIEW_FAR[view()]
 	var cam = torii.get("cam") if torii else null
 	if cam is Camera3D: (cam as Camera3D).far = far
+	if is_instance_valid(WorldLife.me): WorldLife.me.set_view_far(far)   # the plane and birds ignore fog: fade them before the cut
 	if SkyCycle.me:
 		# FAR keeps the sky's own fog; shorter views fog ~91% at the far plane (what FAR already ships with) so nothing pops
 		SkyCycle.me.fog_min = 0.0 if view() == 0 else 2.4 / far
