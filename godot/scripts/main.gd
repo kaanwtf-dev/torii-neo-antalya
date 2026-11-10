@@ -121,6 +121,21 @@ func _ready() -> void:
 	if "--godkey" in OS.get_cmdline_user_args(): _dev_godkey(m, p, hud); return
 	if "--fxtest" in OS.get_cmdline_user_args(): _dev_fxtest(p, hud); return
 	for a in OS.get_cmdline_user_args(): if a.begins_with("--quittest="): _dev_quittest(a.substr(11))
+	for a in OS.get_cmdline_user_args():                # dev: --iconshot=PATH = a square head-and-shoulders render of her, 3D only (the app icon)
+		if a.begins_with("--iconshot="):
+			for _i in 90: await get_tree().process_frame
+			for sysn in [Tutors.me, Quests.me, Shops.me]:      # they re-show their signs every frame
+				if sysn: (sysn as Node).process_mode = Node.PROCESS_MODE_DISABLED
+			for n in get_tree().root.find_children("*", "Label3D", true, false): (n as Label3D).visible = false
+			var ic := Camera3D.new(); ic.fov = 27; p.add_child(ic)
+			ic.position = Vector3(0, 1.98, -1.95); ic.look_at(p.to_global(Vector3(0, 1.86, 0))); ic.make_current()
+			for _i in 6: await get_tree().process_frame
+			await RenderingServer.frame_post_draw
+			var img := p.get_viewport().get_texture().get_image()
+			var sq := mini(img.get_width(), img.get_height())
+			img = img.get_region(Rect2i((img.get_width() - sq) / 2, (img.get_height() - sq) / 2, sq, sq))
+			img.save_png(a.substr(11)); print("ICONSHOT ", img.get_size())
+			get_tree().root.propagate_notification(NOTIFICATION_WM_CLOSE_REQUEST); return
 	for a in OS.get_cmdline_user_args():                # dev: --near=x,z,r lists every visible 3D thing within r m
 		if a.begins_with("--near="):
 			var v := a.substr(7).split(","); var at := Vector2(float(v[0]), float(v[1])); var r := float(v[2]) if v.size() > 2 else 3.0
@@ -215,13 +230,13 @@ func _dev_quittest(mode: String) -> void:
 # dev runs (autoplay, lesson test, screenshots) never stop at the BRING YOUR SAVE screen
 func _dev() -> bool:
 	for a in OS.get_cmdline_user_args():
-		if a.begins_with("--autoplay=") or a == "--lessontest" or a.begins_with("--shot=") or a == "--fps" or a == "--savecheck" or a == "--godkey" or a == "--fxtest" or a.begins_with("--probe=") or a.begins_with("--brawl="): return true
+		if a.begins_with("--autoplay=") or a == "--lessontest" or a.begins_with("--shot=") or a == "--fps" or a == "--savecheck" or a == "--godkey" or a == "--fxtest" or a.begins_with("--probe=") or a.begins_with("--brawl=") or a.begins_with("--iconshot="): return true
 	return false
 
 # dev checks that need a calm city: no roaming monsters walking into the shot / test
 func _quiet_dev() -> bool:
 	for a in OS.get_cmdline_user_args():
-		if a.begins_with("--shot=") or a in ["--lessontest", "--fxtest", "--godkey", "--savecheck", "--fps"] or a.begins_with("--probe="): return true
+		if a.begins_with("--shot=") or a in ["--lessontest", "--fxtest", "--godkey", "--savecheck", "--fps"] or a.begins_with("--probe=") or a.begins_with("--iconshot="): return true
 	return false
 
 # 7.2's interact(): ONE E, first taker wins, in 7.2's order. The bike (player.gd) comes first, and the

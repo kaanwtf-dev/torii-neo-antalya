@@ -21,7 +21,7 @@ merged-diff review 2026-11-09, on main and pushed. Kaan hasn't played it by hand
 - **Ambient** (ambient.gd): club neon, ferry, windmill, gods' coins, water → FX-06.
 - **Quality governor** (quality.gd, saves `gView`, `gManual`): GRAFİK then VIEW steps on a slow Mac, 🔭 VIEW button → WLD-08.
 - **INT** (items.gd): every 7.2 source was already in; glasses chuckle added → PRG-23/TRK-19.
-- **Still open:** PRG-24 (outfit per level) and CRT-02 (the Mac .app export itself): both wait for Kaan.
+- **Still open:** PRG-24 (outfit per level): waits for Kaan. CRT-02 (the Mac .app) done 2026-11-09: `bash tools/export_mac.sh`.
 
 **Batch 2+ "Game game" (all systems) — built + wired 2026-11-07, not committed, no window playtest yet.** Ten systems in parallel,
 then one integrator (main.gd wiring, API fixes, clean parse, `--autoplay` runs). Kaan's goal: port all of 7.2 AND add PS1-era depth.

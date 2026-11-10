@@ -40,7 +40,15 @@ Project rules live in `CLAUDE.md` (they apply to both of us). Newest entry on to
   (view distance FAR/MID/NEAR) and `gManual` (she picked GRAFİK/VIEW herself: the governor stops). NEW GAME keeps all three.
 - **Open gaps:** `godot/PORT_GAPS.md` §0 (batch 8.1 entry on top): only PRG-24 (outfit per level) and CRT-02 (the Mac .app
   export) are left, both wait for Kaan. Machine-readable rows: `godot/port_gaps.json`. Don't re-audit.
-- **Not done yet:** the open gaps above (PRG-24 outfits, CRT-02 Mac export: export templates ~1 GB, ask Kaan first).
+- **Mac app (CRT-02, 2026-11-09):** `bash tools/export_mac.sh` → `godot/build/TORİİ NEO ANTALYA.app` + `godot/build/TORII-NEO-ANTALYA-<ver>-mac.zip`
+  (build/ is git-ignored). Preset `godot/export_presets.cfg` "macOS": universal (Intel + Apple Silicon), `*.json` included,
+  icon `godot/icon.png` (a `--iconshot=PATH` render of her model, never her photo), boot splash = plain dark purple. The
+  script renames the inner binary/.pck to `Torii` / `Torii.pck` and re-signs ad-hoc with Apple's codesign: Godot names them
+  after the game, and the Turkish İ in those inner names breaks the signature check ("app is damaged"). Templates are in
+  `~/Library/Application Support/Godot/export_templates/4.7.2.stable` (SHA-512 checked). `import_etc2_astc=true` is needed
+  for arm64. Not notarized (no Apple developer account): first launch on her Mac = System Settings → Privacy & Security →
+  Open Anyway (older macOS: right-click → Open). Her saves go to `~/Library/Application Support/Godot/app_userdata/TORİİ: NEO ANTALYA/`.
+- **Not done yet:** PRG-24 (outfits per level: Kaan decides).
   Seen but not fixed: "NAZAR SHIELD 12s" shows twice (left HUD list + right buff chip, from before 8.1); the club neon
   pulse / ferry / windmill motion and the visor (G on) were never watched on screen; the bare-hand kick only happens when
   her weapon list is just ['kick'] (an empty list migrates back to the katana).
@@ -53,6 +61,10 @@ Project rules live in `CLAUDE.md` (they apply to both of us). Newest entry on to
 - Never put Torii's real photo (`assets/screenshots/torii face.jpg`) in git — it's ignored on purpose.
 
 ## Log
+- 2026-11-09 Claude (parent session): **Mac app built (CRT-02).** Kaan OK'd the export templates (1.28 GB, SHA-512 checked,
+  installed for 4.7.2). Added `godot/export_presets.cfg`, `godot/icon.png` (+ `--iconshot=PATH` dev flag), ETC2/ASTC import,
+  dark boot splash, `tools/export_mac.sh` (export → ASCII inner names → ad-hoc re-sign → verify → zip). Checked: signature
+  valid after unzipping, the exported app boots headless with no errors and renders the same as the editor build.
 - 2026-11-09 Claude (parent session): **8.1 checked and shipped to main.** After the merge: the checkpoint pillars fade when
   she or the camera is close (she spawns inside the HOME one, and the opening call is filmed there); quest-giver and tutor
   signs hide within 6 m of the camera (`Shops.sign3d(text, col, size, hide_near)`: opt-in, 6.0 only for quests.gd's !/⏳/
