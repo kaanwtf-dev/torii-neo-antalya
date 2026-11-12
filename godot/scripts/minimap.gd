@@ -38,7 +38,9 @@ func setup(p: Node3D, h: Node) -> void:
 	player = p; hud = h
 	_font = ThemeDB.fallback_font
 	mouse_filter = Control.MOUSE_FILTER_IGNORE
-	size = Vector2(R * 2 + 8, R * 2 + 8); position = Vector2(960 - size.x - 8, 8)
+	# top right, pinned to the REAL corner by anchors (widescreen, 8.2): at 4:3 = x 818, y 8 as before
+	set_anchors_preset(Control.PRESET_TOP_RIGHT)
+	offset_left = -(R * 2 + 8) - 8; offset_right = -8; offset_top = 8; offset_bottom = 8 + R * 2 + 8
 	var data = JSON.parse_string(FileAccess.get_file_as_string("res://assets/city/city_data.json"))
 	if data is Dictionary:
 		for c in data.get("colliders", []): _blds.append([float(c["x"]), float(c["z"]), float(c["hw"]), float(c["hd"])])

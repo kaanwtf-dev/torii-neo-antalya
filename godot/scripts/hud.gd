@@ -153,6 +153,7 @@ void fragment() {
 	hl.add_theme_font_size_override("font_size", 14); hl.add_theme_color_override("font_color", Color("bfeefc")); lock_hint.add_child(hl)
 	look_label = _label(Vector2(800, 656), "👁 LOOKING BACK [C]", 13, Color("ffd66b")); look_label.visible = false
 	_fs()
+	Bus.on("screen", func(_d): _fs())         # widescreen (8.2): a resized window re-places everything
 
 # 🔠 TEXT SIZE (UiScale, save gFs): the text boxes re-scale from their built sizes and grow with it (100% = as above)
 func _fs() -> void:
@@ -160,12 +161,26 @@ func _fs() -> void:
 	var k := UiScale.k()
 	_stats.size = Vector2(UiScale.wide(330, 570), UiScale.wide(122, 214) + (24.0 if k > 1.0 else 0.0))
 	obj.size.y = UiScale.wide(110, 220); ban.size.y = UiScale.wide(70, 150)
-	ban.position.y = 236.0 + UiScale.wide(122, 214) - 122.0     # below the taller stats
 	lock_hint.size = Vector2.ZERO; skip_btn.size = Vector2.ZERO
 	# back to the built layout; at a bigger size _process moves them again next frame (so 100% after 175% = 100% again)
-	box.size = Vector2(720, 130); box.position.y = 560.0
-	toasts.size.y = 340.0; toasts.position.y = 210.0 if box.visible else 300.0
-	if _choice: _choice.position.y = 200.0
+	box.size = Vector2(720, 130); box.position.y = Screen.bottom(560.0)
+	toasts.size.y = 340.0; toasts.position.y = Screen.bottom(210.0 if box.visible else 300.0)
+	if _choice: _choice.position.y = 200.0 + Screen.dy()
+	_place()
+
+# widescreen (8.2): everything was laid out on a 960x720 canvas. Corner things keep their distance to the REAL
+# corner, centred things sit on the real centre (Screen.dx), the banner spans the whole width. At 4:3 = as built.
+func _place() -> void:
+	var dx := Screen.dx()
+	obj.position.x = Screen.right(590.0)
+	ban.position = Vector2(0.0, 236.0 + UiScale.wide(122, 214) - 122.0 + Screen.dy()); ban.size.x = Screen.w()   # below the taller stats
+	toasts.position.x = 80.0 + dx
+	box.position.x = 120.0 + dx
+	save_btn.position = Vector2(Screen.right(800.0), Screen.bottom(684.0))
+	look_label.position = Vector2(Screen.right(800.0), Screen.bottom(656.0))
+	cross.position = Vector2(478.0 + dx, 358.0 + Screen.dy())
+	lock_hint.position.x = 300.0 + dx
+	if _choice: _choice.position.x = 140.0 + dx
 
 func _label(at: Vector2, t: String, size: int, col: Color) -> Label:
 	var l := Label.new(); l.text = t; l.position = at; l.add_theme_font_size_override("font_size", size)
@@ -216,6 +231,26 @@ func bind(p: Node3D) -> void:
 	Bus.on("enemy_died", func(d): _recent.erase(d.get("enemy")))
 	Bus.on("night", func(d): _night = bool(d.get("on", false)))
 	Bus.on("player_hit", func(_d): _hp_jig = .3)
+	_dev_hud()
+
+# dev only (with --shot=PATH --clear): --hudwheel = the hold-Q weapon wheel open, --hudsave = the SAVE & LOAD
+# panel open, for the screenshot; --hudresize=WxH = the window changes to that size while she plays (the HUD must
+# re-place itself). Normal play never passes these.
+func _dev_hud() -> void:
+	var args := OS.get_cmdline_user_args()
+	for a in args:
+		if a.begins_with("--hudresize="):
+			await get_tree().create_timer(.3, true, false, true).timeout
+			var wh := a.substr(12).split("x")
+			get_window().size = Vector2i(int(wh[0]), int(wh[1]))
+	if not (args.has("--hudwheel") or args.has("--hudsave")): return
+	await get_tree().create_timer(.6, true, false, true).timeout
+	for i in 300:
+		if not Overlay.any(): break
+		await get_tree().process_frame
+	if args.has("--hudsave"): save_pressed.emit()
+	var ars := sys("Arsenal")
+	if args.has("--hudwheel") and ars: ars.call("open_wheel")
 
 # another system's singleton (Skills.me, Arsenal.me...) without naming its class, so this file still
 # parses before that system exists
@@ -313,7 +348,7 @@ var _choice_frame := -1                # the frame it opened in: that frame's ke
 func choose(who_: String, text_: String, opts: Array, cb: Callable) -> void:
 	_choice_frame = Engine.get_process_frames()
 	if _choice: _choice.queue_free()
-	_choice = PanelContainer.new(); _choice.position = Vector2(140, 200); _choice.size = Vector2(680, 0)
+	_choice = PanelContainer.new(); _choice.position = Vector2(140 + Screen.dx(), 200 + Screen.dy()); _choice.size = Vector2(680, 0)
 	var sb := StyleBoxFlat.new(); sb.bg_color = Color(.07, .04, .13, 1); sb.border_color = Color("ffd66b")
 	sb.set_border_width_all(2); sb.set_corner_radius_all(12); sb.set_content_margin_all(18)
 	_choice.add_theme_stylebox_override("panel", sb); add_child(_choice)
@@ -362,13 +397,14 @@ func _process(dt: float) -> void:
 	lock_hint.visible = not captured and not Overlay.any()
 	# toasts sit low (under her body, above the skill bar) like 7.2's; above the call box while it's up
 	# bigger text (UiScale): the call box grows up from the bottom edge, the toasts and a tall choice box stay on screen
-	if UiScale.k() == 1.0: toasts.position.y = 210.0 if box.visible else 300.0
+	# (y measured from the bottom edge: Screen.bottom = as built at 720 high)
+	if UiScale.k() == 1.0: toasts.position.y = Screen.bottom(210.0 if box.visible else 300.0)
 	else:
-		if box.visible: box.position.y = maxf(8.0, minf(560.0, 690.0 - box.size.y))      # bottom at 690 like 100%: clear of SAVE & LOAD
-		toasts.position.y = minf(210.0, box.position.y - 350.0) if box.visible else 300.0
+		if box.visible: box.position.y = maxf(8.0, minf(Screen.bottom(560.0), Screen.bottom(690.0) - box.size.y))      # bottom at 690 like 100%: clear of SAVE & LOAD
+		toasts.position.y = minf(Screen.bottom(210.0), box.position.y - 350.0) if box.visible else Screen.bottom(300.0)
 		var tm := maxf(340.0, toasts.get_combined_minimum_size().y)
 		toasts.size.y = tm; toasts.position.y = maxf(4.0 - 340.0 + minf(340.0, tm), toasts.position.y - (tm - 340.0))
-		if _choice: _choice.position.y = maxf(8.0, minf(200.0, 712.0 - _choice.size.y))
+		if _choice: _choice.position.y = maxf(8.0, minf(200.0 + Screen.dy(), Screen.bottom(712.0) - _choice.size.y))
 	for p in toasts.get_children():
 		var left: float = p.get_meta("t") - dt; p.set_meta("t", left)
 		if left <= 0: toasts.remove_child(p); p.queue_free()
@@ -663,7 +699,7 @@ func _draw_compass() -> void:
 	if not cam: return
 	var f: Vector3 = -cam.global_transform.basis.z
 	var h := atan2(f.x, -f.z)
-	var cx := 480.0; var w := 300.0; var y := 8.0
+	var cx := Screen.w() * .5; var w := 300.0; var y := 8.0
 	var r := Rect2(cx - w * .5, y, w, 20)
 	_panel(r, Color("4a3b66"))
 	var ppr := (w * .5 - 10) / (PI * .5)
@@ -701,9 +737,9 @@ func _draw_compass() -> void:
 # 7.2's bosses only had "💀 BOSS HP" in the objective: now a proper bar with the name and phase marks
 func _draw_boss() -> void:
 	if not _alive(_boss): return
-	var r := Rect2(270, 64, 420, 12)
+	var r := Rect2(270 + Screen.dx(), 64, 420, 12)
 	var nm := "💀 " + _ename(_boss).to_upper() + ("  👑 EPIC" if _boss.get("elite") == true else "")
-	_text(_cv, Vector2(270, 59), nm, 14, Color("ff9ecf"), HORIZONTAL_ALIGNMENT_CENTER, 420)
+	_text(_cv, Vector2(r.position.x, 59), nm, 14, Color("ff9ecf"), HORIZONTAL_ALIGNMENT_CENTER, 420)
 	var f := float(_boss.get("hp")) / maxf(1.0, float(_boss.get("max_hp")))
 	_bar(r, f, _boss_trail, Color("c8143c"), Color("ff5fa2"), "")
 	var ph = _boss.get("phases")
@@ -747,7 +783,7 @@ func _draw_streak() -> void:
 	var fs := UiScale.px(13)                    # TEXT SIZE: the chip grows up from the weapon box
 	var h := roundf(22.0 * fs / 13.0)
 	var w := _font.get_string_size(tx, HORIZONTAL_ALIGNMENT_LEFT, -1, fs).x + 18
-	var r := Rect2(10, 662.0 - h, w, h)
+	var r := Rect2(10, Screen.bottom(662.0) - h, w, h)
 	_cv.draw_rect(r, Color(20 / 255.0, 8 / 255.0, 38 / 255.0, .82))
 	_cv.draw_rect(Rect2(r.position, Vector2(3, r.size.y)), col)
 	_cv.draw_rect(Rect2(r.position + Vector2(3, r.size.y - 2), Vector2((w - 3) * clampf(float(sk.get("left")) / 7.0, 0, 1), 2)), col)
@@ -782,7 +818,7 @@ func _draw_weapon() -> void:
 			"dur": durs.get(id) if durs is Dictionary else null, "dur_max": ws.get("dur"), "ammo": SaveBridge.get_i("ammo"),
 			"ranged": w.get("ranged", ws.get("ranged", false))}
 	var rc := Color(RARCOL.get(str(info.get("rar", "Common")), "b8b8c4"))
-	var r := Rect2(10, 668, 206, 42)          # ends left of the 10-slot skill bar (x 223)
+	var r := Rect2(10, Screen.bottom(668.0), 206, 42)          # ends left of the 10-slot skill bar (x 223)
 	_panel(r, rc, .35)
 	_text(_cv, r.position + Vector2(10, 17), str(info.get("n", "?")), 14, rc)
 	_text(_cv, r.position + Vector2(10, 17), "💥%d  [Q]" % int(info.get("dmg", 0)), 11, Color("e8dcff"), HORIZONTAL_ALIGNMENT_RIGHT, 186)
