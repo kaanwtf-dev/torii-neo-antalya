@@ -9,6 +9,15 @@ Audited 2026-11-04 against **ALPHA 7.2 · POLYGON GIRL** (`torii-neo-antalya-ALP
 
 ## 0. Progress
 
+**Batch 8.2 "GENİŞ" — 5 branches merged on `build/8.2` 2026-11-11 (ALPHA 8.2 · GENİŞ), not on main yet.**
+- **Widescreen** (screen.gd + hud, menus, story, side groups): any window width; corners at the real corners, centred
+  things centred, full-width bars/dims; 4:3 unchanged. Rules: AI_HANDOFF "Widescreen rules".
+- **In-game updater** (updater.gd, boot.gd, tools/publish_update.sh): GitHub Releases pack, sha256-checked, anti-brick.
+  The 8.2 app zip must still go to her by hand once.
+- **Fixes:** random slow motion (hit-stop real-clock end + only her hits freeze time), stuck victory dance.
+- **Still open:** PRG-24 (outfit per level). Roaming minibosses never show the boss bar (hud.gd checks "miniboss", enemy
+  sets "mini"): old bug, Kaan decides.
+
 **Batch 8.1 "parallel polish" — 8 branches merged on `build/8.1` 2026-11-08 (ALPHA 8.1 · SERİ); windowed smoke test +
 merged-diff review 2026-11-09, on main and pushed. Kaan hasn't played it by hand yet.**
 - **Kill streaks** (streaks.gd, enemy.gd, items.gd, hud.gd): 7 s chain, ÜÇLÜ/ALTILI/ONLU/EFSANE/DURDURULAMAZ at 3/6/10/16/25

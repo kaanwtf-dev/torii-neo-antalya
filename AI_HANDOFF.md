@@ -4,7 +4,7 @@ Kaan switches between Claude (Claude Code) and ChatGPT when one runs out of cred
 **Whoever works on this project: read this first, and update it before you stop.**
 Project rules live in `CLAUDE.md` (they apply to both of us). Newest entry on top.
 
-## Current state (2026-11-09)
+## Current state (2026-11-11)
 
 - **ONE version = the Godot 4 project in `godot/`** (Godot 4.7.2, GL Compatibility; run: `godot --path godot`).
   The HTML game is FROZEN at ALPHA 7.2 (`torii-neo-antalya-ALPHA-7.2.html`, still Torii's live link at
@@ -12,7 +12,20 @@ Project rules live in `CLAUDE.md` (they apply to both of us). Newest entry on to
 - **Kaan's goal (2026-11-06): "a game game"** — 7.2 is the concept; Godot ports all of it AND adds PS1-era depth
   (Medievil / Tenchu / Spyro / Ape Escape): light/heavy combos, dodge roll, lock-on, block + parry, stamina, jump
   with coyote time, ledge climb, roaming monsters (harder at night, minibosses), loot, skills, sound for everything.
-- **Godot version is now ALPHA 8.1 · SERİ** (`Menus.GAME_VER`, from `assets/story/godot.json` "ver"). 8.1 = eight
+- **ALPHA 8.2 · GENİŞ (2026-11-11, on `build/8.2`, not on main yet):** five branches merged (updater, story, side, menus,
+  hud): widescreen, the in-game updater, the random slow-mo fix (only HER hits freeze time; `enemy_hit` / `enemy_died` carry
+  `src` = "" Torii / "skill", "bandit", "ally", "dot"; Fx skips the hit-stop for the last three), the stuck victory dance.
+- **Widescreen rules (8.2):** window 1152x720 (16:10), `stretch/aspect="expand"`: the canvas stays 720 high and gets wider
+  (taller on narrow windows). Everything was laid out on 960x720, so: `Screen` (screen.gd: `size() w() h()`, `dx()/dy()` =
+  the offset that centres a 960x720 block, `right(x)` / `bottom(y)` = a 4:3 x / y kept the same distance from the real
+  right / bottom edge, `BASE`). Controls use anchors (PRESET_TOP_RIGHT, PRESET_CENTER, PRESET_FULL_RECT…); hand-placed or
+  hand-drawn things use `Screen.*` and re-place on Bus `"screen"` {size} (main.gd emits it on resize) or every frame.
+  Corner things go to the real corner, centred things to the real centre, dims/bars/flashes cover the whole screen, dialogs
+  keep their 4:3 size. At 960x720 every screen must stay pixel-identical. Check at 960/1152/1280/1680 x 720 with
+  `godot --path godot --resolution WxH -- ...`. Dev flags: `--storyshots=DIR` / `--resize` (cutscene.gd), `--sideshot=DIR` (shops.gd).
+- **NEVER change `application/config/name` in project.godot:** it names her save folder
+  (`app_userdata/TORİİ: NEO ANTALYA/`). A new name = a new empty folder = her progress looks gone.
+- **Godot version was ALPHA 8.1 · SERİ** (`Menus.GAME_VER`, from `assets/story/godot.json` "ver"). 8.1 = eight
   parallel branches merged on `build/8.1`, smoke-tested in a window, then fast-forwarded onto main and pushed (2026-11-09):
   kill streaks, bike parts + underglow, braid swing + bare-hand heavy kick, visible gear, TEXT SIZE, ambient scenery, auto
   quality governor, INT check.
@@ -93,6 +106,13 @@ Project rules live in `CLAUDE.md` (they apply to both of us). Newest entry on to
 - Never put Torii's real photo (`assets/screenshots/torii face.jpg`) in git — it's ignored on purpose.
 
 ## Log
+- 2026-11-11 Claude (integrator): **ALPHA 8.2 · GENİŞ merged on `build/8.2`** — wf82/updater, story, side, menus, hud, all
+  clean merges (no conflicts; both sides had already done each other's cross-file asks: version line + SAVE & LOAD in the real
+  bottom-right). Kaan's note "slow mo starts randomly, not during weapon selection": Bandit's bites, ally hits and burn/poison
+  kills no longer freeze time (enemy.gd `last_src`, fx.gd `_hers`); a hit-stop that is running when the weapon wheel opens no
+  longer resets the wheel's .2. Version + patch notes + export_presets 8.2. Checks: boot check clean, windowed --continue
+  shots at 960x720 and 1280x720, --brawl=20 --tslog no TSLOG. Not pushed, not on main; the 8.2 app zip still has to be built
+  (export_mac.sh, which writes tools/app_base.* to commit with it).
 - 2026-11-11 Claude (wf82/updater): **in-game updater** (see Current state). Proven against the EXPORTED app with a 9.9 test
   pack on a local server: download + sha256 → restart → `GAME_VER ALPHA 9.9 · TEST`, same save (lvl 5, 18 words); the next
   plain start goes straight into 9.9 (world shot from the pack); same-size corruption / truncated pack / wrong-sha download /

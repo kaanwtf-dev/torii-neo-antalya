@@ -167,6 +167,7 @@ var poise := 10.0
 var poise_max := 10.0
 var poise_t := 0.0
 var hitstop := 0.0
+var last_src := ""                                     # who landed the last hit ("" = Torii; bandit / ally / dot) — Fx only freezes time for hers
 var flash_t := 0.0
 var kb := Vector3.ZERO
 var status := {}
@@ -442,6 +443,7 @@ func hit(d: float, from_dir := Vector3.ZERO, opts := {}) -> void:
 		return
 	var heavy := bool(opts.get("heavy", false)); var crit := bool(opts.get("crit", false))
 	hp -= d; flash_t = .14; hitstop = .1 if heavy else .05
+	last_src = str(opts.get("src", ""))
 	if not noticed or state == "idle" or state == "notice": noticed = true; _set_state("chase")
 	var dv := Vector3(from_dir.x, 0, from_dir.z)
 	if dv.length_squared() < .001: dv = -fwd()
@@ -464,7 +466,7 @@ func hit(d: float, from_dir := Vector3.ZERO, opts := {}) -> void:
 		Fx.me.label(global_position + Vector3(0, tag_h, 0), str(int(round(d))), col, .9)
 		Fx.me.puff(global_position + Vector3(0, tag_h * .5, 0), Color("ffe04d"), 7 if heavy else 4, 1.8 if heavy else 1.5, 1.5, .4)
 		if heavy: Fx.me.shake(.12)
-	Bus.emit_ev("enemy_hit", {"enemy": self, "pos": global_position, "dmg": d, "heavy": heavy, "crit": crit})
+	Bus.emit_ev("enemy_hit", {"enemy": self, "pos": global_position, "dmg": d, "heavy": heavy, "crit": crit, "src": last_src})
 	sfx("enemy_hit_heavy" if heavy else "enemy_hit", global_position)
 	if flags.has("boss") and hp > 0:                  # 7.2's battle quiz marks (the quiz owner listens)
 		if not _q66 and hp < max_hp * .66: _q66 = true; Bus.emit_ev("boss_quiz", {"enemy": self, "at": .66})
@@ -550,7 +552,7 @@ func _die() -> void:
 	var purse := int(round((randi_range(40, 60) if elite else randi_range(6, 18)) * mult))   # lira scales with the streak too
 	died.emit(self)
 	Bus.emit_ev("enemy_died", {"enemy": self, "pos": p, "kind": type, "elite": elite, "xp": xp, "boss": flags.has("boss"),
-		"mini": flags.has("mini"), "level": level, "lira": purse, "roam": has_meta("roam"), "xp_paid": paid, "mult": mult})
+		"mini": flags.has("mini"), "level": level, "lira": purse, "roam": has_meta("roam"), "xp_paid": paid, "mult": mult, "src": last_src})
 
 func _death_anim(dt: float) -> void:
 	dead_t += dt
@@ -890,7 +892,7 @@ func _tick_status(dt: float) -> void:
 		var c := Color("ff7a2d") if status.has("burn") else Color("5fff9e")
 		Fx.me.label(global_position + Vector3(0, tag_h, 0), str(int(n)), c, .6)
 		Fx.me.puff(global_position + Vector3(0, tag_h * .5, 0), c, 2, .6, 1.2, .5)
-	if hp <= 0: _die()
+	if hp <= 0: last_src = "dot"; _die()
 
 func _place_on_ground() -> void:
 	var y := _ray_ground(global_position.x, global_position.z, global_position.y + 40.0, global_position.y)

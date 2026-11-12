@@ -25,7 +25,7 @@ const PINK := Color("ff5fa2")
 const CYAN := Color("7bf7ff")
 const GOLD := Color("ffd66b")
 const PURP := Color("b06bff")
-var GAME_VER := "ALPHA 8.1 · SERİ"
+var GAME_VER := "ALPHA 8.2 · GENİŞ"
 var PATCHES: Array = []
 var _gpatches := 0                     # how many of PATCHES are Godot notes (shown in full)
 var torii: CharacterBody3D

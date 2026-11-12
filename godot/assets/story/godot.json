@@ -1,6 +1,33 @@
 {
-  "ver": "ALPHA 8.1 · SERİ",
+  "ver": "ALPHA 8.2 · GENİŞ",
   "patches": [
+    {
+      "v": "ALPHA 8.2",
+      "t": "GENİŞ · WIDE SCREEN, NO MORE SLOW-MO",
+      "groups": [
+        [
+          "🖥 Wide screens",
+          [
+            "The game fills wide windows now. The map, your quest, the buttons and SAVE & LOAD sit in the real corners, and everything that belongs in the middle is in the middle. [i]geniş[/i] = wide.",
+            "Kaan's calls, the story scenes and the credits get black bars across the whole screen, and the bag, shops, tavla and quiz are centred."
+          ]
+        ],
+        [
+          "🐌 Bugs fixed",
+          [
+            "No more random slow motion. Only YOUR hits freeze the world for a blink now, not Bandit's bites or your friends' hits.",
+            "The slow motion can't get stuck any more, and it only crawls while you pick a weapon.",
+            "Your victory dance doesn't get stuck."
+          ]
+        ],
+        [
+          "🆕 Updates inside the game",
+          [
+            "From now on new versions come to you: a 🆕 card pops up on the title screen. One click on [b]⬇ GÜNCELLE · UPDATE[/b], the game restarts, and your save stays safe 💾."
+          ]
+        ]
+      ]
+    },
     {
       "v": "ALPHA 8.1",
       "t": "SERİ · STREAKS, BRAIDS AND BLING",

@@ -476,7 +476,13 @@ func hitstop(sec := .06, scale := .05) -> void:
 # dance at 5% speed looked stuck (Kaan, 11-11)
 func _hs_check() -> void:
 	if _hs_on and (Time.get_ticks_usec() >= _hs_end or Overlay.any()):
-		Engine.time_scale = _hs_prev; _hs_on = false
+		if not Overlay.is_open("wheel"): Engine.time_scale = _hs_prev   # the wheel opened mid-freeze: it owns the .2 now
+		_hs_on = false
+
+# only HER hits freeze time. Bandit's bites, the Josh squad's hits and burn/poison kills happen while she isn't
+# swinging, so a freeze for them felt like the world randomly going slow-mo (Kaan, 11-11: "not during weapon selection")
+func _hers(d: Dictionary) -> bool:
+	return not (str(d.get("src", "")) in ["bandit", "ally", "dot"])
 
 func _exit_tree() -> void:
 	if _hs_on: Engine.time_scale = _hs_prev; _hs_on = false
@@ -500,7 +506,7 @@ func _on_enemy_hit(d: Dictionary) -> void:
 	var pl := get_tree().get_first_node_in_group("player") as Node3D
 	if pl: dir = (p - pl.global_position).normalized()
 	hit_spark(p + Vector3(0, 1.1, 0), kind, dir)
-	hitstop({"crit": .09, "heavy": .07}.get(kind, .035))
+	if _hers(d): hitstop({"crit": .09, "heavy": .07}.get(kind, .035))
 
 func _on_player_hit(d: Dictionary) -> void:
 	if not auto: return
@@ -517,7 +523,7 @@ func _on_enemy_died(d: Dictionary) -> void:
 	if p == Vector3.INF: return
 	if d.get("boss", false):
 		explosion(p, 4.0); hitstop(.16); flash_screen(Color.WHITE, .4, .3)
-	else: hitstop(.05)
+	elif _hers(d): hitstop(.05)
 
 func _on_level_up(_d: Dictionary) -> void:
 	var pl := get_tree().get_first_node_in_group("player") as Node3D
