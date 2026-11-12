@@ -12,8 +12,8 @@
 #
 # Never a brick: a partial or bad download is never named in current.json; boot.gd checks the pack's size and
 # sha256 every start; boot_try_<ver> counts starts on it and this node writes boot_ok_<ver>
-# once the game is going (title up, or 5 s of running). Two starts without that → boot.gd deletes the update (and
-# that ver is never offered again) and the bundled game starts. No internet, no release yet (404), a timeout, a
+# once the game is going (title up, 5 s of running, or an orderly quit). Two starts without that → boot.gd deletes the
+# update (a ver that never got going is never offered again; one that did is offered again) and the bundled game starts. No internet, no release yet (404), a timeout, a
 # broken version.json: nothing happens, silently.
 #
 # Only the exported app (OS.has_feature("template")) updates. Dev runs only with --updateurl=http://127.0.0.1:PORT/
@@ -160,7 +160,7 @@ func setup(h: CanvasLayer) -> void:
 func _process(dt: float) -> void:
 	_alive += dt
 	var title := Menus.me != null and Menus.me.title_up
-	if not _ok_marked and (title or _alive > 5.0): _mark_ok(title)
+	if not _ok_marked and (title or _alive > 5.0): _mark_ok("the title" if title else "5 s")
 	if not _checked and title and enabled():
 		_checked = true; _check()
 	if _quit_after >= 0.0 and _ok_marked:
@@ -175,13 +175,17 @@ func _process(dt: float) -> void:
 		if _toast_t <= 0.0: _toast.queue_free(); _toast = null
 
 # the update got going (the title is up, or 5 s of running: the world is built and drawing): stop counting tries
-func _mark_ok(title: bool) -> void:
+func _mark_ok(how: String) -> void:
+	if _ok_marked: return
 	_ok_marked = true
 	if not from_pack(): return
 	var ver := str((Engine.get_meta("torii_update") as Dictionary).get("ver", game_ver())); var d := udir()
 	_write(d.path_join("boot_ok_" + ver), Time.get_datetime_string_from_system())
 	DirAccess.remove_absolute(d.path_join("boot_try_" + ver))
-	_log("boot ok: GAME_VER %s reached %s · save level %d, %d words" % [Menus.me.GAME_VER if Menus.me else game_name(), "the title" if title else "5 s", SaveBridge.get_i("lvl", 1), (SaveBridge.data.get("words", []) as Array).size() if SaveBridge.data.get("words") is Array else 0])
+	_log("boot ok: GAME_VER %s reached %s · save level %d, %d words" % [Menus.me.GAME_VER if Menus.me else game_name(), how, SaveBridge.get_i("lvl", 1), (SaveBridge.data.get("words", []) as Array).size() if SaveBridge.data.get("words") is Array else 0])
+
+# main._quit(): an orderly quit (close button, Cmd+Q, even on the VHS intro) means this pack runs fine
+func mark_ok_on_quit() -> void: _mark_ok("an orderly quit")
 
 # ---------------------------------------------------------------- the check (once, while the title shows)
 
@@ -280,7 +284,10 @@ func _update() -> void:
 	var d := udir()
 	DirAccess.make_dir_recursive_absolute(d)
 	if FileAccess.file_exists(_part()): DirAccess.remove_absolute(_part())
-	_dl = HTTPRequest.new(); _dl.use_threads = true; _dl.max_redirects = 8; _dl.download_file = _part()
+	# no thread: a threaded HTTPRequest blocks in recv() on a dead link, and cancel_request() then joins that thread
+	# on the main thread (the whole game freezes). Polled once a frame, non-blocking, up to 1 MB a frame.
+	_dl = HTTPRequest.new(); _dl.use_threads = false; _dl.download_chunk_size = 1 << 20
+	_dl.max_redirects = 8; _dl.download_file = _part()
 	_dl.body_size_limit = int(_info["size"]) + 1048576
 	add_child(_dl)
 	_dl.request_completed.connect(_downloaded)
@@ -345,8 +352,11 @@ func _hashed(sha) -> void:
 	var final := d.path_join(pck)
 	if FileAccess.file_exists(final): DirAccess.remove_absolute(final)
 	if DirAccess.rename_absolute(_part(), final) != OK: _failed("couldn't move the pack into place"); return
-	for f in DirAccess.get_files_at(d):           # older packs, half downloads and their boot marks go
-		if (f.ends_with(".pck") and f != pck) or f.ends_with(".part") or ((f.begins_with("boot_try_") or f.begins_with("boot_ok_")) and not f.ends_with("_" + ver)):
+	# older packs, half downloads and their boot marks go — but never the pack this run is playing from (Godot reads
+	# it again on every resource load): boot.gd deletes it at the next start, before anything mounts it
+	var running := str((Engine.get_meta("torii_update") as Dictionary).get("pck", "")) if from_pack() else ""
+	for f in DirAccess.get_files_at(d):
+		if (f.ends_with(".pck") and f != pck and f != running) or f.ends_with(".part") or ((f.begins_with("boot_try_") or f.begins_with("boot_ok_")) and not f.ends_with("_" + ver)):
 			DirAccess.remove_absolute(d.path_join(f))
 	DirAccess.remove_absolute(d.path_join("boot_ok_" + ver))
 	var cur := {"ver": ver, "pck": pck, "size": int(_info["size"]), "sha256": str(_info["sha256"]).to_lower(), "engine": str(_info.get("engine", engine_ver())), "name": str(_info["name"])}

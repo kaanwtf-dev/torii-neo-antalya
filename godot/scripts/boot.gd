@@ -7,15 +7,19 @@
 # The update (written by updater.gd): <updates>/current.json {ver, pck, size, sha256, engine, name} + <updates>/<pck>,
 # <updates> = user://updates, or <--savedir>/updates in test runs. It's used when its ver is newer than the bundled
 # game's and it was made with this engine; the pack's size and sha256 are checked every start. boot_try_<ver>
-# counts starts on it; the game writes boot_ok_<ver> (and clears the count) once it's running (Updater._mark_ok).
-# A damaged pack (size / sha256) is deleted and simply offered again at the next check. Two starts that never got there → the update is deleted, bad_<ver> written (never
-# offered again), and the bundled game starts. A newer bundled game (a new zip from Kaan) also drops it.
+# counts starts on it; the game writes boot_ok_<ver> (and clears the count) once it's running (Updater._mark_ok: the
+# title, 5 s, or an orderly quit). A damaged pack (size / sha256) is deleted and simply offered again at the next check.
+# Two starts that never got there → the update is deleted and the bundled game starts; bad_<ver> (never offered again)
+# only if that ver never got going at all (no boot_ok_<ver>). A newer bundled game (a new zip from Kaan) also drops it.
+# Whenever an update newer than the bundled game is dropped, the save is copied to torii_save_from_<ver>.json first
+# (the older bundled code is about to run on a save the update wrote).
 #
 # This script must not use ANY game class (Updater, SaveBridge, Bus...): naming one would load it from the bundled
 # pack before the update is laid over it. Its helpers are copied in updater.gd for the same reason.
 # Limits: project.godot settings (window, rendering, new autoloads) and the engine itself come from the app, not the
 # pack, so a change there needs a new app (tools/export_mac.sh), like an engine change. So does a change to THIS file
-# or scenes/boot.tscn: the app's own copy always runs (it is what lays the pack over).
+# or scenes/boot.tscn: the app's own copy always runs (it is what lays the pack over). tools/publish_update.sh refuses
+# a pack when any of those differ from the app build (tools/app_base.sha256 / app_base.engine, from tools/export_mac.sh).
 extends Node
 
 func _ready() -> void:
@@ -61,8 +65,13 @@ static func _pick() -> Dictionary:
 		_drop("the pack doesn't match its sha256 (it gets offered again)"); return {}
 	var tp := d.path_join("boot_try_" + ver)
 	var tries := int(FileAccess.get_file_as_string(tp)) if FileAccess.file_exists(tp) else 0
-	if tries >= 2: _drop("it started %d times without getting going" % tries, ver); return {}
+	if tries >= 2:
+		var proven := FileAccess.file_exists(d.path_join("boot_ok_" + ver))    # it ran fine before: offer it again later
+		_drop("it started %d times without getting going%s" % [tries, " (it did run before: offered again)" if proven else ""], "" if proven else ver)
+		return {}
 	write(tp, str(tries + 1))
+	for f in DirAccess.get_files_at(d):           # packs of older updates (kept while that run was still playing from one)
+		if f.ends_with(".pck") and f != pck: DirAccess.remove_absolute(d.path_join(f))
 	return {"ver": ver, "pck": pck, "path": ProjectSettings.globalize_path(path), "name": str(cur.get("name", ver)), "try": tries + 1}
 
 static func _bundled_name() -> String:
@@ -73,10 +82,25 @@ static func _bundled_name() -> String:
 static func _drop(why: String, bad_ver := "") -> void:
 	var d := udir()
 	_log("boot: not using the update: " + why)
+	_keep_save(d)
 	if bad_ver != "": write(d.path_join("bad_" + bad_ver), why)
 	for f in DirAccess.get_files_at(d):
 		if f.ends_with(".pck") or f.ends_with(".part") or f == "current.json" or f.begins_with("boot_try_") or f.begins_with("boot_ok_"):
 			DirAccess.remove_absolute(d.path_join(f))
+
+# the older bundled game is about to run on a save written by a newer update: keep a copy of it as it is
+# (torii_save_from_<ver>.json, next to the save; the torii_save keys themselves are untouched)
+static func _keep_save(d: String) -> void:
+	var cur = JSON.parse_string(FileAccess.get_file_as_string(d.path_join("current.json"))) if FileAccess.file_exists(d.path_join("current.json")) else null
+	if not cur is Dictionary: return
+	var ver := ver_num(str(cur.get("ver", "")))
+	if ver == "" or cmp(ver, ver_num(_bundled_name())) <= 0: return
+	var sd := _arg("--savedir=")
+	if sd == "": sd = "user://"
+	var src := sd.path_join("torii_save.json")
+	if not FileAccess.file_exists(src): return
+	var txt := FileAccess.get_file_as_string(src)
+	if txt != "" and write(sd.path_join("torii_save_from_%s.json" % ver), txt): _log("boot: kept the save as torii_save_from_%s.json" % ver)
 
 # ---- helpers (the same ones are in updater.gd: see the top) ----
 static func _arg(prefix: String) -> String:

@@ -197,6 +197,7 @@ var _quitting := false
 func _quit() -> void:
 	if _quitting: return
 	_quitting = true
+	if Updater.me: Updater.me.mark_ok_on_quit()     # an update that quits in order is a good one (boot.gd stops counting)
 	if not SaveBridge.data.is_empty(): SaveBridge.write()
 	if Audio.me: Audio.me.shutdown()
 	else: DisplayServer.tts_stop()

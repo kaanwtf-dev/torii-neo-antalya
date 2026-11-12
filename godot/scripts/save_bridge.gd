@@ -80,9 +80,28 @@ static func migrate() -> void:
 		data["xp"] = clampi(get_i("xp"), 0, need - 1)
 	data["need"] = need
 	var known: Dictionary = _missions_data()["weapons"]
-	var weap: Array = (data["weap"] if data.get("weap") is Array else ["katana"]).filter(func(w): return known.has(str(w)))
-	if weap.is_empty(): weap = ["katana"]
+	var raw: Array = data["weap"] if data.get("weap") is Array else ["katana"]
 	var dur: Dictionary = data["dur"] if data.get("dur") is Dictionary else {}
+	# weapons this build doesn't know (a newer update's, when the updater fell back to the bundled game) wait in
+	# weap_later / dur_later instead of being dropped, and come back as soon as a build knows them again
+	var later: Array = data["weap_later"] if data.get("weap_later") is Array else []
+	var dur_later: Dictionary = data["dur_later"] if data.get("dur_later") is Dictionary else {}
+	for w in raw:
+		if not known.has(str(w)) and not later.has(w):
+			later.append(w)
+			if dur.has(w): dur_later[w] = dur[w]
+	var weap: Array = raw.filter(func(w): return known.has(str(w)))
+	for w in later.duplicate():
+		if known.has(str(w)):
+			later.erase(w)
+			if not weap.has(w):
+				weap.append(w)
+				if dur_later.has(w) and not dur.has(w): dur[w] = dur_later[w]
+			dur_later.erase(w)
+	for w in dur_later.keys(): if not later.has(w): dur_later.erase(w)
+	if later.is_empty(): data.erase("weap_later"); data.erase("dur_later")
+	else: data["weap_later"] = later; data["dur_later"] = dur_later
+	if weap.is_empty(): weap = ["katana"]
 	var nd := {}
 	for w in weap:
 		var v = dur.get(w)

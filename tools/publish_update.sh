@@ -13,15 +13,18 @@
 # The version number is the first number in "ver" ("ALPHA 8.3 · ..." → 8.3) and must be higher than the last release.
 # The notes line defaults to "update_note" in godot.json, else the newest patch title.
 # An ENGINE change (a new Godot version) can't ship as a pack: build a new app with tools/export_mac.sh instead
-# (the app sees the different engine in version.json and tells her to ask you).
+# (the app sees the different engine in version.json and tells her to ask you). Neither can a change to
+# godot/project.godot, scripts/boot.gd or scenes/boot.tscn: the app always uses its own copies. The script refuses
+# both, comparing against tools/app_base.sha256 / app_base.engine (written by tools/export_mac.sh); --force skips that.
 set -euo pipefail
 cd "$(dirname "$0")/.."
 REPO="kaanwtf-dev/torii-neo-antalya"
-PUBLISH=0; NOTES=""
+PUBLISH=0; NOTES=""; FORCE=0
 while [ $# -gt 0 ]; do
   case "$1" in
     --publish) PUBLISH=1 ;;
     --notes) NOTES="$2"; shift ;;
+    --force) FORCE=1 ;;
     *) echo "unknown option $1"; exit 2 ;;
   esac
   shift
@@ -40,6 +43,17 @@ NAME=$(python3 -c 'import json,sys; print(json.loads(sys.argv[1]))' "$NAME")
 [ -z "$NOTES" ] && NOTES=$(python3 -c 'import json,sys; print(json.loads(sys.argv[1]))' "$DEFNOTES")
 PCK="torii-$VER.pck"
 ENGINE=$(godot --version | grep -oE '^[0-9]+(\.[0-9]+){1,2}')
+
+# the app Torii has must be able to run this pack (see the top)
+if [ "$FORCE" != 1 ]; then
+  NEWAPP="this needs a new app (bash tools/export_mac.sh, then send her the zip), not a pack. --force to publish anyway"
+  [ -f tools/app_base.sha256 ] && [ -f tools/app_base.engine ] ||
+    { echo "no tools/app_base.sha256 / app_base.engine: build the app first (bash tools/export_mac.sh) and commit them"; exit 1; }
+  shasum -a 256 -c --quiet tools/app_base.sha256 ||
+    { echo "godot/project.godot, scripts/boot.gd or scenes/boot.tscn changed since the app build: $NEWAPP"; exit 1; }
+  [ "$(cat tools/app_base.engine)" = "$ENGINE" ] ||
+    { echo "engine $ENGINE, but the app was built with $(cat tools/app_base.engine): $NEWAPP"; exit 1; }
+fi
 
 mkdir -p godot/build; touch godot/build/.gdignore      # (.gdignore: nothing in build/ ends up inside the pack)
 rm -f "godot/build/$PCK" godot/build/version.json

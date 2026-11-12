@@ -59,8 +59,14 @@ Project rules live in `CLAUDE.md` (they apply to both of us). Newest entry on to
   engine, right size and sha256, then `change_scene_to_file(main.tscn)`. (The first plan, a restart with `--main-pack`, is
   impossible: official release templates abort with "compiled without support for path overrides".) `boot.gd` must never
   name a game class, and the app's own copy of it always runs (changing it = new app). Anti-brick: `boot_try_<ver>` counts
-  starts, `Updater._mark_ok` writes `boot_ok_<ver>` + clears the count at the title (or after 5 s running); 2 starts without
-  it → update deleted + `bad_<ver>` (never offered again) → bundled game. Damaged pack → deleted, offered again. Log:
+  starts, `Updater._mark_ok` writes `boot_ok_<ver>` + clears the count at the title, after 5 s running, or on an orderly
+  quit (`main._quit()` → `Updater.mark_ok_on_quit()`); 2 starts without it → update deleted → bundled game, + `bad_<ver>`
+  (never offered again) only if that ver never had a `boot_ok_<ver>`. Damaged pack → deleted, offered again. Any drop of
+  an update newer than the bundled game first copies the save to `torii_save_from_<ver>.json` (the older code is about to
+  run on it), and `SaveBridge.migrate()` parks weapon ids it doesn't know in `weap_later` / `dur_later` instead of
+  deleting them (they come back once a build knows them). The download runs WITHOUT threads (`use_threads=false`, 1 MB
+  chunks a frame): threaded, a dead link froze the game when the 30 s watchdog / CANCEL / quit joined the HTTP thread.
+  The pack the game is playing from is never deleted by an install; `boot.gd` deletes other packs before mounting. Log:
   `user://updates/updater.log`. Only the exported app updates (`OS.has_feature("template")`); dev runs need
   `--updateurl=http://127.0.0.1:PORT/`. With `--savedir=DIR` the update files live in `DIR/updates` (tests never touch the
   real folder). Dev flags: `--updateurl=`, `--updatepress`, `--updateshot=PATH` (also writes PATH_dl.png), `--updatequit=SEC`,
@@ -69,8 +75,10 @@ Project rules live in `CLAUDE.md` (they apply to both of us). Newest entry on to
   number must be higher than the last release), commit, then `bash tools/publish_update.sh [--notes "one line for Torii"]`
   → `godot/build/torii-<ver>.pck` + `godot/build/version.json` and the exact `gh release create v<ver> ... --latest` command
   (run it, or re-run the script with `--publish`). Notes default to godot.json `"update_note"`, else the newest patch title.
-  An engine upgrade or a `project.godot` change (window, rendering, autoloads) can't ship as a pack: `tools/export_mac.sh` and
-  send her the zip. Test before publishing: serve `godot/build/` with `python3 -m http.server 8765 --bind 127.0.0.1` and run
+  An engine upgrade or a change to `project.godot` (window, rendering, autoloads), `scripts/boot.gd` or `scenes/boot.tscn`
+  can't ship as a pack: `tools/export_mac.sh` and send her the zip. The script refuses those (`--force` skips): it compares
+  with `tools/app_base.sha256` + `tools/app_base.engine`, which `export_mac.sh` writes — COMMIT them with the app build you
+  send her (they don't exist yet: the 8.2 app build creates them; until then publish_update.sh refuses). Test before publishing: serve `godot/build/` with `python3 -m http.server 8765 --bind 127.0.0.1` and run
   the exported app with `-- --updateurl=http://127.0.0.1:8765/ --savedir=<scratch> --totitle`.
 - **Not done yet:** PRG-24 (outfits per level: Kaan decides).
   Seen but not fixed: "NAZAR SHIELD 12s" shows twice (left HUD list + right buff chip, from before 8.1); the club neon
@@ -91,6 +99,9 @@ Project rules live in `CLAUDE.md` (they apply to both of us). Newest entry on to
   two killed starts / newer bundled app all fall back to the bundled game; engine mismatch = toast only; 404 + no server =
   silent; the real GitHub URL answers 404 today (no release yet) and HTTPRequest follows GitHub's asset redirect (tested on a
   public release). Nothing was published.
+  Review fixes: no-thread download (a stalled server: watchdog fires at 30 s, quit mid-stall exits at once, 30 MB local
+  download < 1 s), orderly quit = boot ok (3 windowed 2 s quits on the VHS intro stay at try 1), proven ver dropped
+  without `bad_`, save copy on drop, `weap_later`, running pack kept, publish guard (tools/app_base.*).
 - 2026-11-09 Claude (parent session): **Mac app built (CRT-02).** Kaan OK'd the export templates (1.28 GB, SHA-512 checked,
   installed for 4.7.2). Added `godot/export_presets.cfg`, `godot/icon.png` (+ `--iconshot=PATH` dev flag), ETC2/ASTC import,
   dark boot splash, `tools/export_mac.sh` (export → ASCII inner names → ad-hoc re-sign → verify → zip). Checked: signature
