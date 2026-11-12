@@ -66,7 +66,9 @@ func setup(p: CharacterBody3D, h: CanvasLayer, sui: Node) -> void:
 	_root = Control.new(); _root.set_anchors_preset(Control.PRESET_FULL_RECT); _root.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	add_child(_root)
 	_build_bar()
-	_prompt = Label.new(); _prompt.position = Vector2(180, 606); _prompt.size = Vector2(600, 26)
+	# centred over the skill bar on the real screen, the same height above the bottom (widescreen 8.2)
+	_prompt = Label.new(); _prompt.anchor_left = .5; _prompt.anchor_right = .5; _prompt.anchor_top = 1; _prompt.anchor_bottom = 1
+	_prompt.offset_left = -300; _prompt.offset_right = 300; _prompt.offset_top = -114; _prompt.offset_bottom = -88
 	_prompt.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER; _prompt.add_theme_font_size_override("font_size", 17)
 	_prompt.add_theme_color_override("font_color", GOLD); _prompt.add_theme_constant_override("outline_size", 6)
 	_prompt.add_theme_color_override("font_outline_color", Color(0, 0, 0, .9)); _prompt.mouse_filter = Control.MOUSE_FILTER_IGNORE
@@ -353,7 +355,7 @@ func _fit(p: Control, sc: ScrollContainer) -> void:
 	if UiScale.k() <= 1.0: return
 	await get_tree().process_frame
 	if not is_instance_valid(p) or not is_instance_valid(sc): return
-	var over := p.get_combined_minimum_size().y - 704.0
+	var over := p.get_combined_minimum_size().y - (Screen.h() - 16.0)
 	if over > 0: sc.custom_minimum_size.y = maxf(160.0, sc.custom_minimum_size.y - over)
 
 func _apply_display() -> void:
@@ -550,7 +552,10 @@ func close_guide() -> void:
 
 # ---------------------------------------------------------------- the toggle bar (#btns), #ver, the E prompt
 func _build_bar() -> void:
-	_bar = VBoxContainer.new(); _bar.position = Vector2(812, 414); _bar.add_theme_constant_override("separation", 4)    # ends above SAVE & LOAD (y 684)
+	_bar = VBoxContainer.new(); _bar.add_theme_constant_override("separation", 4)    # ends above SAVE & LOAD (y 684)
+	# the bottom-right corner of the real screen (widescreen 8.2): 812,414 on the 960x720 canvas
+	_bar.anchor_left = 1; _bar.anchor_right = 1; _bar.anchor_top = 1; _bar.anchor_bottom = 1
+	_bar.offset_left = -148; _bar.offset_right = -4; _bar.offset_top = -306; _bar.offset_bottom = -306
 	_bar.custom_minimum_size = Vector2(144, 0); _root.add_child(_bar)
 	var items := [["🔊 VOICES [V]", func(): if Audio.me: Audio.me.set_voice(not Audio.me.voice_on)],
 		["👁 LOOK BEHIND [C]", func(): if torii and torii.has_method("_set_look"): torii._set_look(not torii.look_back)],
@@ -562,7 +567,9 @@ func _build_bar() -> void:
 	for it in items:
 		var b := _btn(_bar, it[0], it[1], CYAN, 11)
 		b.custom_minimum_size = Vector2(144, 0); b.alignment = HORIZONTAL_ALIGNMENT_LEFT
-	_ver = Label.new(); _ver.text = "TORİİ: NEO ANTALYA — " + GAME_VER; _ver.position = Vector2(400, 704); _ver.size = Vector2(554, 14)
+	_ver = Label.new(); _ver.text = "TORİİ: NEO ANTALYA — " + GAME_VER
+	_ver.anchor_left = 1; _ver.anchor_right = 1; _ver.anchor_top = 1; _ver.anchor_bottom = 1      # bottom-right corner (400,704 at 4:3)
+	_ver.offset_left = -560; _ver.offset_right = -6; _ver.offset_top = -16; _ver.offset_bottom = -2
 	_ver.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT; _ver.add_theme_font_size_override("font_size", 10)
 	_ver.add_theme_color_override("font_color", Color(1, 1, 1, .4)); _ver.mouse_filter = Control.MOUSE_FILTER_IGNORE; _root.add_child(_ver)
 

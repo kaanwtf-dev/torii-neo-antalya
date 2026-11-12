@@ -30,7 +30,10 @@ const TXT := Color("e8e4f8")
 func setup(p) -> void:
 	me = self; player = p; layer = 5
 	D = Stats.data()
-	panel = PanelContainer.new(); panel.position = Vector2(30, 24); panel.size = Vector2(900, 672); panel.visible = false
+	panel = PanelContainer.new(); panel.visible = false
+	# centred on the real screen (widescreen 8.2): 30,24 + 900x672 on the 960x720 canvas
+	panel.anchor_left = .5; panel.anchor_right = .5; panel.anchor_top = .5; panel.anchor_bottom = .5
+	panel.offset_left = -450; panel.offset_top = -336; panel.offset_right = 450; panel.offset_bottom = 336
 	panel.add_theme_stylebox_override("panel", _sb(Color(.05, .025, .1, .97), PINK, 3, 14, 16))
 	add_child(panel)
 	var v := VBoxContainer.new(); v.add_theme_constant_override("separation", 8); panel.add_child(v)
@@ -157,6 +160,18 @@ func render() -> void:
 	# 🔠 TEXT SIZE (UiScale): everything scales; the tabs grow less so they stay on one line, the list gets shorter
 	UiScale.apply(panel); UiScale.apply(tabs_row, 1.25)
 	scroll.custom_minimum_size.y = 540.0 - maxf(0.0, UiScale.k() - 1.0) * 90.0; panel.size = Vector2(900, 672)
+	_fit()
+
+# big TEXT SIZE: if the header, tabs and hint still push the bag past the bottom of the screen, the list gives up
+# the difference (at 100% the bag is exactly 672 tall and nothing changes)
+func _fit() -> void:
+	if UiScale.k() <= 1.0: return
+	for i in 3:                            # rich text settles its height over a frame or two
+		await get_tree().process_frame
+		if not panel.visible: return
+		var over := panel.get_combined_minimum_size().y - (Screen.h() - 48.0)
+		if over > 0: scroll.custom_minimum_size.y = maxf(160.0, scroll.custom_minimum_size.y - over)
+		panel.size = Vector2(900, 672)          # a box never shrinks by itself once its content got smaller
 
 func _gear_card(parent: Node, it: Dictionary, cmp = null) -> void:
 	var I := Items.me

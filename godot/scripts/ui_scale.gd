@@ -67,6 +67,7 @@ static func dev(main: Node, hud: Hud) -> void:
 		if a.begins_with("--fs="):
 			dev_k = float(a.substr(5)); Bus.emit_ev("ui_scale", {"k": k()})
 		if a.begins_with("--fsdemo="): _demo(main, hud, a.substr(9))
+		if a.begins_with("--menudemo="): _menudemo(main, hud, a.substr(11))
 
 static func _shot(main: Node, dir: String, n: String) -> void:
 	await main.get_tree().create_timer(.5, true).timeout
@@ -110,4 +111,43 @@ static func _demo(main: Node, hud: Hud, dir: String) -> void:
 	if InventoryUI.me:
 		InventoryUI.me.open("gear"); await _shot(main, dir, "inv_gear")
 		InventoryUI.me.open("bag"); await _shot(main, dir, "inv_bag"); InventoryUI.me.close()
+	main.call("_quit")
+
+# dev only: --menudemo=DIR (with --continue --savedir=, any --resolution / --fs=) saves a shot of every menu,
+# bag tab and card (title, NEW GAME confirm, pause, guide, patch notes, the I bag tabs, perk pick, tip card,
+# milestone card, the toggle bar + buff list), then quits. For the widescreen checks.
+static func _menudemo(main: Node, hud: Hud, dir: String) -> void:
+	await main.get_tree().create_timer(3.0, true).timeout
+	if Menus.me: Menus.me.close_patch()
+	await main.call("_dev_clear", hud)
+	await main.get_tree().create_timer(1.0, true).timeout
+	if Menus.me: Menus.me.close_patch()
+	var M = Menus.me
+	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+	if Items.me: Items.me.buffs["regen"] = 30.0; Items.me.buffs["lucky"] = 30.0
+	if M: M._prompt_t = 99.0; M._prompt.text = "E: ride the Diamond Back 🚲"; M._prompt.visible = true
+	await _shot(main, dir, "bar")
+	if M:
+		M._prompt_t = 0.0
+		M.title(); await _shot(main, dir, "title")
+		M._ask_new(true); await _shot(main, dir, "confirm")
+		M._close_title()
+		M.open_pause(); await _shot(main, dir, "pause")
+		M.open_guide(true); await _shot(main, dir, "guide")
+		M.close_guide(); M.close_pause()
+		M.show_patch(true); await _shot(main, dir, "patch"); M.close_patch()
+	if InventoryUI.me:
+		for t in ["gear", "bag", "cards", "nazar", "quests", "stats"]:
+			InventoryUI.me.open(t); await _shot(main, dir, "inv_" + t)
+		InventoryUI.me.close()
+	if LevelUp.me:
+		var pp0 = SaveBridge.data.get("pp")
+		SaveBridge.data["pp"] = maxi(1, SaveBridge.get_i("pp"))
+		LevelUp.me.open_perks(); await _shot(main, dir, "perks")
+		SaveBridge.data["pp"] = 0; LevelUp.me.close_perks()
+		if pp0 == null: SaveBridge.data.erase("pp")
+		else: SaveBridge.data["pp"] = pp0
+		LevelUp.me._show_tip("combo"); await _shot(main, dir, "tip"); LevelUp.me.close_tip()
+		LevelUp.me._card(LevelUp.me.milestone_for(10)); await main.get_tree().create_timer(.6, true).timeout
+		await _shot(main, dir, "milestone")
 	main.call("_quit")
