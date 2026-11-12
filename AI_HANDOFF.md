@@ -91,7 +91,7 @@ Project rules live in `CLAUDE.md` (they apply to both of us). Newest entry on to
   An engine upgrade or a change to `project.godot` (window, rendering, autoloads), `scripts/boot.gd` or `scenes/boot.tscn`
   can't ship as a pack: `tools/export_mac.sh` and send her the zip. The script refuses those (`--force` skips): it compares
   with `tools/app_base.sha256` + `tools/app_base.engine`, which `export_mac.sh` writes — COMMIT them with the app build you
-  send her (they don't exist yet: the 8.2 app build creates them; until then publish_update.sh refuses). Test before publishing: serve `godot/build/` with `python3 -m http.server 8765 --bind 127.0.0.1` and run
+  send her (committed with the 8.2 app build, 84af963). Test before publishing: serve `godot/build/` with `python3 -m http.server 8765 --bind 127.0.0.1` and run
   the exported app with `-- --updateurl=http://127.0.0.1:8765/ --savedir=<scratch> --totitle`.
 - **Not done yet:** PRG-24 (outfits per level: Kaan decides).
   Seen but not fixed: "NAZAR SHIELD 12s" shows twice (left HUD list + right buff chip, from before 8.1); the club neon
@@ -106,6 +106,13 @@ Project rules live in `CLAUDE.md` (they apply to both of us). Newest entry on to
 - Never put Torii's real photo (`assets/screenshots/torii face.jpg`) in git — it's ignored on purpose.
 
 ## Log
+- 2026-11-11 Claude (smoke test 8.2): windowed `--smoke82=DIR` tour (play HUD, weapon wheel, call letterbox, lesson, quiz,
+  pause/options, bag, title) at 960/1152/1280/1680 x 720: 960 matches the pre-8.2 baselines, wide = corners in the real
+  corners, panels centred, dims/bars full width. `--smokeresize=1280x720` (start 960, widen in game): everything re-places.
+  `--brawl=25 --tslog --brawllvl` (headless + windowed 1280): no TSLOG, level-up dance 5.1-5.2 s real time. Updater end
+  to end with the EXPORTED app + a 9.9 test pack on 127.0.0.1: panel, download + sha256, relaunch into 9.9, save intact
+  (lvl 5, 18 words), next plain start runs 9.9. Then a clean 8.2 export (godot/build/, test pack removed, godot.json
+  back to 8.2) and tools/app_base.* committed. Shots: tools/shots/82_*.png. Not pushed.
 - 2026-11-11 Claude (integrator): **ALPHA 8.2 · GENİŞ merged on `build/8.2`** — wf82/updater, story, side, menus, hud, all
   clean merges (no conflicts; both sides had already done each other's cross-file asks: version line + SAVE & LOAD in the real
   bottom-right). Kaan's note "slow mo starts randomly, not during weapon selection": Bandit's bites, ally hits and burn/poison
