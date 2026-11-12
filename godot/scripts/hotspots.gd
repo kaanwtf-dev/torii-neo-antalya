@@ -35,7 +35,7 @@ func setup(w: Node3D, p: Node3D, h: Hud) -> void:
 	me = self; world = w; torii = p; hud = h
 	D = JSON.parse_string(FileAccess.get_file_as_string("res://assets/side/hotspots.json"))
 	var layer := CanvasLayer.new(); layer.layer = 3; add_child(layer)
-	_line = Shops.rich("", 15, Color("ff9ecf"), 450); _line.position = Vector2(500, 140)
+	_line = Shops.rich("", 15, Color("ff9ecf"), 450); Shops.pin_right(_line, Vector2(500, 140), 450)
 	_line.add_theme_color_override("font_outline_color", Color(0, 0, 0, .85)); _line.add_theme_constant_override("outline_size", 6)
 	layer.add_child(_line)
 	var ds := Shops.sign3d("MİDTOWN EV · KAPI 🚪", Color("ffd66b"), 48); ds.position = Vector3(DOORXZ.x, 3.6, DOORXZ.y + .4); world.add_child(ds)
