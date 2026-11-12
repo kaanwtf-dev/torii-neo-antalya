@@ -68,6 +68,7 @@ static func dev(main: Node, hud: Hud) -> void:
 			dev_k = float(a.substr(5)); Bus.emit_ev("ui_scale", {"k": k()})
 		if a.begins_with("--fsdemo="): _demo(main, hud, a.substr(9))
 		if a.begins_with("--menudemo="): _menudemo(main, hud, a.substr(11))
+		if a.begins_with("--smoke82="): _smoke(main, hud, a.substr(10))
 
 static func _shot(main: Node, dir: String, n: String) -> void:
 	await main.get_tree().create_timer(.5, true).timeout
@@ -151,3 +152,48 @@ static func _menudemo(main: Node, hud: Hud, dir: String) -> void:
 		LevelUp.me._card(LevelUp.me.milestone_for(10)); await main.get_tree().create_timer(.6, true).timeout
 		await _shot(main, dir, "milestone")
 	main.call("_quit")
+
+# dev only: --smoke82=DIR (with --continue --savedir=, any --resolution): the widescreen smoke tour (play HUD, the
+# weapon wheel, a call in the letterbox, a lesson, a quiz, pause / options, the bag, the title), then quits.
+# --smokeresize=WxH: after the first round the window changes to that size and the tour runs again (rs_*.png).
+static func _smoke(main: Node, hud: Hud, dir: String) -> void:
+	var rs := ""
+	for a in OS.get_cmdline_user_args(): if a.begins_with("--smokeresize="): rs = a.substr(14)
+	await main.get_tree().create_timer(3.0, true).timeout
+	if Menus.me: Menus.me.close_patch()
+	await main.call("_dev_clear", hud)
+	await main.get_tree().create_timer(1.0, true).timeout
+	if Menus.me: Menus.me.close_patch()
+	await _smoke_round(main, hud, dir, "")
+	if rs != "":
+		var wh := rs.split("x")
+		main.get_window().size = Vector2i(int(wh[0]), int(wh[1]))
+		await main.get_tree().create_timer(1.0, true, false, true).timeout
+		await _smoke_round(main, hud, dir, "rs_")
+	main.call("_quit")
+
+static func _smoke_round(main: Node, hud: Hud, dir: String, pre: String) -> void:
+	await _shot(main, dir, pre + "hud")
+	if Arsenal.me:
+		Arsenal.me.open_wheel()
+		await main.get_tree().create_timer(.6, true, false, true).timeout
+		await RenderingServer.frame_post_draw
+		main.get_viewport().get_texture().get_image().save_png("%s/%swheel.png" % [dir, pre]); print("FSDEMO ", pre, "wheel")
+		Arsenal.me.close_wheel(false)
+	var cs = Cutscene.me
+	if cs:
+		cs.play([{"who": "Kaan", "line": "Bebeğim! [Merhaba] (hello) — a long subtitle line to see how the letterbox holds it at this size.", "title": "BÖLÜM 1 · THE AVOCADO RUN"}])
+		await _shot(main, dir, pre + "cut"); cs.end(true)
+	var L = Lessons.me
+	if L and L.quiz:
+		L.quiz.show_lesson("Selamlar · Greetings", ["[b]Merhaba[/b] (hello) works any time of day. [b]Günaydın[/b] (good morning) is for the morning, and [b]İyi akşamlar[/b] (good evening) for later."], func(): pass)
+		await _shot(main, dir, pre + "lesson")
+		L.quiz.run([{"text": "What does [b]Teşekkür ederim[/b] mean?", "vis": "🙏", "opts": ["thank you very much", "good morning", "see you later, my friend", "excuse me"], "a": 0}], func(_s): pass)
+		await _shot(main, dir, pre + "quiz"); L.quiz.queue = []; L.quiz.done_cb = Callable(); L.quiz.total = 0; L.quiz._show(false)
+	if Menus.me:
+		Menus.me.open_pause(); await _shot(main, dir, pre + "pause"); Menus.me.close_pause()
+	if InventoryUI.me:
+		InventoryUI.me.open("bag"); await _shot(main, dir, pre + "inv_bag"); InventoryUI.me.close()
+	if Menus.me:
+		Menus.me.title(); await _shot(main, dir, pre + "title"); Menus.me._close_title()
+	await main.get_tree().create_timer(.4, true).timeout

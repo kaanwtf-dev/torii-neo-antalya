@@ -461,11 +461,17 @@ func _dev_brawl(p: CharacterBody3D, sec: float) -> void:
 	for i in kinds.size():
 		Enemy.spawn(p.get_parent(), kinds[i], p.global_position + Vector3(cos(i * 1.3) * 7.0, 0, sin(i * 1.3) * 7.0), p)
 	var t0 := Time.get_ticks_msec(); var k := 0
+	var dance0 := 0; var dance_max := 0.0               # --brawllvl: a level-up (its 5.2 s dance) 5 s in
 	var shot := ""                                      # --brawlshot=PATH: one frame the first time a streak hits 3
 	for a in OS.get_cmdline_user_args(): if a.begins_with("--brawlshot="): shot = a.substr(12)
 	while (Time.get_ticks_msec() - t0) / 1000.0 < sec:
 		await get_tree().create_timer(.1).timeout
 		k += 1
+		if p.dance_t > 0:                               # how long a dance (level-up / skill) lasts in real seconds
+			if dance0 == 0: dance0 = Time.get_ticks_msec()
+			dance_max = maxf(dance_max, (Time.get_ticks_msec() - dance0) / 1000.0)
+		else: dance0 = 0
+		if k == 50 and "--brawllvl" in OS.get_cmdline_user_args(): Stats.gain_xp(SaveBridge.xp_for(SaveBridge.get_i("lvl", 1)), Vector3.INF, true)
 		if shot != "" and Streaks.me and Streaks.me.count >= 3:
 			await get_tree().create_timer(.3).timeout
 			await RenderingServer.frame_post_draw
@@ -499,7 +505,7 @@ func _dev_brawl(p: CharacterBody3D, sec: float) -> void:
 				if bd < 3.0: p.combat.light()
 	for a in ["move_forward", "block", "roll", "sprint", "jump"]: Input.action_release(a)
 	print("BRAWL ", JSON.stringify(c), " hp=", p.hp, "/", p.max_hp, " st=", int(p.stamina), " mana=", int(p.mana), " lvl=", SaveBridge.get_i("lvl", 1),
-		" mobs=", get_tree().get_nodes_in_group("enemies").size(), " pos=", p.global_position.snapped(Vector3.ONE))
+		" mobs=", get_tree().get_nodes_in_group("enemies").size(), " dance_max=", snappedf(dance_max, .1), " pos=", p.global_position.snapped(Vector3.ONE))
 	get_tree().quit()
 
 # every person in the city (7.2's walkers, shopkeepers, café/tavla regulars, named NPCs, Kaan) as one of
