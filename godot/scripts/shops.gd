@@ -153,6 +153,18 @@ static func rich(t: String, size := 16, col := Color.WHITE, w := 0.0) -> RichTex
 	if w > 0: r.custom_minimum_size = Vector2(w, 0)
 	r.text = t; return r
 
+# widescreen (8.2): boxes are laid out on the 960x720 canvas and anchored, so they follow the real window by themselves
+# center(): a box drawn at `at` (size sz) on the 960 canvas, kept centred on the real screen (the same spot at 4:3)
+static func center(c: Control, at: Vector2, sz: Vector2) -> void:
+	c.anchor_left = .5; c.anchor_right = .5; c.anchor_top = .5; c.anchor_bottom = .5
+	c.offset_left = at.x - Screen.BASE.x / 2.0; c.offset_top = at.y - Screen.BASE.y / 2.0
+	c.offset_right = c.offset_left + sz.x; c.offset_bottom = c.offset_top + sz.y
+
+# pin_right(): a line drawn at `at` (width w) on the 960 canvas that belongs to the right edge: same gap to the REAL edge
+static func pin_right(c: Control, at: Vector2, w: float) -> void:
+	c.anchor_left = 1.0; c.anchor_right = 1.0; c.anchor_top = 0.0; c.anchor_bottom = 0.0
+	c.offset_left = at.x - Screen.BASE.x; c.offset_right = c.offset_left + w; c.offset_top = at.y; c.offset_bottom = at.y
+
 # ---- gear and the backpack, in 7.2's save format (S.gear / S.eq / S.gu / S.bag) ----
 static func _inv() -> Node:
 	if me == null or not me.is_inside_tree(): return null
@@ -339,6 +351,7 @@ func setup(w: Node3D, p: Node3D, h: Hud) -> void:
 	for V in data()["VENDORS"]:
 		var y := ground_y(V["x"], V["z"])
 		var s := sign3d("💍 KUYUMCU", Color("ffd66b"), 80); s.position = Vector3(V["x"], y + 3.2, V["z"]); world.add_child(s)
+	for a in OS.get_cmdline_user_args(): if a.begins_with("--sideshot="): _dev_sideshot.call_deferred(a.substr(11))
 
 func is_open() -> bool: return _panel != null
 
@@ -372,7 +385,7 @@ func close() -> void:
 
 func _render() -> void:
 	if _panel: _panel.queue_free()
-	_panel = PanelContainer.new(); _panel.position = Vector2(70, 60); _panel.size = Vector2(820, 600)
+	_panel = PanelContainer.new(); center(_panel, Vector2(70, 60), Vector2(820, 600))
 	_panel.add_theme_stylebox_override("panel", panel_box(Color("ffd66b") if kind == "jewel" else Color("ff5fa2")))
 	_layer.add_child(_panel)
 	var v := VBoxContainer.new(); v.add_theme_constant_override("separation", 8); _panel.add_child(v)
@@ -490,3 +503,39 @@ func _process(dt: float) -> void:
 			sfx("ding", n.global_position); n.queue_free()
 			Bus.emit_ev("pickup", {"id": it["kind"], "kind": it["kind"], "pos": n.global_position, "side": true})
 			if it["cb"].is_valid(): it["cb"].call(it["kind"])
+
+# ---------------------------------------------------------------- dev only
+# --sideshot=DIR (with --continue --savedir=): opens every side-system screen once (Five Sips, Kuyumcu, the quest
+# log, the three hint lines, the tavla stake screen, the board with a taunt up), saves DIR/side_<name>.png, quits
+func _dev_sideshot(dir: String) -> void:
+	await get_tree().create_timer(3.0, true).timeout
+	if Menus.me: Menus.me.close_patch()
+	await get_parent().call("_dev_clear", hud)
+	await get_tree().create_timer(1.0, true).timeout
+	if Menus.me: Menus.me.close_patch()
+	open("cafe"); await _dev_snap(dir, "shop_cafe"); close()
+	open("jewel"); await _dev_snap(dir, "shop_jewel"); close()
+	if Quests.me:
+		Quests.me.toggle_log(); await _dev_snap(dir, "qlog"); Quests.me._close_log()
+		Quests.me.line.text = "[right]📜 [b]Pamuk nerede?[/b] [color=#c8b8a0](1/3)[/color]\nFind the cat · 📸 0/3 · press T when it's on screen[/right]"
+	if Tutors.me: Tutors.me._line.text = "[right]🤝 Ayşe Hoca: bring her 3 simit[/right]"
+	if Hotspots.me: Hotspots.me._line.text = "[right]📞 Kaan's monsters: 4 × zombie at the harbour[/right]"
+	await _dev_snap(dir, "lines")
+	if Quests.me: Quests.me._hud_line()
+	if Tutors.me: Tutors.me._side_hud()
+	if Hotspots.me: Hotspots.me._hud_line()
+	if Tavla.me:
+		var ui := Tavla.me.ui; var N: Dictionary = Tavla.me.D["TVNPC"][0]
+		ui.open_bet(N); await _dev_snap(dir, "tavla_bet"); ui.close_bet()
+		ui.begin(N, 3, 0)
+		await get_tree().create_timer(.3, true).timeout
+		if QuizUI.open and Lessons.me: Lessons.me.quiz.skip_all()
+		ui.taunt = {"tr": "Zarın bile senden korkuyor!", "en": "Even your dice are scared of you!", "size": "lg", "ttl": 30.0, "tilt": .03, "flavor": "(he slams the table)"}
+		ui._show_taunt(); await _dev_snap(dir, "tavla_board"); ui._close()
+	get_tree().root.propagate_notification(NOTIFICATION_WM_CLOSE_REQUEST)
+
+func _dev_snap(dir: String, n: String) -> void:
+	await get_tree().create_timer(.6, true).timeout
+	await RenderingServer.frame_post_draw
+	get_viewport().get_texture().get_image().save_png("%s/side_%s.png" % [dir, n])
+	print("SIDESHOT ", n)

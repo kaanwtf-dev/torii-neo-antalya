@@ -61,14 +61,16 @@ var _dismissed := 0
 
 func setup(t: Tavla) -> void:
 	T = t; layer = 4
-	root = Control.new(); root.size = Vector2(960, 720); root.mouse_filter = Control.MOUSE_FILTER_STOP; root.visible = false; add_child(root)
-	var bg := ColorRect.new(); bg.color = Color(.03, .01, .07, .92); bg.size = Vector2(960, 720); bg.mouse_filter = Control.MOUSE_FILTER_IGNORE; root.add_child(bg)
-	who_l = Shops.rich("", 17, Color("ffe9fb"), 860); who_l.position = Vector2(50, 18); root.add_child(who_l)
-	score_l = Shops.rich("", 15, GOLD, 860); score_l.position = Vector2(50, 50); root.add_child(score_l)
+	# widescreen (8.2): the dim covers the whole window; the table itself is a 960x720 block kept in the real centre
+	root = Control.new(); root.set_anchors_preset(Control.PRESET_FULL_RECT); root.mouse_filter = Control.MOUSE_FILTER_STOP; root.visible = false; add_child(root)
+	var bg := ColorRect.new(); bg.color = Color(.03, .01, .07, .92); bg.set_anchors_preset(Control.PRESET_FULL_RECT); bg.mouse_filter = Control.MOUSE_FILTER_IGNORE; root.add_child(bg)
+	var fr := Control.new(); Shops.center(fr, Vector2.ZERO, Screen.BASE); fr.mouse_filter = Control.MOUSE_FILTER_IGNORE; root.add_child(fr)
+	who_l = Shops.rich("", 17, Color("ffe9fb"), 860); who_l.position = Vector2(50, 18); fr.add_child(who_l)
+	score_l = Shops.rich("", 15, GOLD, 860); score_l.position = Vector2(50, 50); fr.add_child(score_l)
 	board = Control.new(); board.position = BO; board.size = Vector2(TVW, TVH); board.mouse_filter = Control.MOUSE_FILTER_STOP
-	board.draw.connect(_draw_board); board.gui_input.connect(_board_input); root.add_child(board)
-	msg_l = Shops.rich("", 15, Color("ffe9fb"), 860); msg_l.position = Vector2(50, 592); root.add_child(msg_l)
-	var row := HBoxContainer.new(); row.position = Vector2(50, 650); row.add_theme_constant_override("separation", 8); root.add_child(row)
+	board.draw.connect(_draw_board); board.gui_input.connect(_board_input); fr.add_child(board)
+	msg_l = Shops.rich("", 15, Color("ffe9fb"), 860); msg_l.position = Vector2(50, 592); fr.add_child(msg_l)
+	var row := HBoxContainer.new(); row.position = Vector2(50, 650); row.add_theme_constant_override("separation", 8); fr.add_child(row)
 	b_roll = Shops.button("🎲 ZAR AT", GOLD, 15); b_roll.pressed.connect(roll); row.add_child(b_roll)
 	b_rer = Shops.button("🔄 ZAR HAKKI (0)", Color("5fff9e"), 15); b_rer.pressed.connect(reroll); row.add_child(b_rer)
 	b_undo = Shops.button("↩ GERİ AL (0)", GOLD, 15); b_undo.pressed.connect(undo); row.add_child(b_undo)
@@ -77,7 +79,7 @@ func setup(t: Tavla) -> void:
 	b_quit = Shops.button("✕ ÇIK", PINK, 15); b_quit.pressed.connect(quit); row.add_child(b_quit)
 	taunt_box = PanelContainer.new(); taunt_box.visible = false; taunt_box.mouse_filter = Control.MOUSE_FILTER_STOP
 	taunt_box.gui_input.connect(func(e): if e is InputEventMouseButton and e.pressed: close_taunt(); _dismissed = Time.get_ticks_msec())
-	taunt_l = Shops.rich("", 20, Color.WHITE, 520); taunt_box.add_child(taunt_l); root.add_child(taunt_box)
+	taunt_l = Shops.rich("", 20, Color.WHITE, 520); taunt_box.add_child(taunt_l); fr.add_child(taunt_box)
 	_build_bet()
 	set_auto(false)
 
@@ -85,7 +87,7 @@ static func _sb(col: Color) -> StyleBoxFlat: return Shops.panel_box(col)
 
 # ================================================================ the stake screen (tvOpenBet)
 func _build_bet() -> void:
-	bet = PanelContainer.new(); bet.position = Vector2(180, 130); bet.size = Vector2(600, 0); bet.visible = false
+	bet = PanelContainer.new(); Shops.center(bet, Vector2(180, 130), Vector2(600, 0)); bet.visible = false
 	bet.add_theme_stylebox_override("panel", _sb(GOLD)); add_child(bet)
 	var v := VBoxContainer.new(); v.add_theme_constant_override("separation", 10); bet.add_child(v)
 	v.add_child(Shops.rich("", 20, GOLD, 570)); v.add_child(Shops.rich("", 14, Color("bfeefc"), 570)); v.add_child(Shops.rich("", 14, Color("ffe9fb"), 570))

@@ -49,7 +49,7 @@ func setup(w: Node3D, p: Node3D, h: Hud) -> void:
 	me = self; world = w; torii = p; hud = h
 	D = JSON.parse_string(FileAccess.get_file_as_string("res://assets/side/quests.json"))
 	_layer = CanvasLayer.new(); _layer.layer = 3; add_child(_layer)
-	line = Shops.rich("", 15, Color("ffd66b"), 450); line.position = Vector2(500, 96)
+	line = Shops.rich("", 15, Color("ffd66b"), 450); Shops.pin_right(line, Vector2(500, 96), 450)
 	line.add_theme_color_override("font_outline_color", Color(0, 0, 0, .85)); line.add_theme_constant_override("outline_size", 6)
 	_layer.add_child(line)
 	for G in D["QGIVERS"]:
@@ -272,7 +272,7 @@ func log_bbcode() -> String:
 func toggle_log() -> void:
 	if _log: _close_log(); return
 	if Overlay.any(): return
-	_log = PanelContainer.new(); _log.position = Vector2(150, 70); _log.size = Vector2(660, 580)
+	_log = PanelContainer.new(); Shops.center(_log, Vector2(150, 70), Vector2(660, 580))
 	_log.add_theme_stylebox_override("panel", Shops.panel_box(Color("ffd66b"))); _layer.add_child(_log)
 	var v := VBoxContainer.new(); _log.add_child(v)
 	v.add_child(Shops.rich("[b]📜 YAN GÖREVLER · SIDE QUESTS[/b]", 20, Color("ffd66b"), 620))

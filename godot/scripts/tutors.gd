@@ -37,7 +37,7 @@ func setup(w: Node3D, p: Node3D, h: Hud) -> void:
 	me = self; world = w; torii = p; hud = h
 	D = JSON.parse_string(FileAccess.get_file_as_string("res://assets/side/tutors.json"))
 	var layer := CanvasLayer.new(); layer.layer = 3; add_child(layer)
-	_line = Shops.rich("", 15, Color("8ff2ff"), 450); _line.position = Vector2(500, 118)
+	_line = Shops.rich("", 15, Color("8ff2ff"), 450); Shops.pin_right(_line, Vector2(500, 118), 450)
 	_line.add_theme_color_override("font_outline_color", Color(0, 0, 0, .85)); _line.add_theme_constant_override("outline_size", 6)
 	layer.add_child(_line)
 	for T in D["NPCS"]:
