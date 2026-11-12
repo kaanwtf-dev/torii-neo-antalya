@@ -61,7 +61,7 @@ func _process(dt: float) -> void:
 					_slots.append(s)
 		var n := _slots.size()
 		size = Vector2(maxf(0.0, n * (W + GAP) - GAP), H)
-		position = Vector2(480 - size.x * .5, 720 - H - 12)
+		position = Vector2(Screen.w() * .5 - size.x * .5, Screen.h() - H - 12)     # bottom centre of the real screen (widescreen)
 	for k in _flash.keys():
 		_flash[k] = _flash[k] - dt
 		if _flash[k] <= 0: _flash.erase(k)

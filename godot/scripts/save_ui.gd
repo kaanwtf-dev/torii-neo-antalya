@@ -24,6 +24,7 @@ var _busy := false
 func _ready() -> void:
 	layer = 8
 	panel = PanelContainer.new(); panel.position = Vector2(170, 70); panel.size = Vector2(620, 0); panel.visible = false
+	Bus.on("screen", func(_d): _place())      # widescreen (8.2): the panel stays on the real centre
 	var sb := StyleBoxFlat.new(); sb.bg_color = Color(.07, .04, .13, .97); sb.border_color = Color("7bf7ff")
 	sb.set_border_width_all(2); sb.set_corner_radius_all(14); sb.set_content_margin_all(22)
 	panel.add_theme_stylebox_override("panel", sb); add_child(panel)
@@ -77,7 +78,11 @@ func open_panel(first := false) -> void:
 	down_btn.visible = not first; fresh_btn.visible = first; close_btn.visible = not first
 	up_btn.visible = not OS.has_feature("web")          # the website has no file picker: drag a file in or use the code
 	code.text = "" if first else SaveBridge.code(); code_box.visible = false; msg.text = ""
-	panel.visible = true; Overlay.open("save")
+	panel.visible = true; Overlay.open("save"); _place()
+
+# 4:3 size, on the real centre of a wider (or taller) window: at 960x720 = x 170, y 70 as before
+func _place() -> void:
+	panel.position = Vector2(170.0 + Screen.dx(), 70.0 + Screen.dy())
 
 func _close(fresh: bool) -> void:
 	if _busy: return
