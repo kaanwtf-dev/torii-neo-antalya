@@ -41,7 +41,10 @@ func setup(w: Node3D, p, h: Hud) -> void:
 	Stats.apply(player)
 	Bus.on("enemy_died", _on_kill)
 	var cl := CanvasLayer.new(); cl.layer = 1; add_child(cl)
-	_buff_box = VBoxContainer.new(); _buff_box.position = Vector2(706, 270); _buff_box.size = Vector2(240, 120)
+	_buff_box = VBoxContainer.new()
+	# right edge of the real screen (widescreen 8.2): 706,270 + 240x120 on the 960x720 canvas
+	_buff_box.anchor_left = 1; _buff_box.anchor_right = 1
+	_buff_box.offset_left = -254; _buff_box.offset_right = -14; _buff_box.offset_top = 270; _buff_box.offset_bottom = 390
 	_buff_box.mouse_filter = Control.MOUSE_FILTER_IGNORE; cl.add_child(_buff_box)
 	# the world needs a physics frame before rays can find the ground
 	await get_tree().physics_frame
