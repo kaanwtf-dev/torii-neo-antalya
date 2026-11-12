@@ -620,6 +620,7 @@ func _physics_process(dt: float) -> void:
 		return
 	var fresh := not Overlay.just_closed()    # the E / Space that closed a box isn't hers to use
 	_tick_status(dt)
+	dance_t -= dt                              # counts down on the bike and on ledges too (it used to wait until she walked)
 	lock_target = _lock.tick(self, lock_target, dt) if not on_bike else null
 	if not on_bike: _lock.visible = lock_target != null
 	else: _lock.visible = false
@@ -655,7 +656,6 @@ func _cam_fwd() -> Vector3:
 func _move(dt: float, fresh: bool) -> void:
 	var stunned := has_status("stun")
 	var dancing := dance_t > 0
-	dance_t -= dt
 	var floor := is_on_floor()
 	if floor:
 		_coyote = COYOTE; air_t = 0.0; _floor_y = global_position.y

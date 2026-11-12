@@ -416,7 +416,7 @@ func close_wheel(commit: bool) -> void:
 	if not wheel.is_open: return
 	var k := wheel.picked()
 	wheel.hide_wheel()
-	if is_equal_approx(Engine.time_scale, .2) or Engine.time_scale < .5: Engine.time_scale = _ts
+	Engine.time_scale = _ts                              # always back to normal (Fx's safety net agrees)
 	Overlay.close("wheel")
 	if not commit or k == "": return
 	if is_dry(k):                                        # an empty gun is not a choice
@@ -465,6 +465,8 @@ func _input(e: InputEvent) -> void:
 
 func _process(dt: float) -> void:
 	_cd -= dt
+	if wheel.is_open and (Overlay.count() > 1 or player == null or player.get("dead")):
+		close_wheel(false); _q_down = false                # something else took the screen: the wheel lets go
 	if _q_down and not wheel.is_open and Time.get_ticks_msec() - _q_at >= HOLD_MS: open_wheel()
 	if Overlay.any() or player == null: return
 	_director(dt)

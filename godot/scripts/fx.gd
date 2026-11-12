@@ -63,6 +63,8 @@ var _last_spark := {"f": -1, "p": Vector3.ZERO}
 var _hs_on := false
 var _hs_end := 0
 var _hs_prev := 1.0
+var _tslog := "--tslog" in OS.get_cmdline_user_args()
+var _tsl_since := 0
 
 func setup(w: Node3D, camera: Camera3D) -> void:
 	me = self; world = w; cam = camera
@@ -465,8 +467,10 @@ func hitstop(sec := .06, scale := .05) -> void:
 		_hs_prev = Engine.time_scale if Engine.time_scale >= .5 else 1.0; _hs_on = true
 	_hs_end = maxi(_hs_end, now + int(minf(sec, .25) * 1000000.0))
 	Engine.time_scale = minf(_hs_prev, scale)
-	get_tree().create_timer(minf(sec, .25) + .01, true, false, true).timeout.connect(_hs_check)
 
+# the end is checked every frame against the real clock (_process). It used to hang on a one-shot timer, and
+# that timer could miss: the world then stayed at 5% speed — "slow motion lasts forever", and a victory
+# dance at 5% speed looked stuck (Kaan, 11-11)
 func _hs_check() -> void:
 	if _hs_on and (Time.get_ticks_usec() >= _hs_end or Overlay.any()):
 		Engine.time_scale = _hs_prev; _hs_on = false
@@ -588,7 +592,14 @@ func _process(dt: float) -> void:
 	_vig_a = maxf(0.0, _vig_a - dt / .45)
 	_vig.material.set_shader_parameter("amt", _vig_a)
 	if _scr.color.a > 0: _scr.color.a = maxf(0.0, _scr.color.a - _scr_rate * dt)
-	if _hs_on and Overlay.any(): _hs_check()
+	if _hs_on: _hs_check()
+	elif Engine.time_scale < .99 and not Overlay.is_open("wheel"):
+		Engine.time_scale = 1.0                    # safety net: nothing else may leave the world slowed
+	if _tslog:                                     # dev: --tslog reports any slow-down longer than half a second
+		if Engine.time_scale >= .99: _tsl_since = 0
+		elif _tsl_since == 0: _tsl_since = Time.get_ticks_msec()
+		elif Time.get_ticks_msec() - _tsl_since > 500:
+			print("TSLOG slowed for 500 ms: time_scale=", Engine.time_scale, " hitstop=", _hs_on, " wheel=", Overlay.is_open("wheel")); _tsl_since = Time.get_ticks_msec() + 100000
 	for p in _parts:
 		if p["life"] <= 0: continue
 		p["life"] -= dt

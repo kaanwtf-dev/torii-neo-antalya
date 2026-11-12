@@ -22,6 +22,8 @@ func _ready() -> void:
 	Bus.reset()                        # Bus subscriptions are static: a reload (NEW GAME, a loaded file) starts clean
 	Overlay.reset()                    # a reload (after loading a save file) starts with nothing open
 	get_tree().auto_accept_quit = false   # quitting goes through _quit(): save, stop the voices and sound jobs first
+	# widescreen (8.2): the window can be any shape; whatever places itself once re-places itself on Bus "screen"
+	get_tree().root.size_changed.connect(func(): Bus.emit_ev("screen", {"size": Screen.size()}))
 	_inputs()
 	var box := SubViewportContainer.new()
 	box.stretch = true; box.stretch_shrink = PIXEL

@@ -19,6 +19,7 @@ static func close(name: String) -> void:
 	if _open.is_empty(): Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 
 static func any() -> bool: return not _open.is_empty()
+static func count() -> int: return _open.size()
 static func is_open(name: String) -> bool: return _open.has(name)
 
 # the key that closed a box (E, Space) mustn't also get her on the bike or make her jump
