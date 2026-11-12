@@ -78,6 +78,9 @@ func setup(w: Node3D, p: CharacterBody3D, h: CanvasLayer) -> void:
 	cam = Camera3D.new(); cam.fov = 58; cam.near = .05; cam.far = 400; cam.name = "CutCam"
 	world.add_child(cam)
 	_ui()
+	_fs()                                                    # placed for the real screen from the start
+	Bus.on("screen", _on_screen)
+	for a in OS.get_cmdline_user_args(): if a.begins_with("--storyshots="): _dev_storyshots.call_deferred(a.substr(13))
 
 # ---------------------------------------------------------------- the letterbox + subtitles (cineEl)
 func _ui() -> void:
@@ -112,9 +115,14 @@ func _fs() -> void:
 	for c in [_who, _line, _next, _skip, _title]: UiScale.apply(c)
 	var ex := _sub_h() - 70.0
 	var w := UiScale.wide(740, 860)
-	_line.size = Vector2(w, 70.0 + ex); _line.position = Vector2((960.0 - w) / 2.0, 646.0 - ex); _who.position.x = _line.position.x
+	# widescreen (8.2): subtitles centred on the real screen and kept at its bottom; the corner hints in the real corners
+	_line.size = Vector2(w, 70.0 + ex); _line.position = Vector2((Screen.w() - w) / 2.0, Screen.bottom(646.0 - ex)); _who.position.x = _line.position.x
 	_who.size.y = UiScale.wide(22, 44); _who.position.y = _line.position.y - UiScale.wide(24, 50)
-	_next.position.y = 690.0 - (UiScale.px(14) - 14); _skip.position.x = 780.0 - (UiScale.px(12) - 12) * 10.0
+	_next.position = Vector2(Screen.right(870.0), Screen.bottom(690.0 - (UiScale.px(14) - 14)))
+	_skip.position.x = Screen.right(780.0 - (UiScale.px(12) - 12) * 10.0)
+	_title.position = Vector2(40.0 + Screen.dx(), 250.0 + Screen.dy())
+
+func _on_screen(_d: Dictionary) -> void: _fs()
 
 # the subtitle box's height: 70 at 100%, room for three lines at the bigger sizes
 func _sub_h() -> float: return 70.0 if UiScale.k() <= 1.0 else minf(170.0, 80.0 * UiScale.k())
@@ -214,7 +222,8 @@ func _process(dt: float) -> void:
 	_t += dt
 	# letterbox bars, title fade, flash
 	_bars = move_toward(_bars, _bars_to, dt * 260.0)
-	_top.size = Vector2(960, minf(_bars, 92.0)); _bot.position = Vector2(0, 720 - _bars); _bot.size = Vector2(960, _bars)
+	var sz := Screen.size()                            # the bars run the real screen's width, the bottom one sits on its real bottom
+	_top.size = Vector2(sz.x, minf(_bars, 92.0)); _bot.position = Vector2(0, sz.y - _bars); _bot.size = Vector2(sz.x, _bars)
 	_top.visible = _bars > .5; _bot.visible = _bars > .5
 	if _title_a > 0: _title_a = minf(1.0, _title_a + dt * 2.5); _title.modulate.a = _title_a
 	_flash_a = maxf(0.0, _flash_a - dt * 2.2); _flash.color = Color(1, 1, 1, _flash_a)
@@ -628,3 +637,91 @@ func _anim_set() -> void:
 		if _karen_head: _karen_head.rotation.y = sin(_t * .7) * .25
 	if _imp: _imp.position.y = absf(sin(_t * 6)) * .12; _imp.rotation.z = sin(_t * 6) * .08
 	if _zomb: _zomb.rotation.z = .08 + sin(_t * .9) * .05
+
+# ---------------------------------------------------------------- dev only
+# --storyshots=DIR (windowed, with --savedir=): screenshots of every story screen at this window's shape — the
+# VHS intro (press any key, BİR KAAN YAPIMI, sunset, logo, cast card), the title, the opening call with its
+# subtitles, a Hellspace scene, the credits, then Fx (edge flash, screen flash, a damage number and a bubble). Quits.
+func _dev_snap(dir: String, n: String) -> void:
+	await RenderingServer.frame_post_draw
+	get_viewport().get_texture().get_image().save_png("%s/%s.png" % [dir, n])
+	print("STORYSHOT ", n, " ", Screen.size())
+
+func _dev_wait(s: float) -> void: await get_tree().create_timer(maxf(.01, s), true, false, true).timeout
+
+func _dev_clear_ui() -> void:
+	if Menus.me: Menus.me.close_patch()
+	if hud and hud.has_method("skip_say"): hud.skip_say()
+	if LevelUp.me: LevelUp.me.close_tip()
+
+func _dev_storyshots(dir: String) -> void:
+	for i in 60:
+		if Intro.me: break
+		await get_tree().process_frame
+	await _dev_wait(1.2)
+	if Intro.me:
+		await _dev_snap(dir, "intro_vhs")
+		Intro.me._go()
+		for s in [[1.6, "intro_kaan"], [5.6, "intro_sunset"], [8.2, "intro_logo"], [13.2, "intro_cast"]]:
+			await _dev_wait(float(s[0]) - (Intro.me._now() - Intro.me._t0) if Intro.me else 0.0)
+			await _dev_snap(dir, s[1])
+		Intro.me._to_menu()
+	await _dev_wait(1.0)
+	if Menus.me: Menus.me.close_patch()
+	await _dev_wait(.4)
+	await _dev_snap(dir, "title")
+	if Menus.me and Menus.me.title_up: Menus.me._continue()
+	for i in 240:
+		if active: break
+		await get_tree().process_frame
+	await _dev_wait(1.4)
+	await _dev_snap(dir, "call_0")
+	for i in 3:
+		await _dev_wait(.5); next()
+		if str(cur.get("line", "")) != "": break
+	await _dev_wait(.8)
+	await _dev_snap(dir, "call_line")
+	end(true)
+	await _dev_wait(.6)
+	_dev_clear_ui()
+	await _dev_wait(.4)
+	hell_scene("avo")
+	await _dev_wait(1.6)
+	await _dev_snap(dir, "hell_title")
+	_shot(2)
+	await _dev_wait(.8)
+	await _dev_snap(dir, "hell_line")
+	end(true)
+	await _dev_wait(.5)
+	ending()
+	await _dev_wait(1.6)
+	await _dev_snap(dir, "credits")
+	if "--resize" in OS.get_cmdline_user_args():        # --resize: the window gets 400 px wider mid-scene (Bus "screen")
+		next(); get_window().size += Vector2i(400, 0)
+		await _dev_wait(.8)
+		await _dev_snap(dir, "credits_resized")
+	end(true)
+	await _dev_wait(.8)
+	_dev_clear_ui()
+	if Fx.me:
+		var p := torii.global_position
+		Fx.me.label(p + Vector3(0, 2.4, 0), "-42", Color("ffd66b"), 3.0)
+		Fx.me.label(p + Vector3(1.2, 2.0, 0), "Merhaba! 👋", Color("7bf7ff"), 3.0, true)
+		Fx.me.flash("hurt")
+		await _dev_wait(.12)
+		await _dev_snap(dir, "fx_vig")
+		Fx.me.flash_screen(Color.WHITE, .45, 1.5)
+		await _dev_wait(.05)
+		await _dev_snap(dir, "fx_flash")
+	var qs := get_tree().root.find_children("*", "QuizUI", true, false)
+	if qs.size():
+		var q: QuizUI = qs[0]
+		q.show_lesson("📖 UNIT 1 · Merhaba!", ["Selam! = Hi!", "[b]Merhaba[/b] means hello. Say it to everyone in Antalya."], func(): pass)
+		await _dev_wait(.6)
+		await _dev_snap(dir, "lesson")
+		if "--resize" in OS.get_cmdline_user_args():
+			get_window().size -= Vector2i(400, 0)
+			await _dev_wait(.6)
+			await _dev_snap(dir, "lesson_resized")
+		while q.lesson_cb.is_valid(): q._next_page()
+	get_tree().root.propagate_notification(NOTIFICATION_WM_CLOSE_REQUEST)

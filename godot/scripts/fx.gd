@@ -96,8 +96,10 @@ func setup(w: Node3D, camera: Camera3D) -> void:
 	sh.code = """shader_type canvas_item;
 uniform vec4 col : source_color = vec4(1.0, 0.08, 0.2, 0.75);
 uniform float amt = 0.0;
+uniform float asp = 1.0;
 void fragment() {
 	vec2 d = abs(UV - 0.5) * 2.0;
+	d.x = max(0.0, 1.0 - (1.0 - d.x) * asp);   // widescreen: asp = canvas width / 960, so the side glow keeps its 4:3 width at the real edges
 	float e = smoothstep(0.35, 1.25, max(d.x, d.y) * 0.55 + length(d) * 0.5);
 	COLOR = vec4(col.rgb, col.a * e * amt);
 }"""
@@ -258,6 +260,7 @@ func flash(kind := "hurt") -> void:
 		"crit", "gold": c = Color(1, .84, .42, .55)
 		"poison": c = Color(.37, 1, .62, .55)
 	_vig.material.set_shader_parameter("col", c)
+	_vig.material.set_shader_parameter("asp", Screen.w() / Screen.BASE.x)
 	_vig_a = 1.0
 
 # a whole-screen blink (parry, boss kill, level-up). Kept light: strength is the peak alpha

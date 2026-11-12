@@ -77,6 +77,13 @@ func _ready() -> void:
 	qskip = Button.new(); qskip.text = "⏭ QUİZİ GEÇ · SKIP (no re-roll bonus)  [K]"; qskip.focus_mode = Control.FOCUS_NONE
 	qskip.add_theme_font_size_override("font_size", 13); qskip.add_theme_color_override("font_color", Color("d8ffe8"))
 	qskip.visible = false; qskip.pressed.connect(skip_all); v.add_child(qskip)
+	Bus.on("screen", _on_screen)
+
+# widescreen (8.2): the window changed shape — the lesson box / quiz panel re-centres on the real screen
+func _on_screen(_d: Dictionary) -> void:
+	if not panel.visible: return
+	if lesson_cb.is_valid(): _place_lesson()
+	else: panel.position = Vector2((Screen.w() - panel.size.x) / 2, 120 + Screen.dy())
 
 func _lab(parent: Node, size: int, col: Color) -> Label:
 	var l := Label.new(); l.add_theme_font_size_override("font_size", size); l.add_theme_color_override("font_color", col)
@@ -95,8 +102,8 @@ func _fs() -> void:
 	text.custom_minimum_size.x = _w() - 40; feed.custom_minimum_size.x = _w() - 40
 
 func _process(_dt: float) -> void:
-	if panel.visible and not lesson_cb.is_valid() and panel.position.y + panel.size.y > 712.0:
-		panel.position.y = maxf(6.0, 712.0 - panel.size.y)
+	if panel.visible and not lesson_cb.is_valid() and panel.position.y + panel.size.y > Screen.bottom(712.0):
+		panel.position.y = maxf(6.0, Screen.bottom(712.0) - panel.size.y)
 
 # the lesson's explanation first, one line per page like 7.2's say() box, then whatever comes next
 func show_lesson(title: String, lines: Array, then: Callable) -> void:
@@ -117,10 +124,10 @@ func _place_lesson() -> void:
 	await get_tree().process_frame
 	if not lesson_cb.is_valid(): return
 	panel.reset_size(); panel.size.x = _w()
-	panel.position = Vector2((960 - _w()) / 2, maxf(6.0, 720 - panel.size.y - 70))
+	panel.position = Vector2((Screen.w() - _w()) / 2, maxf(6.0, Screen.h() - panel.size.y - 70))
 
 func _place_quiz() -> void:
-	panel.position = Vector2((960 - _w()) / 2, 120); panel.size = Vector2(_w(), 480)
+	panel.position = Vector2((Screen.w() - _w()) / 2, 120 + Screen.dy()); panel.size = Vector2(_w(), 480)
 
 func _next_page() -> void:
 	pages.pop_front()
