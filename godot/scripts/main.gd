@@ -106,6 +106,8 @@ func _ready() -> void:
 	var menus := Menus.new(); add_child(menus); menus.setup(p, hud, save_ui)
 	# the auto quality governor (7.2 autoGfx): a slow Mac steps GRAFİK / VIEW down on its own, with a toast
 	var qual := Quality.new(); add_child(qual); qual.setup(p, hud)
+	# 🆕 the in-game updater: checks GitHub once while the title shows (exported app only), UPDATE / LATER panel
+	var upd := Updater.new(); add_child(upd); upd.setup(hud)
 	m.setup(world, p, hud, lessons)
 	# roaming monsters, night packs, minibosses, the stinky Cruze
 	var spawner := Spawner.new(); spawner.name = "Spawner"; add_child(spawner); spawner.setup(world, p)
@@ -180,6 +182,7 @@ func _ready() -> void:
 	if not _dev() and not Missions.dev_run():
 		if "--continue" in OS.get_cmdline_user_args():          # dev: skip the VHS intro and press CONTINUE on the title
 			menus.title(); await get_tree().process_frame; menus._continue(); return
+		if "--totitle" in OS.get_cmdline_user_args(): menus.title(); return      # dev: skip the VHS intro, stay on the title
 		Intro.run(self, menus.title, world, [p, ban, null])
 
 # closing the window saves first (7.2 saved at every event; this catches whatever happened since). Not
@@ -194,6 +197,7 @@ var _quitting := false
 func _quit() -> void:
 	if _quitting: return
 	_quitting = true
+	if Updater.me: Updater.me.mark_ok_on_quit()     # an update that quits in order is a good one (boot.gd stops counting)
 	if not SaveBridge.data.is_empty(): SaveBridge.write()
 	if Audio.me: Audio.me.shutdown()
 	else: DisplayServer.tts_stop()
@@ -201,6 +205,7 @@ func _quit() -> void:
 	for i in 3: await get_tree().process_frame
 	await get_tree().create_timer(.2, true).timeout          # the speech engine reports its cancel before we go
 	_drop_statics()
+	if not Updater.relaunch.is_empty(): Updater.spawn(Updater.relaunch)     # UPDATE: the app starts again on the new pack
 	get_tree().quit()
 
 # every static cache that holds a resource (materials, textures, scenes, scripts) — all rebuilt lazily when needed

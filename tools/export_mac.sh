@@ -33,5 +33,10 @@ codesign --verify --deep --strict "$APP"
 VER=$(python3 -c 'import json; print(json.load(open("godot/assets/story/godot.json"))["ver"].split(" ")[1])')
 ZIP="godot/build/TORII-NEO-ANTALYA-$VER-mac.zip"
 rm -f "$ZIP"; ditto -c -k --sequesterRsrc --keepParent "$APP" "$ZIP"
+# 5. what this app takes from ITSELF and never from an update pack (tools/publish_update.sh compares against these):
+#    project.godot (window, rendering, autoloads), the boot scene that lays a pack over the app, and the engine.
+#    Commit tools/app_base.* together with the build you send her.
+shasum -a 256 godot/project.godot godot/scripts/boot.gd godot/scenes/boot.tscn > tools/app_base.sha256
+godot --version | grep -oE '^[0-9]+(\.[0-9]+){1,2}' > tools/app_base.engine
 echo "built: $APP"
 echo "zip:   $ZIP ($(du -h "$ZIP" | cut -f1))"

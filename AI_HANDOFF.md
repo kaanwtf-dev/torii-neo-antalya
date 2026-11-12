@@ -48,6 +48,38 @@ Project rules live in `CLAUDE.md` (they apply to both of us). Newest entry on to
   `~/Library/Application Support/Godot/export_templates/4.7.2.stable` (SHA-512 checked). `import_etc2_astc=true` is needed
   for arm64. Not notarized (no Apple developer account): first launch on her Mac = System Settings → Privacy & Security →
   Open Anyway (older macOS: right-click → Open). Her saves go to `~/Library/Application Support/Godot/app_userdata/TORİİ: NEO ANTALYA/`.
+- **In-game updater (8.2, `scripts/updater.gd` + `scripts/boot.gd`):** after the 8.2 zip, Torii never installs a zip again
+  unless the ENGINE or `project.godot` changes. Hosting = GitHub Releases of `kaanwtf-dev/torii-neo-antalya`: the app reads
+  `releases/latest/download/version.json` once while the title shows; newer `ver` + same engine → UPDATE / LATER panel
+  (Overlay "update"); UPDATE downloads `releases/download/v<ver>/<pck>` to `user://updates/<pck>.part`, checks size + sha256,
+  writes `user://updates/current.json`, saves, and starts the app again (`Updater.relaunch`, spawned at the end of
+  `main._quit()`). Different engine → one line "ask Kaan 💌". 404 / no internet / timeout → nothing.
+  **How the pack gets used:** `run/main_scene` is now `scenes/boot.tscn` (`boot.gd`): BEFORE any game script loads it does
+  `ProjectSettings.load_resource_pack(pck, true)` when current.json names a pack that is newer than the bundled game, same
+  engine, right size and sha256, then `change_scene_to_file(main.tscn)`. (The first plan, a restart with `--main-pack`, is
+  impossible: official release templates abort with "compiled without support for path overrides".) `boot.gd` must never
+  name a game class, and the app's own copy of it always runs (changing it = new app). Anti-brick: `boot_try_<ver>` counts
+  starts, `Updater._mark_ok` writes `boot_ok_<ver>` + clears the count at the title, after 5 s running, or on an orderly
+  quit (`main._quit()` → `Updater.mark_ok_on_quit()`); 2 starts without it → update deleted → bundled game, + `bad_<ver>`
+  (never offered again) only if that ver never had a `boot_ok_<ver>`. Damaged pack → deleted, offered again. Any drop of
+  an update newer than the bundled game first copies the save to `torii_save_from_<ver>.json` (the older code is about to
+  run on it), and `SaveBridge.migrate()` parks weapon ids it doesn't know in `weap_later` / `dur_later` instead of
+  deleting them (they come back once a build knows them). The download runs WITHOUT threads (`use_threads=false`, 1 MB
+  chunks a frame): threaded, a dead link froze the game when the 30 s watchdog / CANCEL / quit joined the HTTP thread.
+  The pack the game is playing from is never deleted by an install; `boot.gd` deletes other packs before mounting. Log:
+  `user://updates/updater.log`. Only the exported app updates (`OS.has_feature("template")`); dev runs need
+  `--updateurl=http://127.0.0.1:PORT/`. With `--savedir=DIR` the update files live in `DIR/updates` (tests never touch the
+  real folder). Dev flags: `--updateurl=`, `--updatepress`, `--updateshot=PATH` (also writes PATH_dl.png), `--updatequit=SEC`,
+  `--totitle` (main: skip the VHS intro, stay on the title).
+- **Publishing an update (Kaan confirms, it's public):** bump `"ver"` in `godot/assets/story/godot.json` (+ patch notes; the
+  number must be higher than the last release), commit, then `bash tools/publish_update.sh [--notes "one line for Torii"]`
+  → `godot/build/torii-<ver>.pck` + `godot/build/version.json` and the exact `gh release create v<ver> ... --latest` command
+  (run it, or re-run the script with `--publish`). Notes default to godot.json `"update_note"`, else the newest patch title.
+  An engine upgrade or a change to `project.godot` (window, rendering, autoloads), `scripts/boot.gd` or `scenes/boot.tscn`
+  can't ship as a pack: `tools/export_mac.sh` and send her the zip. The script refuses those (`--force` skips): it compares
+  with `tools/app_base.sha256` + `tools/app_base.engine`, which `export_mac.sh` writes — COMMIT them with the app build you
+  send her (they don't exist yet: the 8.2 app build creates them; until then publish_update.sh refuses). Test before publishing: serve `godot/build/` with `python3 -m http.server 8765 --bind 127.0.0.1` and run
+  the exported app with `-- --updateurl=http://127.0.0.1:8765/ --savedir=<scratch> --totitle`.
 - **Not done yet:** PRG-24 (outfits per level: Kaan decides).
   Seen but not fixed: "NAZAR SHIELD 12s" shows twice (left HUD list + right buff chip, from before 8.1); the club neon
   pulse / ferry / windmill motion and the visor (G on) were never watched on screen; the bare-hand kick only happens when
@@ -61,6 +93,15 @@ Project rules live in `CLAUDE.md` (they apply to both of us). Newest entry on to
 - Never put Torii's real photo (`assets/screenshots/torii face.jpg`) in git — it's ignored on purpose.
 
 ## Log
+- 2026-11-11 Claude (wf82/updater): **in-game updater** (see Current state). Proven against the EXPORTED app with a 9.9 test
+  pack on a local server: download + sha256 → restart → `GAME_VER ALPHA 9.9 · TEST`, same save (lvl 5, 18 words); the next
+  plain start goes straight into 9.9 (world shot from the pack); same-size corruption / truncated pack / wrong-sha download /
+  two killed starts / newer bundled app all fall back to the bundled game; engine mismatch = toast only; 404 + no server =
+  silent; the real GitHub URL answers 404 today (no release yet) and HTTPRequest follows GitHub's asset redirect (tested on a
+  public release). Nothing was published.
+  Review fixes: no-thread download (a stalled server: watchdog fires at 30 s, quit mid-stall exits at once, 30 MB local
+  download < 1 s), orderly quit = boot ok (3 windowed 2 s quits on the VHS intro stay at try 1), proven ver dropped
+  without `bad_`, save copy on drop, `weap_later`, running pack kept, publish guard (tools/app_base.*).
 - 2026-11-09 Claude (parent session): **Mac app built (CRT-02).** Kaan OK'd the export templates (1.28 GB, SHA-512 checked,
   installed for 4.7.2). Added `godot/export_presets.cfg`, `godot/icon.png` (+ `--iconshot=PATH` dev flag), ETC2/ASTC import,
   dark boot splash, `tools/export_mac.sh` (export → ASCII inner names → ad-hoc re-sign → verify → zip). Checked: signature

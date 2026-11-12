@@ -4,7 +4,7 @@ config_version=5
 [application]
 
 config/name="TORİİ: NEO ANTALYA"
-run/main_scene="res://scenes/main.tscn"
+run/main_scene="res://scenes/boot.tscn"
 config/features=PackedStringArray("4.7", "GL Compatibility")
 config/icon="res://icon.png"
 boot_splash/bg_color=Color(0.03, 0.01, 0.08, 1)
